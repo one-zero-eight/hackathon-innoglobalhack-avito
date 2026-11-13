@@ -10,10 +10,10 @@ requires-python = ">=3.13"
 dependencies = [
     "pydantic>=2",
     "python-dotenv>=1",
+    "scikit-learn>=1.9.1",
 ]
 
 [dependency-groups]
 dev = [
     "pandas>=3.1.1",
-    "scikit-learn>=1.9.1",
 ]

@@ -4,10 +4,12 @@ import csv
 import hashlib
 import json
 import os
+import logging
 
 from dotenv import load_dotenv
 
-from benchmark import DATASET, HERE, MODEL, ROOT, TokenBudget, predict, score
+from benchmark import DATASET, HERE, MODEL, PROMPT_DIR, ROOT, TokenBudget, predict, score
+from subcategory_extraction.google_decision.routing import resolve_disagreements
 
 MARGINS = (None, 0.1, 0.2, 0.3, 0.0)
 OUTPUT = HERE / "2026-11-13_routing-results.json"
@@ -19,15 +21,9 @@ def local_sets(row):
 
 def routed(row, answers, margin):
     baseline, alternative = local_sets(row)
-    if margin is None:
-        return baseline
-    for category in baseline ^ alternative:
-        probability = answers[str(category)]
-        if probability >= 0.5 + margin:
-            baseline.add(category)
-        elif probability < 0.5 - margin:
-            baseline.discard(category)
-    return baseline
+    return resolve_disagreements(
+        baseline, alternative, {int(cid): value for cid, value in answers.items()}, margin,
+    )
 
 
 def measure(rows, cache, margin):
@@ -41,7 +37,7 @@ def main():
     load_dotenv(ROOT / ".env")
     source = (HERE / "2026-11-13_routing-sample.json").read_bytes()
     sample = json.loads(source)
-    prompt = (HERE / "prompts/google_decision_guided.md").read_text(encoding="utf-8")
+    prompt = (PROMPT_DIR / "google_decision_guided.md").read_text(encoding="utf-8")
     fingerprint = hashlib.sha256(source + prompt.encode()).hexdigest()
     report = json.loads(OUTPUT.read_text()) if OUTPUT.exists() else {
         "model": MODEL, "fingerprint": fingerprint, "responses": {},
@@ -72,7 +68,7 @@ def main():
                                     descriptions[group, source_id], source_id, budget, disputed)
             cache[group] = {"probabilities": {str(k): v for k, v in probabilities.items()}, "input_tokens": budget.last_actual}
             save()
-            print(f"{split}: {len(cache)} calls saved", flush=True)
+            logging.info("%s: %d calls saved", split, len(cache))
 
         if split == "validation":
             trials = [(margin, measure(rows, cache, margin)) for margin in MARGINS]
