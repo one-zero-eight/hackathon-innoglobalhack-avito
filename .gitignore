@@ -51,3 +51,6 @@ backlog/
 
 # Артефакты прогонов
 out/
+
+# Local agent instructions
+/local_agents.md
