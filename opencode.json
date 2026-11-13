@@ -1,0 +1,34 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "model": "stepfun/step-5-preview",
+  "providers": {
+    "stepfun": {
+      "name": "StepFun",
+      "package": "@opencode/ai/providers/openai-compatible",
+      "settings": {
+        "baseURL": "https://api.stepfun.com/step_plan/v1",
+        "apiKey": "{file:.opencode/secrets/stepfun-api-key}",
+        "strictJsonSchema": false
+      },
+      "models": {
+        "step-5-preview": {
+          "name": "step-5-preview",
+          "limit": {
+            "context": 200000,
+            "output": 8192
+          },
+          "capabilities": {
+            "tools": true,
+            "reasoning": {
+              "supported": true
+            }
+          },
+          "compatibility": {
+            "reasoningField": "reasoning_content",
+            "maxTokensField": "max_tokens"
+          }
+        }
+      }
+    }
+  }
+}
