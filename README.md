@@ -39,8 +39,7 @@ draft_generation          черновик на каждую целевую ка
 Запуск:
 
 ```bash
-uv venv
-uv pip install -r requirements.txt
+uv sync
 cp .env.example .env          # заполнить LLM_API_KEY
 
 uv run python main.py --input data/input.json --output out/output.json

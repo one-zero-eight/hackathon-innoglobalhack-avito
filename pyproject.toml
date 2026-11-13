@@ -1,17 +1,22 @@
 [project]
 name = "hackathon-innoglobalhack-avito"
 version = "0.1.0"
-description = "Add your description here"
+description = "Выделение услуг из объявлений Авито и генерация черновиков"
 readme = "README.md"
 authors = [
-    { name = "ZolotarevAlexandr", email = "Zolotarev10032006@mail.ru" }
+    { name = "ZolotarevAlexandr", email = "Zolotarev10032006@mail.ru" },
 ]
-requires-python = ">=3.14"
-dependencies = []
+requires-python = ">=3.13"
+dependencies = [
+    "pydantic>=2",
+    "python-dotenv>=1",
+    "pytest>=8",
+]
 
-[project.scripts]
-hackathon-innoglobalhack-avito = "hackathon_innoglobalhack_avito:main"
-
-[build-system]
-requires = ["uv_build>=0.12.9,<0.13.0"]
-build-backend = "uv_build"
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = [
+    "subcategory_extraction",
+    "category_validation",
+    "draft_generation",
+]

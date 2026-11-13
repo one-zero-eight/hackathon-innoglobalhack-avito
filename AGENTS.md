@@ -51,8 +51,8 @@
 │   └── <username>/{TODO,PROCESS,REVIEW,DONE}
 ├── data/                        # примеры входных данных
 ├── docs/                        # кейс, критерии, справочник микрокатегорий, датасеты
-├── requirements.txt             # зависимости (ставим через uv)
-├── pytest.ini                   # конфиг тестов
+├── pyproject.toml               # зависимости (ставим через uv sync) + конфиг pytest
+├── .python-version              # версия Python для uv
 ├── .env.example                 # шаблон переменных окружения (.env в git не коммитим)
 └── AGENTS.md
 ```
@@ -206,8 +206,7 @@ git branch --show-current          # в начале каждого чата
 git status
 
 # setup (один раз):
-uv venv
-uv pip install -r requirements.txt
+uv sync
 cp .env.example .env               # заполнить LLM_API_KEY
 
 uv run pytest                      # прогон бенчмарков
