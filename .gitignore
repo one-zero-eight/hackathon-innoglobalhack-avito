@@ -1,2 +1,47 @@
+# Environment / secrets
+.env
+.env.*
+!.env.example
 .opencode/secrets/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+dist/
+*.egg-info/
+.eggs/
+wheels/
+
+# Virtual environments
+.venv/
+venv/
+ENV/
+env/
+
+# uv / ruff / tooling
+uv.lock.bak
+.ruff_cache/
+.mypy_cache/
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+.tox/
+.nox/
+
+# FastAPI / app artifacts
+*.log
+*.sqlite
+*.sqlite3
+*.db
+
+# IDEs / OS
+.idea/
+.vscode/
+*.swp
 .DS_Store
+Thumbs.db
