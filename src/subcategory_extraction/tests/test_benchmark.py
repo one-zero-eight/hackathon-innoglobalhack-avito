@@ -11,8 +11,7 @@ from pathlib import Path
 
 import pytest
 
-from main import PipelineInput, is_valid_mcid
-from subcategory_extraction import SubcategoryExtractionPipeline
+from main import PipelineInput, is_valid_mcid, load_config, load_pipeline
 
 BENCHMARKS_DIR = Path(__file__).resolve().parents[1] / "benchmarks"
 JSON_BLOCK = re.compile(r"```json\s*\n(.*?)```", re.DOTALL)
@@ -29,9 +28,12 @@ def load_benchmark_cases() -> list[tuple[str, dict]]:
 
 @pytest.mark.parametrize(("benchmark", "payload"), load_benchmark_cases())
 def test_benchmark(benchmark: str, payload: dict) -> None:
+    config = load_config()
+    if config.subcategory_extraction is None:
+        pytest.skip("Модуль subcategory_extraction не выбран")
     inp = PipelineInput.model_validate(payload)
 
-    result = SubcategoryExtractionPipeline().run(inp)
+    result = load_pipeline("subcategory_extraction", config).run(inp)
 
     assert isinstance(result, list)
     assert all(isinstance(mcid, int) and is_valid_mcid(mcid) for mcid in result)
