@@ -11,8 +11,7 @@ from pathlib import Path
 
 import pytest
 
-from common.categories import is_valid_mcid
-from common.schemas import PipelineInput
+from main import PipelineInput, is_valid_mcid
 from subcategory_extraction import SubcategoryExtractionPipeline
 
 BENCHMARKS_DIR = Path(__file__).resolve().parents[1] / "benchmarks"

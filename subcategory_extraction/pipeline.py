@@ -2,8 +2,7 @@
 
 import logging
 
-from common.base import BasePipeline
-from common.schemas import PipelineInput
+from main import BasePipeline, PipelineInput
 
 logger = logging.getLogger(__name__)
 
@@ -13,7 +12,7 @@ class SubcategoryExtractionPipeline(BasePipeline):
 
     TODO: реализовать выделение услуг из description и маппинг на
     микрокатегории 101–106. Промпт — в prompts/extract_subcategories.md,
-    вызов модели — через common.llm_client.LLMClient.
+    вызов модели — через main.LLMClient.
     """
 
     name = "subcategory_extraction"

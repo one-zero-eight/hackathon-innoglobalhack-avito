@@ -2,7 +2,7 @@
 
 import logging
 
-from common.base import BasePipeline
+from main import BasePipeline
 
 logger = logging.getLogger(__name__)
 

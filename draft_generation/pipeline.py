@@ -2,8 +2,7 @@
 
 import logging
 
-from common.base import BasePipeline
-from common.schemas import Draft, PipelineInput
+from main import BasePipeline, PipelineInput
 
 logger = logging.getLogger(__name__)
 
@@ -19,8 +18,11 @@ class DraftGenerationPipeline(BasePipeline):
 
     name = "draft_generation"
 
-    def run(self, inp: PipelineInput, target_mc_ids: list[int]) -> list[Draft]:
+    def run(self, inp: PipelineInput, target_mc_ids: list[int]) -> list[dict]:
         """Сгенерировать по одному черновику на каждый целевой mcId.
+
+        Черновик — dict контракта кейса: {"mcId": int, "title": str, "text": str}.
+        Валидация и сериализация — в main.PipelineOutput.
 
         TODO: заменить заглушку на генерацию через jev-модель.
         """

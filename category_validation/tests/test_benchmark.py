@@ -12,7 +12,7 @@ from pathlib import Path
 import pytest
 
 from category_validation import CategoryValidationPipeline
-from common.categories import is_valid_mcid
+from main import is_valid_mcid
 
 BENCHMARKS_DIR = Path(__file__).resolve().parents[1] / "benchmarks"
 JSON_BLOCK = re.compile(r"```json\s*\n(.*?)```", re.DOTALL)

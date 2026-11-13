@@ -11,9 +11,8 @@ from pathlib import Path
 
 import pytest
 
-from common.categories import is_valid_mcid
-from common.schemas import PipelineInput, PipelineOutput
 from draft_generation import DraftGenerationPipeline
+from main import PipelineInput, PipelineOutput, is_valid_mcid
 
 BENCHMARKS_DIR = Path(__file__).resolve().parents[1] / "benchmarks"
 JSON_BLOCK = re.compile(r"```json\s*\n(.*?)```", re.DOTALL)
