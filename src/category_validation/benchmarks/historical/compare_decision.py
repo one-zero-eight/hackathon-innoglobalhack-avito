@@ -3,10 +3,11 @@
 import csv
 import json
 import os
+import logging
 
 from dotenv import load_dotenv
 
-from benchmark import DATASET, HERE, ROOT, THRESHOLD, TokenBudget, predict, score
+from benchmark import DATASET, HERE, PROMPT_DIR, ROOT, THRESHOLD, TokenBudget, predict, score
 
 
 def main() -> None:
@@ -19,7 +20,7 @@ def main() -> None:
             (row["group_id"], int(row["source_mc_id"])): row["description"]
             for row in csv.DictReader(stream)
         }
-    prompt = (HERE / "prompts/google_decision_guided.md").read_text(encoding="utf-8")
+    prompt = (PROMPT_DIR / "google_decision_guided.md").read_text(encoding="utf-8")
     output = HERE / "2026-11-13_decision-1_fresh32.json"
     report = json.loads(output.read_text()) if output.exists() else {"rows": []}
     budget = TokenBudget()
@@ -41,7 +42,7 @@ def main() -> None:
             "intersection": sorted(google & local), "union": sorted(google | local),
         })
         output.write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
-        print(f"Decision 1 {index + 1}/{len(sample)}", flush=True)
+        logging.info("Decision 1 %d/%d", index + 1, len(sample))
 
     expected = [set(row["expected"]) for row in report["rows"]]
     # Retain confident Google decisions and use the local model near the cutoff.

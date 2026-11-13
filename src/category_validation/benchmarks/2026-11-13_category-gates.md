@@ -59,4 +59,11 @@ SplitShift regex без фильтра. Считаем micro-F1, TP/FP/FN по �
 | Рабочая копия | 2026-11-13 | 128 строк | Decision 1, пороги из validation | 0.8782 |
 | Рабочая копия | 2026-11-13 | 128 строк | Decision 1 на всех разногласиях | 0.8858 |
 
-[Журнал, выборки и исходные результаты](../../../experiments/google-api-categories/EXPERIMENTS.md).
+[Журнал, выборки и исходные результаты](historical/EXPERIMENTS.md).
+
+## Модульный перенос
+
+Google Decision и TF-IDF теперь находятся в `subcategory_extraction`.
+Структурная проверка ID — модуль `category_validation/strict`.
+Оценки выше относятся только к историческому коду: внешние SplitShift
+и смешанный CSV не входят в новые модульные прогоны.
