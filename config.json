@@ -1,5 +1,5 @@
 {
-  "subcategory_extraction": null,
-  "category_validation": null,
-  "draft_generation": null
+  "subcategory_extraction": "tfidf",
+  "category_validation": "strict",
+  "draft_generation": "sample_llm"
 }

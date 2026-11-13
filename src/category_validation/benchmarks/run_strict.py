@@ -6,7 +6,7 @@ from pathlib import Path
 
 from main import PipelineConfig, load_pipeline
 
-SOURCE = Path(__file__).with_name("2026-11-13_strict.md")
+SOURCE = Path(__file__).with_name("strict.md")
 
 
 def main() -> None:

@@ -14,7 +14,7 @@ empty target sets. Both prompts used a fixed 0.5 threshold.
 | Short | 0.6777 | 3.3884 | 41 | 38 | 1 |
 | Guided | 0.8632 | 4.3158 | 41 | 12 | 1 |
 
-The [Flash-Lite run](../../../subcategory_extraction/benchmarks/2026-11-13_flash-lite.md) used a different dataset and
+The [Flash-Lite run](../../../subcategory_extraction/benchmarks/flash-lite.md) used a different dataset and
 sample. Use seed 43 for paired diagnostics with the saved Decision 1 predictions.
 
 ## Google quota
