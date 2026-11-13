@@ -37,23 +37,23 @@
 
 ```
 .
-├── main.py                      # CLI-точка входа (флаги --input / --output)
-├── pipelines/                   # каждый сервис — отдельная папка
-│   ├── subcategory_extraction/  # шаг 1: jev-модель выделяет подкатегории услуг
-│   │   ├── pipeline.py          #   класс пайплайна
-│   │   ├── benchmarks/          #   бенчмарки сервиса (.md, по файлу на бенчмарк)
-│   │   ├── tests/
-│   │   ├── prompts/             #   промпты вынесены из кода
-│   │   └── README.md
-│   ├── category_validation/     # шаг 2: проверка выбранных категорий
-│   └── draft_generation/        # шаг 3: генерация черновиков объявлений
-├── backlog/                     # личный бэклог каждого участника
-│   └── <username>/
-│       ├── TODO/
-│       ├── PROCESS/
-│       ├── REVIEW/
-│       └── DONE/
+├── main.py                      # CLI-ядро (флаги --input / --output)
+├── common/                      # общее: категории, схемы, база, клиент LLM
+├── subcategory_extraction/      # шаг 1: jev-модель выделяет подкатегории услуг
+│   ├── pipeline.py              #   класс пайплайна
+│   ├── prompts/                 #   промпты вынесены из кода
+│   ├── benchmarks/              #   бенчмарки (.md, по файлу на бенчмарк)
+│   ├── tests/                   #   только бенчмарк-прогоны
+│   └── README.md
+├── category_validation/         # шаг 2: проверка выбранных категорий
+├── draft_generation/            # шаг 3: генерация черновиков объявлений
+├── backlog/                     # локальный бэклог каждого (в .gitignore)
+│   └── <username>/{TODO,PROCESS,REVIEW,DONE}
+├── data/                        # примеры входных данных
 ├── docs/                        # кейс, критерии оценки
+├── requirements.txt             # зависимости (ставим через uv)
+├── pytest.ini                   # конфиг тестов
+├── .env.example                 # шаблон переменных окружения (.env в git не коммитим)
 └── AGENTS.md
 ```
 
@@ -63,8 +63,10 @@
   `benchmarks/`.
 - `main.py` **импортирует классы пайплайнов** и только оркеструрует вызовы.
   Бизнес-логика живёт в пайплайнах, не в `main.py`.
-- Общие вещи (таблица микрокатегорий, клиент LLM, утилиты) — в отдельном
-  модуле, не дублировать по сервисам.
+- Общие вещи (таблица микрокатегорий, клиент LLM, утилиты) — в `common/`,
+  не дублировать по сервисам.
+- Переменные окружения — в `.env` (шаблон `.env.example`), `main.py` подгружает
+  их через `load_dotenv()`. Секреты в репозиторий не коммитим.
 
 ---
 
@@ -90,6 +92,8 @@ python main.py --input data/input.json --output out/output.json
 - Принимает путь к файлу ввода и генерирует файл вывода через флаги
   `--input` / `--output`.
 - Импортирует классы каждого из пайплайнов и собирает их в цепочку.
+- В начале `main()` подгружает переменные из `.env` (`load_dotenv()`):
+  `LLM_MODEL_ID`, `LLM_API_KEY`.
 - Без побочных эффектов на импорте: `if __name__ == "__main__":`.
 - Логика «прочитать JSON → прогнать пайплайн → записать JSON» — только здесь.
 
@@ -97,7 +101,7 @@ python main.py --input data/input.json --output out/output.json
 
 ## 4. Бенчмарки
 
-- Папка: `pipelines/<service>/benchmarks/`.
+- Папка: `<service>/benchmarks/`.
 - **Каждый бенчмарк — новый `.md` файл.** Имя: `YYYY-MM-DD_<slug>.md`.
 - **Каждое обновление кода → перезапуск бенчмарков → обновление `.md`** с
   результатами. Устаревшие результаты не оставляем.
@@ -109,7 +113,7 @@ python main.py --input data/input.json --output out/output.json
 
 ```markdown
 # Бенчмарк: <что проверяем>
-Сервис: pipelines/<service>
+Сервис: <service>
 Дата: YYYY-MM-DD   Автор: <username>
 
 ## Что проверяем и почему
@@ -128,7 +132,8 @@ python main.py --input data/input.json --output out/output.json
 
 ## 5. Бэклог и ветки
 
-- У каждого участника свой бэклог: `backlog/<username>/{TODO,PROCESS,REVIEW,DONE}`.
+- У каждого участника свой **локальный** бэклог: `backlog/<username>/{TODO,PROCESS,REVIEW,DONE}`.
+  Папка `backlog/` в `.gitignore` — в репозиторий не коммитится, у каждого своя.
 - Задача — `.md` файл: заголовок, описание, критерий готовности, ссылка на ветку.
 - **Каждая фича — новая ветка.** Имя ветки: `<username>/feature/<короткий-slug>`
   (для фиксов: `<username>/fix/<slug>`).
@@ -190,8 +195,13 @@ python main.py --input data/input.json --output out/output.json
 git branch --show-current          # в начале каждого чата
 git status
 
-python main.py --input data/input.json --output out/output.json
-pytest
+# setup (один раз):
+uv venv
+uv pip install -r requirements.txt
+cp .env.example .env               # заполнить LLM_API_KEY
+
+uv run pytest                      # прогон бенчмарков
+uv run python main.py --input data/input.json --output out/output.json
 ```
 
 ---

@@ -33,7 +33,7 @@ htmlcov/
 .tox/
 .nox/
 
-# FastAPI / app artifacts
+# App artifacts
 *.log
 *.sqlite
 *.sqlite3
@@ -45,3 +45,9 @@ htmlcov/
 *.swp
 .DS_Store
 Thumbs.db
+
+# Локальный бэклог участников (не коммитится)
+backlog/
+
+# Артефакты прогонов
+out/
