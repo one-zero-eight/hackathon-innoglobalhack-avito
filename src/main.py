@@ -4,7 +4,7 @@
 база пайплайнов и клиент LLM. Логика отдельных шагов — в папках сервисов,
 которые импортируют общее из этого модуля.
 
-Импорты сервисов намеренно внутри run_pipeline(): сервисы импортируют main,
+Импорты модулей выполняются при загрузке пайплайна: сервисы импортируют main,
 и модульный импорт на верхнем уровне дал бы циклическую зависимость.
 
 Пример:
@@ -17,8 +17,9 @@ import logging
 import os
 import sys
 from abc import ABC, abstractmethod
+from importlib import import_module
 from pathlib import Path
-from typing import Annotated
+from typing import Annotated, Literal
 
 from dotenv import load_dotenv
 from pydantic import AfterValidator, BaseModel, ConfigDict, Field
@@ -96,7 +97,7 @@ class PipelineOutput(BaseModel):
 
 
 # --- База пайплайнов ---
-# Один сервис — один класс с методом run(). Класс не делает ничего при импорте.
+# Один вариант сервиса — один класс с методом run().
 
 
 class BasePipeline(ABC):
@@ -110,39 +111,83 @@ class BasePipeline(ABC):
 
 
 # --- Клиент LLM ---
-# Заглушка jev-модели. Точный model id и ключ берём из окружения (.env):
+# Общий интерфейс клиента. Точный model id и ключ берём из окружения (.env):
 # LLM_MODEL_ID — идентификатор модели (по умолчанию "jev"),
 # LLM_API_KEY — ключ доступа (в репозиторий не коммитим).
 
 
-class LLMClient:
-    """Минимальный клиент LLM. TODO: реализовать вызов jev-модели."""
+class LLMClient(ABC):
+    """Интерфейс клиента LLM для конкретных реализаций."""
 
     def __init__(self, model_id: str | None = None) -> None:
         self.model_id = model_id or os.getenv("LLM_MODEL_ID", "jev")
         self.api_key = os.getenv("LLM_API_KEY")
 
+    @abstractmethod
     def complete(self, prompt: str, **kwargs) -> str:
-        """TODO: заменить заглушку на реальный вызов jev-модели."""
-        raise NotImplementedError("LLMClient.complete: вызов jev-модели не реализован")
+        """Получить ответ модели на промпт."""
 
 
 # --- Оркестрация ---
 
 
-def run_pipeline(inp: PipelineInput) -> PipelineOutput:
-    """Прогнать цепочку сервисов: выделение -> проверка -> генерация.
+DEFAULT_CONFIG_PATH = Path(__file__).resolve().parents[1] / "config.json"
+ServiceName = Literal["subcategory_extraction", "category_validation", "draft_generation"]
+PIPELINE_CLASSES: dict[ServiceName, str] = {
+    "subcategory_extraction": "SubcategoryExtractionPipeline",
+    "category_validation": "CategoryValidationPipeline",
+    "draft_generation": "DraftGenerationPipeline",
+}
+ModuleName = Annotated[str, Field(strict=True, pattern=r"^[a-z][a-z0-9_]*$")]
 
-    Импорты внутри функции: сервисы импортируют общее из main, поэтому на
-    верхнем уровне модуля была бы циклическая зависимость.
-    """
-    from category_validation import CategoryValidationPipeline
-    from draft_generation import DraftGenerationPipeline
-    from subcategory_extraction import SubcategoryExtractionPipeline
 
-    extraction = SubcategoryExtractionPipeline()
-    validation = CategoryValidationPipeline()
-    generation = DraftGenerationPipeline()
+class PipelineConfig(BaseModel):
+    """Выбранный модуль для каждого раздела проекта."""
+
+    model_config = ConfigDict(extra="forbid")
+
+    subcategory_extraction: ModuleName | None
+    category_validation: ModuleName | None
+    draft_generation: ModuleName | None
+
+
+def load_config(path: Path = DEFAULT_CONFIG_PATH) -> PipelineConfig:
+    """Прочитать и проверить конфигурацию выбора модулей."""
+    return PipelineConfig.model_validate_json(path.read_text(encoding="utf-8"))
+
+
+def load_pipeline(
+    service: ServiceName, config: PipelineConfig | None = None
+) -> BasePipeline:
+    """Загрузить выбранный класс из <service>/<module>/pipeline.py."""
+    if service not in PIPELINE_CLASSES:
+        raise ValueError(f"Неизвестный раздел: {service}")
+    config = config if config is not None else load_config()
+    module_name = getattr(config, service)
+    if module_name is None:
+        raise ValueError(f"Для раздела {service} не выбран модуль в config.json")
+    module_path = f"{service}.{module_name}.pipeline"
+    try:
+        module = import_module(module_path)
+    except ModuleNotFoundError as exc:
+        if exc.name in {service, f"{service}.{module_name}", module_path}:
+            raise ValueError(f"Модуль раздела не найден: {module_path}") from exc
+        raise
+    class_name = PIPELINE_CLASSES[service]
+    pipeline_class = getattr(module, class_name, None)
+    if not isinstance(pipeline_class, type) or not issubclass(pipeline_class, BasePipeline):
+        raise TypeError(f"{module_path}.{class_name} должен наследовать BasePipeline")
+    return pipeline_class()
+
+
+def run_pipeline(
+    inp: PipelineInput, config: PipelineConfig | None = None
+) -> PipelineOutput:
+    """Прогнать выбранные модули: выделение -> проверка -> генерация."""
+    config = config if config is not None else load_config()
+    extraction = load_pipeline("subcategory_extraction", config)
+    validation = load_pipeline("category_validation", config)
+    generation = load_pipeline("draft_generation", config)
 
     candidates = extraction.run(inp)
     target_mc_ids = validation.run(candidates, inp.mc_id)
@@ -182,4 +227,6 @@ def main(argv: list[str] | None = None) -> int:
 
 
 if __name__ == "__main__":
+    # Модули импортируют main: CLI должен использовать тот же BasePipeline.
+    sys.modules["main"] = sys.modules[__name__]
     sys.exit(main())

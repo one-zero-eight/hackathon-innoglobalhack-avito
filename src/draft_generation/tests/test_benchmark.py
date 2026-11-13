@@ -11,8 +11,7 @@ from pathlib import Path
 
 import pytest
 
-from draft_generation import DraftGenerationPipeline
-from main import PipelineInput, PipelineOutput, is_valid_mcid
+from main import PipelineInput, PipelineOutput, is_valid_mcid, load_config, load_pipeline
 
 BENCHMARKS_DIR = Path(__file__).resolve().parents[1] / "benchmarks"
 JSON_BLOCK = re.compile(r"```json\s*\n(.*?)```", re.DOTALL)
@@ -29,9 +28,14 @@ def load_benchmark_cases() -> list[tuple[str, dict]]:
 
 @pytest.mark.parametrize(("benchmark", "payload"), load_benchmark_cases())
 def test_benchmark(benchmark: str, payload: dict) -> None:
+    config = load_config()
+    if config.draft_generation is None:
+        pytest.skip("Модуль draft_generation не выбран")
     inp = PipelineInput.model_validate(payload)
 
-    output = PipelineOutput(drafts=DraftGenerationPipeline().run(inp, payload["target_mc_ids"]))
+    output = PipelineOutput(
+        drafts=load_pipeline("draft_generation", config).run(inp, payload["target_mc_ids"])
+    )
 
     contract = output.model_dump(by_alias=True)  # сериализация в контракт кейса
     assert set(contract) == {"drafts"}
