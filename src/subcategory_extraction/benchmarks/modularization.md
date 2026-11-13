@@ -12,8 +12,8 @@ Google проверяется без сети на сохранённых вер
 ```json
 {
   "google_cached_samples": [
-    "src/category_validation/benchmarks/historical/2026-11-13_decision-1_seed43.json",
-    "src/category_validation/benchmarks/historical/2026-11-13_decision-1_fresh32.json"
+    "src/subcategory_extraction/benchmarks/historical/2026-11-13_decision-1_seed43.json",
+    "src/subcategory_extraction/benchmarks/historical/2026-11-13_decision-1_fresh32.json"
   ],
   "tfidf_dataset": "docs/innoglobalhack_avito/public-train-annotated.jsonl",
   "dataset_sha256": "b7118d68086624fbeab43839f22a635d4e325e4ee339f22d4aa0ad3c2e986615",
@@ -29,7 +29,7 @@ Google проверяется без сети на сохранённых вер
 ```sh
 PYTHONPATH=src uv run python -m subcategory_extraction.benchmarks.replay_google
 PYTHONPATH=src uv run python -m subcategory_extraction.benchmarks.train_tfidf
-uv run python src/category_validation/benchmarks/historical/benchmark_checks.py
+uv run python src/subcategory_extraction/benchmarks/historical/benchmark_checks.py
 ```
 
 TF-IDF: 4 854 уникальных нормализованных описания, train/validation/holdout
@@ -51,6 +51,11 @@ JSON-веса и предсказания через `load_pipeline()` свер�
 | Рабочая ветка, google_decision (офлайн-replay fresh32) | 2026-11-13 | те же свежие 32 | 0.800000 | 54 / 22 / 5 |
 | Рабочая ветка, tfidf | 2026-11-13 | validation, 728 | 0.931900 | 1690 / 104 / 143 |
 | Рабочая ветка, tfidf | 2026-11-13 | holdout, 729 | 0.925414 | 1675 / 122 / 148 |
+| `88712ac` + рабочие правки, tfidf | 2026-11-14 | holdout, 729; повтор обучения | 0.925414 | 1675 / 122 / 148 |
+
+Повтор 2026-11-14 после перехода на два шага: Google replay — baseline
+0.677686, guided 0.863158, fresh32 0.800000; 10/10 некорректных ответов
+отклонены. Перенесённые исторические проверки — 4/4.
 
 На main `0643454` модуль TF-IDF отсутствует: сравнимого нового прогона нет.
 Исторические смешанные датасеты не сравниваем с новым holdout как равные.
@@ -62,7 +67,7 @@ JSON-веса и предсказания через `load_pipeline()` свер�
 отсутствие ключа обнаруживается явно. Payload и учёт токенов проверяются
 подменённым HTTP-транспортом, платных запросов нет.
 4/4 проверок исторических метрик, выборки, бюджета и маршрутизации проходят.
-На `data/input.json` TF-IDF и последующая strict-валидация возвращают `[104]`.
+На `data/input.json` TF-IDF возвращает `[104]`.
 Обученные веса и полные отчёты локально в `out/`, в Git не добавляются.
 Исходная категория в train всегда 101: обобщение на другие источники и
 выделение самой категории 101 не подтверждены.

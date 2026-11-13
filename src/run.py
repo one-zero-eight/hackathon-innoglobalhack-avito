@@ -158,7 +158,7 @@ def calculate_metrics(
 
 
 def evaluate(config_path: Path) -> dict[str, Any]:
-    """Прогнать все три шага решения и сохранить отчёт с каждым ответом."""
+    """Прогнать оба шага решения и сохранить отчёт с каждым ответом."""
     config_path = config_path.resolve()
     config = RunConfig.model_validate_json(config_path.read_text(encoding="utf-8"))
     base = config_path.parent
@@ -169,7 +169,7 @@ def evaluate(config_path: Path) -> dict[str, Any]:
         if module is None:
             raise ValueError(
                 f"Для раздела {service} не выбран модуль в {pipeline_path}; "
-                "оценка полного решения требует все три шага, без заглушек"
+                "оценка полного решения требует оба шага, без заглушек"
             )
     dataset = resolve_path(base, config.dataset)
     records = read_records(dataset)

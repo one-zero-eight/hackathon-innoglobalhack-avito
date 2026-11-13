@@ -10,8 +10,7 @@
 | `src/main.py` | CLI + всё общее: контракт, микрокатегории, `BasePipeline`, `LLMClient` |
 | `config.json` | выбор реализации каждого шага |
 | `src/subcategory_extraction/` | шаг 1: выделение подкатегорий услуг |
-| `src/category_validation/` | шаг 2: проверка выбранных категорий |
-| `src/draft_generation/` | шаг 3: генерация черновиков |
+| `src/draft_generation/` | шаг 2: генерация черновиков |
 | `data/` | пример входа |
 | `docs/` | кейс, критерии, справочник, датасеты |
 | `backlog/` | локальный бэклог (в `.gitignore`) |
@@ -27,14 +26,13 @@
 
 ```json
 {
-  "subcategory_extraction": null,
-  "category_validation": null,
+  "subcategory_extraction": "tfidf",
   "draft_generation": "sample_llm"
 }
 ```
 
 Доступны `subcategory_extraction/google_decision`,
-`subcategory_extraction/tfidf` и `category_validation/strict`.
+`subcategory_extraction/tfidf`.
 Доступен генератор `draft_generation/sample_llm`. `null` означает, что модуль
 не выбран. CLI выдаёт явную ошибку.
 Варианты (например, `jev`, `embeddings` или `llm`) добавляются в
@@ -47,7 +45,7 @@
 модуль в результатах. Скрипты переноса и обучения описаны в
 [subcategory_extraction/README.md](src/subcategory_extraction/README.md);
 исторические результаты с внешним SplitShift сохранены в
-`src/category_validation/benchmarks/historical/`.
+`src/subcategory_extraction/benchmarks/historical/`.
 
 ## Пайплайн
 
@@ -56,9 +54,6 @@ description + mcId
    │
    ▼
 subcategory_extraction    список mcId найденных услуг (101–106)
-   │
-   ▼
-category_validation       фильтр: только валидные, ≠ исходной mcId, без дублей
    │
    ▼
 draft_generation          черновик на каждую целевую категорию
@@ -76,7 +71,7 @@ cp .env.example .env          # заполнить LLM_API_KEY
 uv run python src/main.py --input data/input.json --output out/output.json
 ```
 
-Для полного запуска выберите реализации всех трёх шагов и настройте `.env`
+Для полного запуска выберите реализации обоих шагов и настройте `.env`
 (для генератора см. `src/draft_generation/README.md`).
 Общий `LLMClient` — абстрактный интерфейс для конкретных клиентов.
 
@@ -92,7 +87,7 @@ uv run python src/run.py --config run.config.json
 путь отчёта, необязательный лимит строк и частоту логирования.
 Все относительные пути считаются от файла конфигурации.
 `pipeline_config` ссылается на обычный `config.json`: необходимо выбрать
-все три рабочих модуля, включая генератор. При `null` оценка завершается
+оба рабочих модуля, включая генератор. При `null` оценка завершается
 ошибкой, без подмены полного решения классификатором. Параметры моделей
 и секреты выбранных модулей по-прежнему берутся из `.env`.
 
@@ -115,7 +110,7 @@ uv run python src/run.py --config run.config.json
 ## Контрибьюшн
 
 1. Ветка на каждую фичу: `<username>/feature/<slug>`. В `main` — только через PR.
-2. Бэклог локальный: `backlog/<username>/{TODO,PROCESS,REVIEW,DONE}`,
+2. Бэклог локальный: `backlog/{TODO,PROCESS,REVIEW,DONE}`,
    задача перемещается по папкам по мере работы.
 3. Новый бенчмарк — новый `.md` в `src/<service>/benchmarks/`. Перед коммитом
    прогнать на всех версиях кода и обновить таблицу результатов в `.md`.

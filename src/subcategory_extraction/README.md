@@ -24,7 +24,7 @@
 - Офлайн-проверка переноса Google на сохранённых ответах:
   `PYTHONPATH=src uv run python -m subcategory_extraction.benchmarks.replay_google`.
 - Исторические сравнения с внешним SplitShift и их исходные результаты:
-  `../category_validation/benchmarks/historical/`. Они не являются
+  `benchmarks/historical/`. Они не являются
   готовыми автономными модулями SplitShift: его код и модели не входят в репозиторий.
 - `config.json` автоматически не меняется: генератора черновиков пока нет,
   поэтому полный CLI всё ещё требует реализации третьего шага.

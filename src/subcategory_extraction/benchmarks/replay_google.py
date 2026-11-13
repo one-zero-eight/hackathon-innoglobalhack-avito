@@ -11,13 +11,13 @@ from subcategory_extraction.benchmarks.metrics import score
 from subcategory_extraction.google_decision.client import GoogleDecisionClient
 
 ROOT = Path(__file__).resolve().parents[3]
-HISTORICAL = ROOT / "src/category_validation/benchmarks/historical"
+HISTORICAL = ROOT / "src/subcategory_extraction/benchmarks/historical"
 
 
 def replay() -> dict:
     """Пропустить сохранённые вероятности через публичный run модуля."""
     config = PipelineConfig(
-        subcategory_extraction="google_decision", category_validation=None,
+        subcategory_extraction="google_decision",
         draft_generation=None,
     )
     results = {}
