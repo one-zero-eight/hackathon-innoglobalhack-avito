@@ -14,9 +14,9 @@ dependencies = [
 ]
 
 [tool.pytest.ini_options]
-pythonpath = ["."]
+pythonpath = ["src"]
 testpaths = [
-    "subcategory_extraction",
-    "category_validation",
-    "draft_generation",
+    "src/subcategory_extraction",
+    "src/category_validation",
+    "src/draft_generation",
 ]

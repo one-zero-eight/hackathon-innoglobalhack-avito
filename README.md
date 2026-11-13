@@ -7,10 +7,10 @@
 
 | Путь | Что это |
 | --- | --- |
-| `main.py` | CLI + всё общее: контракт, микрокатегории, `BasePipeline`, `LLMClient` |
-| `subcategory_extraction/` | шаг 1: jev-модель выделяет подкатегории услуг |
-| `category_validation/` | шаг 2: проверка выбранных категорий |
-| `draft_generation/` | шаг 3: генерация черновиков |
+| `src/main.py` | CLI + всё общее: контракт, микрокатегории, `BasePipeline`, `LLMClient` |
+| `src/subcategory_extraction/` | шаг 1: jev-модель выделяет подкатегории услуг |
+| `src/category_validation/` | шаг 2: проверка выбранных категорий |
+| `src/draft_generation/` | шаг 3: генерация черновиков |
 | `data/` | пример входа |
 | `docs/` | кейс, критерии, справочник, датасеты |
 | `backlog/` | локальный бэклог (в `.gitignore`) |
@@ -42,7 +42,7 @@ draft_generation          черновик на каждую целевую ка
 uv sync
 cp .env.example .env          # заполнить LLM_API_KEY
 
-uv run python main.py --input data/input.json --output out/output.json
+uv run python src/main.py --input data/input.json --output out/output.json
 uv run pytest                 # прогон бенчмарков
 ```
 
@@ -53,7 +53,7 @@ uv run pytest                 # прогон бенчмарков
 1. Ветка на каждую фичу: `<username>/feature/<slug>`. В `main` — только через PR.
 2. Бэклог локальный: `backlog/<username>/{TODO,PROCESS,REVIEW,DONE}`,
    задача перемещается по папкам по мере работы.
-3. Новый бенчмарк — новый `.md` в `<service>/benchmarks/`. Перед коммитом
+3. Новый бенчмарк — новый `.md` в `src/<service>/benchmarks/`. Перед коммитом
    прогнать на всех версиях кода и обновить таблицу результатов в `.md`.
 4. Правки в чужих сервисах — через свою ветку и с согласия автора.
 5. Контракт входа/выхода не меняем без согласования со всей командой.

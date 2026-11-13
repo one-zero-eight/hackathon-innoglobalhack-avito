@@ -8,7 +8,7 @@
 и модульный импорт на верхнем уровне дал бы циклическую зависимость.
 
 Пример:
-    python main.py --input data/input.json --output out/output.json
+    python src/main.py --input data/input.json --output out/output.json
 """
 
 import argparse

@@ -37,16 +37,17 @@
 
 ```
 .
-├── main.py                      # CLI-ядро + всё общее: контракт, микрокатегории,
-│                                #   BasePipeline, LLMClient
-├── subcategory_extraction/      # шаг 1: jev-модель выделяет подкатегории услуг
-│   ├── pipeline.py              #   класс пайплайна
-│   ├── prompts/                 #   промпты вынесены из кода
-│   ├── benchmarks/              #   бенчмарки (.md, по файлу на бенчмарк)
-│   ├── tests/                   #   только бенчмарк-прогоны
-│   └── README.md
-├── category_validation/         # шаг 2: проверка выбранных категорий
-├── draft_generation/            # шаг 3: генерация черновиков объявлений
+├── src/                         # весь исполняемый код
+│   ├── main.py                  # CLI-ядро + всё общее: контракт, микрокатегории,
+│   │                            #   BasePipeline, LLMClient
+│   ├── subcategory_extraction/  # шаг 1: jev-модель выделяет подкатегории услуг
+│   │   ├── pipeline.py          #   класс пайплайна
+│   │   ├── prompts/             #   промпты вынесены из кода
+│   │   ├── benchmarks/          #   бенчмарки (.md, по файлу на бенчмарк)
+│   │   ├── tests/               #   только бенчмарк-прогоны
+│   │   └── README.md
+│   ├── category_validation/     # шаг 2: проверка выбранных категорий
+│   └── draft_generation/        # шаг 3: генерация черновиков объявлений
 ├── backlog/                     # локальный бэклог каждого (в .gitignore)
 │   └── <username>/{TODO,PROCESS,REVIEW,DONE}
 ├── data/                        # примеры входных данных
@@ -59,6 +60,7 @@
 
 Правила:
 
+- Весь исполняемый код — в `src/`; ниже `main.py` означает `src/main.py`.
 - **Один сервис — одна папка.** Внутри папки сервиса обязательно есть
   `benchmarks/`.
 - `main.py` **импортирует классы пайплайнов** и только оркеструрует вызовы.
@@ -88,7 +90,7 @@
 ## 3. main.py — ядро проекта
 
 ```bash
-python main.py --input data/input.json --output out/output.json
+python src/main.py --input data/input.json --output out/output.json
 ```
 
 - Принимает путь к файлу ввода и генерирует файл вывода через флаги
@@ -105,7 +107,7 @@ python main.py --input data/input.json --output out/output.json
 
 ## 4. Бенчмарки
 
-- Папка: `<service>/benchmarks/`.
+- Папка: `src/<service>/benchmarks/`.
 - **Каждый бенчмарк — новый `.md` файл.** Имя: `YYYY-MM-DD_<slug>.md`.
 - Входные данные бенчмарка лежат в `.md` в блоке ```json. Единственный тест
   сервиса (`tests/test_benchmark.py`) прогоняет пайплайн на этих данных и
@@ -119,7 +121,7 @@ python main.py --input data/input.json --output out/output.json
   заполняется таблица по версиям (commit / дата / метрики), чтобы сразу было
   видно регрессии.
 
-Шаблон `benchmarks/YYYY-MM-DD_<slug>.md`:
+Шаблон `src/<service>/benchmarks/YYYY-MM-DD_<slug>.md`:
 
 ```markdown
 # Бенчмарк: <что проверяем>
@@ -193,7 +195,7 @@ python main.py --input data/input.json --output out/output.json
 - [ ] Ветка создана по соглашению из этого файла.
 - [ ] Тесты проходят (`pytest`).
 - [ ] Новый бенчмарк прогнан на всех версиях кода, `.md` обновлён.
-- [ ] `python main.py --input <файл> --output <файл>` работает на актуальных данных.
+- [ ] `python src/main.py --input <файл> --output <файл>` работает на актуальных данных.
 - [ ] Задача лежит в правильной папке бэклога (`PROCESS` → `REVIEW` после PR).
 - [ ] Правки в чужих сервисах согласованы с автором.
 
@@ -210,7 +212,7 @@ uv sync
 cp .env.example .env               # заполнить LLM_API_KEY
 
 uv run pytest                      # прогон бенчмарков
-uv run python main.py --input data/input.json --output out/output.json
+uv run python src/main.py --input data/input.json --output out/output.json
 ```
 
 ---
