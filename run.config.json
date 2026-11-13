@@ -1,0 +1,9 @@
+{
+  "pipeline_config": "config.json",
+  "dataset": "docs/innoglobalhack_avito/public-test-dataset.parquet",
+  "training_dataset": "docs/innoglobalhack_avito/public-train-annotated.jsonl",
+  "report": "out/evaluation.json",
+  "source_mc_id": 101,
+  "limit": null,
+  "log_every": 10
+}

@@ -8,6 +8,7 @@ authors = [
 ]
 requires-python = ">=3.13"
 dependencies = [
+    "pyarrow>=23",
     "pydantic>=2",
     "python-dotenv>=1",
     "scikit-learn>=1.9.1",
