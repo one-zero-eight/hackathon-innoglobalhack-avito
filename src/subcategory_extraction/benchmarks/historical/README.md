@@ -5,7 +5,7 @@
 внешний SplitShift; для новых оценок используйте официальный InnoGlobalHack.
 
 Офлайн-проверки без pytest и внешних данных:
-`uv run python src/category_validation/benchmarks/historical/benchmark_checks.py`.
+`uv run python src/subcategory_extraction/benchmarks/historical/benchmark_checks.py`.
 Google-клиент, промпты и функция арбитража теперь импортируются из
 `subcategory_extraction/google_decision`, метрики — из общих benchmarks.
 
@@ -13,7 +13,7 @@ Run from the repository root with `GOOGLE_API_KEY` in the environment or the
 root `.env`.
 
 ```sh
-uv run python src/category_validation/benchmarks/historical/benchmark.py
+uv run python src/subcategory_extraction/benchmarks/historical/benchmark.py
 ```
 
 The runner uses `local-notes/joined-datasets/train.csv` by default. This local
@@ -50,15 +50,15 @@ Run the grouped local holdout and the paired Decision 1 follow-up from the
 repository root. The local benchmark imports SplitShift from `../IGH cases`.
 
 ```sh
-uv run python src/category_validation/benchmarks/historical/local_benchmark.py
-uv run python src/category_validation/benchmarks/historical/compare_decision.py
+uv run python src/subcategory_extraction/benchmarks/historical/local_benchmark.py
+uv run python src/subcategory_extraction/benchmarks/historical/compare_decision.py
 ```
 
 The local runner also freezes the 64/128 group-disjoint routing samples.
 Run the disagreement-only API experiment with:
 
 ```sh
-uv run python src/category_validation/benchmarks/historical/routing_benchmark.py
+uv run python src/subcategory_extraction/benchmarks/historical/routing_benchmark.py
 ```
 
 The routing runner checkpoints each API response and resumes matching samples.

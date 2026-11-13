@@ -103,7 +103,7 @@ def main() -> None:
     args.artifact.write_text(json.dumps(artifact, ensure_ascii=False), encoding="utf-8")
     os.environ["TFIDF_ARTIFACT_PATH"] = str(args.artifact.resolve())
     pipeline = load_pipeline("subcategory_extraction", PipelineConfig(
-        subcategory_extraction="tfidf", category_validation=None, draft_generation=None,
+        subcategory_extraction="tfidf", draft_generation=None,
     ))
     predicted = [set(pipeline.run(rows[i]["inp"])) for i in holdout]
     if predicted != predictions(holdout, threshold):

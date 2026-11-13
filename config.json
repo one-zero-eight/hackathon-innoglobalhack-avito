@@ -1,5 +1,4 @@
 {
   "subcategory_extraction": "tfidf",
-  "category_validation": "strict",
   "draft_generation": "sample_llm"
 }

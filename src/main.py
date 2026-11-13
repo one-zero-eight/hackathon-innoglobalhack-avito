@@ -132,10 +132,9 @@ class LLMClient(ABC):
 
 
 DEFAULT_CONFIG_PATH = Path(__file__).resolve().parents[1] / "config.json"
-ServiceName = Literal["subcategory_extraction", "category_validation", "draft_generation"]
+ServiceName = Literal["subcategory_extraction", "draft_generation"]
 PIPELINE_CLASSES: dict[ServiceName, str] = {
     "subcategory_extraction": "SubcategoryExtractionPipeline",
-    "category_validation": "CategoryValidationPipeline",
     "draft_generation": "DraftGenerationPipeline",
 }
 ModuleName = Annotated[str, Field(strict=True, pattern=r"^[a-z][a-z0-9_]*$")]
@@ -147,7 +146,6 @@ class PipelineConfig(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
     subcategory_extraction: ModuleName | None
-    category_validation: ModuleName | None
     draft_generation: ModuleName | None
 
 
@@ -183,14 +181,12 @@ def load_pipeline(
 def run_pipeline(
     inp: PipelineInput, config: PipelineConfig | None = None
 ) -> PipelineOutput:
-    """Прогнать выбранные модули: выделение -> проверка -> генерация."""
+    """Прогнать выбранные модули: выделение -> генерация."""
     config = config if config is not None else load_config()
     extraction = load_pipeline("subcategory_extraction", config)
-    validation = load_pipeline("category_validation", config)
     generation = load_pipeline("draft_generation", config)
 
-    candidates = extraction.run(inp)
-    target_mc_ids = validation.run(candidates, inp.mc_id)
+    target_mc_ids = extraction.run(inp)
     drafts = generation.run(inp, target_mc_ids)
     return PipelineOutput(drafts=drafts)
 
