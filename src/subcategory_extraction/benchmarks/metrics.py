@@ -20,4 +20,4 @@ def score(expected: list[set[int]], predicted: list[set[int]]) -> dict:
     totals = {name: sum(row[name] for row in counts.values()) for name in ("tp", "fp", "fn")}
     denominator = 2 * totals["tp"] + totals["fp"] + totals["fn"]
     micro_f1 = 2 * totals["tp"] / denominator if denominator else 0.0
-    return {"micro_f1": micro_f1, "points": 5 * micro_f1, **totals, "by_category": counts}
+    return {"micro_f1": micro_f1, "points": 60 * micro_f1, **totals, "by_category": counts}

@@ -28,6 +28,14 @@ class SubcategoryExtractionPipeline(BasePipeline):
         self.categories = artifact["categories"]
         if artifact["version"] != 1 or self.categories != list(MICROCATEGORIES):
             raise ValueError("Несовместимый формат артефакта TF-IDF")
+        trained_categories = artifact.get("trained_categories", self.categories)
+        if (
+            not isinstance(trained_categories, list)
+            or any(type(cid) is not int or cid not in self.categories for cid in trained_categories)
+            or len(set(trained_categories)) != len(trained_categories)
+        ):
+            raise ValueError("Некорректные обученные категории TF-IDF")
+        self._trained_categories = frozenset(trained_categories)
         self.threshold = float(artifact["threshold"])
         if not 0 <= self.threshold <= 1:
             raise ValueError("Некорректный порог TF-IDF")
@@ -48,12 +56,22 @@ class SubcategoryExtractionPipeline(BasePipeline):
         ):
             raise ValueError("Некорректные размеры или значения весов TF-IDF")
 
-    def run(self, inp: PipelineInput) -> list[int]:
-        """Вернуть категории, кроме исходной, с учётом сохранённого порога."""
+    @property
+    def trained_categories(self) -> frozenset[int]:
+        """Вернуть неизменяемый набор категорий с обученными головами."""
+        return self._trained_categories
+
+    def probabilities(self, inp: PipelineInput) -> dict[int, float]:
+        """Оценить вероятности всех категорий, кроме исходной."""
         features = self.vectorizer.transform([inp.description])
         logits = np.asarray(features @ self.weights.T).ravel() + self.intercepts
         probabilities = 1 / (1 + np.exp(-np.clip(logits, -700, 700)))
-        return [
-            cid for cid, value in zip(self.categories, probabilities, strict=True)
-            if cid != inp.mc_id and value >= self.threshold
-        ]
+        return {
+            cid: float(value)
+            for cid, value in zip(self.categories, probabilities, strict=True)
+            if cid != inp.mc_id
+        }
+
+    def run(self, inp: PipelineInput) -> list[int]:
+        """Вернуть категории, кроме исходной, с учётом сохранённого порога."""
+        return [cid for cid, value in self.probabilities(inp).items() if value >= self.threshold]

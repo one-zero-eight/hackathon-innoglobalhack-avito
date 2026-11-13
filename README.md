@@ -26,13 +26,13 @@
 
 ```json
 {
-  "subcategory_extraction": "tfidf",
+  "subcategory_extraction": "jev",
   "draft_generation": "sample_llm"
 }
 ```
 
-Доступны `subcategory_extraction/google_decision`,
-`subcategory_extraction/tfidf`.
+Доступны `subcategory_extraction/google_decision`, `tfidf`, `jev`, `jev_tfidf`,
+`jev_retrieval`, `evidence_jev`, `jev_arbiter`, `semantic_encoder`, `jev_boundaries`.
 Доступен генератор `draft_generation/sample_llm`. `null` означает, что модуль
 не выбран. CLI выдаёт явную ошибку.
 Варианты (например, `jev`, `embeddings` или `llm`) добавляются в
@@ -46,6 +46,63 @@
 [subcategory_extraction/README.md](src/subcategory_extraction/README.md);
 исторические результаты с внешним SplitShift сохранены в
 `src/subcategory_extraction/benchmarks/historical/`.
+
+### Jev + локальный TF-IDF без validation
+
+`jev` использует нативный System One API BestAPI и существующий guided-промпт.
+`jev_tfidf` усредняет вероятности Jev и обученных локальных голов с весами
+0.5/0.5 и порогом 0.5. Для категории без обученной локальной головы остаётся
+решение Jev. Это заранее фиксированные параметры, не подбор по public test.
+
+В `.env` нужны `BESTAPI_API_KEY` для классификатора и `LLM_API_KEY` для
+существующего генератора Gemini. При наличии `GOOGLE_API_KEY` допустима запись
+`LLM_API_KEY=${GOOGLE_API_KEY}`. Ключи не коммитим.
+
+```bash
+PYTHONPATH=src uv run python -m subcategory_extraction.benchmarks.train_jev_hybrid
+PYTHONPATH=src uv run python -m subcategory_extraction.benchmarks.compare_jev_hybrid
+uv run python src/main.py --input data/input.json --output out/jev-hybrid-live.json
+```
+
+Новый trainer использует официальный train без validation/holdout и без поиска
+порогов. Из обучения исключаются компоненты точных и близких к public test
+описаний, только по текстам. Оценочные строки и метки не удаляются.
+Артефакт — `out/tfidf.json`, фактический train — `out/hybrid-training.jsonl`.
+Общий бенчмарк сравнивает три классификатора на одинаковых 208 строках
+через конкурсную `calculate_metrics`; генерация и остальные баллы в эту
+классификационную оценку не входят. Фактические ответы Jev кэшируются в
+`out/jev-cache`, чтобы гибрид использовал те же ответы, что и baseline.
+
+
+Результаты, инвентарь промптов и ограничения:
+[бенчмарк Jev/TF-IDF](src/subcategory_extraction/benchmarks/jev-tfidf.md).
+
+## Пять новых методов и общий отчёт
+
+Реализованы RAG с размеченными train-примерами, извлечение цитат перед Jev,
+сильный арбитр спорных решений, реально дообучаемый семантический encoder
+и отдельный промпт границ микрокатегорий. Все выбираются через обычный
+`config.json`; код моделей и промпты находятся в `src/subcategory_extraction/`.
+
+**Полное API-сравнение не завершено:** предоставленный BestAPI-ключ отклонён
+с HTTP 401. В отчёте четыре метода имеют явный статус ошибки без выдуманного F1.
+Encoder обучен на MPS и измерен; базовые варианты посчитаны на тех же 208 строках.
+Порог 0.5 и остальные настройки фиксированы до запуска, validation не создана.
+
+[Описание каждого метода, таблица результатов и воспроизведение](src/subcategory_extraction/benchmarks/classifier-methods.md).
+[Исходные предсказания и статусы JSON](src/subcategory_extraction/benchmarks/results/classifier-methods.json).
+
+```bash
+uv sync
+PYTHONPATH=src uv run python -m subcategory_extraction.benchmarks.train_jev_hybrid
+PYTHONPATH=src uv run python -m subcategory_extraction.benchmarks.train_semantic_encoder --dataset out/hybrid-training.jsonl --device auto
+PYTHONPATH=src uv run python -m subcategory_extraction.benchmarks.compare_methods --methods google_decision tfidf semantic_encoder
+```
+
+Последняя команда не требует BestAPI после обучения локальных моделей:
+Google здесь — проверяемый replay реальных ранее полученных ответов на этом
+наборе. Для нового API-инференса нужен рабочий ключ; полные кэши и веса
+в Git не добавляются.
 
 ## Пайплайн
 
