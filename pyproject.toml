@@ -10,14 +10,4 @@ requires-python = ">=3.13"
 dependencies = [
     "pydantic>=2",
     "python-dotenv>=1",
-    "pytest>=8",
-]
-
-[tool.pytest.ini_options]
-pythonpath = ["src"]
-testpaths = [
-    "src/tests",
-    "src/subcategory_extraction",
-    "src/category_validation",
-    "src/draft_generation",
 ]
