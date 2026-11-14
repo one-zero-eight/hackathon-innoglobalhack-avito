@@ -1,8 +1,60 @@
-# Сравнение пяти новых методов классификации и четырёх baseline
+# Бенчмарк: девять методов классификации
 
 Сервис: subcategory_extraction  
 Дата: 2026-11-14  Автор: leo  
 Ветка: `leo/feature/classifier-methods`, база GitHub `cd0f310`.
+
+## Архитектура после синхронизации с main
+
+Перенос выполнен на `origin/main` **0f2b9b7**, merge **8d3b5d7**.
+Ниже первоначальный эксперимент сохранён как история, не как новая оценка.
+Каждый из девяти вариантов — `src/subcategory_extraction/<module>/pipeline.py`
+с классом `SubcategoryExtractionPipeline(BasePipeline)` и методом
+`run(inp: PipelineInput) -> list[int]`. Выбор — `config.json`;
+`main.py` и внешний контракт не менялись при переносе.
+
+- `run.py` — общий протокол, загрузка модулей через `load_pipeline`,
+  аудит пересечений, метрики, статусы и фактические замеры `run()`.
+- `publish.py` — проверка и объединение полных отчётов одного протокола;
+  требует также локальный `out/semantic-encoder/train-report.json`.
+- `results.json` — новый прогон; `recorded-results.json` — неизменённый
+  исторический отчёт; `google-guided-public.json` — реальные ответы для replay.
+- Обучение: `../../jev_tfidf/train.py`, `../../semantic_encoder/train.py`.
+  Подготовка filtered train остаётся частью обучения, не оценки.
+- Промпты и описание каждого решения находятся в его модуле.
+  Guided-промпт Jev переиспользует `google_decision/prompts/`, без копирования.
+
+## Проверка после переноса — 2026-11-14
+
+```bash
+PYTHONPATH=src uv run python -m subcategory_extraction.jev_tfidf.train --artifact out/classifier-methods/tfidf.json --report out/classifier-methods/training-results.json
+TFIDF_ARTIFACT_PATH=out/classifier-methods/tfidf.json uv run python src/subcategory_extraction/benchmarks/classifier_methods/run.py --offline --training-dataset out/classifier-methods/hybrid-training.jsonl
+```
+
+Обучение заново дало 4821 описание и пять голов. Test и протокол ниже не менялись.
+Отпечаток кода прогона: `81d2603af5e890a81da1d741d9cd26137aa6f5aa6aa9bbc587d247e954b32f2e`.
+Полный отчёт: [results.json](results.json). Код выхода 1 означает неполное
+сравнение; для недоступных методов F1 не рассчитывается.
+
+| Сценарий | Версия / дата | Модуль / модель | Лучший промпт | micro-F1 | N | Среднее / медиана / p95, с | Стоимость |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| public test, replay | 8d3b5d7 + отпечаток выше / 2026-11-14 | google_decision / gemini-decision-1 | guided, исторический; не новый выбор | 0.839394 | 208 строк | — (replay, не время API) | бесплатно, без новых API-вызовов |
+| public test, локальный | та же версия / 2026-11-14 | tfidf / LogisticRegression | — | 0.778462 | 139 вызовов / 208 строк | 0.003210 / 0.001724 / 0.004454 | бесплатно |
+| public test | та же версия / 2026-11-14 | jev, jev_tfidf, jev_retrieval, evidence_jev, jev_arbiter, jev_boundaries | не оценивался | — | 0 | — | бесплатно, API отключён |
+| public test | та же версия / 2026-11-14 | semantic_encoder / RuBERT-tiny2 | — | — | 0 | — | бесплатно, локальные веса отсутствуют |
+
+Инициализация и обучение не входят во время `run()`. 139 уникальных входов
+разворачиваются в 208 строк для F1. В этом прогоне API-запросов нет.
+Флаг `--offline` явно блокирует API-методы, но не подменяет их replay Jev.
+
+### Промпт — результат нового прогона
+
+| Сценарий | Модуль / модель | Промпт (файл / версия) | Версия кода / дата | micro-F1 | N | Среднее / p95, с | Стоимость |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| public test, replay | google_decision / gemini-decision-1 | `google_decision/prompts/google_decision_guided.md`, hash проверяется по записи | 8d3b5d7 + отпечаток / 2026-11-14 | 0.839394 | 208 строк | — | бесплатно |
+
+Новый выбор лучшего промпта не выполнялся. Результат guided исторический,
+пересчитанный по сохранённым вероятностям, а не новый вызов модели.
 
 ## Статус эксперимента
 
@@ -22,11 +74,15 @@ baseline fallback или другая модель под именем Jev. В J
 
 | Модуль | Реализация | Подробное описание |
 | --- | --- | --- |
-| `jev_retrieval` | Jev + ближайшие положительный и отрицательный полные train-примеры для каждой категории | [RAG](jev-retrieval.md) |
-| `evidence_jev` | `gpt-6.1-terra` извлекает дословные цитаты, затем Jev оценивает полный исходник с этими подсказками | [Evidence → Jev](evidence-jev.md) |
-| `jev_arbiter` | Сильная LLM разрешает споры Jev/TF-IDF и неопределённые решения Jev | [Арбитр](jev-arbiter.md) |
-| `semantic_encoder` | Реально дообученный RuBERT-tiny2 с multilabel-головой и тремя окнами текста | [Encoder](semantic-encoder.md) |
-| `jev_boundaries` | Jev с уточнёнными границами категорий по официальному справочнику | [Границы](jev-boundaries.md) |
+| `google_decision` | Нативный Google Decisions API, baseline/guided | [Модуль](../../google_decision/pipeline.py) |
+| `jev` | Нативный System One API, guided | [Модуль](../../jev/README.md) |
+| `tfidf` | Word TF-IDF + LogisticRegression, JSON-артефакт | [Качество](../tfidf_quality/README.md) |
+| `jev_tfidf` | Фиксированное среднее вероятностей Jev и TF-IDF | [Гибрид](../jev_tfidf/README.md) |
+| `jev_retrieval` | Jev + ближайшие положительный и отрицательный полные train-примеры для каждой категории | [RAG](../../jev_retrieval/README.md) |
+| `evidence_jev` | `gpt-6.1-terra` извлекает дословные цитаты, затем Jev оценивает полный исходник с этими подсказками | [Evidence → Jev](../../evidence_jev/README.md) |
+| `jev_arbiter` | Сильная LLM разрешает споры Jev/TF-IDF и неопределённые решения Jev | [Арбитр](../../jev_arbiter/README.md) |
+| `semantic_encoder` | Реально дообученный RuBERT-tiny2 с multilabel-головой и тремя окнами текста | [Encoder](../../semantic_encoder/README.md) |
+| `jev_boundaries` | Jev с уточнёнными границами категорий по официальному справочнику | [Границы](../../jev_boundaries/README.md) |
 
 Базовые варианты: Google Decisions с существующим guided-промптом, нативный Jev,
 word TF-IDF + LogisticRegression и заранее фиксированное усреднение Jev/TF-IDF.
@@ -73,7 +129,7 @@ Google baseline — **replay реальных ранее полученных na
 категорий. Запись находится в `results/google-guided-public.json`; mixed/Purple
 наборы и прежние validation/holdout-выборки не используются.
 
-## Реальные результаты
+## Исторические результаты до переноса
 
 | Метод | Статус | micro-F1 | Баллы / 60 | TP | FP | FN |
 | --- | --- | ---: | ---: | ---: | ---: | ---: |
@@ -130,9 +186,9 @@ Pytest, `tests/` и тестовый фреймворк не добавлены.
 
 ```bash
 uv sync
-PYTHONPATH=src uv run python -m subcategory_extraction.benchmarks.train_jev_hybrid
-HF_HUB_DISABLE_XET=1 TOKENIZERS_PARALLELISM=false PYTHONPATH=src uv run python -m subcategory_extraction.benchmarks.train_semantic_encoder --dataset out/hybrid-training.jsonl --device auto
-PYTHONPATH=src uv run python -m subcategory_extraction.benchmarks.compare_methods --methods google_decision tfidf semantic_encoder --report out/offline-methods.json
+PYTHONPATH=src uv run python -m subcategory_extraction.jev_tfidf.train
+HF_HUB_DISABLE_XET=1 TOKENIZERS_PARALLELISM=false PYTHONPATH=src uv run python -m subcategory_extraction.semantic_encoder.train --dataset out/hybrid-training.jsonl --device auto
+uv run python src/subcategory_extraction/benchmarks/classifier_methods/run.py --methods google_decision tfidf semantic_encoder
 ```
 
 Последняя команда работает без BestAPI после обучения локальных моделей. Для
@@ -140,18 +196,18 @@ PYTHONPATH=src uv run python -m subcategory_extraction.benchmarks.compare_method
 или полный совпадающий кэш фактических ответов. Повторить отдельный API-метод:
 
 ```bash
-PYTHONPATH=src uv run python -m subcategory_extraction.benchmarks.compare_methods --methods jev_retrieval --report out/methods-retrieval.json
+uv run python src/subcategory_extraction/benchmarks/classifier_methods/run.py --methods jev_retrieval --report src/subcategory_extraction/benchmarks/classifier_methods/retrieval-results.json
 ```
 
 Каждый метод запускается отдельно, чтобы его ошибка не скрыла остальные.
 Сборка общего отчёта из шести фактических файлов, без новых вызовов моделей:
 
 ```bash
-PYTHONPATH=src uv run python -m subcategory_extraction.benchmarks.publish_methods --reports out/methods-baselines.json out/methods-retrieval.json out/methods-evidence.json out/methods-arbiter.json out/methods-encoder.json out/methods-boundaries.json
+uv run python src/subcategory_extraction/benchmarks/classifier_methods/publish.py --reports out/methods-baselines.json out/methods-retrieval.json out/methods-evidence.json out/methods-arbiter.json out/methods-encoder.json out/methods-boundaries.json
 ```
 
 Машиночитаемый отчёт с предсказаниями, model IDs, source/data hashes, ошибками,
-cache/API-счётчиками и историей реального обучения: [results/classifier-methods.json](results/classifier-methods.json).
+cache/API-счётчиками и историей реального обучения: [recorded-results.json](recorded-results.json).
 Веса, API-кэши и `.env` в Git не включаются.
 
 ## Интерпретация

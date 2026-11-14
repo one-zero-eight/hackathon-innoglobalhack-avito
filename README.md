@@ -57,8 +57,8 @@
 `LLM_API_KEY=${GOOGLE_API_KEY}`. Ключи не коммитим.
 
 ```bash
-PYTHONPATH=src uv run python -m subcategory_extraction.benchmarks.train_jev_hybrid
-PYTHONPATH=src uv run python -m subcategory_extraction.benchmarks.compare_jev_hybrid
+PYTHONPATH=src uv run python -m subcategory_extraction.jev_tfidf.train
+uv run python src/subcategory_extraction/benchmarks/jev_tfidf/run.py
 uv run python src/main.py --input data/input.json --output out/jev-hybrid-live.json
 ```
 
@@ -73,7 +73,7 @@ uv run python src/main.py --input data/input.json --output out/jev-hybrid-live.j
 
 
 Результаты, инвентарь промптов и ограничения:
-[бенчмарк Jev/TF-IDF](src/subcategory_extraction/benchmarks/jev-tfidf.md).
+[бенчмарк Jev/TF-IDF](src/subcategory_extraction/benchmarks/jev_tfidf/README.md).
 
 ## Пять новых методов и общий отчёт
 
@@ -87,14 +87,14 @@ uv run python src/main.py --input data/input.json --output out/jev-hybrid-live.j
 Encoder обучен на MPS и измерен; базовые варианты посчитаны на тех же 208 строках.
 Порог 0.5 и остальные настройки фиксированы до запуска, validation не создана.
 
-[Описание каждого метода, таблица результатов и воспроизведение](src/subcategory_extraction/benchmarks/classifier-methods.md).
-[Исходные предсказания и статусы JSON](src/subcategory_extraction/benchmarks/results/classifier-methods.json).
+[Описание каждого метода, таблица результатов и воспроизведение](src/subcategory_extraction/benchmarks/classifier_methods/README.md).
+[Исторические предсказания и статусы JSON](src/subcategory_extraction/benchmarks/classifier_methods/recorded-results.json).
 
 ```bash
 uv sync
-PYTHONPATH=src uv run python -m subcategory_extraction.benchmarks.train_jev_hybrid
-PYTHONPATH=src uv run python -m subcategory_extraction.benchmarks.train_semantic_encoder --dataset out/hybrid-training.jsonl --device auto
-PYTHONPATH=src uv run python -m subcategory_extraction.benchmarks.compare_methods --methods google_decision tfidf semantic_encoder
+PYTHONPATH=src uv run python -m subcategory_extraction.jev_tfidf.train
+PYTHONPATH=src uv run python -m subcategory_extraction.semantic_encoder.train --dataset out/hybrid-training.jsonl --device auto
+uv run python src/subcategory_extraction/benchmarks/classifier_methods/run.py --methods google_decision tfidf semantic_encoder
 ```
 
 Последняя команда не требует BestAPI после обучения локальных моделей:

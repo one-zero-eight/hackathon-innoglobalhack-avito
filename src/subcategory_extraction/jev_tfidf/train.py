@@ -13,7 +13,8 @@ from sklearn.neighbors import NearestNeighbors
 
 from main import MICROCATEGORIES
 from run import normalize_description, read_records
-from subcategory_extraction.benchmarks.train_tfidf import DATASET, ROOT, load_rows
+from benchmark_support import ROOT, TRAIN as DATASET
+from subcategory_extraction.benchmarks.tfidf_quality.run import load_rows
 from subcategory_extraction.tfidf.pipeline import DEFAULT_ARTIFACT
 
 logger = logging.getLogger(__name__)

@@ -82,19 +82,19 @@
 Из корня репозитория с настроенным `.env`:
 
 ```bash
-PYTHONPATH=src JEV_THRESHOLD=0.5 uv run python -m subcategory_extraction.benchmarks.compare_methods --methods jev_boundaries
+JEV_THRESHOLD=0.5 uv run python src/subcategory_extraction/benchmarks/classifier_methods/run.py --methods jev_boundaries
 ```
 
 Для совместного сравнения двух вариантов:
 
 ```bash
-PYTHONPATH=src JEV_THRESHOLD=0.5 uv run python -m subcategory_extraction.benchmarks.compare_methods --methods jev_retrieval jev_boundaries
+JEV_THRESHOLD=0.5 uv run python src/subcategory_extraction/benchmarks/classifier_methods/run.py --methods jev_retrieval jev_boundaries
 ```
 
 Общий runner оценивает все 208 официальных строк, включая противоречивые
 дубликаты, и использует `run.calculate_metrics`: sklearn micro-F1 и
 `60 × micro-F1`. Измеренные значения, реальный model ID и затраты находятся
-в [общем отчёте](classifier-methods.md) и `results/classifier-methods.json`.
+в [общем отчёте](../benchmarks/classifier_methods/README.md) и его `recorded-results.json`.
 Этот документ описывает зафиксированную реализацию и не заявляет качество
 до измерения.
 

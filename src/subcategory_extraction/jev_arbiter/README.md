@@ -79,7 +79,7 @@ Jev, но не по фиктивному локальному разноглас
 Из корня репозитория:
 
 ```bash
-PYTHONPATH=src uv run python -m subcategory_extraction.benchmarks.compare_methods --methods evidence_jev jev_arbiter
+uv run python src/subcategory_extraction/benchmarks/classifier_methods/run.py --methods evidence_jev jev_arbiter
 ```
 
 ## Окружение и provenance
@@ -124,7 +124,7 @@ PYTHONPATH=src uv run python -m subcategory_extraction.benchmarks.compare_method
 Общий запуск был выполнен, но запрос к арбитру завершился HTTP 401 от BestAPI.
 Предоставленный ключ также отклонён endpoint списка моделей как `invalid api key`.
 Полного результата/F1 этого метода нет; baseline не выдан за результат арбитража.
-Статус и сравнение доступных методов — [общий отчёт](classifier-methods.md).
+Статус и сравнение доступных методов — [общий отчёт](../benchmarks/classifier_methods/README.md).
 
 Цитата гарантирует лишь совпадение текста, не правильность семантического
 вердикта. Уверенные ошибки Jev вне routing могут остаться без исправления;

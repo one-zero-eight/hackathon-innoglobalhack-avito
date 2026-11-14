@@ -60,7 +60,7 @@ rules и `CATEGORY_EXAMPLES`; инструкции явно запрещают �
 Общее сравнение, из корня репозитория:
 
 ```bash
-PYTHONPATH=src uv run python -m subcategory_extraction.benchmarks.compare_methods --methods evidence_jev jev_arbiter
+uv run python src/subcategory_extraction/benchmarks/classifier_methods/run.py --methods evidence_jev jev_arbiter
 ```
 
 ## Окружение и воспроизводимость
@@ -97,7 +97,7 @@ micro-F1 и `60 * F1`. Метод не обучается и не использ
 Общий запуск был выполнен, но BestAPI отклонил предоставленный ключ с HTTP 401.
 Отдельный запрос списка моделей подтвердил `invalid api key`; F1 этого метода
 не измерен. Ошибка записана без подстановки пустых предсказаний или нулевого F1.
-Фактический статус и результаты остальных методов — [общий отчёт](classifier-methods.md).
+Исторический статус и текущие проверки — [общий отчёт](../benchmarks/classifier_methods/README.md).
 
 Дословная цитата доказывает наличие фрагмента, но сама по себе не гарантирует
 правильную интерпретацию услуги, отрицания или текущего предложения. Извлечение

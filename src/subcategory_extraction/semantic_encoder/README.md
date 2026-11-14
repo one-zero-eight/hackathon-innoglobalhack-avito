@@ -76,7 +76,7 @@ train после общего удаления точных/близких train
 Из корня репозитория:
 
 ```bash
-PYTHONPATH=src uv run python -m subcategory_extraction.benchmarks.train_semantic_encoder --dataset out/hybrid-training.jsonl --device auto
+PYTHONPATH=src uv run python -m subcategory_extraction.semantic_encoder.train --dataset out/hybrid-training.jsonl --device auto
 ```
 
 `--device auto` выбирает MPS при `torch.backends.mps.is_available()`, иначе CPU.
@@ -120,15 +120,15 @@ Inference читает **только локальный** артефакт че
 противоречивые дубликаты, после фиксации кода и обучения. Метрики — общий
 `run.calculate_metrics` (sklearn micro-F1) и `60 × F1`. Таблица фактических метрик,
 времени, версии кода и сравнение с остальными методами находятся в
-[общем отчёте](classifier-methods.md); компактные исходные результаты —
-`results/classifier-methods.json`. Этот документ не подменяет их ожидаемыми
+[общем отчёте](../benchmarks/classifier_methods/README.md); исходные результаты —
+`../benchmarks/classifier_methods/recorded-results.json`. Этот документ не подменяет их ожидаемыми
 или выдуманными результатами.
 `train-report.json` содержит только тренировочный loss, не качество на test.
 
 Запуск общей оценки после обучения:
 
 ```bash
-PYTHONPATH=src uv run python -m subcategory_extraction.benchmarks.compare_methods --methods semantic_encoder
+uv run python src/subcategory_extraction/benchmarks/classifier_methods/run.py --methods semantic_encoder
 ```
 
 Автоматическая разметка train, отсутствие положительных 101 и ограниченное

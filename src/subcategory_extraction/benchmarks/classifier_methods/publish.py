@@ -1,13 +1,17 @@
 """Объединить реальные результаты и ошибки, не подставляя F1 отсутствующим методам."""
 
+import sys
+from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[3]))
+
 import argparse
 import hashlib
 import json
 import logging
-from pathlib import Path
 
 from run import calculate_metrics
-from subcategory_extraction.benchmarks.compare_methods import HERE, METHODS, ROOT
+from subcategory_extraction.benchmarks.classifier_methods.run import HERE, METHODS, ROOT
 
 
 def publish(paths: list[Path], output: Path) -> dict:
@@ -88,7 +92,7 @@ def main() -> None:
     """Собрать отчёт без повторных запросов к моделям и переобучения."""
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--reports", nargs="+", type=Path, required=True)
-    parser.add_argument("--output", type=Path, default=HERE / "results/classifier-methods.json")
+    parser.add_argument("--output", type=Path, default=HERE / "combined-results.json")
     args = parser.parse_args()
     result = publish(args.reports, args.output)
     logging.info("%s", json.dumps({

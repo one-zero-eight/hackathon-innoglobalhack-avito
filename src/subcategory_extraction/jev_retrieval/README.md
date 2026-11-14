@@ -1,4 +1,4 @@
-# Jev: ближайшие положительный и отрицательный примеры
+# Модуль Jev: ближайшие положительный и отрицательный примеры
 
 Сервис: `subcategory_extraction`; модуль: `jev_retrieval`.
 Дата: 2026-11-14.
@@ -101,7 +101,7 @@ JSONL, `rows` — число проиндексированных полных �
 Из корня репозитория, после подготовки общего справочника и `.env`:
 
 ```bash
-PYTHONPATH=src JEV_THRESHOLD=0.5 uv run python -m subcategory_extraction.benchmarks.compare_methods --methods jev_retrieval
+JEV_THRESHOLD=0.5 uv run python src/subcategory_extraction/benchmarks/classifier_methods/run.py --methods jev_retrieval
 ```
 
 Оценка — все 208 официальных строк, включая противоречивые дубликаты, без
@@ -109,8 +109,8 @@ PYTHONPATH=src JEV_THRESHOLD=0.5 uv run python -m subcategory_extraction.benchma
 sklearn micro-F1 через `run.calculate_metrics` и `60 × micro-F1`, сохраняет
 фактический model ID, затраты и происхождение данных. Этот документ
 фиксирует метод, а не измеренный результат; результаты и сравнение методов
-публикуются в [общем отчёте](classifier-methods.md), машиночитаемые данные —
-в `results/classifier-methods.json`.
+публикуются в [общем отчёте](../benchmarks/classifier_methods/README.md), исторические данные —
+в `../benchmarks/classifier_methods/recorded-results.json`.
 
 ## Фактический статус запуска
 

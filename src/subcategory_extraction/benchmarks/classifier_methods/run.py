@@ -1,5 +1,10 @@
 """Единое сравнение заранее фиксированных методов на полном официальном наборе."""
 
+import sys
+from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[3]))
+
 import argparse
 from concurrent.futures import ThreadPoolExecutor, as_completed
 import hashlib
@@ -7,20 +12,20 @@ import json
 import logging
 import math
 import os
-from pathlib import Path
 import threading
 from time import perf_counter
 
 from dotenv import load_dotenv
+from benchmark_support import metadata as run_metadata, save_report, timing
 
 from main import MICROCATEGORIES, PipelineConfig, load_pipeline
 from run import audit_overlap, calculate_metrics, prepare_rows, read_records
 from subcategory_extraction.google_decision.pipeline import PROMPT_DIR
 
-ROOT = Path(__file__).resolve().parents[3]
+ROOT = Path(__file__).resolve().parents[4]
 HERE = Path(__file__).resolve().parent
 DATASET = ROOT / "docs/innoglobalhack_avito/public-test-dataset.parquet"
-GOOGLE_RECORD = HERE / "results/google-guided-public.json"
+GOOGLE_RECORD = HERE / "google-guided-public.json"
 METHODS = (
     "google_decision", "jev", "tfidf", "jev_tfidf", "jev_retrieval",
     "evidence_jev", "jev_arbiter", "semantic_encoder", "jev_boundaries",
@@ -167,6 +172,8 @@ def evaluate_method(method: str, rows: list, workers: int) -> dict:
     return {
         "status": "completed", "metadata": metadata, "unique_inputs": len(unique),
         "workers": worker_count, "elapsed_seconds": perf_counter() - started,
+        "timing": timing([detail["seconds"] for detail in unique_details]),
+        "timing_scope": "run only; initialization excluded; cache hits and retries included",
         "fresh_api_requests": fresh, "cache_hits": cache_hits,
         "metrics": calculate_metrics([row.expected for row in rows], predictions),
         "predicted": [sorted(value) for value in predictions],
@@ -178,19 +185,25 @@ def evaluate_method(method: str, rows: list, workers: int) -> dict:
     }
 
 
-def main() -> None:
+def main(
+    default_methods: tuple[str, ...] = METHODS,
+    default_report: Path = HERE / "results.json",
+) -> None:
     """Сравнить выбранные модули без создания validation или поиска параметров."""
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--methods", nargs="+", choices=METHODS, default=list(METHODS))
+    parser.add_argument("--methods", nargs="+", choices=METHODS, default=list(default_methods))
     parser.add_argument("--dataset", type=Path, default=DATASET)
     parser.add_argument("--training-dataset", type=Path, default=ROOT / "out/hybrid-training.jsonl")
     parser.add_argument("--google-record", type=Path, default=GOOGLE_RECORD)
     parser.add_argument("--google-live", action="store_true")
+    parser.add_argument("--offline", action="store_true", help="Не вызывать внешние API; отметить API-методы недоступными")
     parser.add_argument("--workers", type=int, default=4)
-    parser.add_argument("--report", type=Path, default=ROOT / "out/classifier-methods.json")
+    parser.add_argument("--report", type=Path, default=default_report)
     args = parser.parse_args()
     if not 1 <= args.workers <= 8:
         parser.error("--workers должен быть от 1 до 8")
+    if args.offline and args.google_live:
+        parser.error("--offline несовместим с --google-live")
     load_dotenv(ROOT / ".env")
     for name in ("JEV_THRESHOLD", "GOOGLE_DECISION_THRESHOLD", "JEV_TFIDF_THRESHOLD"):
         os.environ[name] = "0.5"
@@ -202,6 +215,7 @@ def main() -> None:
     if args.report.resolve() in {args.dataset.resolve(), args.training_dataset.resolve(), args.google_record.resolve()}:
         raise ValueError("Отчёт не должен перезаписывать входные данные")
     report = {
+        **run_metadata(),
         "protocol": {
             "dataset_sha256": digest(args.dataset), "training_sha256": digest(args.training_dataset),
             "rows": len(rows), "source_mc_id_assumption": 101,
@@ -219,6 +233,8 @@ def main() -> None:
     args.report.parent.mkdir(parents=True, exist_ok=True)
     for method in args.methods:
         try:
+            if args.offline and method not in ("google_decision", "tfidf", "semantic_encoder"):
+                raise RuntimeError("API-метод не измерен: выбран --offline; новые запросы запрещены")
             if method == "google_decision" and not args.google_live:
                 predictions, metadata = google_replay(args.google_record, args.dataset, rows)
                 result = {"status": "completed", "metadata": metadata,
@@ -232,10 +248,11 @@ def main() -> None:
                         metrics["micro_f1"], metrics["classification_points"], metrics["tp"], metrics["fp"], metrics["fn"])
         except Exception as exc:
             report["results"][method] = {"status": "failed", "error_type": type(exc).__name__, "error": str(exc)}
-            args.report.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+            save_report(args.report, report)
             logger.exception("%s: ошибка; фиктивная метрика не рассчитывается", method)
-            raise
-        args.report.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+        save_report(args.report, report)
+    if any(result["status"] != "completed" for result in report["results"].values()):
+        raise SystemExit(1)
 
 
 if __name__ == "__main__":

@@ -1,4 +1,4 @@
-"""Дообучение реального RuBERT-tiny2 на всём отфильтрованном train без holdout."""
+"""Обучение модуля RuBERT-tiny2 на отфильтрованном train без holdout."""
 
 import argparse
 from datetime import datetime, timezone

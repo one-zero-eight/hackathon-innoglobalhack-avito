@@ -4,6 +4,45 @@
 Дата: 2026-11-14  Автор: leo  
 База: актуальный `origin/main`, `cd0f310`; ветка `leo/feature/jev-hybrid-latest`.
 
+## Статус после переноса на main 0f2b9b7
+
+Приведённые ниже метрики относятся к исходному эксперименту на `cd0f310`.
+Новый entry point — `run.py`; обучение вынесено в
+`subcategory_extraction.jev_tfidf.train`. Время измеряется вокруг `run()`:
+число вызовов, среднее, медиана и p95 записываются в `results.json`.
+Кэширование Jev входит в замер и не считается холодной задержкой API.
+
+После переноса TF-IDF переобучен на тех же 4821 описании; micro-F1
+на 208 строках снова 0.778462, стоимость бесплатно. Новый общий
+[отчёт](../classifier_methods/README.md) содержит время и статусы всех методов.
+Jev и гибрид заново не измерены: локальных API-кэшей нет, API в проверке отключён.
+Исторические 0.846154 / 0.842262 не являются текущим API-прогоном.
+
+### Сравнение решений после переноса
+
+Версия: merge `8d3b5d7` + отпечаток
+`81d2603af5e890a81da1d741d9cd26137aa6f5aa6aa9bbc587d247e954b32f2e`.
+Запуск через тот же общий runner, без дублирования загрузки данных и метрик:
+
+```bash
+TFIDF_ARTIFACT_PATH=out/classifier-methods/tfidf.json uv run python src/subcategory_extraction/benchmarks/jev_tfidf/run.py --offline --training-dataset out/classifier-methods/hybrid-training.jsonl
+```
+
+| Сценарий | Версия / дата | Модуль / модель | Лучший промпт | micro-F1 | N | Среднее / медиана / p95, с | Стоимость |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| public test, offline | версия выше / 2026-11-14 | tfidf / LogisticRegression | — | 0.778462 | 139 вызовов / 208 строк | 0.002254 / 0.001670 / 0.004045 | бесплатно |
+| public test, offline | версия выше / 2026-11-14 | jev / jev-1.13.0 | guided, не оценивался | — | 0 | — | бесплатно, без API |
+| public test, offline | версия выше / 2026-11-14 | jev_tfidf | guided, не оценивался | — | 0 | — | бесплатно, без API |
+
+Отчёт: [results.json](results.json). Неполный прогон завершился кодом 1.
+Загрузка артефакта не входит во время; API-промпты заново не сравнивались.
+
+Для завершения отдельного live-сценария нужен действующий BestAPI-ключ:
+
+```bash
+TFIDF_ARTIFACT_PATH=out/classifier-methods/tfidf.json uv run python src/subcategory_extraction/benchmarks/jev_tfidf/run.py --training-dataset out/classifier-methods/hybrid-training.jsonl
+```
+
 ## Актуальные промпты GitHub
 
 Проверены tracked-деревья всех полученных веток: `origin/main`,
@@ -76,8 +115,8 @@ sublinear_tf) и логистические регрессии C=4, max_iter=500
 
 ```bash
 uv sync
-PYTHONPATH=src uv run python -m subcategory_extraction.benchmarks.train_jev_hybrid
-PYTHONPATH=src uv run python -m subcategory_extraction.benchmarks.compare_jev_hybrid
+PYTHONPATH=src uv run python -m subcategory_extraction.jev_tfidf.train
+uv run python src/subcategory_extraction/benchmarks/jev_tfidf/run.py
 ```
 
 Нужен `BESTAPI_API_KEY` в корневом `.env`. Артефакт — `out/tfidf.json`,
