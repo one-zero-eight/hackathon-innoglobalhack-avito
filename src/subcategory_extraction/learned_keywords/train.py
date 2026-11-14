@@ -28,10 +28,12 @@ MAX_ITERATIONS = 500
 SOURCE_MC_ID = 101
 
 
-def load_training() -> tuple[list[str], list[set[int]]]:
+def load_training(records: list[dict] | None = None) -> tuple[list[str], list[set[int]]]:
     """Проверить контракт и убрать точные нормализованные дубликаты train."""
     groups: dict[str, tuple[str, set[int]]] = {}
-    for row in database_read_records(TRAIN_TABLE):
+    if records is None:
+        records = database_read_records(TRAIN_TABLE)
+    for row in records:
         inp = PipelineInput(description=row["description"], mcId=SOURCE_MC_ID)
         labels = [item["mcId"] for item in row["found_microcategories"]]
         if any(type(cid) is not int or cid not in MICROCATEGORIES or cid == inp.mc_id for cid in labels):

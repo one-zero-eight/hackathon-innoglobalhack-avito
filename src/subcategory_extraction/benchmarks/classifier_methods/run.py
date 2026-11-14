@@ -20,7 +20,7 @@ from run import EvaluationRow, audit_overlap, calculate_metrics, prepare_rows, r
 ROOT = Path(__file__).resolve().parents[4]
 HERE = Path(__file__).resolve().parent
 METHODS = tuple(sorted(path.parent.name for path in HERE.parent.parent.glob("*/pipeline.py")))
-LOCAL_METHODS = {"tfidf", "learned_keywords", "semantic_encoder", "semantic_encoder_calibrated", "semantic_encoder_f1"}
+LOCAL_METHODS = {"tfidf", "learned_keywords", "semantic_encoder", "semantic_encoder_calibrated", "semantic_encoder_f1", "snippet_logistic_regression"}
 DATASETS = {
     # Имена таблиц PostgreSQL (единый формат в src/database.py).
     "classifier_methods": ("case_test", "case_train"),
