@@ -1,0 +1,90 @@
+{
+  "date": "2026-11-14T12:43:04+03:00",
+  "commit": "b488557209a4dce3968dac21f4895d96850e421a",
+  "code_sha256": "64a066c505a1b067ed68bef2d39142bed9755d4a374b70156635e7cfdff33c23",
+  "working_tree": true,
+  "scenario": "offline_api_clients",
+  "real_api_calls": 0,
+  "status": "complete",
+  "versions": [
+    {
+      "revision": "working_tree",
+      "commit": "b488557209a4dce3968dac21f4895d96850e421a",
+      "main_sha256": "be5baab73163ec49c9d73363e41509e9c0f64c0a4020eefea7f18176969405a5",
+      "status": "complete",
+      "checks": {
+        "protocol_cases": 8,
+        "invalid_settings": 16,
+        "invalid_outputs": 36,
+        "http_cases": 23,
+        "environment_cases": 5
+      },
+      "passed": 88,
+      "offline_elapsed_seconds": 0.14427387799992175
+    },
+    {
+      "revision": "b488557209a4dce3968dac21f4895d96850e421a",
+      "commit": "b488557209a4dce3968dac21f4895d96850e421a",
+      "main_sha256": "f74f124e721e1bd1a8f1c0bd67fe74047801e9ea171bc43cd03a622657cdb17f",
+      "status": "unavailable",
+      "reason": "В этой версии нет новых общих API-клиентов",
+      "missing": [
+        "APIClientSettings",
+        "GoogleDecisionClient",
+        "GoogleGenerationClient",
+        "JSONTransport",
+        "LLMError",
+        "OpenAICompatibleClient",
+        "generation_client"
+      ]
+    },
+    {
+      "revision": "3613e030db534ac6dcb502bd417f511ba3b79789",
+      "commit": "3613e030db534ac6dcb502bd417f511ba3b79789",
+      "main_sha256": "f74f124e721e1bd1a8f1c0bd67fe74047801e9ea171bc43cd03a622657cdb17f",
+      "status": "unavailable",
+      "reason": "В этой версии нет новых общих API-клиентов",
+      "missing": [
+        "APIClientSettings",
+        "GoogleDecisionClient",
+        "GoogleGenerationClient",
+        "JSONTransport",
+        "LLMError",
+        "OpenAICompatibleClient",
+        "generation_client"
+      ]
+    },
+    {
+      "revision": "392ed0faf90ae2eaa9de93cc51dc99a7907e08bb",
+      "commit": "392ed0faf90ae2eaa9de93cc51dc99a7907e08bb",
+      "main_sha256": "6eb0a73a9f0518e6f547cf5c9a093c7548e4a014cd92f02b7dc34f7925240904",
+      "status": "unavailable",
+      "reason": "В этой версии нет новых общих API-клиентов",
+      "missing": [
+        "APIClientSettings",
+        "GoogleDecisionClient",
+        "GoogleGenerationClient",
+        "JSONTransport",
+        "LLMError",
+        "OpenAICompatibleClient",
+        "generation_client"
+      ]
+    },
+    {
+      "revision": "e7c6cbeaeab40a8edb93d057437f3e23f3bd2322",
+      "commit": "e7c6cbeaeab40a8edb93d057437f3e23f3bd2322",
+      "main_sha256": "18d232c6d4e49c798d6b435302fee363f71ccd0c6d00e67c6e2e50e5999abaa6",
+      "status": "unavailable",
+      "reason": "В этой версии нет новых общих API-клиентов",
+      "missing": [
+        "APIClientSettings",
+        "GoogleDecisionClient",
+        "GoogleGenerationClient",
+        "JSONTransport",
+        "LLMError",
+        "OpenAICompatibleClient",
+        "generation_client"
+      ]
+    }
+  ]
+}
