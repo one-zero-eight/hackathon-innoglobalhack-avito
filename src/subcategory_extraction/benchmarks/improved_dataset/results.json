@@ -2663,6 +2663,30 @@
     "qwen_decision": {
       "status": "requires_rerun",
       "reason": "Прежний результат измерен на reviewed_test (119 строк). Сценарий переведён на ручную разметку manual_test (139 строк) из PostgreSQL; требуется пересчёт."
+    },
+    "local_jev (guided_ru, threshold=0.5)": {
+      "status": "requires_rerun",
+      "reason": "Прежний результат измерен на reviewed_test (119 строк). Текущий сценарий manual_test содержит 139 строк с другой разметкой; требуется новый прогон.",
+      "model": "jevos-v5",
+      "prompt_variant": "guided_ru",
+      "threshold": 0.5,
+      "previous_record": {
+        "commit": "a2893bf5",
+        "path": "src/subcategory_extraction/benchmarks/improved_dataset/results.json",
+        "dataset_sha256": "0af183508c1501425a1330675ceb8923dfe130fff3f86e418ebe3ec4baba34a2"
+      }
+    },
+    "local_jev": {
+      "status": "requires_rerun",
+      "reason": "Прежний результат измерен на reviewed_test (119 строк). Текущий сценарий manual_test содержит 139 строк с другой разметкой; требуется новый прогон.",
+      "model": "jevos-v5",
+      "prompt_variant": "english",
+      "threshold": 0.5,
+      "previous_record": {
+        "commit": "a2893bf5",
+        "path": "src/subcategory_extraction/benchmarks/improved_dataset/results.json",
+        "dataset_sha256": "0af183508c1501425a1330675ceb8923dfe130fff3f86e418ebe3ec4baba34a2"
+      }
     }
   },
   "limitations": [

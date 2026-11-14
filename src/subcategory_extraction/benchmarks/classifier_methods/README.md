@@ -28,6 +28,9 @@ PostgreSQL), SHA-256 исходного файла —
 | jev | версия в recorded-results.json / 2026-11-14 | guided | 208 | 0.846154 | сохранённые ответы, без новых вызовов |
 | jev_tfidf | версия в recorded-results.json / 2026-11-14 | guided | 208 | 0.842262 | сохранённые ответы, без новых вызовов |
 | semantic_encoder | версия в recorded-results.json / 2026-11-14 | — | 208 | 0.786704 | сохранённые ответы, без новых вызовов |
+| local_jev / jevos-v5 | v5 / 2026-11-14 | english / 0.5 | 208 | 0.399050 | сохранённые CPU-предсказания; входы и метки совпали с case_test |
+| local_jev / jevos-v5 | v5 / 2026-11-14 | guided_ru / 0.5 | 208 | 0.000000 | сохранённые CPU-предсказания; входы и метки совпали с case_test |
+| qwen_decision | preview / 2026-11-14 | boundaries / train-калибровка | 208 | 0.629674 | сохранённые ответы; новый API-прогон не выполнялся |
 
 ## Запуск
 
@@ -48,9 +51,6 @@ API-модули. Отсутствие весов/API фиксируется к�
 Артефакт и калибровка проверены по SHA-256 из `../../semantic_encoder_f1/artifact-manifest.json`.
 Отпечаток исполняемого кода, версии библиотек и хеши файлов — в `results.json`.
 
-| Модуль / модель | Версия весов / дата | Промпт | N | micro-F1 |
-| --- | --- | --- | ---: | ---: |
-| semantic_encoder_f1 / distilled RuBERT-tiny2 | 1c2a6f5 / 2026-11-14 | — | 208 | 0.769433 |
 
 ```bash
 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 TOKENIZERS_PARALLELISM=false RUBERT_F1_ARTIFACT_PATH=src/subcategory_extraction/semantic_encoder_f1/artifacts RUBERT_F1_DEVICE=cpu uv run python src/subcategory_extraction/benchmarks/classifier_methods/run.py --methods semantic_encoder_f1 --offline
@@ -70,13 +70,6 @@ OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 TOKENIZERS_PARALLELISM=false RUBERT_F1_ARTIF
 не качество текущих весов. Использованный guided-промпт:
 `../../google_decision/prompts/google_decision_guided.md`.
 
-| Модуль | Промпт | N | micro-F1 |
-| --- | --- | ---: | ---: |
-| google_decision | guided | 208 | 0.839394 |
-| jev | guided | 208 | 0.846154 |
-| tfidf | — | 208 | 0.778462 |
-| jev_tfidf | guided | 208 | 0.842262 |
-| semantic_encoder | — | 208 | 0.786704 |
 
 ## Выводы
 
@@ -90,9 +83,6 @@ OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 TOKENIZERS_PARALLELISM=false RUBERT_F1_ARTIF
 на `docs/improved_dataset/train.jsonl` (4851 строка), combined-признаки,
 40 фраз на категорию, C=4 и порог 0.5 зафиксированы до test.
 
-| Модуль / модель | Версия / дата | Промпт | N | micro-F1 |
-| --- | --- | --- | ---: | ---: |
-| learned_keywords / TF-IDF + бинарные фразы | 3768d76 / 2026-11-14 | — | 208 | 0.745358 |
 
 ```bash
 OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 uv run python src/subcategory_extraction/benchmarks/classifier_methods/run.py --methods learned_keywords
@@ -115,12 +105,6 @@ OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 uv run python src/subcategory_extractio
 отпечаток кода `3946999259f93a4db45e354a06a12e6cbff64778b66253c27da547e540e90c0f`.
 Модель: `decision-model-preview`, Qwen Token Plan System One.
 
-| Модуль / модель | Версия / дата | Промпт | N | micro-F1 |
-| --- | --- | --- | ---: | ---: |
-| qwen_decision / фиксированный порог 0.5, те же ответы | preview / 2026-11-14 | boundaries | 208 | 0.637209 |
-| qwen_decision / train-калибровка | preview / 2026-11-14 | boundaries | 208 | 0.629674 |
-| learned_keywords / опубликованные веса, свежий run() | 45ff38d / 2026-11-14 | — | 208 | 0.745358 |
-| jev / проверенный пересчёт исторических ответов | исходная запись / 2026-11-14 | guided | 208 | 0.846154 |
 
 ```bash
 OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 LEARNED_KEYWORDS_ARTIFACT=src/subcategory_extraction/learned_keywords/artifacts/learned-keywords.json uv run python src/subcategory_extraction/benchmarks/classifier_methods/run.py --methods learned_keywords qwen_decision --workers 4 --append
@@ -151,3 +135,13 @@ OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 LEARNED_KEYWORDS_ARTIFACT=src/subcatego
 Его прежний результат сохранён с прежним происхождением; новые веса ему не подставлялись.
 `--append` сохраняет результаты других модулей с их датами и отпечатками;
 `recorded-results.json` не изменён.
+
+## Локальный jevos-v5
+
+Английский вариант выбран на 12 примерах прежнего официального train;
+порог 0.5 не подбирался по test. Сохранённые 208 входов и эталонных меток
+побайтово совпали со снимком case_test текущего отчёта, поэтому обе строки
+Jevos совместимы с этим сценарием. Новые вызовы модели при merge не выполнялись.
+Манифест весов, вероятности и исходная дата измерения сохранены в results.json.
+Первый запуск теперь загружает модель и runtime в игнорируемый out/local-jev/;
+команды и ограничения — в ../../local_jev/README.md.

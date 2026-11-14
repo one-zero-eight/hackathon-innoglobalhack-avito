@@ -1,0 +1,36 @@
+{
+  "version": 1,
+  "source": "https://github.com/feder-cr/jev",
+  "release": "jevos-v5",
+  "upstream_commit": "67c7846",
+  "model": "jevos-v5",
+  "runtime": "OpenVINO INT8",
+  "license": "MIT; see upstream THIRD_PARTY_NOTICES.md",
+  "task_finetuning": false,
+  "archives": {
+    "jev-linux-x64.tar.gz": "1ce77566405514ed2f20d64f8222cf9eba9b714d332f05f6296e0cad84dd7b04",
+    "jevos-v5-openvino-int8.zip": "0a1159c31b9c2abc484af9c866cdcfe5279fdf592b368636625c5a795f970acc"
+  },
+  "files": {
+    "model.json": {
+      "bytes": 22,
+      "sha256": "8d1d4d40d23fc0d8fd4dcd8136b3d591c8de3c25a6df16e3668f65301cc42181"
+    },
+    "openvino_model.bin": {
+      "bytes": 683213388,
+      "sha256": "413b40a85163260e4cd9dfe278e5e068f343920bc9e08741d53659ca39fecb81"
+    },
+    "openvino_model.xml": {
+      "bytes": 1124143,
+      "sha256": "59b4dfdfa5f8ebfd8c400d8a8b464b34db2ea2038665e78a71361a6b532e1e79"
+    },
+    "tokenizer.gguf": {
+      "bytes": 5122784,
+      "sha256": "9e15e73e12c6fe6eb9af58d15f6dbc7a8563331947232d0b10158aa8e9832949"
+    },
+    "tokenizer.json": {
+      "bytes": 9894271,
+      "sha256": "3e065a558a034185fe299917b398685c1facd0169a9eea1e629eb30c171fed81"
+    }
+  }
+}

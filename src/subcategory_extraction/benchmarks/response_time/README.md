@@ -9,9 +9,11 @@ train, seed=44. SHA-256 train:
 
 | Модуль | Версия / дата | N | Среднее, с | Медиана, с | p95, с | Происхождение |
 | --- | --- | ---: | ---: | ---: | ---: | --- |
-| learned_keywords | 3768d76 / 2026-11-14 | 10 | 0.001730 | 0.001522 | 0.002868 | настоящие CPU run(), сохранённый замер |
+| learned_keywords | Linux CPU / 2026-11-14 | 10 | 0.002126 | 0.002292 | 0.002644 | сохранённый замер на той же машине, что local_jev |
 | semantic_encoder_f1 | веса 1c2a6f5 / 2026-11-14 | 10 | 0.040450 | 0.036370 | 0.081191 | настоящие CPU run(), сохранённый замер |
 | tfidf | e814b58 / 2026-11-14 | 10 | 0.001142 | 0.000819 | 0.002920 | сохранённая округлённая сводка |
+| local_jev / jevos-v5 | OpenVINO INT8 / 2026-11-14 | 10 | 1.199780 | 1.126392 | 2.275740 | сохранённый замер готового сервера, english / 0.5 |
+| qwen_decision | preview / 2026-11-14 | 10 | 14.309403 | 2.499930 | 62.312641 | сохранённый сетевой API-замер |
 
 ## Запуск
 
@@ -30,12 +32,6 @@ Apple Silicon arm64, CPU. У semantic_encoder_f1 один поток PyTorch,
 percentile NumPy. Условия и даты записаны отдельно для каждого решения.
 Эти числа не являются SLA и не измеряют качество классификации.
 
-| Сценарий | Версия / дата | Модуль / модель | Промпт | Качество | N | Среднее / медиана / p95, с | Стоимость |
-| --- | --- | --- | --- | --- | --- | --- | --- |
-| Свежие CPU `run()` | 1c2a6f5 + main 3144889 / 2026-11-14 | semantic_encoder_f1 / distilled RuBERT-tiny2 | — | Здесь не оценивается | 10 | 0.040450 / 0.036370 / 0.081191 | бесплатно |
-| Предыдущие CPU `run()` | e814b58 + рабочие изменения / 2026-11-14 | tfidf | — | Здесь не оценивается | 10 | 0.001142 / 0.000819 / 0.002920 | бесплатно |
-| Исторический CPU `run()` на 119 диагностических входах | e814b58 / 2026-11-14 | semantic_encoder_f1 | — | Здесь не оценивается | 119 | 0.004776 / 0.003196 / 0.011021 | бесплатно |
-| Новый API-замер | та же версия | google_decision | guided | Не запускался | 0 | — | новых расходов нет |
 
 ## Выводы
 
@@ -62,9 +58,6 @@ Apple Silicon arm64, CPU, один поток PyTorch; версии и плат�
 2026-11-14, код `3768d76`, база main `e04c97d`; веса и конфигурация
 совпадают с двумя F1-сценариями.
 
-| Модуль / модель | N | Среднее, с | Медиана, с | p95, с | Стоимость API |
-| --- | ---: | ---: | ---: | ---: | --- |
-| learned_keywords / combined | 10 | 0.001730 | 0.001522 | 0.002868 | бесплатно |
 
 ```bash
 OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 uv run python src/subcategory_extraction/benchmarks/response_time/run.py --module learned_keywords --size 10
@@ -81,10 +74,6 @@ p95 — линейный percentile NumPy. Выборка: 10 validation-гру�
 База `45ff38d`, код `3946999259f93a4db45e354a06a12e6cbff64778b66253c27da547e540e90c0f`.
 Те же замороженные `boundaries` и train-пороги, что в двух F1-сценариях.
 
-| Модуль / модель | N | Среднее, с | Медиана, с | p95, с | Стоимость |
-| --- | ---: | ---: | ---: | ---: | --- |
-| qwen_decision / decision-model-preview | 10 | 14.309403 | 2.499930 | 62.312641 | неизвестно |
-| learned_keywords / свежий CPU run() | 10 | 0.004704 | 0.004736 | 0.005803 | бесплатно по API |
 
 ```bash
 QWEN_DECISION_CACHE=0 OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 uv run python src/subcategory_extraction/benchmarks/response_time/run.py --module qwen_decision --size 10 --append
@@ -103,3 +92,31 @@ QWEN_DECISION_CACHE=0 OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 uv run python src
 с одним потоком OpenMP/OpenBLAS и без кэша предсказаний. Старые замеры
 сохранены со своими датами; времена Apple Silicon выше не являются новым
 Linux-замером. У Qwen N=10, поэтому оценку нельзя трактовать как SLA.
+
+## Локальный feder-cr/jev: 2026-11-14
+
+Те же jevos-v5 INT8, `english`, порог 0.5, что в двух F1-сценариях.
+Настоящие последовательные `run()` на штатных 10 validation-входах seed=44.
+F1 здесь не считается. Оба модуля измерены заново на одной машине, по очереди,
+после завершения F1-прогонов, без параллельных запросов к серверу.
+
+
+```bash
+OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 uv run python src/subcategory_extraction/benchmarks/response_time/run.py --module local_jev --size 10 --append
+OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 uv run python src/subcategory_extraction/benchmarks/response_time/run.py --module learned_keywords --size 10 --append
+```
+
+Linux x86_64, Intel Core i9-12900H. Jevos: четыре потока OpenVINO;
+learned_keywords: один поток OpenMP/OpenBLAS. Сервер запущен с
+`--threads 4 --warmup 0 --state-cache 0 --batch-tokens 0`, dynamic quantization=128.
+Версия runtime, веса и fingerprint — в `model_provenance` отчёта.
+Старт сервера/загрузка весов, создание экземпляра клиента и health исключены;
+первый измеряемый run() включён. Сервер до замера уже обрабатывал F1-прогоны,
+поэтому это замер готового сервера, а не холодного старта.
+
+Кэш ответов клиента и state-cache сервера отключены, попаданий нет.
+Время включает localhost HTTP, токенизацию, вычисления и разбор результата.
+Квоты, ожидания внешнего API и повторы отсутствуют: 10 HTTP-попыток на 10 входов.
+p95 — линейный percentile NumPy. Средний local_jev примерно в 564 раза медленнее
+этого локального baseline. N=10 не даёт SLA. Исторические времена Apple Silicon
+и внешнего Qwen выше не являются замерами на этом оборудовании.

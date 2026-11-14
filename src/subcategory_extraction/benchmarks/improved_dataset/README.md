@@ -31,6 +31,8 @@ SHA-256 содержимого таблицы: `fae05cba56fdf57a15aa3979afd828b7
 | jev | требуется пересчёт | guided | — | — | прежний результат на reviewed_test несовместим |
 | jev_tfidf | требуется пересчёт | guided | — | — | прежний результат на reviewed_test несовместим |
 | qwen_decision | требуется пересчёт | boundaries | — | — | прежний результат на reviewed_test несовместим |
+| local_jev / jevos-v5 | требуется пересчёт | english / 0.5 | — | — | прежние 119 предсказаний несовместимы с manual_test |
+| local_jev / jevos-v5 | требуется пересчёт | guided_ru / 0.5 | — | — | прежние 119 предсказаний несовместимы с manual_test |
 
 ## Запуск
 
@@ -80,3 +82,8 @@ API-модули (`google_decision`, `jev`, `jev_tfidf`, `qwen_decision`) ещё
 (без изменений) и в истории Git. Новые прогоны API-модулей (`google_decision`,
 `jev`, `jev_tfidf`, `qwen_decision`) на `manual_test` — отдельная задача,
 в `results.json` они помечены `requires_rerun`.
+
+Прежний эксперимент local_jev на reviewed_test (119 строк), включая полные
+предсказания и вероятности, сохранён в истории Git: commit a2893bf,
+файл src/subcategory_extraction/benchmarks/improved_dataset/results.json.
+Его F1 не переносится на manual_test. После merge новый прогон не выполнялся.
