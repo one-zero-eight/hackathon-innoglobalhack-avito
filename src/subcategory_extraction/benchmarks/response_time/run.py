@@ -6,6 +6,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[3]))
 
 import argparse
+import json
 import logging
 from time import perf_counter
 
@@ -24,6 +25,13 @@ def main() -> int:
     args = parser.parse_args()
     rows = validation_sample(args.size, seed=44)
     report = {**metadata(), "sample_seed": 44, "sample_size": len(rows), "results": {}}
+    if args.report.exists():
+        previous = json.loads(args.report.read_text(encoding="utf-8"))
+        for name, result in previous.get("results", {}).items():
+            result.setdefault("measurement_metadata", {
+                key: previous.get(key) for key in ("date", "commit", "code_sha256", "sample_seed", "sample_size")
+            })
+            report["results"][name] = result
     modules = (args.module,)
     for module in modules:
         try:
@@ -33,6 +41,12 @@ def main() -> int:
             save_report(args.report, report)
             return 1
         result = {"status": "running", "model": getattr(getattr(pipeline, "client", None), "model_id", module), "rows": []}
+        result["measurement_metadata"] = {
+            key: report[key] for key in ("date", "commit", "code_sha256", "sample_seed", "sample_size")
+        }
+        result["timing_scope"] = "real sequential run(); loading excluded; first call included; no prediction cache"
+        result["model_metadata"] = getattr(pipeline, "model_metadata", {})
+        result["device"] = getattr(pipeline, "device", None)
         report["results"][module] = result
         durations = []
         for row in rows:

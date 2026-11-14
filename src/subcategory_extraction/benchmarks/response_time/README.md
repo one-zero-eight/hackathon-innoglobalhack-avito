@@ -65,3 +65,30 @@ Apple Silicon arm64, CPU; один поток OpenMP/OpenBLAS. Загрузка 
 p95 — линейный percentile NumPy. Выборка: 10 validation-групп официального train
 с seed=44; для этой модели это замер задержки, а не оценка на отложенных данных.
 Сохранён прежний замер semantic_encoder_f1 с исходным происхождением.
+
+## semantic_evidence: выбранный OOF-ансамбль, 2026-11-14
+
+Реально выполнены 10 последовательных `run()` на прежней фиксированной
+выборке seed44, без прогрева и кэша предсказаний. Загрузка моделей, проверка
+SHA, чтение данных и генерация черновиков исключены; первый вызов включён.
+CPU arm64/macOS, PyTorch2.15.0, один поток. P95 — линейный percentile NumPy.
+
+| Модель | N | Среднее, с | Медиана, с | p95, с | API |
+| --- | ---: | ---: | ---: | ---: | --- |
+| semantic_evidence: document0.25 + evidence0.75 | 10 | 0.020982 | 0.018053 | 0.046685 | не используется |
+
+```bash
+OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 TOKENIZERS_PARALLELISM=false uv run python src/subcategory_extraction/benchmarks/response_time/run.py --module semantic_evidence --size 10
+```
+
+Отпечаток кода `4f0af99e008c`, точные времена и происхождение двух компонентов
+сохранены в `results.json`; прежние измерения имеют свои measurement_metadata.
+Это локальная задержка, не SLA и не время полного решения с внешней генерацией.
+
+Отдельно выполнен настоящий `src/main.py` с новым default `config.json`:
+электромонтажное объявление → один черновик105 с непустыми title/text.
+Использован настоящий Gemini, не replay: 1 API-попытка, 0 ошибок.
+Вход/выход и usage — `out/semantic-evidence-cli-{input,output}.json`
+и `out/semantic-evidence-cli-output.json.costs.json`. Для этой проверки
+`SAMPLE_LLM_MAX_ATTEMPTS=1`; модель генератора не подменялась.
+

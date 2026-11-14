@@ -31,7 +31,7 @@ uv run python src/subcategory_extraction/benchmarks/improved_dataset/run.py --me
 ошибкой, если он отсутствует. Доступность других моделей/API проверяется
 отдельно, фиктивных предсказаний нет.
 
-## Последний локальный прогон
+## Предыдущий локальный прогон опубликованных весов Leo
 
 2026-11-14, опубликованные веса Leo `1c2a6f5`, синхронизация с main `3144889`.
 Настоящие CPU-вызовы `semantic_encoder_f1`, без переобучения и подбора порогов.
@@ -98,3 +98,45 @@ OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 uv run python src/subcategory_extractio
 исходными датами и отпечатками в measurement_metadata. SHA-256 весов, train,
 версии библиотек, предсказания и детали проверки пересечений находятся в JSON.
 Исторические результаты обучения на Юле к этим весам не относятся.
+
+## semantic_evidence: фрагменты, дистилляция и OOF-ансамбль
+
+Дата: 2026-11-14. База `45ff38d`, рабочая ветка
+`leo/feature/semantic-evidence-f1`, код `4f0af99e008c`.
+Все пять вариантов реально вызваны на CPU на тех же119 строках.
+Train —4239 development-описаний из исправленного train;612 control-строк
+не входят в обучение. Третий студент использует44 проверенных учителем
+train-примера:30 машинных исправлений меток,10 повышенных весов,3
+неоднозначных предложения отклонены. Это не независимый gold.
+Пользователь явно согласовал неполный review44/96.
+
+| Вариант | N | micro-F1 | TP | FP | FN |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| document: RuBERT, среднее полного текста | 119 | 0.854460 | 182 | 35 | 27 |
+| evidence: внимание к токенам + глобальный контекст | 119 | 0.841629 | 186 | 47 | 23 |
+| distilled: review + fold-local soft teacher | 119 | 0.865248 | 183 | 31 | 26 |
+| **ensemble: выбран по OOF, document0.25 + evidence0.75** | **119** | **0.861827** | **184** | **34** | **25** |
+| TF-IDF: те же4239 train-описаний, порог0.5 | 119 | 0.762115 | 173 | 72 | 36 |
+
+Выбор композиции и порогов зафиксирован **до** test
+(`2026-11-14T16:13:18Z`); после просмотра этой таблицы модель не менялась.
+Лучший здесь distilled не переотбирается по test. Внутренние OOF/control
+приведены отдельно в [описании обучения](../../README.md).
+Цель0.92–0.93 **на этих119 строках не достигнута**.
+
+Проверка фактических4239 train-текстов: точных пересечений0/119,
+близких при char_wb(3,5), cosine≥0.92 —0/119. Это не гарантия отсутствия
+всех семантических шаблонов. Исходный mcId по-прежнему предполагается101.
+Ни строки, ни метки test не удалялись; API при классификации не использовался.
+В `results.json` сохранены ответы, SHA весов, пороги, code fingerprint,
+per-model `actual_training_overlap` и даты прежних измерений.
+
+```bash
+OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 TOKENIZERS_PARALLELISM=false uv run python src/subcategory_extraction/benchmarks/improved_dataset/run.py --methods semantic_evidence --variant ensemble --offline
+TFIDF_ARTIFACT_PATH=out/semantic-evidence-f1/tfidf.json uv run python src/subcategory_extraction/benchmarks/improved_dataset/run.py --methods tfidf --variant same_development_baseline --offline
+```
+
+Для отдельных студентов задайте `SEMANTIC_EVIDENCE_ARTIFACT_PATH=out/semantic-evidence-f1/bundles/document`
+(или `evidence`, `distilled`) и одноимённый `--variant`. По умолчанию
+загружается выбранный ансамбль из `semantic_evidence/artifacts`.
+

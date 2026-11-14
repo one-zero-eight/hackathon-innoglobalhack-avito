@@ -27,7 +27,7 @@ uv run python src/subcategory_extraction/benchmarks/classifier_methods/run.py --
 параметры моделей и пути к весам задаются через `.env`.
 Отсутствие весов или API даёт неуспешный статус без F1.
 
-## Последний локальный прогон
+## Предыдущий локальный прогон опубликованных весов Leo
 
 2026-11-14, опубликованные веса Leo `1c2a6f5`, синхронизация с main `3144889`.
 Настоящие CPU-вызовы `semantic_encoder_f1`, без переобучения и подбора порогов.
@@ -94,3 +94,42 @@ OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 uv run python src/subcategory_extractio
 исходными датами и отпечатками в measurement_metadata. SHA-256 весов, train,
 версии библиотек, предсказания и детали проверки пересечений находятся в JSON.
 Исторические результаты обучения на Юле к этим весам не относятся.
+
+## semantic_evidence: настоящий CPU-прогон всех208 строк
+
+Дата: 2026-11-14. База `45ff38d`, рабочая ветка
+`leo/feature/semantic-evidence-f1`, код `4f0af99e008c`.
+Обучение — на4239 development-описаниях исправленного InnoGlobalHack;
+прежний control612 не входит в train. Ансамбль и пороги выбраны только
+по development OOF и заморожены до этого прогона.
+
+| Вариант | N | micro-F1 | TP | FP | FN |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| document | 208 | 0.770642 | 294 | 174 | 1 |
+| evidence | 208 | 0.745547 | 293 | 198 | 2 |
+| distilled:44 train-review, неполнота согласована | 208 | 0.764706 | 286 | 167 | 9 |
+| **ensemble: выбран по OOF, document0.25 + evidence0.75** | **208** | **0.764314** | **287** | **169** | **8** |
+| TF-IDF: те же4239 train-описаний, порог0.5 | 208 | 0.674129 | 271 | 238 | 24 |
+
+**Цель0.92–0.93 на исходном public test не достигнута.** Исторические
+0.925414 TF-IDF относятся к внутреннему729 holdout другой разметки,
+а не к этому сценарию. Результат ансамбля также ниже прежних0.769433
+`semantic_encoder_f1` на этих208 строках; прежняя модель имела другой train.
+После test ни вариант, ни пороги не переотбирались.
+
+Все208 строк и дубликаты сохранены. Исходный mcId отсутствует и принимается101.
+Глобальный аудит источника сценария показывает24 точных совпадения;
+аудит **фактических4239 обучающих текстов новых моделей** —22/208 точных
+и30/208 близких при char_wb(3,5), cosine≥0.92. Строки не удаляются,
+поэтому это не независимый holdout; формула F1 от этого не меняется.
+API классификатор не использует. Генерация всех208 объявлений здесь не оценивалась.
+
+```bash
+OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 TOKENIZERS_PARALLELISM=false uv run python src/subcategory_extraction/benchmarks/classifier_methods/run.py --methods semantic_evidence --variant ensemble --offline
+TFIDF_ARTIFACT_PATH=out/semantic-evidence-f1/tfidf.json uv run python src/subcategory_extraction/benchmarks/classifier_methods/run.py --methods tfidf --variant same_development_baseline --offline
+```
+
+Отдельные студенты доступны через `SEMANTIC_EVIDENCE_ARTIFACT_PATH=out/semantic-evidence-f1/bundles/<document|evidence|distilled>`
+и соответствующий `--variant`. Точные входы/предсказания, веса и пороги,
+происхождение старых результатов и аудит пересечений сохранены в `results.json`.
+

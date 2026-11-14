@@ -1,1 +1,2 @@
 src/subcategory_extraction/semantic_encoder_f1/artifacts/encoder/*.safetensors filter=lfs diff=lfs merge=lfs -text
+src/subcategory_extraction/semantic_evidence/artifacts/**/encoder/*.safetensors filter=lfs diff=lfs merge=lfs -text
