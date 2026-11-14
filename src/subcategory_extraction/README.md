@@ -9,6 +9,8 @@
   `jev` (нативный Jev через BestAPI), `jev_tfidf` (среднее вероятностей),
   `jev_retrieval` (размеченные соседи), `evidence_jev` (цитаты → Jev),
   `jev_arbiter` (сильный арбитр), `semantic_encoder` (fine-tuned RuBERT-tiny2),
+  `semantic_encoder_calibrated` (validation-пороги),
+  `semantic_encoder_f1` (выбор checkpoint, окна/attention и дистилляция; CPU),
   `jev_boundaries` (точные границы категорий).
 - Выбор: ключ `subcategory_extraction` в корневом `config.json`
 - `null` — модуль не выбран.
@@ -42,10 +44,10 @@
 - Исторические сравнения с внешним SplitShift и их исходные результаты:
   `benchmarks/historical/`. Они не являются
   готовыми автономными модулями SplitShift: его код и модели не входят в репозиторий.
-- В `config.json` выбран `jev` и существующий `sample_llm`: в текущем
-  сравнении фиксированное усреднение `jev_tfidf` не превзошло чистый Jev.
-  Гибрид остаётся доступен как отдельный модуль, а не выдаётся за улучшение.
-  Полный CLI требует также ключ Google в `LLM_API_KEY` для генератора.
+- В `config.json` выбран локальный CPU-классификатор `semantic_encoder_f1`
+  и существующий внешний генератор `sample_llm`. Ключ для классификации
+  не нужен; генерация непустых черновиков требует отдельного рабочего API-ключа.
+  Исторический `jev_tfidf` остаётся отдельным доступным вариантом.
 
 Пять новых методов и их ограничения описаны в [общем отчёте](benchmarks/classifier-methods.md).
 Общий запуск: `PYTHONPATH=src uv run python -m subcategory_extraction.benchmarks.compare_methods`.
@@ -58,3 +60,23 @@ Encoder реально обучен; три эпохи запускаются о
 `compare_methods` сохраняет latency/loading и `costs`; в API-цене различаются
 нулевой расход текущего кэша и неизвестная стоимость нового инференса.
 Учёт в `main.py` общий с генератором черновиков.
+
+## Полный план улучшения локального RuBERT
+
+Новый вариант `semantic_encoder_f1` сохраняет публичный контракт и загружает
+только одного компактного студента на CPU; учитель нужен лишь при обучении.
+`RUBERT_F1_ARTIFACT_PATH` задаёт путь артефакта, по умолчанию
+`out/rubert-f1-plan/selected`. `RUBERT_F1_DEVICE=cpu` обязателен; GPU inference
+не является скрытым fallback. Без весов или привязанной к ним calibration
+загрузка завершается явной ошибкой.
+
+Обучение и единая оценка:
+
+```bash
+HF_HUB_DISABLE_XET=1 TOKENIZERS_PARALLELISM=false PYTHONPATH=src uv run python -m subcategory_extraction.benchmarks.improve_rubert_f1
+```
+
+Нужны прежнее воспроизводимое разбиение из `tune_semantic_thresholds`,
+baseline-веса по `improved-dataset.md` и сохранённая train-only смысловая
+проверка. Все параметры и выбор сохраняются до доступа к контрольной оценке.
+[Протокол, результаты и ограничения](benchmarks/rubert-f1-plan.md).

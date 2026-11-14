@@ -1,0 +1,19 @@
+{
+  "module": "semantic_encoder_f1",
+  "device": "cpu",
+  "encoder_layers": 3,
+  "invalid_calibrations_rejected": 8,
+  "non_cpu_device_rejected": true,
+  "metadata_copy_isolated": true,
+  "full_pipeline_empty_drafts_verified": true,
+  "full_pipeline_api_attempts": 0,
+  "full_pipeline_input_sha256": "30976cf0f40e46603472ea36e7aefaee5195f57eba1a5c5139b028a7d03f1510",
+  "longest_diagnostic_description_chars": 4480,
+  "longest_diagnostic_run_ms": 15.432082996994723,
+  "isolated_student_process_peak_rss_bytes": 555188224,
+  "rss_scope": "macOS peak of fresh Python process after loading one student and longest diagnostic input, before other instances; includes runtime/imports/data, no teacher",
+  "default_config_cli_verified": true,
+  "default_config_sha256": "f1d6ea7cc8ff863e6823be43920f64a4b3debdbc273de1bdfc1263e08afc9360",
+  "cli_output": {"drafts": []},
+  "cli_api_attempts": 0
+}

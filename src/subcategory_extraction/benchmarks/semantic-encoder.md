@@ -4,6 +4,10 @@
 Модуль: `semantic_encoder`  
 Дата: 2026-11-14
 
+Актуальное переобучение на 4851 исправленном train-описании и evaluation на
+119 диагностических test-описаниях: [improved-dataset.md](improved-dataset.md).
+Ниже сохранён исходный эксперимент на прежней разметке и 208 test-строках.
+
 ## Метод и контракт
 
 `SubcategoryExtractionPipeline(BasePipeline)` создаётся без аргументов;

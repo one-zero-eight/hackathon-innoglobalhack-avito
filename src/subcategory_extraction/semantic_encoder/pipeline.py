@@ -21,10 +21,12 @@ class SubcategoryExtractionPipeline(BasePipeline):
 
     name = "semantic_encoder"
 
-    def __init__(self) -> None:
-        self.artifact_path = Path(os.getenv(
-            "SEMANTIC_ENCODER_ARTIFACT_PATH", str(DEFAULT_ARTIFACT),
-        )).expanduser().resolve()
+    def __init__(self, artifact_path: Path | None = None) -> None:
+        if artifact_path is None:
+            artifact_path = Path(os.getenv(
+                "SEMANTIC_ENCODER_ARTIFACT_PATH", str(DEFAULT_ARTIFACT),
+            ))
+        self.artifact_path = artifact_path.expanduser().resolve()
         self._resource = load_resource(
             self.artifact_path, os.getenv("SEMANTIC_ENCODER_DEVICE", "auto"),
         )

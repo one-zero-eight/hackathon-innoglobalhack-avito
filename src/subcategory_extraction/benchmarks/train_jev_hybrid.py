@@ -5,13 +5,14 @@ import hashlib
 import json
 import logging
 from pathlib import Path
+import time
 
 import numpy as np
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.linear_model import LogisticRegression
 from sklearn.neighbors import NearestNeighbors
 
-from main import MICROCATEGORIES
+from main import MICROCATEGORIES, PipelineInput
 from run import normalize_description, read_records
 from subcategory_extraction.benchmarks.train_tfidf import DATASET, ROOT, load_rows
 from subcategory_extraction.tfidf.pipeline import DEFAULT_ARTIFACT
@@ -67,9 +68,44 @@ def exclude_test_components(rows: list[dict], test_path: Path) -> tuple[list[dic
     }
 
 
-def train(dataset: Path, exclude_dataset: Path, artifact_path: Path, report_path: Path) -> dict:
-    """Обучить фиксированную модель и сохранить совместимый JSON-артефакт."""
-    rows, exclusion = exclude_test_components(load_rows(dataset), exclude_dataset)
+def load_prepared_rows(dataset: Path) -> list[dict]:
+    """Прочитать готовый train без нормализации, дедупликации и изменения меток."""
+    rows = []
+    for line_number, line in enumerate(dataset.read_text(encoding="utf-8").splitlines(), start=1):
+        if not line.strip():
+            continue
+        record = json.loads(line)
+        inp = PipelineInput(description=record["description"], mcId=record.get("mcId", 101))
+        targets = {target["mcId"] for target in record["found_microcategories"]}
+        if (
+            inp.mc_id != 101
+            or any(type(category) is not int or category not in MICROCATEGORIES for category in targets)
+            or inp.mc_id in targets
+        ):
+            raise ValueError(f"Строка {line_number}: некорректные категории готового train")
+        rows.append({"inp": inp, "targets": targets})
+    if not rows:
+        raise ValueError("Обучающий dataset пуст")
+    return rows
+
+
+def train(
+    dataset: Path, exclude_dataset: Path, artifact_path: Path, report_path: Path,
+    prepared_dataset: bool = False,
+) -> dict:
+    """Обучить фиксированную модель; готовый train использовать без фильтрации."""
+    started = time.perf_counter()
+    if prepared_dataset:
+        rows = load_prepared_rows(dataset)
+        exclusion = {
+            "method": "prepared_dataset_no_additional_filtering",
+            "test_labels_used": False,
+            "training_rows_before": len(rows),
+            "training_rows_after": len(rows),
+            "excluded_rows": 0,
+        }
+    else:
+        rows, exclusion = exclude_test_components(load_rows(dataset), exclude_dataset)
     texts = [row["inp"].description for row in rows]
     categories = list(MICROCATEGORIES)
     vectorizer = TfidfVectorizer(
@@ -92,6 +128,16 @@ def train(dataset: Path, exclude_dataset: Path, artifact_path: Path, report_path
     training_path = artifact_path.parent / "hybrid-training.jsonl"
     if len({dataset.resolve(), exclude_dataset.resolve(), artifact_path.resolve(), report_path.resolve(), training_path.resolve()}) != 5:
         raise ValueError("Пути обучения, оценки и выходных файлов должны различаться")
+    artifact_path.parent.mkdir(parents=True, exist_ok=True)
+    with training_path.open("w", encoding="utf-8") as stream:
+        for row in rows:
+            record = {
+                "description": row["inp"].description,
+                "found_microcategories": [{"mcId": category} for category in sorted(row["targets"])],
+            }
+            stream.write(json.dumps(record, ensure_ascii=False) + "\n")
+    dataset_sha256 = hashlib.sha256(dataset.read_bytes()).hexdigest()
+    actual_training_sha256 = hashlib.sha256(training_path.read_bytes()).hexdigest()
     artifact = {
         "version": 1,
         "categories": categories,
@@ -102,26 +148,24 @@ def train(dataset: Path, exclude_dataset: Path, artifact_path: Path, report_path
         "weights": np.asarray(weights).tolist(),
         "intercepts": intercepts,
         "training": {
-            "dataset_sha256": hashlib.sha256(dataset.read_bytes()).hexdigest(),
+            "dataset_sha256": dataset_sha256,
+            "actual_training_dataset_sha256": actual_training_sha256,
+            "training_rows": len(rows),
+            "prepared_dataset": prepared_dataset,
             "validation_used": False,
             "hyperparameters_selected_on_test": False,
             "exclusion": exclusion,
         },
     }
-    artifact_path.parent.mkdir(parents=True, exist_ok=True)
     artifact_path.write_text(json.dumps(artifact, ensure_ascii=False), encoding="utf-8")
-    with training_path.open("w", encoding="utf-8") as stream:
-        for row in rows:
-            record = {
-                "description": row["inp"].description,
-                "found_microcategories": [{"mcId": category} for category in sorted(row["targets"])],
-            }
-            stream.write(json.dumps(record, ensure_ascii=False) + "\n")
     report = {
         "dataset": str(dataset.resolve()),
+        "dataset_sha256": dataset_sha256,
         "artifact": str(artifact_path.resolve()),
         "artifact_sha256": hashlib.sha256(artifact_path.read_bytes()).hexdigest(),
         "actual_training_dataset": str(training_path.resolve()),
+        "actual_training_dataset_sha256": actual_training_sha256,
+        "prepared_dataset": prepared_dataset,
         "training_rows": len(rows),
         "trained_categories": trained_categories,
         "fixed_threshold": LOCAL_THRESHOLD,
@@ -129,6 +173,7 @@ def train(dataset: Path, exclude_dataset: Path, artifact_path: Path, report_path
         "threshold_search_used": False,
         "test_labels_used_for_training": False,
         "exclusion": exclusion,
+        "total_seconds": time.perf_counter() - started,
     }
     report_path.parent.mkdir(parents=True, exist_ok=True)
     report_path.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
@@ -141,10 +186,17 @@ def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--dataset", type=Path, default=DATASET)
     parser.add_argument("--exclude-dataset", type=Path, default=PUBLIC_DATASET)
+    parser.add_argument(
+        "--prepared-dataset", action="store_true",
+        help="Использовать все готовые строки без дедупликации и исключения test-компонент",
+    )
     parser.add_argument("--artifact", type=Path, default=DEFAULT_ARTIFACT)
     parser.add_argument("--report", type=Path, default=ROOT / "out/jev-hybrid-training.json")
     args = parser.parse_args()
-    train(args.dataset, args.exclude_dataset, args.artifact, args.report)
+    train(
+        args.dataset, args.exclude_dataset, args.artifact, args.report,
+        prepared_dataset=args.prepared_dataset,
+    )
 
 
 if __name__ == "__main__":

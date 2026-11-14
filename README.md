@@ -26,13 +26,14 @@
 
 ```json
 {
-  "subcategory_extraction": "jev",
+  "subcategory_extraction": "semantic_encoder_f1",
   "draft_generation": "sample_llm"
 }
 ```
 
 Доступны `subcategory_extraction/google_decision`, `tfidf`, `jev`, `jev_tfidf`,
-`jev_retrieval`, `evidence_jev`, `jev_arbiter`, `semantic_encoder`, `jev_boundaries`.
+`jev_retrieval`, `evidence_jev`, `jev_arbiter`, `semantic_encoder`,
+`semantic_encoder_calibrated`, `semantic_encoder_f1`, `jev_boundaries`.
 Доступен генератор `draft_generation/sample_llm`. `null` означает, что модуль
 не выбран. CLI выдаёт явную ошибку.
 Варианты (например, `jev`, `embeddings` или `llm`) добавляются в
@@ -46,6 +47,41 @@
 [subcategory_extraction/README.md](src/subcategory_extraction/README.md);
 исторические результаты с внешним SplitShift сохранены в
 `src/subcategory_extraction/benchmarks/historical/`.
+
+### Актуальная оценка на исправленном датасете
+
+RuBERT-tiny2 и TF-IDF заново обучены на `improved_dataset` из коммита
+`e3d0e0e`; Google guided, Jev guided, TF-IDF, Jev + TF-IDF и RuBERT
+сравниваются на одних 119 диагностических test-описаниях.
+[Результаты, ограничения разметки и команды](src/subcategory_extraction/benchmarks/improved-dataset.md).
+Прежние метрики на исходных 208 строках ниже и в старых отчётах —
+исторические, с новой оценкой напрямую не сопоставимы.
+
+### Подбор порогов RuBERT на CPU
+
+`semantic_encoder_calibrated` использует тот же RuBERT-tiny2 с порогами,
+выбранными только на внутренней validation. Для этого отдельные веса
+обучаются на train-компонентах; близкие тексты не переходят между
+train/validation/control. Диагностический public test в подбор не входит.
+Прежние веса и default `config.json` не меняются.
+[Протокол, результаты и запуск](src/subcategory_extraction/benchmarks/rubert-thresholds.md).
+В этом опыте подобранные пороги не улучшили micro-F1 на control;
+экспериментальный вариант не включён по умолчанию.
+
+### Полный план улучшения RuBERT-tiny2
+
+`semantic_encoder_f1` добавляет выбор checkpoint/LR и warmup, проверенные
+трудные train-примеры, label-wise attention окон, дистилляцию локального
+RuBERT-base и group-crossfit калибровку порогов. Итоговый классификатор —
+один компактный RuBERT-tiny2 на CPU, без учителя и внешнего API при inference.
+Варианты сравниваются на одних119 диагностических описаниях; это локальная
+оценка предварительных меток, не прогноз скрытого лидерборда.
+[Все результаты, ограничения и воспроизведение](src/subcategory_extraction/benchmarks/rubert-f1-plan.md).
+На тех же119 описаниях выбранный по validation студент получил micro-F1
+**0.857143** против0.811530 у прежнего RuBERT. В этой ветке он выбран в
+`config.json`; перед первым запуском нужны локальные веса из воспроизводимого
+обучения. Веса не включены в Git. Результат на скрытом test неизвестен;
+устойчивость улучшения по разным seed не подтверждена.
 
 ### Jev + локальный TF-IDF без validation
 
@@ -178,9 +214,9 @@ uv run python src/run.py --config run.config.json
 
 ## CPU и стоимость внешних моделей
 
-RuBERT-tiny2 проверен на CPU: micro-F1 0.786704, медиана 3.58 мс на уникальный
-вход на Apple M4 Pro. Это уже дообученная компактная модель, не TinyBERT;
-качество пока ниже Jev, поэтому default не изменён.
+Исторический замер на исходных 208 строках: RuBERT-tiny2 на CPU дал micro-F1
+0.786704, медиану 3.58 мс на уникальный вход на Apple M4 Pro. Это дообученная
+компактная модель, не TinyBERT. Замер не относится к новым весам `improved_dataset`.
 
 Все API-клиенты теперь учитывают usage, повторы и локальный/provider cache.
 Обычный CLI дополнительно сохраняет `<output>.costs.json`, включая ошибки;

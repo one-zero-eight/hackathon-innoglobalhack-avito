@@ -1,7 +1,8 @@
-"""Единое сравнение заранее фиксированных методов на полном официальном наборе."""
+"""Единое сравнение заранее фиксированных методов на выбранном наборе."""
 
 import argparse
 from concurrent.futures import ThreadPoolExecutor, as_completed
+from datetime import datetime, timezone
 import hashlib
 import json
 import logging
@@ -38,30 +39,60 @@ def google_replay(path: Path, dataset: Path, rows: list, costs: LLMCostLedger) -
     """Применить реальные сохранённые вероятности только к совпавшим входам."""
     record = json.loads(path.read_text(encoding="utf-8"))
     prompt = PROMPT_DIR / "google_decision_guided.md"
-    if (
-        record["model"] != "gemini-decision-1" or record["threshold"] != 0.5
-        or record["dataset_sha256"] != digest(dataset)
-        or record["prompt_sha256"] != digest(prompt)
-        or record["source_mc_id"] != 101 or len(record["rows"]) != len(rows)
+    original_hash = digest(DATASET)
+    if not isinstance(record, dict) or (
+        record.get("model") != "gemini-decision-1" or record.get("threshold") != 0.5
+        or record.get("dataset_sha256") != original_hash
+        or record.get("prompt_sha256") != digest(prompt)
+        or type(record.get("source_mc_id")) is not int or record["source_mc_id"] != 101
     ):
-        raise ValueError("Google replay не соответствует данным, модели или guided-промпту")
-    predictions = []
-    for row, saved in zip(rows, record["rows"], strict=True):
-        if saved["description_sha256"] != hashlib.sha256(row.inp.description.encode()).hexdigest():
-            raise ValueError("Google replay: изменился порядок/текст объявлений")
-        probabilities = {int(cid): value for cid, value in saved["probabilities"].items()}
-        if set(probabilities) != set(MICROCATEGORIES) - {row.inp.mc_id} or any(
+        raise ValueError("Google replay не соответствует исходным данным, модели или guided-промпту")
+    original_rows = read_records(DATASET)
+    saved_rows = record.get("rows")
+    if not isinstance(saved_rows, list) or len(saved_rows) != len(original_rows):
+        raise ValueError("Google replay: неверное число исходных записей")
+    indexed = {}
+    record_numbers = {}
+    expected_categories = {str(cid) for cid in MICROCATEGORIES if cid != 101}
+    for number, (original, saved) in enumerate(zip(original_rows, saved_rows, strict=True), start=1):
+        description = original.get("description")
+        source = original.get("mcId", 101)
+        if not isinstance(description, str) or type(source) is not int or source != 101:
+            raise ValueError("Google replay: неверный исходный вход")
+        key = (hashlib.sha256(description.encode("utf-8")).hexdigest(), source)
+        if not isinstance(saved, dict) or saved.get("description_sha256") != key[0]:
+            raise ValueError("Google replay: изменился порядок/текст исходных объявлений")
+        probabilities = saved.get("probabilities")
+        if not isinstance(probabilities, dict) or set(probabilities) != expected_categories or any(
             type(value) not in (int, float) or not math.isfinite(value) or not 0 <= value <= 1
             for value in probabilities.values()
         ):
             raise ValueError("Google replay: неверные категории или вероятности")
-        predictions.append({cid for cid, value in probabilities.items() if value >= 0.5})
+        if key in indexed and indexed[key]["probabilities"] != probabilities:
+            raise ValueError("Google replay: противоречивые вероятности одинаковых исходных входов")
+        indexed.setdefault(key, saved)
+        record_numbers.setdefault(key, []).append(number)
+    keys = [
+        (hashlib.sha256(row.inp.description.encode("utf-8")).hexdigest(), row.inp.mc_id)
+        for row in rows
+    ]
+    if any(key not in indexed for key in keys):
+        raise ValueError("Google replay: запрошенный точный текст/source отсутствует в исходной записи")
+    predictions = []
+    for key in keys:
+        saved = indexed[key]
+        predictions.append({int(cid) for cid, value in saved["probabilities"].items() if value >= 0.5})
         costs.record(record["model"], "https://generativelanguage.googleapis.com/v1beta/decisions",
                      saved.get("usage"), cache_hit=True)
     return predictions, {
         "mode": "genuine_recorded_api_replay", "record_sha256": digest(path),
         "model": record["model"], "prompt_sha256": record["prompt_sha256"],
-        "fresh_api_requests": 0, "recorded_rows": len(rows),
+        "original_dataset_sha256": original_hash, "evaluation_dataset_sha256": digest(dataset),
+        "source_mc_id": record["source_mc_id"], "threshold": record["threshold"],
+        "fresh_api_requests": 0, "recorded_rows": len(saved_rows), "evaluation_rows": len(rows),
+        "unique_inputs": len(set(keys)), "cache_hits": len(rows),
+        "matched_record_row_numbers": [record_numbers[key] for key in keys],
+        "provenance": "genuine recorded API probabilities; exact input/source replay, not fresh calls; labels not reused",
     }
 
 
@@ -105,6 +136,8 @@ def describe(pipeline: object) -> dict:
             metadata[name] = {"model": client.model_id, "endpoint": client.endpoint}
     if hasattr(pipeline, "device"):
         metadata["device"] = str(pipeline.device)
+    if isinstance(getattr(pipeline, "prompt", None), str):
+        metadata["prompt_sha256"] = hashlib.sha256(pipeline.prompt.encode("utf-8")).hexdigest()
     return metadata
 
 
@@ -208,6 +241,7 @@ def main() -> None:
     for name in ("JEV_THRESHOLD", "GOOGLE_DECISION_THRESHOLD", "JEV_TFIDF_THRESHOLD"):
         os.environ[name] = "0.5"
     os.environ["GOOGLE_DECISION_PROMPT"] = "guided"
+    os.environ["JEV_PROMPT_PATH"] = str(PROMPT_DIR / "google_decision_guided.md")
     os.environ["JEV_TFIDF_WEIGHT"] = "0.5"
     os.environ["JEV_REFERENCE_DATASET"] = str(args.training_dataset.resolve())
     os.environ["JEV_REFERENCE_MAX_CHARS"] = "1800"
@@ -215,7 +249,10 @@ def main() -> None:
     if args.report.resolve() in {args.dataset.resolve(), args.training_dataset.resolve(), args.google_record.resolve()}:
         raise ValueError("Отчёт не должен перезаписывать входные данные")
     report = {
+        "evaluated_at_utc": datetime.now(timezone.utc).isoformat(),
         "protocol": {
+            "dataset_path": str(args.dataset.resolve()),
+            "training_dataset_path": str(args.training_dataset.resolve()),
             "dataset_sha256": digest(args.dataset), "training_sha256": digest(args.training_dataset),
             "rows": len(rows), "source_mc_id_assumption": 101,
             "threshold": 0.5, "validation_used": False, "test_parameter_search_used": False,
