@@ -575,6 +575,7 @@ out/
 
 # Local agent instructions
 /local_agents.md
+untitled.md
 
 # Официальные файлы local_jev загружаются при первом запуске.
 src/subcategory_extraction/decisions/local_jev/artifacts/
