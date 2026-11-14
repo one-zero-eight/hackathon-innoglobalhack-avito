@@ -1,0 +1,105 @@
+{
+  "version": 1,
+  "review_date": "2026-11-14",
+  "status": "derived_reviewed_not_organizer_ground_truth",
+  "source_sha256": {
+    "public-train-annotated.jsonl": "b7118d68086624fbeab43839f22a635d4e325e4ee339f22d4aa0ad3c2e986615",
+    "public-test-dataset.parquet": "65b5a45a98b577d853a928932bbbdf8bd9bdeb469ded3016faace4d11f3eabaa"
+  },
+  "normalization": "NFKC, casefold, ё→е, whitespace",
+  "near_similarity_threshold": 0.92,
+  "test_status": "reviewed_diagnostic_subset_not_independent_holdout",
+  "source_mc_id": {
+    "train": 101,
+    "test": null
+  },
+  "pyarrow_version": "26.0.1",
+  "builder_sha256": "1e67bcfeea068242b7fc1220c919c63f15cecb52707ed6ce8f7093bc8df052aa",
+  "policy": {
+    "minimum_alphabetic_characters": 3,
+    "whole_object_only_pattern": "только\\s+под\\s+ключ|только\\s+дом\\s+целиком|исключительно\\s+по\\s+формату|не\\s+бер[её]м\\s+в\\s+работу\\s+отдельные|специализируемся\\s+исключительно\\s+на\\s+комплексном\\s+ремонте|(?:беру|бер[её]м)[^\\n.!?]{0,30}только\\s+комплексные\\s+объекты|работаем\\s+только\\s+по\\s+комплексному\\s+ремонту|(?:только|исключительно)[^\\n.!?]{0,60}(?:квартир\\w*|дом\\w*)\\s+целиком",
+    "plaster_cues_pattern": "штукатур|выравн",
+    "unresolved_filters": [
+      "lexical_signal_without_label",
+      "plaster_without_cues",
+      "near_text_different_labels"
+    ],
+    "test_overlap_policy": "Исключить test-описания, совпадающие с исходным train после нормализации либо имеющие с ним сходство не ниже порога исходного аудита."
+  },
+  "correction_decisions": {
+    "train": 21,
+    "test": 7
+  },
+  "user_review_decisions": {
+    "train": 24,
+    "test": 0
+  },
+  "normalized_train_test_overlap": 0,
+  "known_near_train_test_overlap": 0,
+  "splits": {
+    "train": {
+      "source_rows": 10000,
+      "source_unique_normalized": 4854,
+      "output_rows": 4320,
+      "source_row_statuses": {
+        "deduplicated": 4872,
+        "included": 4320,
+        "quarantine": 808
+      },
+      "corrected_source_rows": 302,
+      "corrected_output_rows": 21,
+      "output_empty_targets": 1221,
+      "source_label_counts": {
+        "102": 5484,
+        "103": 5073,
+        "104": 4582,
+        "105": 4562,
+        "106": 5481
+      },
+      "output_label_counts": {
+        "102": 2154,
+        "103": 2186,
+        "104": 2129,
+        "105": 2141,
+        "106": 2401
+      }
+    },
+    "test": {
+      "source_rows": 208,
+      "source_unique_normalized": 139,
+      "output_rows": 94,
+      "source_row_statuses": {
+        "deduplicated": 36,
+        "excluded_overlap": 34,
+        "included": 94,
+        "quarantine": 44
+      },
+      "corrected_source_rows": 11,
+      "corrected_output_rows": 7,
+      "output_empty_targets": 61,
+      "source_label_counts": {
+        "102": 62,
+        "103": 36,
+        "104": 65,
+        "105": 74,
+        "106": 58
+      },
+      "output_label_counts": {
+        "102": 18,
+        "103": 16,
+        "104": 16,
+        "105": 20,
+        "106": 18
+      }
+    }
+  },
+  "output_sha256": {
+    "train.jsonl": "05dba06c68a8171a459dff751618e9134f0710a61b85231e08395eebf2909a31",
+    "reviewed_test.parquet": "a2bfa034a3b3e47f7baf30431f238b6a134d13443ece1427b5fba515480282db",
+    "quarantine.jsonl": "4a59c2e014e2084cf57aeaaa1793ec724dee93817eb6b90f086d09ab7acc7e4a",
+    "excluded_overlap.jsonl": "7e3c59d3f6d8f2861c28ca48bbadfd7e77b160a7895eeeaffbdd36af280b9ca8",
+    "corrections.jsonl": "c903792958f488a0e0c88bb80e45a69add8a1785af3e9c540bb60b3ff478a085",
+    "provenance.jsonl": "eff212c1880292876f65518e37e10b408454bbf8fbbe2b42fe89416d7904d09c",
+    "decisions.json": "4ac73f4d8137491361b92befed3061081f5e331f0f5d548c1045555dde9d704d"
+  }
+}

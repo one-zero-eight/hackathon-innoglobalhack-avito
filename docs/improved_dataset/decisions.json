@@ -1,0 +1,843 @@
+{
+  "version": 1,
+  "review_date": "2026-11-14",
+  "review_status": "Производная разметка по аудиту ассистента; не эталон, подтверждённый организаторами",
+  "selection_policy": {
+    "minimum_alphabetic_characters": 3,
+    "whole_object_only_pattern": "только\\s+под\\s+ключ|только\\s+дом\\s+целиком|исключительно\\s+по\\s+формату|не\\s+бер[её]м\\s+в\\s+работу\\s+отдельные|специализируемся\\s+исключительно\\s+на\\s+комплексном\\s+ремонте|(?:беру|бер[её]м)[^\\n.!?]{0,30}только\\s+комплексные\\s+объекты|работаем\\s+только\\s+по\\s+комплексному\\s+ремонту|(?:только|исключительно)[^\\n.!?]{0,60}(?:квартир\\w*|дом\\w*)\\s+целиком",
+    "plaster_cues_pattern": "штукатур|выравн",
+    "unresolved_filters": [
+      "lexical_signal_without_label",
+      "plaster_without_cues",
+      "near_text_different_labels"
+    ],
+    "test_overlap_policy": "Исключить test-описания, совпадающие с исходным train после нормализации либо имеющие с ним сходство не ниже порога исходного аудита."
+  },
+  "source_sha256": {
+    "public-train-annotated.jsonl": "b7118d68086624fbeab43839f22a635d4e325e4ee339f22d4aa0ad3c2e986615",
+    "public-test-dataset.parquet": "65b5a45a98b577d853a928932bbbdf8bd9bdeb469ded3016faace4d11f3eabaa"
+  },
+  "whole_object_only": {
+    "status": "user_clarification",
+    "rule": "При явном ограничении только комплексным заказом его этапы отдельно не размечаются. Пустой набор корректен. Одна общая фраза «под ключ» без ограничения не доказывает отказ от отдельных заказов."
+  },
+  "train": [
+    {
+      "id": "user-review-024-train-243",
+      "row": 243,
+      "expected_labels": [],
+      "new_labels": [
+        102
+      ],
+      "action": "correct",
+      "review_type": "user_cli_review",
+      "review_case": 24,
+      "review_answer": "2",
+      "description_group_id": "a34ad80e2c93062099baf25cfa6cdcdeb218b9e47ab3c80f9660ca1a14a0ec70",
+      "reason": "Пользователь выбрал набор в интерактивном CLI. Применяется только к нормализованным копиям этого текста в той же части.",
+      "item_id": 2511911500643
+    },
+    {
+      "id": "user-review-023-train-238",
+      "row": 238,
+      "expected_labels": [],
+      "new_labels": [
+        102,
+        103,
+        106
+      ],
+      "action": "correct",
+      "review_type": "user_cli_review",
+      "review_case": 23,
+      "review_answer": "2",
+      "description_group_id": "b026a130886a7df526d26cde49949ef9cad71107884798ebbb8dcb9947a80d5b",
+      "reason": "Пользователь выбрал набор в интерактивном CLI. Применяется только к нормализованным копиям этого текста в той же части.",
+      "item_id": 2516273252454
+    },
+    {
+      "id": "user-review-022-train-219",
+      "row": 219,
+      "expected_labels": [
+        102
+      ],
+      "new_labels": [
+        102
+      ],
+      "action": "retain",
+      "review_type": "user_cli_review",
+      "review_case": 22,
+      "review_answer": "1",
+      "description_group_id": "0a66a8ea8d5901a234b5297906488240733e7fc1773ce849bb3f0874735b3b18",
+      "reason": "Пользователь выбрал набор в интерактивном CLI. Применяется только к нормализованным копиям этого текста в той же части.",
+      "item_id": 2500404752804
+    },
+    {
+      "id": "user-review-021-train-173",
+      "row": 173,
+      "expected_labels": [
+        102,
+        103,
+        105,
+        106
+      ],
+      "new_labels": [
+        102,
+        103,
+        105,
+        106
+      ],
+      "action": "retain",
+      "review_type": "user_cli_review",
+      "review_case": 21,
+      "review_answer": "1",
+      "description_group_id": "194e16f6fdb2c829ac56787a1dc61db20915c18b3a70ad19390e77a921e18a40",
+      "reason": "Пользователь выбрал набор в интерактивном CLI. Применяется только к нормализованным копиям этого текста в той же части.",
+      "item_id": 2499549001108
+    },
+    {
+      "id": "user-review-020-train-157",
+      "row": 157,
+      "expected_labels": [
+        102,
+        103,
+        104,
+        105
+      ],
+      "new_labels": [
+        102,
+        103,
+        104,
+        105,
+        106
+      ],
+      "action": "correct",
+      "review_type": "user_cli_review",
+      "review_case": 20,
+      "review_answer": "2",
+      "description_group_id": "6ab17b216ce955209fae3e95dccc85222bf8d0edfeaf7430054c9821dd92d3c8",
+      "reason": "Пользователь выбрал набор в интерактивном CLI. Применяется только к нормализованным копиям этого текста в той же части.",
+      "item_id": 2506361250815
+    },
+    {
+      "id": "user-review-019-train-144",
+      "row": 144,
+      "expected_labels": [
+        103,
+        104,
+        105
+      ],
+      "new_labels": [
+        102,
+        103,
+        104,
+        105,
+        106
+      ],
+      "action": "correct",
+      "review_type": "user_cli_review",
+      "review_case": 19,
+      "review_answer": "2",
+      "description_group_id": "f6e3cef1899f7494491d2d276934604d3e191c68322a6ee77f054e691819df31",
+      "reason": "Пользователь выбрал набор в интерактивном CLI. Применяется только к нормализованным копиям этого текста в той же части.",
+      "item_id": 2511184250475
+    },
+    {
+      "id": "user-review-018-train-132",
+      "row": 132,
+      "expected_labels": [
+        102,
+        106
+      ],
+      "new_labels": [
+        102,
+        106
+      ],
+      "action": "retain",
+      "review_type": "user_cli_review",
+      "review_case": 18,
+      "review_answer": "1",
+      "description_group_id": "d266d0bc09f61f59f00b945ec7cb3077e149208a31b25ad9cdbe17293a37d8ed",
+      "reason": "Пользователь выбрал набор в интерактивном CLI. Применяется только к нормализованным копиям этого текста в той же части.",
+      "item_id": 2509542001836
+    },
+    {
+      "id": "user-review-017-train-130",
+      "row": 130,
+      "expected_labels": [
+        102,
+        106
+      ],
+      "new_labels": [
+        102,
+        106
+      ],
+      "action": "retain",
+      "review_type": "user_cli_review",
+      "review_case": 17,
+      "review_answer": "1",
+      "description_group_id": "3aaf6458e02c526669b588e6a127d9c063cd2425dee04deb93333338132b822d",
+      "reason": "Пользователь выбрал набор в интерактивном CLI. Применяется только к нормализованным копиям этого текста в той же части.",
+      "item_id": 2514508253384
+    },
+    {
+      "id": "user-review-016-train-120",
+      "row": 120,
+      "expected_labels": [
+        102,
+        103,
+        104,
+        105,
+        106
+      ],
+      "new_labels": [
+        102,
+        103,
+        104,
+        105,
+        106
+      ],
+      "action": "retain",
+      "review_type": "user_cli_review",
+      "review_case": 16,
+      "review_answer": "1",
+      "description_group_id": "34ecce5356760369956eef0933b5957a0f514daa02437670fbd1b2d89b2490be",
+      "reason": "Пользователь выбрал набор в интерактивном CLI. Применяется только к нормализованным копиям этого текста в той же части.",
+      "item_id": 2517580000039
+    },
+    {
+      "id": "user-review-015-train-109",
+      "row": 109,
+      "expected_labels": [
+        102,
+        106
+      ],
+      "new_labels": [
+        102,
+        106
+      ],
+      "action": "retain",
+      "review_type": "user_cli_review",
+      "review_case": 15,
+      "review_answer": "1",
+      "description_group_id": "f2b4abb664d6dfc16e6ce2aa49bc38c1cec84ec23aa37f1250170d9e3ef4de48",
+      "reason": "Пользователь выбрал набор в интерактивном CLI. Применяется только к нормализованным копиям этого текста в той же части.",
+      "item_id": 2514388750049
+    },
+    {
+      "id": "user-review-014-train-102",
+      "row": 102,
+      "expected_labels": [
+        103,
+        104,
+        105,
+        106
+      ],
+      "new_labels": [
+        102,
+        103,
+        104,
+        105,
+        106
+      ],
+      "action": "correct",
+      "review_type": "user_cli_review",
+      "review_case": 14,
+      "review_answer": "2",
+      "description_group_id": "dbff360657a5f52bc77d507704bc14f2b587cd317ead2d88722731d992cb08b1",
+      "reason": "Пользователь выбрал набор в интерактивном CLI. Применяется только к нормализованным копиям этого текста в той же части.",
+      "item_id": 2505858751060
+    },
+    {
+      "id": "user-review-013-train-101",
+      "row": 101,
+      "expected_labels": [],
+      "new_labels": [],
+      "action": "retain",
+      "review_type": "user_cli_review",
+      "review_case": 13,
+      "review_answer": "1",
+      "description_group_id": "41c991eb6a66242c0454191244278183ce58cf4a6bcd372f799e4b9cc01886af",
+      "reason": "Пользователь выбрал набор в интерактивном CLI. Применяется только к нормализованным копиям этого текста в той же части.",
+      "item_id": 2506561502452
+    },
+    {
+      "id": "user-review-012-train-89",
+      "row": 89,
+      "expected_labels": [
+        106
+      ],
+      "new_labels": [
+        103,
+        106
+      ],
+      "action": "correct",
+      "review_type": "user_cli_review",
+      "review_case": 12,
+      "review_answer": "2",
+      "description_group_id": "c84778a912bed2b1c204772509bb60031383d71a99c2c365f733751dc1eea6d5",
+      "reason": "Пользователь выбрал набор в интерактивном CLI. Применяется только к нормализованным копиям этого текста в той же части.",
+      "item_id": 2503319754738
+    },
+    {
+      "id": "user-review-011-train-82",
+      "row": 82,
+      "expected_labels": [
+        102,
+        104,
+        105
+      ],
+      "new_labels": [],
+      "action": "correct",
+      "review_type": "user_cli_review",
+      "review_case": 11,
+      "review_answer": "3",
+      "description_group_id": "9a0dde7c1ab9ac7cb4974e943c2b0a1bf78bb26b7a9382622ee89042d75ac1e4",
+      "reason": "Пользователь выбрал набор в интерактивном CLI. Применяется только к нормализованным копиям этого текста в той же части.",
+      "item_id": 2504786750172
+    },
+    {
+      "id": "user-review-010-train-74",
+      "row": 74,
+      "expected_labels": [],
+      "new_labels": [],
+      "action": "retain",
+      "review_type": "user_cli_review",
+      "review_case": 10,
+      "review_answer": "1",
+      "description_group_id": "bdbbc673daa4243323dbf82d0ac9c1d4fd06e35b488eac5f78d0bdfe8394ab00",
+      "reason": "Пользователь выбрал набор в интерактивном CLI. Применяется только к нормализованным копиям этого текста в той же части.",
+      "item_id": 2507811002529
+    },
+    {
+      "id": "user-review-009-train-73",
+      "row": 73,
+      "expected_labels": [],
+      "new_labels": [],
+      "action": "retain",
+      "review_type": "user_cli_review",
+      "review_case": 9,
+      "review_answer": "1",
+      "description_group_id": "89698fd185713a74ad24b6858fcaac35ee88aeaaed70d77c7932c58ebe6beb26",
+      "reason": "Пользователь выбрал набор в интерактивном CLI. Применяется только к нормализованным копиям этого текста в той же части.",
+      "item_id": 2504115500540
+    },
+    {
+      "id": "user-review-008-train-60",
+      "row": 60,
+      "expected_labels": [],
+      "new_labels": [],
+      "action": "retain",
+      "review_type": "user_cli_review",
+      "review_case": 8,
+      "review_answer": "1",
+      "description_group_id": "9307cf544a5fb54034217ec368b553479dc99d9986cbdb903b4dbba20ceee406",
+      "reason": "Пользователь выбрал набор в интерактивном CLI. Применяется только к нормализованным копиям этого текста в той же части.",
+      "item_id": 2514615252161
+    },
+    {
+      "id": "user-review-007-train-58",
+      "row": 58,
+      "expected_labels": [
+        102,
+        103,
+        106
+      ],
+      "new_labels": [
+        102,
+        103,
+        104,
+        105,
+        106
+      ],
+      "action": "correct",
+      "review_type": "user_cli_review",
+      "review_case": 7,
+      "review_answer": "2",
+      "description_group_id": "d2f30ef60ed782b9d915871a399f67318069bd1c3209b6bd5385947f56dca9ab",
+      "reason": "Пользователь выбрал набор в интерактивном CLI. Применяется только к нормализованным копиям этого текста в той же части.",
+      "item_id": 2510690250064
+    },
+    {
+      "id": "user-review-006-train-51",
+      "row": 51,
+      "expected_labels": [
+        102,
+        104,
+        105,
+        106
+      ],
+      "new_labels": [
+        102,
+        104,
+        105,
+        106
+      ],
+      "action": "retain",
+      "review_type": "user_cli_review",
+      "review_case": 6,
+      "review_answer": "1",
+      "description_group_id": "8faa927bcf782515ac6f08235f5078f837f26916b9970ea3683b2af6f6466ac1",
+      "reason": "Пользователь выбрал набор в интерактивном CLI. Применяется только к нормализованным копиям этого текста в той же части.",
+      "item_id": 2505909754577
+    },
+    {
+      "id": "user-review-005-train-47",
+      "row": 47,
+      "expected_labels": [
+        102,
+        106
+      ],
+      "new_labels": [
+        102,
+        106
+      ],
+      "action": "retain",
+      "review_type": "user_cli_review",
+      "review_case": 5,
+      "review_answer": "1",
+      "description_group_id": "c0b414e179deb24d703a859259c2d0ca1e881ed0fc6caeaf78bdf78ae84ebce9",
+      "reason": "Пользователь выбрал набор в интерактивном CLI. Применяется только к нормализованным копиям этого текста в той же части.",
+      "item_id": 2503918001052
+    },
+    {
+      "id": "user-review-004-train-44",
+      "row": 44,
+      "item_id": 2515454001210,
+      "expected_labels": [
+        102,
+        104,
+        105
+      ],
+      "new_labels": [
+        102,
+        104,
+        105,
+        106
+      ],
+      "action": "correct",
+      "review_type": "user_chat_review",
+      "review_case": 4,
+      "review_answer": "2",
+      "reason": "Пользователь выбрал добавить малярные работы по упоминанию шпаклёвки в этом объявлении. Решение не обобщается на другие поисковые списки."
+    },
+    {
+      "id": "user-review-003-train-42",
+      "row": 42,
+      "item_id": 2516185001513,
+      "expected_labels": [
+        102,
+        104,
+        105,
+        106
+      ],
+      "action": "retain",
+      "review_type": "user_chat_review",
+      "review_case": 3,
+      "review_answer": "1",
+      "reason": "Пользователь выбрал исходный набор без плитки: [102,104,105,106]. Упоминание укладки плитки в поисковом списке в этой записи не учитывается. Решение не обобщается на другие SEO-списки."
+    },
+    {
+      "id": "user-review-002-train-38",
+      "row": 38,
+      "item_id": 2508017750732,
+      "expected_labels": [],
+      "new_labels": [
+        102,
+        103,
+        104,
+        106
+      ],
+      "action": "correct",
+      "review_type": "user_chat_review",
+      "review_case": 2,
+      "review_answer": "2",
+      "reason": "Пользователь выбрал учитывать услуги из поискового списка в этом объявлении: штукатурку, плитку, сантехнику и малярные работы. Не является автоматическим решением для остальных SEO-списков."
+    },
+    {
+      "id": "user-review-001-train-3",
+      "row": 3,
+      "item_id": 2514956500363,
+      "expected_labels": [
+        102,
+        103,
+        104,
+        105,
+        106
+      ],
+      "action": "retain",
+      "review_type": "user_chat_review",
+      "review_case": 1,
+      "review_answer": "1",
+      "reason": "Пользователь выбрал исходный набор всех пяти категорий. Решение применяется ко всем 48 одинаковым описаниям."
+    },
+    {
+      "id": "train-wood-not-plaster",
+      "row": 9616,
+      "item_id": 2506557005079,
+      "expected_labels": [
+        102
+      ],
+      "new_labels": [],
+      "action": "correct",
+      "reason": "Деревянные каркасы и обрешётка, а не штукатурное выравнивание."
+    },
+    {
+      "id": "train-putty-missing-painting",
+      "row": 9621,
+      "item_id": 2502691251117,
+      "expected_labels": [
+        102
+      ],
+      "new_labels": [
+        102,
+        106
+      ],
+      "action": "correct",
+      "reason": "Штукатурка и шпаклёвка прямо предложены; малярная подготовка относится к 106."
+    },
+    {
+      "id": "train-characteristics-paint-preparation",
+      "row": 1686,
+      "item_id": 2500381500962,
+      "expected_labels": [
+        103
+      ],
+      "new_labels": [
+        103,
+        106
+      ],
+      "action": "correct",
+      "reason": "В характеристиках прямо указаны подготовка стен под покраску и укладка плитки."
+    },
+    {
+      "id": "train-explicit-putty-18",
+      "row": 18,
+      "item_id": 2521201000461,
+      "expected_labels": [
+        102,
+        103,
+        104,
+        105
+      ],
+      "new_labels": [
+        102,
+        103,
+        104,
+        105,
+        106
+      ],
+      "action": "correct",
+      "reason": "В основном списке прямо предложена шпатлевка под обои и покраску."
+    },
+    {
+      "id": "train-explicit-putty-378",
+      "row": 378,
+      "item_id": 2512337750933,
+      "expected_labels": [
+        102,
+        103,
+        104,
+        105
+      ],
+      "new_labels": [
+        102,
+        103,
+        104,
+        105,
+        106
+      ],
+      "action": "correct",
+      "reason": "Шпаклёвка прямо предложена в списке работ; явного запрета отдельных заказов нет."
+    },
+    {
+      "id": "train-explicit-putty-4046",
+      "row": 4046,
+      "item_id": 2515534500908,
+      "expected_labels": [
+        102,
+        103,
+        104,
+        105
+      ],
+      "new_labels": [
+        102,
+        103,
+        104,
+        105,
+        106
+      ],
+      "action": "correct",
+      "reason": "Шпаклёвка прямо перечислена среди доступных услуг."
+    },
+    {
+      "id": "train-explicit-putty-1689",
+      "row": 1689,
+      "item_id": 2514219250182,
+      "expected_labels": [
+        102,
+        103,
+        104,
+        105
+      ],
+      "new_labels": [
+        102,
+        103,
+        104,
+        105,
+        106
+      ],
+      "action": "correct",
+      "reason": "Шпатлевка стен прямо предложена исполнителем."
+    },
+    {
+      "id": "train-painting-not-plaster-176",
+      "row": 176,
+      "item_id": 2502799000708,
+      "expected_labels": [
+        102,
+        106
+      ],
+      "new_labels": [
+        106
+      ],
+      "action": "correct",
+      "reason": "В полном коротком тексте только шпаклёвка, обои и окраска; штукатурка не предложена."
+    },
+    {
+      "id": "train-drywall-not-plaster-252",
+      "row": 252,
+      "item_id": 2511011250480,
+      "expected_labels": [
+        102,
+        103,
+        104,
+        105,
+        106
+      ],
+      "new_labels": [
+        103,
+        104,
+        105,
+        106
+      ],
+      "action": "correct",
+      "reason": "Перечислены гипсокартон, шпаклёвка, покраска, плитка и инженерия, но не штукатурка."
+    },
+    {
+      "id": "train-putty-not-plaster-7557",
+      "row": 7557,
+      "item_id": 2513256251250,
+      "expected_labels": [
+        102,
+        103,
+        104,
+        105,
+        106
+      ],
+      "new_labels": [
+        103,
+        104,
+        105,
+        106
+      ],
+      "action": "correct",
+      "reason": "Шпаклевание относится к 106; штукатурных работ в тексте нет."
+    },
+    {
+      "id": "train-no-explicit-plaster-124",
+      "row": 124,
+      "item_id": 2514843750615,
+      "expected_labels": [
+        102,
+        103,
+        104,
+        105,
+        106
+      ],
+      "new_labels": [
+        103,
+        104,
+        105,
+        106
+      ],
+      "action": "correct",
+      "reason": "Предложены шпаклёвка, покраска, плитка и инженерия; черновой этап не содержит штукатурки."
+    },
+    {
+      "id": "train-seo-policy-9586",
+      "row": 9586,
+      "item_id": 2513226501293,
+      "expected_labels": [
+        102
+      ],
+      "action": "quarantine",
+      "reason": "Штукатурка и шпаклёвка в SEO-хвосте учтены неодинаково; политика не согласована."
+    },
+    {
+      "id": "train-customer-not-provider",
+      "row": 90,
+      "item_id": 2511719500936,
+      "expected_labels": [],
+      "action": "retain",
+      "reason": "Автор ищет исполнителя, а не предлагает перечисленные услуги."
+    },
+    {
+      "id": "train-comparison-not-offer",
+      "row": 52,
+      "item_id": 2511007250770,
+      "expected_labels": [],
+      "action": "retain",
+      "reason": "Предлагается возведение перегородок; штукатурка упомянута только в сравнении."
+    }
+  ],
+  "test": [
+    {
+      "id": "test-explicit-tile-plumbing-electricity",
+      "row": 14,
+      "expected_labels": [
+        103,
+        104,
+        105
+      ],
+      "new_labels": [
+        103,
+        104,
+        105
+      ],
+      "action": "correct",
+      "reason": "В одинаковом тексте прямо предложены плиточные работы, электрика и сантехника."
+    },
+    {
+      "id": "test-explicit-four-services",
+      "row": 16,
+      "expected_labels": [
+        102,
+        104,
+        105,
+        106
+      ],
+      "new_labels": [
+        102,
+        104,
+        105,
+        106
+      ],
+      "action": "correct",
+      "reason": "Прямо перечислены штукатурка, малярные работы и разводка электрики/сантехники."
+    },
+    {
+      "id": "test-missing-floor-tile",
+      "row": 17,
+      "expected_labels": [
+        102,
+        104,
+        105,
+        106
+      ],
+      "new_labels": [
+        102,
+        103,
+        104,
+        105,
+        106
+      ],
+      "action": "correct",
+      "reason": "Прямо предложены все пять направлений, включая напольную плитку."
+    },
+    {
+      "id": "test-explicit-five-services",
+      "row": 41,
+      "expected_labels": [],
+      "new_labels": [
+        102,
+        103,
+        104,
+        105,
+        106
+      ],
+      "action": "correct",
+      "reason": "Перечень прямо содержит штукатурку по маякам, обои, плитку, проводку и трубы."
+    },
+    {
+      "id": "test-putty-under-paint",
+      "row": 44,
+      "expected_labels": [
+        102,
+        106
+      ],
+      "new_labels": [
+        102,
+        106
+      ],
+      "action": "correct",
+      "reason": "Прямо предложены штукатурные и шпаклёвочные работы под покраску/обои."
+    },
+    {
+      "id": "test-plaster-painting",
+      "row": 58,
+      "expected_labels": [],
+      "new_labels": [
+        102,
+        106
+      ],
+      "action": "correct",
+      "reason": "Штукатурка, шпаклёвка, покраска и обои перечислены явно."
+    },
+    {
+      "id": "test-textile-walls-not-electricity",
+      "row": 67,
+      "expected_labels": [],
+      "new_labels": [],
+      "action": "correct",
+      "reason": "Предлагаются текстильные стены и натяжные потолки, а не электромонтаж."
+    }
+  ],
+  "superseded_decisions": [
+    {
+      "id": "train-ambiguous-preparation-47",
+      "row": 47,
+      "item_id": 2503918001052,
+      "expected_labels": [
+        102,
+        106
+      ],
+      "action": "quarantine",
+      "reason": "Граница общей подготовки стен и штукатурной технологии не согласована.",
+      "superseded_by": "user-review-005-train-47"
+    },
+    {
+      "id": "train-seo-policy-9930",
+      "row": 9930,
+      "item_id": 2503320500732,
+      "expected_labels": [
+        106
+      ],
+      "action": "quarantine",
+      "reason": "Нет единого решения по косметическому ремонту и плитке в поисковом списке.",
+      "superseded_by": "user-review-012-train-89"
+    },
+    {
+      "id": "train-seo-policy-9866",
+      "row": 9866,
+      "item_id": 2499550250967,
+      "expected_labels": [
+        102,
+        103,
+        105,
+        106
+      ],
+      "action": "quarantine",
+      "reason": "Сантехника находится только в SEO-хвосте; требуется согласование.",
+      "superseded_by": "user-review-021-train-173"
+    },
+    {
+      "id": "train-incomplete-label-resolution-238",
+      "row": 238,
+      "item_id": 2516273252454,
+      "expected_labels": [],
+      "action": "quarantine",
+      "reason": "103/106 явно пропущены, но полный набор зависит от трактовки штукатурки в SEO; неполный набор не фиксируем как эталон.",
+      "superseded_by": "user-review-023-train-238"
+    }
+  ]
+}
