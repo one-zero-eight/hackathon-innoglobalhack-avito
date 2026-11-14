@@ -5,9 +5,17 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[3]))
 
+import argparse
+import json
 import logging
+import os
+import runpy
+import socket
 import subprocess
-from time import perf_counter
+from tempfile import TemporaryDirectory
+from time import perf_counter, sleep
+from urllib.error import URLError
+from urllib.request import Request, urlopen
 from unittest.mock import patch
 
 from fastapi.testclient import TestClient
@@ -17,8 +25,63 @@ from benchmark_support import ROOT, metadata, save_report
 from main import Draft, LLMError, PipelineConfig, PipelineOutput
 
 
+def check_module_server() -> list[str]:
+    """Запустить python -m src на свободном локальном порту без вызовов LLM."""
+    with patch("uvicorn.run") as serve, patch("dotenv.load_dotenv") as load_env:
+        runpy.run_path(str(ROOT / "src/__main__.py"))
+        serve.assert_not_called()
+        load_env.assert_not_called()
+    with socket.socket() as listener:
+        listener.bind(("127.0.0.1", 0))
+        port = listener.getsockname()[1]
+    environment = {
+        **os.environ, "PYTHONPATH": str(ROOT), "UVICORN_HOST": "127.0.0.1",
+        "UVICORN_PORT": str(port), "EXTRACTION_API_KEY": "offline-placeholder",
+        "GENERATION_API_KEY": "offline-placeholder",
+        "EXTRACTION_API_URL": "https://example.invalid/decisions",
+        "GENERATION_API_URL": "https://example.invalid/generateContent",
+    }
+    address = f"http://127.0.0.1:{port}"
+    with TemporaryDirectory(prefix="module-server-") as folder:
+        with (Path(folder) / "server.log").open("w+") as log:
+            process = subprocess.Popen(
+                [sys.executable, "-m", "src"], cwd=folder, env=environment,
+                stdout=log, stderr=subprocess.STDOUT,
+            )
+            try:
+                deadline = perf_counter() + 15
+                while True:
+                    try:
+                        with urlopen(f"{address}/health", timeout=0.5) as response:
+                            assert response.status == 200 and json.load(response) == {"status": "ok"}
+                        break
+                    except (URLError, TimeoutError):
+                        if process.poll() is not None or perf_counter() >= deadline:
+                            log.seek(0)
+                            raise AssertionError(f"Модульный сервер не запустился: {log.read()}") from None
+                        sleep(0.05)
+                payload = json.dumps({"description": "", "mcId": 101}).encode()
+                request = Request(f"{address}/drafts", data=payload, headers={"Content-Type": "application/json"})
+                with urlopen(request, timeout=5) as response:
+                    assert response.status == 200 and json.load(response) == {"drafts": []}
+                with urlopen(f"{address}/openapi.json", timeout=5) as response:
+                    assert "/drafts" in json.load(response)["paths"]
+            finally:
+                process.terminate()
+                try:
+                    process.wait(timeout=5)
+                except subprocess.TimeoutExpired:
+                    process.kill()
+                    process.wait(timeout=5)
+    return ["module_import_without_startup", "module_server_health_custom_port",
+            "module_server_empty_pipeline_from_other_cwd", "module_server_openapi"]
+
+
 def main() -> None:
     """Проверить маршруты, схемы, ошибки и выполнение в thread pool."""
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--report", type=Path, default=Path(__file__).with_name("results.json"))
+    args = parser.parse_args()
     cases = []
     started = perf_counter()
     payload = {"description": "Устанавливаю раковины.", "mcId": 101}
@@ -77,11 +140,12 @@ def main() -> None:
         except ValueError:
             pass
     cases.append("invalid_configuration_fails_startup")
+    cases.extend(check_module_server())
     report = {**metadata(), "scenario": "offline_http_api_contract", "status": "complete",
               "real_model_calls": 0, "passed": len(cases), "cases": cases,
               "offline_elapsed_seconds": perf_counter() - started}
     revisions = subprocess.check_output(
-        ["git", "log", "--format=%H", "--", "src/api.py", "src/main.py"], cwd=ROOT, text=True,
+        ["git", "log", "--format=%H", "--", "src/api.py", "src/main.py", "src/__main__.py"], cwd=ROOT, text=True,
     ).splitlines()
     head = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=ROOT, text=True).strip()
     report["versions"] = []
@@ -91,7 +155,7 @@ def main() -> None:
             "commit": revision, "status": "unavailable" if present.returncode else "not_run",
             "reason": "HTTP-адаптер отсутствует" if present.returncode else "Нужен отдельный прогон версии адаптера",
         })
-    save_report(Path(__file__).with_name("results.json"), report)
+    save_report(args.report, report)
     logging.info("HTTP API: %d checks passed; no model calls", len(cases))
 
 

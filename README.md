@@ -5,17 +5,19 @@
 
 ## Запуск
 
-[Пошаговая ручная проверка CLI, API и всех бенчмарков](docs/manual-testing.md).
+[Пошаговая ручная проверка сервера и всех бенчмарков](docs/manual-testing.md).
 
 ```bash
 uv sync
-cp .env.example .env
+# Если .env ещё не создан:
+cp -n .env.example .env
 # Заполните LLM_API_KEY своим ключом Google в локальном .env.
-uv run python src/main.py --input data/input.json --output out/output.json
+uv run python -m src
 ```
 
-`config.json` и `.env` читаются относительно проекта, независимо от cwd.
-Пути `--input` и `--output` задаёт вызывающая сторона.
+Запускайте из корня проекта. `config.json` и `.env` читаются относительно
+проекта. Сервер по умолчанию слушает `127.0.0.1:8000`; адрес и порт задаются
+через `UVICORN_HOST` и `UVICORN_PORT` в `.env` или окружении.
 
 Контракт входа:
 
@@ -36,10 +38,12 @@ uv run python src/main.py --input data/input.json --output out/output.json
 
 ## Реализации и настройки
 
-HTTP-интерфейс с тем же JSON-контрактом:
+Пример запроса к серверу:
 
 ```bash
-uv run uvicorn --app-dir src api:app --host 127.0.0.1 --port 8000
+curl http://127.0.0.1:8000/drafts \
+  -H 'Content-Type: application/json' \
+  --data-binary @data/input.json
 ```
 
 `POST /drafts` принимает объявление в JSON-теле и возвращает JSON `drafts`.
@@ -73,7 +77,7 @@ Swagger UI: `http://127.0.0.1:8000/docs`, проверка сервера: `GET 
 подтверждает фактическую достоверность; дополнительного проверяющего LLM нет.
 API schema mode включается явно; по умолчанию формат задаёт промпт,
 локальная проверка обязательна. Ошибка не превращается в пустой или частичный
-ответ и не перезаписывает файл результатом неуспешной генерации.
+ответ. При ошибке модели HTTP API возвращает 502.
 
 Прежние `tfidf` и `sample_llm` удалены. Их результаты помечены историческими
 в соответствующих сценариях, а исходные реализации доступны на `2c65c3f`.
@@ -90,7 +94,8 @@ JSON-отчёт с датой, commit и отпечатком кода/пром�
 | --- | --- |
 | Общие клиенты, офлайн | [api_clients](src/draft_generation/benchmarks/api_clients/README.md) |
 | Выделение, офлайн | [contract](src/subcategory_extraction/benchmarks/contract/README.md) |
-| Генерация и CLI, офлайн | [contract](src/draft_generation/benchmarks/contract/README.md) |
+| Генерация и оркестрация, офлайн | [contract](src/draft_generation/benchmarks/contract/README.md) |
+| HTTP API и модульный запуск | [http_api](src/draft_generation/benchmarks/http_api/README.md) |
 | Выделение, качество и промпты | [prompt_comparison](src/subcategory_extraction/benchmarks/prompt_comparison/README.md) |
 | Выделение, задержка | [response_time](src/subcategory_extraction/benchmarks/response_time/README.md) |
 | Генерация, задержка и тексты для ручной оценки | [response_time](src/draft_generation/benchmarks/response_time/README.md) |
@@ -101,6 +106,7 @@ JSON-отчёт с датой, commit и отпечатком кода/пром�
 uv run python src/draft_generation/benchmarks/api_clients/run.py --all-revisions
 uv run python src/subcategory_extraction/benchmarks/contract/run.py --all-revisions
 uv run python src/draft_generation/benchmarks/contract/run.py --all-revisions
+uv run python src/draft_generation/benchmarks/http_api/run.py
 uv run python src/draft_generation/benchmarks/full_pipeline_evaluation/run.py
 
 # Настоящие вызовы: нужен локально настроенный ключ.
@@ -110,9 +116,9 @@ uv run python src/draft_generation/benchmarks/response_time/run.py
 uv run python src/draft_generation/benchmarks/full_pipeline_evaluation/run.py --live --config run.config.json
 ```
 
-Новый Google-пайплайн проверен офлайн. Live-прогоны в текущем окружении
-не завершены из-за отсутствия ключей; новой оценки F1/задержки/качества текста
-нет. `guided` не объявляется лучшим на основании исторических результатов.
+Пайплайн и модульный запуск сервера проверены офлайн. Последний live-прогон
+не завершился из-за ошибки Google при генерации; новой итоговой оценки F1
+и качества текста нет. `guided` не объявляется лучшим на основании истории.
 
 Общие выборки формируются в `benchmark_support.py` по официальному train:
 нормализованные точные дубликаты объединяются; идентификаторы и хеш данных

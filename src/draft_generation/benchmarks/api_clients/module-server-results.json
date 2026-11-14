@@ -1,0 +1,119 @@
+{
+  "date": "2026-11-14T15:57:54+03:00",
+  "commit": "958897148f9be9061d44796d738f360ca6fdff6f",
+  "code_sha256": "77c0f03852484a5370e42e07f4944c24401e35ee6c00549828b3947e182ee255",
+  "working_tree": true,
+  "scenario": "offline_api_clients",
+  "real_api_calls": 0,
+  "status": "complete",
+  "versions": [
+    {
+      "revision": "working_tree",
+      "commit": "958897148f9be9061d44796d738f360ca6fdff6f",
+      "main_sha256": "b1422a03f10944468062f742166010f6d9024e2c328e73768f5264154e74f635",
+      "status": "complete",
+      "checks": {
+        "protocol_cases": 8,
+        "invalid_settings": 16,
+        "invalid_outputs": 36,
+        "http_cases": 23,
+        "environment_cases": 5
+      },
+      "passed": 88,
+      "offline_elapsed_seconds": 0.12670654199973796
+    },
+    {
+      "revision": "958897148f9be9061d44796d738f360ca6fdff6f",
+      "commit": "958897148f9be9061d44796d738f360ca6fdff6f",
+      "main_sha256": "319451ca592bbb5292684d576fe424d132373a28ff89fc9e2012aa374ca19ed6",
+      "status": "complete",
+      "checks": {
+        "protocol_cases": 8,
+        "invalid_settings": 16,
+        "invalid_outputs": 36,
+        "http_cases": 23,
+        "environment_cases": 5
+      },
+      "passed": 88,
+      "offline_elapsed_seconds": 0.1361227620000136
+    },
+    {
+      "revision": "b08f4e4528ec1d9f4db5c012963ec36bb1689555",
+      "commit": "b08f4e4528ec1d9f4db5c012963ec36bb1689555",
+      "main_sha256": "319451ca592bbb5292684d576fe424d132373a28ff89fc9e2012aa374ca19ed6",
+      "status": "complete",
+      "checks": {
+        "protocol_cases": 8,
+        "invalid_settings": 16,
+        "invalid_outputs": 36,
+        "http_cases": 23,
+        "environment_cases": 5
+      },
+      "passed": 88,
+      "offline_elapsed_seconds": 0.12633054800062382
+    },
+    {
+      "revision": "9464aed0d25f45dd1369e5ed5aedd76ee4bade7c",
+      "commit": "9464aed0d25f45dd1369e5ed5aedd76ee4bade7c",
+      "main_sha256": "be5baab73163ec49c9d73363e41509e9c0f64c0a4020eefea7f18176969405a5",
+      "status": "complete",
+      "checks": {
+        "protocol_cases": 8,
+        "invalid_settings": 16,
+        "invalid_outputs": 36,
+        "http_cases": 23,
+        "environment_cases": 5
+      },
+      "passed": 88,
+      "offline_elapsed_seconds": 0.09335925999948813
+    },
+    {
+      "revision": "3613e030db534ac6dcb502bd417f511ba3b79789",
+      "commit": "3613e030db534ac6dcb502bd417f511ba3b79789",
+      "main_sha256": "f74f124e721e1bd1a8f1c0bd67fe74047801e9ea171bc43cd03a622657cdb17f",
+      "status": "unavailable",
+      "reason": "В этой версии нет новых общих API-клиентов",
+      "missing": [
+        "APIClientSettings",
+        "GoogleDecisionClient",
+        "GoogleGenerationClient",
+        "JSONTransport",
+        "LLMError",
+        "OpenAICompatibleClient",
+        "generation_client"
+      ]
+    },
+    {
+      "revision": "392ed0faf90ae2eaa9de93cc51dc99a7907e08bb",
+      "commit": "392ed0faf90ae2eaa9de93cc51dc99a7907e08bb",
+      "main_sha256": "6eb0a73a9f0518e6f547cf5c9a093c7548e4a014cd92f02b7dc34f7925240904",
+      "status": "unavailable",
+      "reason": "В этой версии нет новых общих API-клиентов",
+      "missing": [
+        "APIClientSettings",
+        "GoogleDecisionClient",
+        "GoogleGenerationClient",
+        "JSONTransport",
+        "LLMError",
+        "OpenAICompatibleClient",
+        "generation_client"
+      ]
+    },
+    {
+      "revision": "e7c6cbeaeab40a8edb93d057437f3e23f3bd2322",
+      "commit": "e7c6cbeaeab40a8edb93d057437f3e23f3bd2322",
+      "main_sha256": "18d232c6d4e49c798d6b435302fee363f71ccd0c6d00e67c6e2e50e5999abaa6",
+      "status": "unavailable",
+      "reason": "В этой версии нет новых общих API-клиентов",
+      "missing": [
+        "APIClientSettings",
+        "GoogleDecisionClient",
+        "GoogleGenerationClient",
+        "JSONTransport",
+        "LLMError",
+        "OpenAICompatibleClient",
+        "generation_client"
+      ]
+    }
+  ]
+}

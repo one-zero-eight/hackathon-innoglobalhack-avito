@@ -1,5 +1,8 @@
 # Проверка rebuild
 
+Это исторический срез до появления HTTP-сервера и удаления CLI.
+Команды текущей проверки — в [manual-testing.md](manual-testing.md).
+
 Срез исполняемого кода: `b08f4e4`. Он совпадает с проверенной рабочей копией
 на базе `2c65c3f`; отпечаток кода и промптов:
 `20eae115e95e6ff2162a08f927a787957d5f3411c5d1bb427bcbe0bcc107088e`.
@@ -51,7 +54,13 @@ Python-код компилируется, `git diff --check` и проверка
 `EXTRACTION_API_KEY` и `GENERATION_API_KEY`; ключи не передаются в чат и Git.
 
 ```bash
-uv run python src/main.py --input data/input.json --output out/output.json
+uv run python -m src
+```
+
+После запуска сервера в другом терминале:
+
+```bash
+curl http://127.0.0.1:8000/drafts -H 'Content-Type: application/json' --data-binary @data/input.json
 uv run python src/subcategory_extraction/benchmarks/prompt_comparison/run.py
 uv run python src/subcategory_extraction/benchmarks/response_time/run.py
 uv run python src/draft_generation/benchmarks/response_time/run.py

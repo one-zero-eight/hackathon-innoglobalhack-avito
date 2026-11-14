@@ -1,9 +1,8 @@
 # Ручная проверка всего решения
 
-Все локальные изменения собраны на `zolotarev/feature/avito-pipeline`.
-HTTP API, исправление баллов по PDF и новые отчёты пока **не закоммичены**.
-Работайте в текущем checkout: переключение веток само по себе не сохраняет
-незакоммиченные файлы в Git. Коммиты и push автоматически не выполняются.
+Рабочая ветка — `zolotarev/feature/avito-pipeline`.
+Сервер запускается через `python -m src`; файловый CLI удалён.
+Ключи хранятся только в локальном `.env`.
 
 ## 1. Подготовка
 
@@ -15,8 +14,7 @@ git status --short
 uv sync --locked
 ```
 
-Ожидаемая ветка — `zolotarev/feature/avito-pipeline`. В `git status` видны
-сохранённые изменения API и бенчмарков; это ожидаемо.
+Ожидаемая ветка — `zolotarev/feature/avito-pipeline`. Незакоммиченные изменения проверяйте через `git status`.
 
 Уже заполненный `.env` сохраните. Если создаёте новый checkout, скопируйте
 `.env.example` в `.env` и задайте ключи локально. Для текущего Google-режима:
@@ -51,7 +49,7 @@ uv run python src/draft_generation/benchmarks/api_clients/run.py --all-revisions
 uv run python src/subcategory_extraction/benchmarks/contract/run.py --all-revisions
 uv run python src/draft_generation/benchmarks/contract/run.py --all-revisions
 uv run python src/draft_generation/benchmarks/http_api/run.py
-uv run python src/draft_generation/benchmarks/full_pipeline_evaluation/run.py --report src/draft_generation/benchmarks/full_pipeline_evaluation/pdf-scoring-checks-results.json
+uv run python src/draft_generation/benchmarks/full_pipeline_evaluation/run.py --report src/draft_generation/benchmarks/full_pipeline_evaluation/module-server-checks-results.json
 ```
 
 Ожидается успешный exit code и текущие результаты:
@@ -60,8 +58,8 @@ uv run python src/draft_generation/benchmarks/full_pipeline_evaluation/run.py --
 | --- | --- |
 | API-клиенты | 88/88 |
 | Выделение и метрики | 49/49 |
-| Генерация и CLI | 64/64 |
-| HTTP API | 18/18 |
+| Генерация и оркестрация | 64/64 |
+| HTTP API и модульный запуск | 22/22 |
 | Оценщик | 208 записей; 24 нормализованных пересечения с train; 5 проверок checkpoint |
 | Формула PDF | 1007 контрольных случаев для двух scorer, все совпадают |
 
@@ -69,7 +67,7 @@ uv run python src/draft_generation/benchmarks/full_pipeline_evaluation/run.py --
 Итоговый exit code относится к текущему коду. В частности, старый множитель
 60 не проходит новую проверку запрошенного PDF; это не изменение сырого F1.
 
-В `pdf-scoring-checks-results.json` проверьте `scoring_audit.status=complete`,
+В `module-server-checks-results.json` проверьте `scoring_audit.status=complete`,
 `independent_cases=1007`, `classification_max_points=5`.
 Пример PDF: эталон `{102,104}`, ответ `{102,105}` → TP=1, FP=1, FN=1,
 micro-F1=0.5, баллы=2.5/5. Проверяется именно глобальный micro-F1:
@@ -87,34 +85,25 @@ micro-F1=0.5, баллы=2.5/5. Проверяется именно глобал
 таблицы README обновляются вручную фактическими результатами и стоимостью.
 Длительность офлайн-проверки не является временем ответа модели.
 
-## 3. CLI без внешних вызовов
+## 3. Запуск сервера
 
-Создайте контрольный пустой вход:
+Из корня проекта в отдельном терминале:
 
 ```bash
-mkdir -p out
-printf '%s\n' '{"description":"","mcId":101}' > out/manual-empty-input.json
-uv run python src/main.py --input out/manual-empty-input.json --output out/manual-empty-output.json
-uv run python -m json.tool out/manual-empty-output.json
+uv run python -m src
 ```
 
-Ожидается exit code 0 и:
+Сервер слушает `127.0.0.1:8000`. Для другого порта:
 
-```json
-{ "drafts": [] }
+```bash
+UVICORN_PORT=8001 uv run python -m src
 ```
+
+`UVICORN_HOST` и `UVICORN_PORT` можно задать в `.env`; окружение имеет
+приоритет. Используйте один экземпляр на порту. Если старый сервер ещё
+работает, остановите его перед проверкой новой точки входа. Остановка — Ctrl+C.
 
 ## 4. HTTP без внешних вызовов
-
-В этой сессии сервер уже запущен на `127.0.0.1:8000`; можно использовать его.
-Для самостоятельного запуска в отдельном терминале:
-
-```bash
-uv run uvicorn --app-dir src api:app --host 127.0.0.1 --port 8000
-```
-
-Используйте один экземпляр на этом порту. Свой запущенный сервер останавливайте
-через Ctrl+C; если порт занят текущим экземпляром, второй запуск не нужен.
 
 Откройте [Swagger UI](http://127.0.0.1:8000/docs) и выполните:
 
@@ -154,18 +143,9 @@ curl -i http://127.0.0.1:8000/drafts
 Health проверяет приложение, а не доступность Google. Эти запросы к моделям
 не обращаются и не подтверждают качество извлечения или генерации.
 
-## 5. Реальный пример: CLI и HTTP
+## 5. Реальный запрос к моделям
 
-Следующие команды используют модели и их квоты:
-
-```bash
-uv run python src/main.py --input data/input.json --output out/manual-live-output.json
-```
-
-Только при exit code 0 откройте `out/manual-live-output.json`. При ошибке
-предыдущий файл результата не заменяется частичным ответом.
-
-Тот же вход через HTTP:
+Следующий запрос использует модели и их квоты:
 
 ```bash
 curl -i http://127.0.0.1:8000/drafts \
@@ -179,8 +159,7 @@ curl -i http://127.0.0.1:8000/drafts \
 Заголовок и формулировки могут отличаться между вызовами модели.
 
 При последней проверке Google перечислял Gemma 4 как доступную модель,
-но генерация возвращала HTTP 500. В таком случае CLI завершится ошибкой,
-а HTTP-адаптер вернёт 502 с полем detail. Это не успешный результат и не F1=0.
+но генерация возвращала HTTP 500. В таком случае HTTP-адаптер вернёт 502 с полем detail. Это не успешный результат и не F1=0.
 Строгая ошибка на неверный JSON модели также отображается как 502.
 
 ## 6. Качество и задержка отдельных шагов
@@ -240,7 +219,7 @@ EXTRACTION_RETRY_DELAY=30 EXTRACTION_MAX_ATTEMPTS=5 \
 
 Прежний classification-only запуск прерван на 78/208 по просьбе пользователя.
 Его исходная контрольная точка относится к коду до добавления API; после
-изменений кода используйте новый запуск с отдельным файлом отчёта, как выше.
+изменений кода, включая удаление CLI, используйте новый запуск с отдельным файлом отчёта, как выше.
 
 ## 8. Проверка OpenAI-compatible генерации
 
@@ -255,7 +234,7 @@ GENERATION_RESPONSE_MODE=prompt
 ```
 
 Укажите полный endpoint, включая `/chat/completions`, и перезапустите сервер.
-Повторите реальный пример CLI/HTTP из раздела 5. Экстрактор остаётся Google
+Повторите реальный HTTP-запрос из раздела 5. Экстрактор остаётся Google
 Decision 1. При неподдерживаемой модели, авторизации или невалидном JSON
 ожидается явная ошибка; автоматического переключения провайдеров нет.
 

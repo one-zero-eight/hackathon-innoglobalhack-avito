@@ -1,4 +1,4 @@
-"""Офлайн-контракт генерации и полного CLI для обоих провайдеров."""
+"""Офлайн-контракт генерации и оркестрации для обоих провайдеров."""
 
 import sys
 from pathlib import Path
@@ -159,31 +159,26 @@ def check_contract(source_root: Path) -> dict[str, Any]:
 
             case(f"{provider}:source_as_json_data", source_data)
 
-            def cli(failure: bool = False, empty: bool = False) -> None:
-                """Проверить настоящий CLI из другого cwd и запись только полного результата."""
+            def orchestration(failure: bool = False, empty: bool = False) -> None:
+                """Проверить полный пайплайн из другого cwd без файлового интерфейса."""
                 decisions = json.dumps({"answers": {
                     f"mc{cid}": {"type": "noul", "noul": 0.9 if cid == 104 and not empty else 0.1}
                     for cid in core.MICROCATEGORIES if cid != 101
                 }})
-                with TemporaryDirectory(prefix="draft-cli-") as folder:
-                    input_path, output_path = Path(folder) / "input.json", Path(folder) / "output.json"
-                    input_path.write_text(inp.model_dump_json(by_alias=True), encoding="utf-8")
-                    output_path.write_text("previous-output", encoding="utf-8")
+                with TemporaryDirectory(prefix="draft-pipeline-") as folder:
                     with patch.object(core.GoogleDecisionClient, "complete", return_value=decisions), patch.object(type(pipeline.client), "complete", return_value="bad JSON" if failure else ANSWER) as complete, chdir(folder):
                         try:
-                            code = core.main(["--input", str(input_path), "--output", str(output_path)])
+                            output = core.run_pipeline(inp)
                         except ValueError:
-                            require(failure, "CLI неожиданно завершился ошибкой")
-                            require(output_path.read_text() == "previous-output", "Ошибка перезаписала прежний результат")
+                            require(failure, "Пайплайн неожиданно завершился ошибкой")
                             return
-                    require(not failure and code == 0, "Неверный код CLI")
-                    output = core.PipelineOutput.model_validate_json(output_path.read_text())
-                    require([draft.mc_id for draft in output.drafts] == ([] if empty else [104]), "Неверный результат CLI")
-                    require(complete.call_count == (0 if empty else 1), "Лишний вызов генерации из CLI")
+                    require(not failure, "Ошибка генерации скрыта")
+                    require([draft.mc_id for draft in output.drafts] == ([] if empty else [104]), "Неверный результат пайплайна")
+                    require(complete.call_count == (0 if empty else 1), "Лишний вызов генерации")
 
-            case(f"{provider}:cli_success", cli)
-            case(f"{provider}:cli_empty_targets", lambda: cli(empty=True))
-            case(f"{provider}:cli_failure_preserves_output", lambda: cli(failure=True))
+            case(f"{provider}:pipeline_success", orchestration)
+            case(f"{provider}:pipeline_empty_targets", lambda: orchestration(empty=True))
+            case(f"{provider}:pipeline_failure_propagates", lambda: orchestration(failure=True))
 
     passed = sum(row["status"] == "passed" for row in cases)
     return {"status": "complete" if passed == len(cases) else "failed", "passed": passed,
@@ -200,7 +195,8 @@ def main() -> int:
     started = perf_counter()
     current = check_contract(args.source_root)
     report = {**metadata(), "scenario": "offline_generation_contract", "real_api_calls": 0,
-              "current": current, "versions": [], "status": current["status"]}
+              "contract_version": "pipeline_without_file_cli", "current": current,
+              "versions": [], "status": current["status"]}
     if args.all_revisions:
         report["versions"] = compare_contract_revisions(
             Path(__file__), ["src/main.py", "src/draft_generation/llm"],
@@ -208,7 +204,7 @@ def main() -> int:
         )
     report["offline_elapsed_seconds"] = perf_counter() - started
     save_report(args.report, report)
-    logging.info("Генерация и CLI: %s/%s, %s", current.get("passed", 0), current.get("total", 0), current["status"])
+    logging.info("Генерация и пайплайн: %s/%s, %s", current.get("passed", 0), current.get("total", 0), current["status"])
     for row in current.get("cases", []):
         if row["status"] == "failed":
             logging.error("%s: %s", row["name"], row["error"])

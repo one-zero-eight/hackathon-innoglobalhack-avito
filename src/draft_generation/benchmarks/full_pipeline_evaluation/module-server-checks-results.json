@@ -1,0 +1,83 @@
+{
+  "date": "2026-11-14T15:57:54+03:00",
+  "commit": "958897148f9be9061d44796d738f360ca6fdff6f",
+  "code_sha256": "77c0f03852484a5370e42e07f4944c24401e35ee6c00549828b3947e182ee255",
+  "working_tree": true,
+  "scenario": "offline",
+  "scoring_audit": {
+    "source": "docs/Критерии авито.pdf",
+    "page": 1,
+    "source_sha256": "6cba551a129b7f05061388c4217082b1ee77bc8db8e191874d689ec87277f610",
+    "formula": "2 * sum(TP) / (2 * sum(TP) + sum(FP) + sum(FN))",
+    "classification_max_points": 5,
+    "zero_denominator": 0,
+    "independent_cases": 1007,
+    "implementations": 2,
+    "random_seed": 43,
+    "status": "complete",
+    "examples": [
+      {
+        "name": "pdf_example",
+        "tp": 1,
+        "fp": 1,
+        "fn": 1,
+        "micro_f1": 0.5,
+        "classification_points": 2.5
+      },
+      {
+        "name": "global_micro_not_sample_average",
+        "tp": 4,
+        "fp": 0,
+        "fn": 1,
+        "micro_f1": 0.8888888888888888,
+        "classification_points": 4.444444444444445
+      },
+      {
+        "name": "source_category_is_false_positive",
+        "tp": 1,
+        "fp": 1,
+        "fn": 0,
+        "micro_f1": 0.6666666666666666,
+        "classification_points": 3.333333333333333
+      },
+      {
+        "name": "empty_labels",
+        "tp": 0,
+        "fp": 0,
+        "fn": 0,
+        "micro_f1": 0.0,
+        "classification_points": 0.0
+      },
+      {
+        "name": "all_false_positives",
+        "tp": 0,
+        "fp": 2,
+        "fn": 0,
+        "micro_f1": 0.0,
+        "classification_points": 0.0
+      },
+      {
+        "name": "all_false_negatives",
+        "tp": 0,
+        "fp": 0,
+        "fn": 2,
+        "micro_f1": 0.0,
+        "classification_points": 0.0
+      },
+      {
+        "name": "perfect",
+        "tp": 2,
+        "fp": 0,
+        "fn": 0,
+        "micro_f1": 1.0,
+        "classification_points": 5.0
+      }
+    ],
+    "model_quality_evaluation": false
+  },
+  "status": "complete",
+  "rows": 208,
+  "overlapping_rows": 24,
+  "checkpoint_checks": 5,
+  "elapsed_seconds": 4.352068890000737
+}

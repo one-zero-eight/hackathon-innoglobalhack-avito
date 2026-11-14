@@ -50,7 +50,7 @@ def health() -> dict[str, str]:
     responses={502: {"description": "Ошибка API модели или некорректный результат пайплайна"}},
 )
 def create_drafts(inp: PipelineInput, request: Request) -> PipelineOutput:
-    """Обработать JSON теми же модулями, что CLI; синхронно в thread pool."""
+    """Обработать JSON выбранными модулями синхронно в thread pool."""
     try:
         return run_pipeline(inp, request.app.state.pipeline_config)
     except LLMError as exc:

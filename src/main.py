@@ -1,4 +1,4 @@
-"""CLI-ядро проекта.
+"""Общее ядро и оркестрация пайплайна.
 
 Здесь живёт всё общее для сервисов: микрокатегории, контракт входа/выхода,
 база пайплайнов и клиент LLM. Логика отдельных шагов — в папках сервисов,
@@ -7,16 +7,13 @@
 Импорты модулей выполняются при загрузке пайплайна: сервисы импортируют main,
 и модульный импорт на верхнем уровне дал бы циклическую зависимость.
 
-Пример:
-    python src/main.py --input data/input.json --output out/output.json
+HTTP-сервер запускается через python -m src.
 """
 
-import argparse
 import json
 import logging
 import os
 import math
-import sys
 from abc import ABC, abstractmethod
 from email.utils import parsedate_to_datetime
 from importlib import import_module
@@ -27,7 +24,6 @@ from urllib.error import HTTPError, URLError
 from urllib.parse import quote, urlsplit
 from urllib.request import HTTPRedirectHandler, Request, build_opener
 
-from dotenv import load_dotenv
 from pydantic import AfterValidator, BaseModel, ConfigDict, Field, field_validator
 
 logger = logging.getLogger(__name__)
@@ -477,40 +473,3 @@ def run_pipeline(
     target_mc_ids = extraction.run(inp)
     drafts = generation.run(inp, target_mc_ids)
     return PipelineOutput(drafts=drafts)
-
-
-# --- CLI ---
-
-
-def build_parser() -> argparse.ArgumentParser:
-    """CLI: пути к файлу ввода и файлу вывода."""
-    parser = argparse.ArgumentParser(description="Выделение услуг и черновики объявлений")
-    parser.add_argument("--input", required=True, type=Path, help="путь к JSON на вход")
-    parser.add_argument("--output", required=True, type=Path, help="путь к JSON на выход")
-    return parser
-
-
-def main(argv: list[str] | None = None) -> int:
-    """Прочитать входной файл, прогнать пайплайн, записать выходной файл."""
-    logging.basicConfig(level=logging.INFO, format="%(levelname)s %(name)s: %(message)s")
-    load_dotenv(DEFAULT_CONFIG_PATH.parent / ".env")
-    args = build_parser().parse_args(argv)
-
-    payload = json.loads(args.input.read_text(encoding="utf-8"))
-    inp = PipelineInput.model_validate(payload)
-
-    output = run_pipeline(inp)
-
-    args.output.parent.mkdir(parents=True, exist_ok=True)
-    args.output.write_text(
-        json.dumps(output.model_dump(by_alias=True), ensure_ascii=False, indent=2),
-        encoding="utf-8",
-    )
-    logger.info("Готово: %s", args.output)
-    return 0
-
-
-if __name__ == "__main__":
-    # Модули импортируют main: CLI должен использовать тот же BasePipeline.
-    sys.modules["main"] = sys.modules[__name__]
-    sys.exit(main())

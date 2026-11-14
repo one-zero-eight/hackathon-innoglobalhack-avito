@@ -1,13 +1,7 @@
 # HTTP API
 
-CLI по-прежнему читает и записывает JSON-файлы:
-
-```bash
-uv run python src/main.py --input data/input.json --output out/output.json
-```
-
-`src/api.py` добавляет FastAPI-адаптер той же функции `run_pipeline()`.
-В HTTP-режиме вход — JSON-тело запроса, выход — JSON-тело ответа; файлы
+`src/api.py` предоставляет FastAPI-адаптер функции `run_pipeline()`.
+Вход — JSON-тело запроса, выход — JSON-тело ответа; файлы
 для каждого запроса не создаются. Схемы `PipelineInput` и `PipelineOutput`
 импортируются из `main.py`, формат кейса не меняется.
 
@@ -15,8 +9,18 @@ uv run python src/main.py --input data/input.json --output out/output.json
 
 ```bash
 uv sync
-uv run uvicorn --app-dir src api:app --host 127.0.0.1 --port 8000
+uv run python -m src
 ```
+
+Запускайте из корня проекта. Точка входа — `src/__main__.py`.
+`UVICORN_HOST` (по умолчанию `127.0.0.1`) и `UVICORN_PORT` (по умолчанию
+`8000`) читаются из окружения и `.env`. Например, другой порт:
+
+```bash
+UVICORN_PORT=8001 uv run python -m src
+```
+
+Остановка — Ctrl+C. Файловый CLI удалён; `main.py` содержит общее ядро.
 
 Документация и форма запроса: [Swagger UI](http://127.0.0.1:8000/docs).
 Схема API: [OpenAPI JSON](http://127.0.0.1:8000/openapi.json).
