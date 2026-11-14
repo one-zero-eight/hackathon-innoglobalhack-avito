@@ -365,8 +365,15 @@ def create_manifest(records: list[Record], selected: dict, changes: list[dict],
     }
     if "full_annotation" in decisions:
         manifest["full_annotation"] = decisions["full_annotation"]
-        for name in ("annotation_policy.json", "annotations.jsonl", "annotation_overrides.json"):
+        for name in ("annotation_policy.json", "annotations.jsonl", "annotation_overrides.json",
+                     "pending_review.jsonl"):
             manifest["output_sha256"][name] = digest((DESTINATION / name).read_bytes())
+        if decisions["full_annotation"].get("verification_status") == "not_independently_verified":
+            manifest["status"] = "provisional_annotation_not_independently_verified"
+        if "repair" in decisions["full_annotation"]:
+            manifest["output_sha256"]["repair_changes.jsonl"] = digest(
+                (DESTINATION / "repair_changes.jsonl").read_bytes(),
+            )
     return manifest
 
 
@@ -536,6 +543,46 @@ PYTHONPATH=src uv run python -m dataset_annotation.finalize_dataset_annotations 
 Обычная пересборка использует сохранённые решения, без повторной классификации.
 Машинная разметка может содержать ошибки контекста, отрицаний и границ SEO.
 Рост числа включённых записей не является измерением качества или F1.
+"""
+        if full.get("verification_status") == "not_independently_verified":
+            text += f"""
+## Ограничения смысловой проверки
+
+Это **предварительная разметка без итоговой смысловой проверки**.
+Разметка не является вручную подтверждённым эталоном. Результаты
+сохранены с диагностическими признаками. Групп с отметками
+сомнений — {full['unresolved_semantic_groups']}.
+Они находятся в `pending_review.jsonl` с полным исходным объявлением,
+текущими метками и причинами сомнений. Остальные машинные решения тоже
+не следует считать гарантированно верными.
+
+Техническая сборка проверяет только контракт, происхождение, сохранность
+исходных текстов и правила дедупликации/исключения пересечений.
+"""
+        if "repair" in full:
+            repair = full["repair"]
+            text += f"""
+## Самостоятельный повторный проход
+
+По новому поручению пользователя повторно обработаны **все {repair['groups_recomputed']}
+уникальные группы** исправленным офлайн-аннотатором, без субагентов.
+По сравнению с предварительной разметкой изменены метки {repair['changed_groups']} групп.
+Журнал до/после — `repair_changes.jsonl`.
+Из активных правил исключены {repair['discarded_unverified_shard_overrides']}
+непроверенных решений шардов; прежние варианты сохранены в `review_history/`.
+Все 24 индивидуальных ответа пользователя сохранены.
+
+Исправлены обработка SEO-маркеров, отрицаний до и после услуги,
+ограничений только целым объектом, различие тёплого пола и утепления,
+контекст покраски труб и сопоставление опечаток.
+Проверены известные контрпримеры из предыдущего разбора.
+Это сплошной **автоматический пересчёт с исправлением правил**, а не заявление
+о ручном прочтении всех 4993 текстов или отсутствии любых смысловых ошибок.
+Диагностические отметки в `pending_review.jsonl` сохранены.
+
+```sh
+PYTHONPATH=src uv run python -m dataset_annotation.repair_dataset
+```
 """
     (DESTINATION / "README.md").write_text(text, encoding="utf-8")
 

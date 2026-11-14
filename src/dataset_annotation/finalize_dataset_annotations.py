@@ -70,7 +70,7 @@ def atomic_jsonl(path: Path, rows: list[dict]) -> None:
 
 
 def prepare(decisions: dict, proposals: list[dict], overrides: dict,
-            records: list[builder.Record]) -> tuple[dict, list[dict]]:
+            records: list[builder.Record], allow_unreviewed: bool = False) -> tuple[dict, list[dict]]:
     """Проверить полное покрытие, приоритет пользователя и разрешение сомнений."""
     if overrides.get("policy_id") != "user-policy-full-dataset-v2":
         raise ValueError("Смысловые уточнения относятся к другой политике")
@@ -127,6 +127,8 @@ def prepare(decisions: dict, proposals: list[dict], overrides: dict,
             raise ValueError("Неизвестная строка в смысловом уточнении")
         record = lookup[override["split"], override["row"]]
         key = record.split, record.group_id
+        if override.get("description_group_id", record.group_id) != record.group_id:
+            raise ValueError("Смысловое уточнение относится к другому описанию")
         if key in locked or key in seen_overrides:
             raise ValueError(f"Перезапись пользователя/повторное уточнение: {key}")
         seen_overrides.add(key)
@@ -138,11 +140,15 @@ def prepare(decisions: dict, proposals: list[dict], overrides: dict,
             semantic_evidence=override.get("evidence", []),
             review_method="assistant_semantic_review_with_user_policy",
         )
+        if override.get("pending_question"):
+            indexed[key]["uncertainties"] = [override["pending_question"]]
+        if override.get("verification_status"):
+            indexed[key]["verification_status"] = override["verification_status"]
     unresolved = [
         f"{p['split']}:{p['row']}: {p['uncertainties']}"
         for p in indexed.values() if p["uncertainties"] and not p["user_locked"]
     ]
-    if unresolved:
+    if unresolved and not allow_unreviewed:
         raise ValueError("Нужен разбор неопределённости:\n" + "\n".join(unresolved))
     updated = copy.deepcopy(decisions)
     for split in ("train", "test"):
@@ -175,6 +181,7 @@ def prepare(decisions: dict, proposals: list[dict], overrides: dict,
             "description_group_id": anchor.group_id,
             "policy_id": "user-policy-full-dataset-v2",
             "review_method": proposal["review_method"],
+            "verification_status": "not_independently_verified" if allow_unreviewed else "checked",
             "reason": proposal.get("semantic_review")
             or ("Явный отказ от отдельных работ: " + proposal["restriction"]
                 if proposal.get("restriction")
@@ -188,7 +195,8 @@ def prepare(decisions: dict, proposals: list[dict], overrides: dict,
     updated["annotation_policy"] = json.loads(POLICY.read_text(encoding="utf-8"))
     updated["full_annotation"] = {
         "groups": len(groups), "individual_user_exceptions": len(locked),
-        "unresolved_semantic_groups": 0,
+        "unresolved_semantic_groups": len(unresolved),
+        "verification_status": "not_independently_verified" if allow_unreviewed else "checked",
         "policy_sha256": builder.digest(POLICY.read_bytes()),
         "overrides_sha256": builder.digest(OVERRIDES.read_bytes()),
         "finalizer_sha256": builder.digest(Path(__file__).read_bytes()),
@@ -207,6 +215,8 @@ def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--proposals", type=Path, default=PROPOSALS)
     parser.add_argument("--apply", action="store_true")
+    parser.add_argument("--allow-unreviewed", action="store_true",
+                        help="Сохранить предварительную разметку вместе с неразрешёнными сомнениями")
     args = parser.parse_args()
     with session_lock():
         snapshot = builder.DECISIONS.read_bytes()
@@ -219,7 +229,9 @@ def main() -> None:
         )
         proposals = [json.loads(line) for line in proposals_snapshot.decode("utf-8").splitlines()]
         overrides = json.loads(overrides_snapshot)
-        updated, annotations = prepare(decisions, proposals, overrides, records)
+        updated, annotations = prepare(
+            decisions, proposals, overrides, records, allow_unreviewed=args.allow_unreviewed,
+        )
         logging.info("Проверено групп: %d; индивидуальных исключений: %d.",
                      len(annotations), updated["full_annotation"]["individual_user_exceptions"])
         if not args.apply:
@@ -240,6 +252,12 @@ def main() -> None:
             if not previous.exists():
                 atomic_json(previous, decisions)
         atomic_jsonl(ANNOTATIONS, annotations)
+        pending = builder.DESTINATION / "pending_review.jsonl"
+        originals = {(r.split, r.row): r.original for r in records}
+        atomic_jsonl(pending, [
+            {**row, "original": originals[row["split"], row["row"]]}
+            for row in annotations if row["uncertainties"] and not row["user_locked"]
+        ])
         updated["full_annotation"]["annotations_sha256"] = builder.digest(ANNOTATIONS.read_bytes())
         atomic_json(builder.DECISIONS, updated)
         logging.info("Решения сохранены; пересобираю датасет.")
