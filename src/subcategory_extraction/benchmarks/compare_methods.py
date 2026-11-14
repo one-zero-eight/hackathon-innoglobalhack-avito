@@ -8,12 +8,13 @@ import logging
 import math
 import os
 from pathlib import Path
+from statistics import median
 import threading
 from time import perf_counter
 
 from dotenv import load_dotenv
 
-from main import MICROCATEGORIES, PipelineConfig, load_pipeline
+from main import LLMCostLedger, MICROCATEGORIES, PipelineConfig, load_pipeline, track_llm_costs
 from run import audit_overlap, calculate_metrics, prepare_rows, read_records
 from subcategory_extraction.google_decision.pipeline import PROMPT_DIR
 
@@ -33,7 +34,7 @@ def digest(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
-def google_replay(path: Path, dataset: Path, rows: list) -> tuple[list[set[int]], dict]:
+def google_replay(path: Path, dataset: Path, rows: list, costs: LLMCostLedger) -> tuple[list[set[int]], dict]:
     """Применить реальные сохранённые вероятности только к совпавшим входам."""
     record = json.loads(path.read_text(encoding="utf-8"))
     prompt = PROMPT_DIR / "google_decision_guided.md"
@@ -55,6 +56,8 @@ def google_replay(path: Path, dataset: Path, rows: list) -> tuple[list[set[int]]
         ):
             raise ValueError("Google replay: неверные категории или вероятности")
         predictions.append({cid for cid, value in probabilities.items() if value >= 0.5})
+        costs.record(record["model"], "https://generativelanguage.googleapis.com/v1beta/decisions",
+                     saved.get("usage"), cache_hit=True)
     return predictions, {
         "mode": "genuine_recorded_api_replay", "record_sha256": digest(path),
         "model": record["model"], "prompt_sha256": record["prompt_sha256"],
@@ -105,11 +108,13 @@ def describe(pipeline: object) -> dict:
     return metadata
 
 
-def evaluate_method(method: str, rows: list, workers: int) -> dict:
+def evaluate_method(method: str, rows: list, workers: int, costs: LLMCostLedger) -> dict:
     """Предсказать уникальные входы один раз, но оценить каждую исходную строку."""
     config = PipelineConfig(subcategory_extraction=method, draft_generation=None)
+    load_started = perf_counter()
     prototype = load_pipeline("subcategory_extraction", config)
     metadata = describe(prototype)
+    model_load_seconds = perf_counter() - load_started
     unique = {}
     for row in rows:
         unique.setdefault((row.inp.description, row.inp.mc_id), row.inp)
@@ -126,7 +131,8 @@ def evaluate_method(method: str, rows: list, workers: int) -> dict:
                 thread_state.pipeline = load_pipeline("subcategory_extraction", config)
             pipeline = thread_state.pipeline
         started = perf_counter()
-        output = pipeline.run(inp)
+        with track_llm_costs(costs):
+            output = pipeline.run(inp)
         if not isinstance(output, list) or any(
             type(cid) is not int or cid not in MICROCATEGORIES or cid == inp.mc_id for cid in output
         ):
@@ -164,10 +170,17 @@ def evaluate_method(method: str, rows: list, workers: int) -> dict:
     unique_details = [value[1] for value in outputs.values()]
     fresh = sum(not client["cache_hit"] for detail in unique_details for client in detail["clients"].values())
     cache_hits = sum(client["cache_hit"] for detail in unique_details for client in detail["clients"].values())
+    durations = sorted(detail["seconds"] for detail in unique_details)
     return {
         "status": "completed", "metadata": metadata, "unique_inputs": len(unique),
         "workers": worker_count, "elapsed_seconds": perf_counter() - started,
         "fresh_api_requests": fresh, "cache_hits": cache_hits,
+        "model_load_seconds": model_load_seconds,
+        "latency_seconds": {
+            "median": median(durations), "p95_nearest_rank": durations[math.ceil(0.95 * len(durations)) - 1],
+            "mean": sum(durations) / len(durations), "max": durations[-1],
+            "scope": "single unique input; includes first inference; excludes pipeline loading",
+        },
         "metrics": calculate_metrics([row.expected for row in rows], predictions),
         "predicted": [sorted(value) for value in predictions],
         "unique_observations": [
@@ -218,20 +231,28 @@ def main() -> None:
     }
     args.report.parent.mkdir(parents=True, exist_ok=True)
     for method in args.methods:
+        costs = LLMCostLedger()
         try:
             if method == "google_decision" and not args.google_live:
-                predictions, metadata = google_replay(args.google_record, args.dataset, rows)
+                predictions, metadata = google_replay(args.google_record, args.dataset, rows, costs)
                 result = {"status": "completed", "metadata": metadata,
                           "metrics": calculate_metrics([row.expected for row in rows], predictions),
                           "predicted": [sorted(value) for value in predictions]}
             else:
-                result = evaluate_method(method, rows, args.workers)
+                result = evaluate_method(method, rows, args.workers, costs)
+            result["costs"] = costs.summary()
+            logger.info("%s: API USD fresh=%s, cold=%s, попытки=%d, кэш=%d", method,
+                        result["costs"]["fresh_estimated_usd"], result["costs"]["cold_estimated_usd"],
+                        result["costs"]["api_attempts"], result["costs"]["local_cache_hits"])
             report["results"][method] = result
             metrics = result["metrics"]
             logger.info("%s: micro-F1 %.6f, баллы %.3f/60, TP=%d FP=%d FN=%d", method,
                         metrics["micro_f1"], metrics["classification_points"], metrics["tp"], metrics["fp"], metrics["fn"])
         except Exception as exc:
-            report["results"][method] = {"status": "failed", "error_type": type(exc).__name__, "error": str(exc)}
+            report["results"][method] = {
+                "status": "failed", "error_type": type(exc).__name__, "error": str(exc),
+                "costs": costs.summary(),
+            }
             args.report.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
             logger.exception("%s: ошибка; фиктивная метрика не рассчитывается", method)
             raise

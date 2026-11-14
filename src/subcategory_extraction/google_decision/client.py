@@ -49,6 +49,8 @@ class GoogleDecisionClient(LLMClient):
         self.api_key = self.api_key or os.getenv("GOOGLE_API_KEY")
         self.endpoint = os.getenv("GOOGLE_DECISION_ENDPOINT", DEFAULT_ENDPOINT)
         self.budget = TokenBudget()
+        self.last_cache_hit = False
+        self.last_usage: dict = {}
 
     def complete(self, prompt: str, **kwargs: object) -> str:
         """Отправить описание и вопросы; вернуть JSON без интерпретации."""
@@ -69,8 +71,7 @@ class GoogleDecisionClient(LLMClient):
         for attempt in range(3):
             self.budget.reserve(len(payload) + 256)
             try:
-                with urlopen(request, timeout=30) as response:
-                    result = json.load(response)
+                result = self.request_json(request, 30, urlopen)
                 break
             except HTTPError as exc:
                 if exc.code not in (429, 503) or attempt == 2:
@@ -79,6 +80,7 @@ class GoogleDecisionClient(LLMClient):
         if not isinstance(result, dict):
             raise ValueError("Google Decision вернул не JSON-объект")
         usage = result.get("usage", {})
+        self.last_usage = usage if isinstance(usage, dict) else {}
         actual = usage.get("total_input_tokens") if isinstance(usage, dict) else None
         self.budget.last_actual = actual if type(actual) is int and actual > 0 else None
         if self.budget.last_actual is not None:

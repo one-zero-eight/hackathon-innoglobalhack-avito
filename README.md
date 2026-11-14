@@ -175,3 +175,16 @@ uv run python src/run.py --config run.config.json
 5. Контракт входа/выхода не меняем без согласования со всей командой.
 
 Подробнее — в [AGENTS.md](AGENTS.md).
+
+## CPU и стоимость внешних моделей
+
+RuBERT-tiny2 проверен на CPU: micro-F1 0.786704, медиана 3.58 мс на уникальный
+вход на Apple M4 Pro. Это уже дообученная компактная модель, не TinyBERT;
+качество пока ниже Jev, поэтому default не изменён.
+
+Все API-клиенты теперь учитывают usage, повторы и локальный/provider cache.
+Обычный CLI дополнительно сохраняет `<output>.costs.json`, включая ошибки;
+`run.py` и общий бенчмарк также сохраняют расходы. Тарифы задаются через
+`LLM_PRICING_FILE` по точному endpoint/model; неизвестная цена — `null`, не ноль.
+
+[CPU-замер, стоимость, ограничения и формат тарифов](src/subcategory_extraction/benchmarks/cpu-costs.md).

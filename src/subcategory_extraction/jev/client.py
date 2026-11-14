@@ -89,6 +89,7 @@ class JevClient(LLMClient):
                 json.loads(path.read_text(encoding="utf-8")), questions,
             )
             self.last_cache_hit = True
+            self.record_usage(result.get("usage"), cache_hit=True)
         else:
             if not self.api_key:
                 raise ValueError("Укажите BESTAPI_API_KEY в .env для запросов Jev")
@@ -101,8 +102,7 @@ class JevClient(LLMClient):
                 },
                 method="POST",
             )
-            with urlopen(request, timeout=self.timeout) as response:
-                result = self._validate_response(json.load(response), questions)
+            result = self._validate_response(self.request_json(request, self.timeout, urlopen), questions)
             self._store_response(path, result)
         usage = result.get("usage")
         self.last_usage = usage if isinstance(usage, dict) else None
