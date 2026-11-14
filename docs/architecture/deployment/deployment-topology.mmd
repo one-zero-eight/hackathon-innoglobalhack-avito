@@ -1,0 +1,55 @@
+%% Runtime topology — current state (code + config evidence; no runtime telemetry)
+%% Skill: deployment-topology-analyzer. Evidence: runtime-evidence.md.
+%% Solid = active in config.json; dotted = alternative / optional.
+flowchart TB
+  subgraph WS["Runtime: developer / judge workstation (Linux or macOS)"]
+    CLI["CLI entry point<br/>python src/main.py<br/>--input JSON --output JSON<br/>Python 3.13 · uv"]
+    ORCH["Orchestrator (src/main.py)<br/>load_config() → load_pipeline() → run_pipeline()"]
+    EXT["Step 1 (active)<br/>subcategory_extraction/jev<br/>BestAPI · Jev 1.13.0"]
+    GEN["Step 2 (active)<br/>draft_generation/sample_llm<br/>Google Gemini · 3.5 Flash Lite"]
+    ALT["Selectable alternatives in config.json<br/>google_decision · tfidf · jev_tfidf · jev_retrieval<br/>evidence_jev · jev_arbiter · semantic_encoder · jev_boundaries"]
+  end
+
+  subgraph FS["Local filesystem (runtime state; not a deployed data store)"]
+    ENV[".env (gitignored)<br/>BESTAPI_API_KEY · LLM_API_KEY<br/>GOOGLE_API_KEY · JEV_* · SAMPLE_LLM_*"]
+    CFG["config.json<br/>module selection"]
+    IO["Input JSON → output JSON<br/>(explicit CLI paths)"]
+    ART["out/ artifacts (gitignored, no TTL)<br/>jev-cache/ · structured-llm-cache/<br/>tfidf.json · semantic-encoder/ · hybrid-training.jsonl"]
+  end
+
+  subgraph SVC["Trust / network boundary: third-party HTTPS services"]
+    BESTAPI["BestAPI (bestapi.fugue.pro)<br/>POST /v1/systemone — Jev, 60 s timeout<br/>POST /v1/chat/completions — structured LLM, 90 s<br/>Auth: Bearer BESTAPI_API_KEY"]
+    GOOGLE["Google Generative Language API<br/>POST /v1beta/decisions — classifier<br/>POST /v1beta/models/MODEL:generateContent — drafts<br/>Auth: x-goog-api-key"]
+  end
+
+  OUTSIDE["Outside the runtime path<br/>Source: git clone / PR merge (AGENTS.md §5)<br/>Setup: uv sync ← PyPI (uv.lock)<br/>Training (optional): encoder ← Hugging Face Hub<br/>Evaluation/benchmarks: separate local processes"]
+  LEGEND["Legend<br/>solid = active in config.json<br/>dotted = alternative / optional<br/>No IaC, container, CI/CD, or hosted service found"]
+
+  CLI -->|"run_pipeline()"| ORCH
+  CLI -->|"load_dotenv()"| ENV
+  CLI -->|"reads"| CFG
+  CLI -->|"reads / writes"| IO
+  ORCH -->|"import_module()"| EXT
+  ORCH -->|"import_module()"| GEN
+  ORCH -.->|"if selected"| ALT
+  EXT -->|"Jev API"| BESTAPI
+  GEN -->|"drafts API"| GOOGLE
+  ALT -.->|"Jev-based modules"| BESTAPI
+  ALT -.->|"google_decision"| GOOGLE
+  EXT -.->|"response cache"| ART
+  ALT -.->|"requires trained artifacts"| ART
+
+  classDef current fill:#DCEBFA,stroke:#2F6DB5,color:#111
+  classDef alt fill:#F7F7F7,stroke:#888888,color:#111,stroke-dasharray: 5 5
+  classDef store fill:#EAF5EA,stroke:#2E7D32,color:#111
+  classDef service fill:#FDECEA,stroke:#C0392B,color:#111
+  classDef note fill:#FFFFFF,stroke:#888888,color:#111,stroke-dasharray: 5 5
+  class CLI,EXT,GEN current
+  class ALT alt
+  class ENV,CFG,IO,ART store
+  class BESTAPI,GOOGLE service
+  class OUTSIDE,LEGEND note
+
+  style WS fill:#FCFCFC,stroke:#9AA5B1
+  style FS fill:#FAFDF7,stroke:#7CB342
+  style SVC fill:#FFF7F6,stroke:#C0392B
