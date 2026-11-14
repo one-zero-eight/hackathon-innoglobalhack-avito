@@ -8,15 +8,18 @@ authors = [
 ]
 requires-python = ">=3.13"
 dependencies = [
+    "asyncpg>=0.32.0",
+    "fastapi>=0.163.1",
+    "httpx>=0.28.1",
     "pyarrow>=23",
     "pydantic>=2",
+    "pydantic-settings>=2.16.3",
     "python-dotenv>=1",
     "scikit-learn>=1.9.1",
+    "psycopg[binary]>=3.3.9",
+    "safetensors>=0.4",
     "torch>=2.6,<3",
     "transformers>=4.45,<5",
-    "safetensors>=0.4",
-    "psycopg[binary]>=3.3.9",
-    "fastapi>=0.163.1",
     "uvicorn>=0.54.0",
 ]
 

@@ -1,0 +1,20 @@
+# Файлы, не попадающие в контекст сборки образов (deploy/api.Dockerfile, deploy/web.Dockerfile).
+# Система и окружение
+.git
+.venv
+__pycache__/
+*.py[cod]
+.ruff_cache/
+.mypy_cache/
+
+# Секреты и локальные данные — в образы не идут (настройки приходят через env_file)
+.env
+.env.*
+!.env.example
+backlog/
+out/
+local_agents.md
+
+# Артефакты веб-клиента: ставим и собираем заново внутри образа
+src/web/node_modules/
+src/web/dist/
