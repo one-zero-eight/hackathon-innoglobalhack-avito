@@ -20,6 +20,8 @@ import {
   type DraftsRequest,
   type Microcategory,
 } from '../api'
+import type { ImportedAd } from '../adsParser'
+import { AdsDropzone } from '../components/AdsDropzone'
 import { AppFooter } from '../components/AppFooter'
 import { AppHeader } from '../components/AppHeader'
 import { AvitoLogo } from '../components/AvitoLogo'
@@ -56,12 +58,12 @@ function ResultsSkeleton() {
 
       <SimpleGrid cols={{ base: 1, sm: 2, lg: 3 }} spacing="md" verticalSpacing="md">
         {[0, 1, 2].map((key) => (
-          <Card key={key} withBorder shadow="xs" padding="md" radius="sm" bg="white">
+          <Card key={key} withBorder shadow="xs" padding="md" radius="md" bg="white">
             <Stack gap="sm">
-              <Skeleton height={22} width={180} radius="sm" />
-              <Skeleton height={18} radius="sm" />
-              <Skeleton height={14} radius="sm" />
-              <Skeleton height={14} width="80%" radius="sm" />
+              <Skeleton height={22} width={180} radius="md" />
+              <Skeleton height={18} radius="md" />
+              <Skeleton height={14} radius="md" />
+              <Skeleton height={14} width="80%" radius="md" />
             </Stack>
           </Card>
         ))}
@@ -106,6 +108,7 @@ export function HomePage() {
   const [requestError, setRequestError] = useState<string | null>(null)
   const [sourceMcId, setSourceMcId] = useState(0)
   const [lastRequest, setLastRequest] = useState<DraftsRequest | null>(null)
+  const [adSelection, setAdSelection] = useState<{ ad: ImportedAd; id: number } | null>(null)
 
   const categoriesRequestId = useRef(0)
 
@@ -175,56 +178,79 @@ export function HomePage() {
         <Stack gap="xl">
           <PageHeader />
 
-          <Card withBorder shadow="xs" padding="lg" radius="sm" bg="white">
-            <Stack gap="md">
-              <Title order={2} size="h3">
-                Исходное объявление
-              </Title>
+          <SimpleGrid
+            cols={{ base: 1, md: 2 }}
+            spacing="lg"
+            verticalSpacing="lg"
+            style={{ alignItems: 'start' }}
+          >
+            <Card withBorder shadow="xs" padding="lg" radius="md" bg="white">
+              <Stack gap="md">
+                <Title order={2} size="h3">
+                  Исходное объявление
+                </Title>
 
-              {categoriesError !== null && (
-                <Alert
-                  color="red"
-                  title="Не удалось загрузить микрокатегории"
-                  radius="sm"
-                  icon={<AlertIcon />}
-                >
-                  <Stack gap="sm">
-                    <Text size="sm">{categoriesError}</Text>
-                    <Button
-                      variant="light"
-                      color="red"
-                      size="sm"
-                      leftSection={<RefreshIcon size={16} />}
-                      onClick={retryCategories}
-                      w="fit-content"
-                    >
-                      Повторить
-                    </Button>
-                  </Stack>
-                </Alert>
-              )}
+                {categoriesError !== null && (
+                  <Alert
+                    color="red"
+                    title="Не удалось загрузить микрокатегории"
+                    radius="md"
+                    icon={<AlertIcon />}
+                  >
+                    <Stack gap="sm">
+                      <Text size="sm">{categoriesError}</Text>
+                      <Button
+                        variant="light"
+                        color="red"
+                        size="sm"
+                        leftSection={<RefreshIcon size={16} />}
+                        onClick={retryCategories}
+                        w="fit-content"
+                      >
+                        Повторить
+                      </Button>
+                    </Stack>
+                  </Alert>
+                )}
 
-              {categoriesLoading ? (
-                <Center py="lg">
-                  <Stack align="center" gap={6}>
-                    <Box className="avito-pulse">
-                      <AvitoLogo height={34} markOnly alt="" />
-                    </Box>
-                    <Text c="dimmed" size="sm">
-                      Загружаем микрокатегории…
-                    </Text>
-                  </Stack>
-                </Center>
-              ) : (
-                <DraftsForm
+                {categoriesLoading ? (
+                  <Center py="lg">
+                    <Stack align="center" gap={6}>
+                      <Box className="avito-pulse">
+                        <AvitoLogo height={34} markOnly alt="" />
+                      </Box>
+                      <Text c="dimmed" size="sm">
+                        Загружаем микрокатегории…
+                      </Text>
+                    </Stack>
+                  </Center>
+                ) : (
+                  <DraftsForm
+                    key={adSelection?.id ?? 'empty'}
+                    microcategories={microcategories}
+                    loading={status === 'loading'}
+                    disabled={categoriesError !== null}
+                    selectedAd={adSelection?.ad ?? null}
+                    onSubmit={handleGenerate}
+                  />
+                )}
+              </Stack>
+            </Card>
+
+            <Card withBorder shadow="xs" padding="lg" radius="md" bg="white">
+              <Stack gap="md">
+                <Title order={2} size="h3">
+                  Таблица объявлений
+                </Title>
+                <AdsDropzone
                   microcategories={microcategories}
-                  loading={status === 'loading'}
-                  disabled={categoriesError !== null}
-                  onSubmit={handleGenerate}
+                  onSelect={(ad) =>
+                    setAdSelection((current) => ({ ad, id: (current?.id ?? 0) + 1 }))
+                  }
                 />
-              )}
-            </Stack>
-          </Card>
+              </Stack>
+            </Card>
+          </SimpleGrid>
 
           {/* Зона результатов: изменения озвучиваются скринридером. */}
           <Box component="section" aria-live="polite" aria-label="Результаты подбора черновиков">
@@ -234,7 +260,7 @@ export function HomePage() {
               <Alert
                 color="red"
                 title="Ошибка подбора черновиков"
-                radius="sm"
+                radius="md"
                 icon={<AlertIcon />}
               >
                 <Stack gap="sm">

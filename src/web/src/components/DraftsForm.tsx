@@ -1,6 +1,7 @@
 import { useCallback, useMemo, useRef, useState, type FormEvent } from 'react'
 import { Alert, Button, Group, Select, Stack, Text, Textarea } from '@mantine/core'
 import { fetchRandomSample, type DraftsRequest, type Microcategory } from '../api'
+import type { ImportedAd } from '../adsParser'
 import { AlertIcon, ShuffleIcon } from './icons'
 
 const MIN_DESCRIPTION_LENGTH = 10
@@ -11,6 +12,8 @@ interface DraftsFormProps {
   loading: boolean
   /** Список ещё не загрузился — поля блокируем. */
   disabled?: boolean
+  /** Выбранная строка загруженной таблицы. */
+  selectedAd?: ImportedAd | null
   onSubmit: (request: DraftsRequest) => void
 }
 
@@ -19,7 +22,11 @@ interface FormErrors {
   mcId?: string
 }
 
-function validate(description: string, mcId: string | null): FormErrors {
+function validate(
+  description: string,
+  mcId: string | null,
+  microcategories: Microcategory[],
+): FormErrors {
   const errors: FormErrors = {}
 
   const trimmed = description.trim()
@@ -31,6 +38,8 @@ function validate(description: string, mcId: string | null): FormErrors {
 
   if (mcId === null || mcId === '') {
     errors.mcId = 'Выберите текущую микрокатегорию.'
+  } else if (!microcategories.some((item) => item.mcId === Number(mcId))) {
+    errors.mcId = 'Выберите микрокатегорию из справочника.'
   }
 
   return errors
@@ -41,11 +50,18 @@ export function DraftsForm({
   microcategories,
   loading,
   disabled = false,
+  selectedAd = null,
   onSubmit,
 }: DraftsFormProps) {
-  const [description, setDescription] = useState('')
-  const [mcId, setMcId] = useState<string | null>(null)
-  const [errors, setErrors] = useState<FormErrors>({})
+  const [description, setDescription] = useState(selectedAd?.description ?? '')
+  const [mcId, setMcId] = useState<string | null>(
+    selectedAd === null ? null : String(selectedAd.mcId),
+  )
+  const [errors, setErrors] = useState<FormErrors>(() =>
+    selectedAd === null
+      ? {}
+      : validate(selectedAd.description, String(selectedAd.mcId), microcategories),
+  )
   const [sampleLoading, setSampleLoading] = useState(false)
   const [sampleError, setSampleError] = useState<string | null>(null)
 
@@ -66,7 +82,7 @@ export function DraftsForm({
   const handleSubmit = useCallback(
     (event: FormEvent<HTMLFormElement>) => {
       event.preventDefault()
-      const nextErrors = validate(description, mcId)
+      const nextErrors = validate(description, mcId, microcategories)
       setErrors(nextErrors)
 
       // При ошибке валидации фокусируем первое невалидное поле.
@@ -81,7 +97,7 @@ export function DraftsForm({
 
       onSubmit({ description: description.trim(), mcId: Number(mcId) })
     },
-    [description, mcId, onSubmit],
+    [description, mcId, microcategories, onSubmit],
   )
 
   // «Пример из датасета»: случайное объявление train-сплита подставляется
@@ -173,7 +189,7 @@ export function DraftsForm({
           <Alert
             color="red"
             variant="light"
-            radius="sm"
+            radius="md"
             icon={<AlertIcon size={16} />}
             title="Не удалось подставить пример"
             withCloseButton
