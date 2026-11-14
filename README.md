@@ -119,7 +119,7 @@ uv run python src/draft_generation/benchmarks/full_pipeline_evaluation/run.py --
 
 ## Структура
 
-[Архитектура проекта и Mermaid-схемы](docs/architecture.md).
+[Архитектура проекта и Mermaid-схема](docs/architecture.md).
 [Подтверждённые проверки и продолжение live-оценки](docs/validation.md).
 
 Весь исполняемый код — в `src/`. `main.py` содержит общий контракт, таблицу
