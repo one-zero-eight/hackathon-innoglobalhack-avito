@@ -37,6 +37,13 @@ class SubcategoryExtractionPipeline(BasePipeline):
         self, inp: PipelineInput, categories: set[int] | None = None,
     ) -> dict[int, float]:
         """Оценить все дополнительные категории или заданное подмножество."""
+        return self.score_description(inp.description, categories, current_mc_id=inp.mc_id)
+
+    def score_description(
+        self, description: str, categories: set[int] | None = None,
+        *, current_mc_id: int | None = None,
+    ) -> dict[int, float]:
+        """Оценить текст, в том числе без исходной микрокатегории."""
         if categories is not None and any(type(cid) is not int or cid not in MICROCATEGORIES for cid in categories):
             raise ValueError("Неизвестные категории в запросе")
         questions = {
@@ -45,11 +52,11 @@ class SubcategoryExtractionPipeline(BasePipeline):
                 "instructions": self.prompt.format(category=name, examples=CATEGORY_EXAMPLES[cid]),
             }
             for cid, name in MICROCATEGORIES.items()
-            if cid != inp.mc_id and (categories is None or cid in categories)
+            if cid != current_mc_id and (categories is None or cid in categories)
         }
         if not questions:
             return {}
-        result = json.loads(self.client.complete(inp.description, questions=questions))
+        result = json.loads(self.client.complete(description, questions=questions))
         if not isinstance(result, dict) or not isinstance(result.get("answers"), dict):
             raise ValueError("Google Decision: отсутствует словарь answers")
         answers = result["answers"]
