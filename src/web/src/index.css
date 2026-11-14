@@ -1,0 +1,33 @@
+/*
+ * Порядок CSS-слоёв важен для каскада: Tailwind utilities должны
+ * перекрывать стили компонентов Mantine, а не наоборот.
+ */
+@layer theme, base, components, utilities;
+
+/* Сброс и базовые стили Mantine (свой preflight-подобный reset). */
+@import '@mantine/core/styles.css' layer(components);
+
+/*
+ * Tailwind v4 подключаем точечно: только theme и utilities.
+ * Полноценный `@import 'tailwindcss'` (со слоем base/preflight) НЕ
+ * используем, чтобы preflight Tailwind не конфликтовал с reset'ом Mantine.
+ */
+@import 'tailwindcss/theme.css' layer(theme);
+@import 'tailwindcss/utilities.css' layer(utilities);
+
+/*
+ * Базовые цвета страницы вне слоёв: приоритет выше Mantine-слоя, поэтому
+ * фон страницы и цвет текста детерминированы. Поверхности карточек
+ * (Paper/AppShell) остаются белыми через --mantine-color-body.
+ */
+html {
+  background-color: #f4f5f6;
+}
+
+body {
+  background-color: #f4f5f6;
+  color: #2b2b2b;
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
