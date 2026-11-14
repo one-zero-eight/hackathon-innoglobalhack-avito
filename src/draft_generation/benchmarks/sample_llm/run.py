@@ -1,5 +1,13 @@
 """Офлайн-проверка генератора sample_llm без вызова платного API."""
 
+import sys
+from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[3]))
+
+from time import perf_counter
+from benchmark_support import metadata, save_report
+
 import json
 import logging
 from io import StringIO
@@ -130,4 +138,9 @@ def replay() -> dict[str, int]:
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO)
-    logger.info("sample_llm: %s", replay())
+    started = perf_counter()
+    report = {**metadata(), "scenario": "offline_contract"}
+    report["checks"] = replay()
+    report.update(status="complete", elapsed_seconds=perf_counter() - started)
+    save_report(Path(__file__).with_name("results.json"), report)
+    logger.info("sample_llm: %s", report)

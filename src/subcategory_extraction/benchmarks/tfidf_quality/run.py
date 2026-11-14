@@ -1,23 +1,29 @@
 """Обучить TF-IDF на официальном train и оценить групповой holdout."""
 
+import sys
+from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[3]))
+
 import argparse
 import hashlib
 import json
 import logging
 import os
 import unicodedata
-from pathlib import Path
+from time import perf_counter
 
 import numpy as np
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import train_test_split
 
+from benchmark_support import metadata, save_report, timing
 from main import MICROCATEGORIES, PipelineConfig, PipelineInput, load_pipeline
 from subcategory_extraction.benchmarks.metrics import score
 from subcategory_extraction.tfidf.pipeline import DEFAULT_ARTIFACT
 
-ROOT = Path(__file__).resolve().parents[3]
+ROOT = Path(__file__).resolve().parents[4]
 DATASET = ROOT / "docs/innoglobalhack_avito/public-train-annotated.jsonl"
 THRESHOLDS = (0.3, 0.4, 0.5, 0.6, 0.7)
 
@@ -51,8 +57,10 @@ def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--dataset", type=Path, default=DATASET)
     parser.add_argument("--artifact", type=Path, default=DEFAULT_ARTIFACT)
-    parser.add_argument("--report", type=Path, default=ROOT / "out/tfidf-benchmark.json")
+    parser.add_argument("--report", type=Path, default=Path(__file__).with_name("results.json"))
     args = parser.parse_args()
+    started = perf_counter()
+    run_metadata = metadata()
     rows = load_rows(args.dataset)
     indices = np.arange(len(rows))
     train, remaining = train_test_split(indices, test_size=0.3, random_state=42)
@@ -105,11 +113,18 @@ def main() -> None:
     pipeline = load_pipeline("subcategory_extraction", PipelineConfig(
         subcategory_extraction="tfidf", draft_generation=None,
     ))
-    predicted = [set(pipeline.run(rows[i]["inp"])) for i in holdout]
+    training_seconds = perf_counter() - started
+    predicted, durations = [], []
+    for i in holdout:
+        call_started = perf_counter()
+        predicted.append(set(pipeline.run(rows[i]["inp"])))
+        durations.append(perf_counter() - call_started)
     if predicted != predictions(holdout, threshold):
         raise ValueError("Предсказания JSON-артефакта не совпадают с обученной моделью")
     report = {
-        "module": "tfidf", "dataset_sha256": hashlib.sha256(args.dataset.read_bytes()).hexdigest(),
+        **run_metadata, "training_seconds": training_seconds,
+        "response_time": timing(durations), "elapsed_seconds": perf_counter() - started,
+        "status": "complete", "module": "tfidf", "dataset_sha256": hashlib.sha256(args.dataset.read_bytes()).hexdigest(),
         "unique_descriptions": len(rows), "threshold": threshold,
         "splits": {name: [rows[i]["group_id"] for i in selection]
                    for name, selection in (("train", train), ("validation", dev), ("holdout", holdout))},
@@ -117,8 +132,7 @@ def main() -> None:
         "holdout": score([rows[i]["targets"] for i in holdout], predicted),
         "artifact_predictions_match": True,
     }
-    args.report.parent.mkdir(parents=True, exist_ok=True)
-    args.report.write_text(json.dumps(report, indent=2), encoding="utf-8")
+    save_report(args.report, report)
     logging.info("TF-IDF: threshold %.1f, holdout micro-F1 %.4f",
                  threshold, report["holdout"]["micro_f1"])
 
