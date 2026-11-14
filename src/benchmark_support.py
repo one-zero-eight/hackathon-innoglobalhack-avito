@@ -3,8 +3,12 @@
 import hashlib
 import json
 import subprocess
+import tarfile
 from datetime import datetime
 from pathlib import Path
+from io import BytesIO
+from tempfile import TemporaryDirectory
+import sys
 from statistics import mean, median
 from typing import Any
 from zoneinfo import ZoneInfo
@@ -72,3 +76,34 @@ def validation_sample(size: int, seed: int = 43, nonempty: bool = False) -> list
 def setup() -> None:
     """Загрузить окружение проекта без вывода секретов."""
     load_dotenv(ROOT / ".env")
+
+
+def compare_contract_revisions(script: Path, paths: list[str], module_path: str) -> list[dict[str, Any]]:
+    """Проверить один контракт на Git-версиях в изолированных процессах."""
+    revisions = subprocess.check_output(["git", "log", "--format=%H", "--", *paths], cwd=ROOT, text=True).splitlines()
+    head = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=ROOT, text=True).strip()
+    results = []
+    for revision in dict.fromkeys([head, *revisions]):
+        present = subprocess.run(["git", "cat-file", "-e", f"{revision}:{module_path}"], cwd=ROOT, capture_output=True)
+        if present.returncode:
+            results.append({"commit": revision, "status": "unavailable", "reason": "Выбранный модуль отсутствует"})
+            continue
+        with TemporaryDirectory(prefix="pipeline-contract-") as folder:
+            root = Path(folder)
+            entries = subprocess.check_output([
+                "git", "ls-tree", "--name-only", revision, "--", "src", "config.json", "data/input.json",
+            ], cwd=ROOT, text=True).splitlines()
+            archive = subprocess.check_output(["git", "archive", revision, *entries], cwd=ROOT)
+            with tarfile.open(fileobj=BytesIO(archive)) as tar:
+                tar.extractall(root, filter="data")
+            report_path = root / "contract.json"
+            process = subprocess.run([
+                sys.executable, str(script.resolve()), "--source-root", str(root / "src"),
+                "--report", str(report_path),
+            ], cwd=ROOT, capture_output=True, text=True)
+            if report_path.exists():
+                result = json.loads(report_path.read_text())["current"]
+            else:
+                result = {"status": "failed", "reason": f"Процесс бенчмарка не создал отчёт; код {process.returncode}"}
+            results.append({"commit": revision, **result})
+    return results

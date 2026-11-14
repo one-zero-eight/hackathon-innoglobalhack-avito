@@ -30,6 +30,57 @@ def check() -> None:
     assert overlap["overlapping_rows"] == 24
     logging.info("Формула и крайние случаи: OK; Parquet: %d строк; пересечения: %d",
                  len(rows), overlap["overlapping_rows"])
+    check_checkpoint()
+
+
+def check_checkpoint() -> None:
+    """Проверить resume и отказ на повреждённый кэш без вызовов модели."""
+    import json
+    import os
+    from tempfile import TemporaryDirectory
+    from unittest.mock import patch
+
+    from main import MICROCATEGORIES, Draft, PipelineOutput
+
+    with TemporaryDirectory(prefix="evaluation-checkpoint-") as folder:
+        root = Path(folder)
+        (root / "pipeline.json").write_text(json.dumps({
+            "subcategory_extraction": "google_decision", "draft_generation": "llm",
+        }))
+        row = {"description": "Устанавливаю раковины.", "categories": [MICROCATEGORIES[104]]}
+        (root / "dataset.jsonl").write_text((json.dumps(row, ensure_ascii=False) + "\n") * 2)
+        config_path = root / "run.json"
+        config_path.write_text(json.dumps({
+            "pipeline_config": "pipeline.json", "dataset": "dataset.jsonl", "report": "unused.json",
+            "source_mc_id": 101,
+        }))
+        report_path = root / "results.json"
+        output = PipelineOutput(drafts=[Draft(mcId=104, title="Сантехника", text="Устанавливаю раковины.")])
+        with patch("main.run_pipeline", return_value=output) as execute:
+            assert run_live(config_path, report_path, resume=False) == 0
+        assert execute.call_count == 2
+        original = json.loads(report_path.read_text())
+        with patch("main.run_pipeline") as execute:
+            assert run_live(config_path, report_path, resume=True) == 0
+        assert execute.call_count == 0
+        changed = json.loads(json.dumps(original))
+        changed["results"][0]["predicted"] = [105]
+        report_path.write_text(json.dumps(changed))
+        with patch("main.run_pipeline") as execute:
+            assert run_live(config_path, report_path, resume=True) == 1
+        failed = json.loads(report_path.read_text())
+        assert failed["status"] == "failed" and "metrics" not in failed
+        assert execute.call_count == 0
+        report_path.write_text(json.dumps(original))
+        with patch.dict(os.environ, {"EXTRACTION_MODEL_ID": "changed-offline-model"}), patch("main.run_pipeline") as execute:
+            try:
+                run_live(config_path, report_path, resume=True)
+            except ValueError:
+                pass
+            else:
+                raise AssertionError("Изменение модели не запретило resume")
+        assert execute.call_count == 0
+    logging.info("Контрольные точки: сохранение, resume, повреждённый кэш и смена модели — OK")
 
 
 
@@ -38,8 +89,6 @@ def run_live(config_path: Path, report_path: Path, resume: bool) -> int:
     import hashlib
     import json
     import os
-    from urllib.error import HTTPError, URLError
-    from time import sleep
 
     from main import PipelineOutput, load_config, run_pipeline
     from run import RunConfig, audit_overlap, calculate_metrics, prepare_rows, read_records, resolve_path
@@ -90,27 +139,19 @@ def run_live(config_path: Path, report_path: Path, resume: bool) -> int:
         for index, row in enumerate(rows, 1):
             if index <= len(report["results"]):
                 saved = report["results"][index - 1]
-                PipelineOutput.model_validate(saved["output"])
+                saved_output = PipelineOutput.model_validate(saved["output"])
+                if saved["predicted"] != sorted({draft.mc_id for draft in saved_output.drafts}):
+                    raise ValueError("Предсказания контрольной точки не совпали с её черновиками")
                 if saved["row_number"] != index or saved["expected"] != sorted(row.expected):
                     raise ValueError("Строка контрольной точки не совпала с эталоном")
                 continue
             call_started = perf_counter()
-            for attempt in range(3):
-                try:
-                    output = run_pipeline(row.inp, selected)
-                    break
-                except (ConnectionError, TimeoutError, URLError) as exc:
-                    if isinstance(exc, HTTPError) and exc.code not in (429, 500, 502, 503, 504):
-                        raise
-                    if attempt == 2:
-                        raise
-                    logging.warning("Строка %d: %s, повтор полного вызова через 60 с", index, type(exc).__name__)
-                    sleep(60)
+            output = run_pipeline(row.inp, selected)
             elapsed = perf_counter() - call_started
             report["results"].append({"row_number": index, "expected": sorted(row.expected),
                                       "predicted": sorted({draft.mc_id for draft in output.drafts}),
                                       "output": output.model_dump(by_alias=True), "seconds": elapsed,
-                                      "attempts": attempt + 1})
+                                      "pipeline_calls": 1})
             report.update(completed_rows=index, response_time=timing([item["seconds"] for item in report["results"]]))
             save_report(report_path, report)
             logging.info("Полный пайплайн: %d/%d, %.3f с", index, len(rows), elapsed)
@@ -137,17 +178,19 @@ def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--live", action="store_true")
     parser.add_argument("--config", type=Path, default=DEFAULT_RUN_CONFIG)
+    parser.add_argument("--report", type=Path, help="Переопределить путь текущего отчёта")
     parser.add_argument("--resume", action="store_true", help="Продолжить live из контрольной точки без повторной генерации готовых строк")
     args = parser.parse_args()
     if args.live:
-        return run_live(args.config, Path(__file__).with_name("live-results.json"), args.resume)
+        return run_live(args.config, args.report or Path(__file__).with_name("pipeline-results.json"), args.resume)
     if args.resume:
         parser.error("--resume требует --live")
     started = perf_counter()
     report = {**metadata(), "scenario": "offline"}
     check()
-    report.update(status="complete", rows=208, overlapping_rows=24, elapsed_seconds=perf_counter() - started)
-    save_report(Path(__file__).with_name("checks-results.json"), report)
+    report.update(status="complete", rows=208, overlapping_rows=24, checkpoint_checks=4,
+                  elapsed_seconds=perf_counter() - started)
+    save_report(args.report or Path(__file__).with_name("checks-results.json"), report)
     return 0
 
 

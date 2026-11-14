@@ -1,7 +1,7 @@
 {
-  "date": "2026-11-14T13:02:23+03:00",
-  "commit": "9464aed0d25f45dd1369e5ed5aedd76ee4bade7c",
-  "code_sha256": "222eeee3b24513599abd707c2f11b7f2eca2e57d4d2ce85027c2c7a90e5c8e1c",
+  "date": "2026-11-14T13:16:57+03:00",
+  "commit": "e58bf075c1a45d000287ab223681c9e6d2a778ed",
+  "code_sha256": "dba433342bb67410000c54248ff76dc597e7c7eafe8ea8f6be6bcae022667aa8",
   "working_tree": true,
   "scenario": "offline_api_clients",
   "real_api_calls": 0,
@@ -9,7 +9,7 @@
   "versions": [
     {
       "revision": "working_tree",
-      "commit": "9464aed0d25f45dd1369e5ed5aedd76ee4bade7c",
+      "commit": "e58bf075c1a45d000287ab223681c9e6d2a778ed",
       "main_sha256": "be5baab73163ec49c9d73363e41509e9c0f64c0a4020eefea7f18176969405a5",
       "status": "complete",
       "checks": {
@@ -20,7 +20,22 @@
         "environment_cases": 5
       },
       "passed": 88,
-      "offline_elapsed_seconds": 0.27319314499982283
+      "offline_elapsed_seconds": 0.12817048099987005
+    },
+    {
+      "revision": "e58bf075c1a45d000287ab223681c9e6d2a778ed",
+      "commit": "e58bf075c1a45d000287ab223681c9e6d2a778ed",
+      "main_sha256": "be5baab73163ec49c9d73363e41509e9c0f64c0a4020eefea7f18176969405a5",
+      "status": "complete",
+      "checks": {
+        "protocol_cases": 8,
+        "invalid_settings": 16,
+        "invalid_outputs": 36,
+        "http_cases": 23,
+        "environment_cases": 5
+      },
+      "passed": 88,
+      "offline_elapsed_seconds": 0.1310037920002287
     },
     {
       "revision": "9464aed0d25f45dd1369e5ed5aedd76ee4bade7c",
@@ -35,7 +50,7 @@
         "environment_cases": 5
       },
       "passed": 88,
-      "offline_elapsed_seconds": 0.1085131149998233
+      "offline_elapsed_seconds": 0.0789329539998107
     },
     {
       "revision": "3613e030db534ac6dcb502bd417f511ba3b79789",

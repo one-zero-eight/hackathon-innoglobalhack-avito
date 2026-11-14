@@ -9,15 +9,11 @@ import argparse
 import hashlib
 import json
 import logging
-import subprocess
-import tarfile
-from io import BytesIO
-from tempfile import TemporaryDirectory
 from time import perf_counter
 from typing import Any, Callable
 from unittest.mock import patch
 
-from benchmark_support import ROOT, metadata, save_report
+from benchmark_support import ROOT, compare_contract_revisions, metadata, save_report
 
 
 def require(condition: bool, message: str) -> None:
@@ -233,29 +229,10 @@ def main() -> int:
     report = {**metadata(), "scenario": "offline_extraction_contract", "real_api_calls": 0,
               "current": current, "versions": [], "status": current["status"]}
     if args.all_revisions:
-        revisions = subprocess.check_output([
-            "git", "log", "--format=%H", "--", "src/main.py", "src/subcategory_extraction/google_decision",
-        ], cwd=ROOT, text=True).splitlines()
-        head = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=ROOT, text=True).strip()
-        for revision in dict.fromkeys([head, *revisions]):
-            present = subprocess.run(["git", "cat-file", "-e", f"{revision}:src/subcategory_extraction/google_decision/pipeline.py"], cwd=ROOT, capture_output=True)
-            if present.returncode:
-                report["versions"].append({"commit": revision, "status": "unavailable", "reason": "Модуль google_decision отсутствует"})
-                continue
-            with TemporaryDirectory(prefix="extraction-contract-") as folder:
-                root = Path(folder)
-                archive = subprocess.check_output(["git", "archive", revision, "src"], cwd=ROOT)
-                with tarfile.open(fileobj=BytesIO(archive)) as tar:
-                    tar.extractall(root, filter="data")
-                child_report = root / "contract.json"
-                process = subprocess.run([
-                    sys.executable, str(Path(__file__).resolve()), "--source-root", str(root / "src"),
-                    "--report", str(child_report),
-                ], cwd=ROOT, capture_output=True, text=True)
-                if not child_report.exists():
-                    raise RuntimeError(f"Не создан отчёт версии {revision}: код {process.returncode}")
-                row = json.loads(child_report.read_text())["current"]
-                report["versions"].append({"commit": revision, **row})
+        report["versions"] = compare_contract_revisions(
+            Path(__file__), ["src/main.py", "src/subcategory_extraction/google_decision"],
+            "src/subcategory_extraction/google_decision/pipeline.py",
+        )
     report["offline_elapsed_seconds"] = perf_counter() - started
     save_report(args.report, report)
     logging.info("Текущий контракт: %s/%s, %s", current.get("passed", 0), current.get("total", 0), current["status"])

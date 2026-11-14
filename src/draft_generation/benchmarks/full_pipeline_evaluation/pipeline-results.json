@@ -1,0 +1,71 @@
+{
+  "date": "2026-11-14T13:16:57+03:00",
+  "commit": "e58bf075c1a45d000287ab223681c9e6d2a778ed",
+  "code_sha256": "dba433342bb67410000c54248ff76dc597e7c7eafe8ea8f6be6bcae022667aa8",
+  "working_tree": true,
+  "scenario": "live",
+  "fingerprint": "0562b71d310bcdd46f091827309f706e07f6621f1111e042d97df3ad9e0e2ef5",
+  "rows": 208,
+  "limited": false,
+  "pipeline_config": {
+    "subcategory_extraction": "google_decision",
+    "draft_generation": "llm"
+  },
+  "run_config": {
+    "pipeline_config": "config.json",
+    "dataset": "docs/innoglobalhack_avito/public-test-dataset.parquet",
+    "training_dataset": "docs/innoglobalhack_avito/public-train-annotated.jsonl",
+    "report": "out/evaluation.json",
+    "source_mc_id": 101,
+    "limit": null,
+    "log_every": 10
+  },
+  "overlap": {
+    "checked": true,
+    "method": "normalized_exact_description",
+    "training_dataset": "/home/zolotarev/PycharmProjects/hackathon-innoglobalhack-avito/docs/innoglobalhack_avito/public-train-annotated.jsonl",
+    "overlapping_rows": 24,
+    "row_numbers": [
+      2,
+      10,
+      20,
+      46,
+      62,
+      65,
+      68,
+      77,
+      78,
+      79,
+      84,
+      88,
+      106,
+      108,
+      129,
+      142,
+      147,
+      154,
+      174,
+      179,
+      187,
+      191,
+      198,
+      203
+    ]
+  },
+  "results": [],
+  "sessions": [
+    {
+      "date": "2026-11-14T13:16:58+03:00",
+      "commit": "e58bf075c1a45d000287ab223681c9e6d2a778ed",
+      "code_sha256": "dba433342bb67410000c54248ff76dc597e7c7eafe8ea8f6be6bcae022667aa8",
+      "working_tree": true,
+      "resumed": false,
+      "starting_row": 1,
+      "elapsed_seconds": 0.010592051000003266
+    }
+  ],
+  "status": "failed",
+  "error": "LLMError: Не задан API-ключ выбранного клиента",
+  "failed_row": 1,
+  "elapsed_seconds": 0.010592051000003266
+}

@@ -28,13 +28,13 @@
 ```json
 {
   "subcategory_extraction": "google_decision",
-  "draft_generation": "sample_llm"
+  "draft_generation": "llm"
 }
 ```
 
 Доступны `subcategory_extraction/google_decision`,
 `subcategory_extraction/tfidf`.
-Доступен генератор `draft_generation/sample_llm`. `null` означает, что модуль
+Доступен генератор `draft_generation/llm`. `null` означает, что модуль
 не выбран. CLI выдаёт явную ошибку.
 Варианты (например, `jev`, `embeddings` или `llm`) добавляются в
 `src/<service>/<module>/`; затем в конфиге указывается имя папки вместо `null`.
@@ -48,7 +48,10 @@ answers. Настройки промпта и порога: `EXTRACTION_PROMPT=g
 `GOOGLE_DECISION_THRESHOLD` больше не используются. См.
 [описание выделения](src/subcategory_extraction/README.md) и
 [офлайн-контракт](src/subcategory_extraction/benchmarks/contract/README.md).
-TF-IDF и sample_llm временно сохранены до следующих отдельных изменений;
+`llm` использует Google Gemma 4 31B по умолчанию и поддерживает
+`GENERATION_PROVIDER=openai_compatible` с явными моделью, ключом и полным URL.
+См. [генератор](src/draft_generation/README.md).
+TF-IDF и sample_llm временно сохранены до отдельного завершения очистки;
 исторические результаты их прежних прогонов не оценивают новый extractor.
 
 Для сравнения вариантов используем общие бенчмарки раздела: качество,

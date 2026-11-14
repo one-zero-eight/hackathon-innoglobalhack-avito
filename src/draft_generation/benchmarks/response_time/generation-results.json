@@ -1,0 +1,41 @@
+{
+  "date": "2026-11-14T13:16:54+03:00",
+  "commit": "e58bf075c1a45d000287ab223681c9e6d2a778ed",
+  "code_sha256": "dba433342bb67410000c54248ff76dc597e7c7eafe8ea8f6be6bcae022667aa8",
+  "working_tree": true,
+  "scenario": "live_generation",
+  "module": "llm",
+  "sample_seed": 44,
+  "sample_size": 10,
+  "status": "failed",
+  "rows": [],
+  "dataset_sha256": "b7118d68086624fbeab43839f22a635d4e325e4ee339f22d4aa0ad3c2e986615",
+  "sample_groups": [
+    "b9e262253dea1cf06e83dd184d0e6df2672b6ef0ee59455c7f3d419a79358e9b",
+    "aee45adc7c125302b3b14330e392d8aaf93d29a0abbe595b98abe7b3e26e8070",
+    "a9367676cf7529ed5ed708229f0d3a0a62dc4551457a83736834fe28ce94d3a3",
+    "7126c3e43d5c653471d5a681a0cced9057f52833c816f1741a79068a5bf9e076",
+    "4b3e4c94f4a11577143c049b2354b4af9b6c2dee51abc6db1e03adf5a22920de",
+    "3966fb2a80454d797a7d85ec2fc51608b41ceb1b17156da917cabc1fd57940ee",
+    "8237122985842673f3b45987f1fe84de2454baf24f4836506895a00d12cf54db",
+    "ca9c6abde9f006ab46a73a5701c59b4c473680cdd2d5887bafe2984b3f6b3b46",
+    "c1e7e9f2b69ac9ab1940d8449706dc2787fed745dd44eba628a5d6217b816bf8",
+    "d1c6217cf15ab633d19bdaafe1a8f832d30834e5c148db7deb47e6129a5b1be1"
+  ],
+  "model": "gemma-4-31b-it",
+  "api_settings": {
+    "model_id": "gemma-4-31b-it",
+    "endpoint": "https://generativelanguage.googleapis.com/v1beta/models/gemma-4-31b-it:generateContent",
+    "timeout": 60.0,
+    "max_attempts": 3,
+    "retry_delay": 1.0,
+    "response_mode": "prompt"
+  },
+  "prompt_path": "src/draft_generation/llm/prompts/draft.md",
+  "prompt_sha256": "0a05849ab2d787ce5ebb72dfd65e0302a2d85f6a5dab93a9a42df6c45694bda0",
+  "error": "ValueError: Не задан API-ключ; настоящие вызовы не выполнялись",
+  "response_time": {
+    "calls": 0
+  },
+  "timing_includes": "run(), API retries and quota waits; excludes instance construction and data loading"
+}
