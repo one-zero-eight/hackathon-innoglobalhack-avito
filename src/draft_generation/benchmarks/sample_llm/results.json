@@ -1,0 +1,15 @@
+{
+  "date": "2026-11-14T16:48:49+03:00",
+  "commit": "e814b58efaeec3f0cbefeb02791f0ae2b1c6ebd9",
+  "code_sha256": "f5b27fbd8a8c6447321a35d60d1c77d9f5dd45dafa8896cbd9361c5744d538c3",
+  "working_tree": true,
+  "scenario": "offline_contract",
+  "checks": {
+    "invalid_json_rejected": 7,
+    "transport_errors_rejected": 3,
+    "drafts": 2,
+    "full_pipeline": 1
+  },
+  "status": "complete",
+  "elapsed_seconds": 0.029633833095431328
+}

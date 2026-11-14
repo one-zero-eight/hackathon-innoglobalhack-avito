@@ -1,0 +1,128 @@
+{
+  "date": "2026-11-14T17:19:43+03:00",
+  "commit": "e814b58efaeec3f0cbefeb02791f0ae2b1c6ebd9",
+  "code_sha256": "5ddd8a5e1357b40d65ef70b85fbea5ec0694a996becca713a3131fbaeadad3fe",
+  "working_tree": true,
+  "sample_seed": 44,
+  "sample_size": 10,
+  "results": {
+    "tfidf": {
+      "status": "complete",
+      "model": "tfidf",
+      "rows": [
+        {
+          "group_id": "1755d70b12029ca196b7b0db67ab296db96a38e58bfa37db4f9eddc1e435d87e",
+          "seconds": 0.003996334038674831,
+          "predicted": [
+            102,
+            103,
+            104,
+            105,
+            106
+          ]
+        },
+        {
+          "group_id": "df3453fa719bcc9c4120f73540192a23c48886d1d05117214da3af68fdc290c9",
+          "seconds": 0.0009407498873770237,
+          "predicted": [
+            102,
+            103,
+            104,
+            105,
+            106
+          ]
+        },
+        {
+          "group_id": "270d30c0fee5b8ec5ce8309bc25a5dec6f0a874bdf86a75c9e6c29d1a30c80b1",
+          "seconds": 0.0016040410846471786,
+          "predicted": [
+            102,
+            103,
+            104,
+            105,
+            106
+          ]
+        },
+        {
+          "group_id": "716b71093f6ffcb8457d664a34eaeafd6b20130cfc8a637d2324960aea030387",
+          "seconds": 0.0005950829945504665,
+          "predicted": [
+            102,
+            103,
+            104,
+            105,
+            106
+          ]
+        },
+        {
+          "group_id": "8d8689783ae7b2d19ae5d3e5a199cea32bf1458a91a5936230bdc502c4051cdf",
+          "seconds": 0.0004880419000983238,
+          "predicted": [
+            103,
+            104,
+            105,
+            106
+          ]
+        },
+        {
+          "group_id": "bdcf8534a4ad2c0f2d370814f3b22e61e250e397c60d1c1dc45b54364947a03d",
+          "seconds": 0.0008713328279554844,
+          "predicted": [
+            102,
+            103,
+            104,
+            105,
+            106
+          ]
+        },
+        {
+          "group_id": "5524cc0b4bc58d27f2d87abc371da359477b802a890b3d21bc34fc51e0214caa",
+          "seconds": 0.0005706669762730598,
+          "predicted": [
+            102,
+            104,
+            105,
+            106
+          ]
+        },
+        {
+          "group_id": "01feb66f2e21c5fb187fedd281f87e93c750cae9f62dd731f95d32ec0e2c0807",
+          "seconds": 0.0006611661519855261,
+          "predicted": [
+            102,
+            103,
+            104,
+            105,
+            106
+          ]
+        },
+        {
+          "group_id": "1f07801ecf1efcabe5f51f854601df2993b41894476fb12115c72242d382ab08",
+          "seconds": 0.000923709012567997,
+          "predicted": [
+            104,
+            105
+          ]
+        },
+        {
+          "group_id": "b06fa5d52b80f154594a544c282106fb90f32dccc057b670b9ad89a60e27d185",
+          "seconds": 0.0007668749894946814,
+          "predicted": [
+            102,
+            106
+          ]
+        }
+      ],
+      "response_time": {
+        "calls": 10,
+        "total_seconds": 0.011417999863624573,
+        "mean_seconds": 0.0011417999863624572,
+        "median_seconds": 0.0008191039087250829,
+        "p95_seconds": 0.002919802209362385,
+        "min_seconds": 0.0004880419000983238,
+        "max_seconds": 0.003996334038674831
+      }
+    }
+  },
+  "status": "complete"
+}

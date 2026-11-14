@@ -196,7 +196,7 @@ def load_resource(artifact: Path, requested_device: str) -> EncoderResource:
             raise ValueError(
                 f"Нет локального артефакта semantic_encoder: {file}. Обучение: "
                 "PYTHONPATH=src uv run python -m "
-                "subcategory_extraction.benchmarks.train_semantic_encoder "
+                "subcategory_extraction.semantic_encoder.train "
                 "--dataset out/hybrid-training.jsonl --device auto"
             )
         stat = file.stat()
