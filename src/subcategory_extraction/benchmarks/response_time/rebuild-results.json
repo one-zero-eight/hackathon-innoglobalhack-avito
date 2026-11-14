@@ -1,0 +1,21 @@
+{
+  "date": "2026-11-14T13:02:27+03:00",
+  "commit": "9464aed0d25f45dd1369e5ed5aedd76ee4bade7c",
+  "code_sha256": "222eeee3b24513599abd707c2f11b7f2eca2e57d4d2ce85027c2c7a90e5c8e1c",
+  "working_tree": true,
+  "sample_seed": 44,
+  "sample_size": 10,
+  "results": {
+    "google_decision": {
+      "status": "failed",
+      "model": "gemini-decision-1",
+      "rows": [],
+      "error": "LLMError: Не задан API-ключ выбранного клиента",
+      "failed_seconds": 2.310599984411965e-05,
+      "response_time": {
+        "calls": 0
+      }
+    }
+  },
+  "status": "failed"
+}

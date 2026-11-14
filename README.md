@@ -27,7 +27,7 @@
 
 ```json
 {
-  "subcategory_extraction": "tfidf",
+  "subcategory_extraction": "google_decision",
   "draft_generation": "sample_llm"
 }
 ```
@@ -41,6 +41,15 @@
 Каждый вариант содержит `__init__.py` и `pipeline.py` с классом и интерфейсом
 своего раздела (см. [AGENTS.md](AGENTS.md)). Переключение — только через конфиг,
 без изменения оркестрации. Несуществующий модуль вызывает ошибку.
+
+`google_decision` переписан с общим API-клиентом и строгой проверкой typed
+answers. Настройки промпта и порога: `EXTRACTION_PROMPT=guided`,
+`EXTRACTION_THRESHOLD=0.5`; `GOOGLE_DECISION_PROMPT` и
+`GOOGLE_DECISION_THRESHOLD` больше не используются. См.
+[описание выделения](src/subcategory_extraction/README.md) и
+[офлайн-контракт](src/subcategory_extraction/benchmarks/contract/README.md).
+TF-IDF и sample_llm временно сохранены до следующих отдельных изменений;
+исторические результаты их прежних прогонов не оценивают новый extractor.
 
 Для сравнения вариантов используем общие бенчмарки раздела: качество,
 время ответа и стоимость для конкретного сценария и выборки.

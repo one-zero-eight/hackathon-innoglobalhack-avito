@@ -61,7 +61,7 @@ def run_live(config_path: Path, report_path: Path, resume: bool) -> int:
     # Кэш не должен пережить изменение кода, модели, промпта или артефакта.
     fingerprint.update(metadata()["code_sha256"].encode())
     public_settings = {key: value for key, value in os.environ.items()
-                       if key.startswith(("GOOGLE_DECISION_", "SAMPLE_LLM_", "TFIDF_"))
+                       if key.startswith(("EXTRACTION_", "GENERATION_", "GOOGLE_DECISION_", "SAMPLE_LLM_", "TFIDF_"))
                        and not any(word in key for word in ("KEY", "TOKEN", "SECRET"))}
     public_settings["LLM_MODEL_ID"] = os.getenv("LLM_MODEL_ID", "")
     fingerprint.update(json.dumps(public_settings, sort_keys=True).encode())

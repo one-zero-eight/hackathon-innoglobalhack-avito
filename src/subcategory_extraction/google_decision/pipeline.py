@@ -1,68 +1,102 @@
-"""Адаптер промптов эксперимента к интерфейсу выделения категорий."""
+"""Выделение дополнительных услуг через Google Decisions API."""
 
 import json
 import os
 from pathlib import Path
+from typing import Literal
 
-from main import BasePipeline, MICROCATEGORIES, PipelineInput
-from subcategory_extraction.google_decision.client import GoogleDecisionClient
+from pydantic import BaseModel, ConfigDict, Field, ValidationError
 
-PROMPT_DIR = Path(__file__).resolve().parent / "prompts"
-CATEGORY_EXAMPLES = {
-    101: "комплексный ремонт помещения в несколько этапов",
-    102: "штукатурка, выравнивание штукатуркой, штукатурка откосов",
-    103: "укладка плитки, керамогранита или мозаики, запил и затирка швов",
-    104: "водоснабжение, канализация, сантехприборы, водяное отопление",
-    105: "проводка, розетки, щиты, светильники, электрический тёплый пол",
-    106: "обои, окраска, подготовка под обои или краску",
-}
+from main import BasePipeline, GoogleDecisionClient, MICROCATEGORIES, PipelineInput
+
+RESOURCE_DIR = Path(__file__).resolve().parent / "prompts"
+
+
+class ExtractionSettings(BaseModel):
+    """Промпт и порог выделения; параметры API находятся в общем клиенте."""
+
+    model_config = ConfigDict(extra="forbid")
+
+    prompt: Literal["baseline", "guided"] = "guided"
+    threshold: float = Field(default=0.5, ge=0, le=1, allow_inf_nan=False)
+
+
+class NoulAnswer(BaseModel):
+    """Ответ на один бинарный вопрос Google без приведения строк и bool."""
+
+    model_config = ConfigDict(extra="ignore", strict=True)
+
+    type: Literal["noul"]
+    noul: float = Field(ge=0, le=1, allow_inf_nan=False)
+    confidence: float | None = Field(default=None, ge=0, le=1, allow_inf_nan=False)
+
+
+class DecisionResponse(BaseModel):
+    """Оболочка typed answers; метаданные API не влияют на выделение."""
+
+    model_config = ConfigDict(extra="ignore", strict=True)
+
+    answers: dict[str, NoulAnswer]
+
+
+def load_guidance() -> dict[int, str]:
+    """Прочитать границы категорий из ресурса и сверить с общим контрактом."""
+    resource = json.loads((RESOURCE_DIR / "category_guidance.json").read_text(encoding="utf-8"))
+    if not isinstance(resource, dict) or set(resource) != {str(cid) for cid in MICROCATEGORIES}:
+        raise ValueError("Справочник выделения должен описывать все категории контракта")
+    if any(not isinstance(value, str) or not value.strip() for value in resource.values()):
+        raise ValueError("Описания границ категорий должны быть непустыми строками")
+    return {cid: resource[str(cid)] for cid in MICROCATEGORIES}
 
 
 class SubcategoryExtractionPipeline(BasePipeline):
-    """Определить дополнительные категории по вероятностям Google Decision."""
+    """Оценить дополнительные категории независимо в одном запросе Google."""
 
     name = "google_decision"
 
     def __init__(self) -> None:
+        self.settings = ExtractionSettings(
+            prompt=os.getenv("EXTRACTION_PROMPT") or "guided",
+            threshold=os.getenv("EXTRACTION_THRESHOLD") or 0.5,
+        )
+        self.threshold = self.settings.threshold
+        self.prompt_path = RESOURCE_DIR / f"google_decision_{self.settings.prompt}.md"
+        self.prompt = self.prompt_path.read_text(encoding="utf-8")
+        self.guidance = load_guidance()
         self.client = GoogleDecisionClient()
-        variant = os.getenv("GOOGLE_DECISION_PROMPT", "guided")
-        if variant not in ("baseline", "guided"):
-            raise ValueError("GOOGLE_DECISION_PROMPT: допустимы baseline и guided")
-        self.prompt = (PROMPT_DIR / f"google_decision_{variant}.md").read_text(encoding="utf-8")
-        self.threshold = float(os.getenv("GOOGLE_DECISION_THRESHOLD", "0.5"))
-        if not 0 <= self.threshold <= 1:
-            raise ValueError("GOOGLE_DECISION_THRESHOLD должен быть от 0 до 1")
 
     def probabilities(
         self, inp: PipelineInput, categories: set[int] | None = None,
     ) -> dict[int, float]:
-        """Оценить все дополнительные категории или заданное подмножество."""
-        if categories is not None and any(type(cid) is not int or cid not in MICROCATEGORIES for cid in categories):
-            raise ValueError("Неизвестные категории в запросе")
+        """Вернуть проверенные вероятности только запрошенных других категорий."""
+        if categories is not None and any(
+            type(cid) is not int or cid not in MICROCATEGORIES for cid in categories
+        ):
+            raise ValueError("Запрошены неизвестные категории выделения")
+        candidates = [
+            cid for cid in sorted(MICROCATEGORIES)
+            if cid != inp.mc_id and (categories is None or cid in categories)
+        ]
+        if not candidates or not inp.description.strip():
+            return {}
         questions = {
             f"mc{cid}": {
                 "type": "noul",
-                "instructions": self.prompt.format(category=name, examples=CATEGORY_EXAMPLES[cid]),
+                "instructions": self.prompt.format(
+                    category=MICROCATEGORIES[cid], guidance=self.guidance[cid],
+                ),
             }
-            for cid, name in MICROCATEGORIES.items()
-            if cid != inp.mc_id and (categories is None or cid in categories)
+            for cid in candidates
         }
-        if not questions:
-            return {}
-        result = json.loads(self.client.complete(inp.description, questions=questions))
-        if not isinstance(result, dict) or not isinstance(result.get("answers"), dict):
-            raise ValueError("Google Decision: отсутствует словарь answers")
-        answers = result["answers"]
-        if set(answers) != set(questions):
-            raise ValueError("Набор ответов Gemini не совпадает с вопросами")
-        probabilities: dict[int, float] = {}
-        for name, answer in answers.items():
-            probability = answer.get("noul") if isinstance(answer, dict) else None
-            if type(probability) not in (float, int) or not 0 <= probability <= 1:
-                raise ValueError(f"Некорректная вероятность для {name}")
-            probabilities[int(name[2:])] = float(probability)
-        return probabilities
+        raw = self.client.complete(inp.description, questions=questions)
+        try:
+            response = DecisionResponse.model_validate_json(raw)
+        except ValidationError:
+            raise ValueError("Google Decision вернул некорректные typed answers") from None
+        if set(response.answers) != set(questions):
+            raise ValueError("Google Decision вернул другой набор вопросов")
+        return {cid: response.answers[f"mc{cid}"].noul for cid in candidates}
 
     def run(self, inp: PipelineInput) -> list[int]:
-        """Вернуть категории с вероятностью не ниже порога."""
-        return [cid for cid, value in self.probabilities(inp).items() if value >= self.threshold]
+        """Вернуть уникальные mcId по порогу, исключив исходную категорию."""
+        return [cid for cid, probability in self.probabilities(inp).items() if probability >= self.threshold]

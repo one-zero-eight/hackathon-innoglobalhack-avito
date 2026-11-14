@@ -120,14 +120,14 @@ def replay() -> dict[str, int]:
             raise AssertionError("Отсутствие ключа не обнаружено")
     # Настоящие два модуля и оркестрация, только ответы API заменены контрольными.
     with (
-        patch("subcategory_extraction.google_decision.client.GoogleDecisionClient.complete",
+        patch("main.GoogleDecisionClient.complete",
               return_value=json.dumps({"answers": {
-                  f"mc{cid}": {"noul": 0.9 if cid == 104 else 0.0}
+                  f"mc{cid}": {"type": "noul", "noul": 0.9 if cid == 104 else 0.0}
                   for cid in range(102, 107)
               }})),
         patch("draft_generation.sample_llm.client.SampleLLMClient.complete",
               return_value=answer),
-        patch.dict("os.environ", {"GOOGLE_DECISION_THRESHOLD": "0.5"}),
+        patch.dict("os.environ", {"EXTRACTION_THRESHOLD": "0.5"}),
     ):
         output = run_pipeline(inp, config)
         assert [draft.mc_id for draft in output.drafts] == [104]

@@ -20,9 +20,9 @@ def metadata() -> dict[str, Any]:
     """Зафиксировать дату, commit и отпечаток исполняемого кода с промптами."""
     digest = hashlib.sha256()
     for path in sorted((ROOT / "src").rglob("*")):
-        if path.suffix not in (".py", ".md") or "dataset_annotation" in path.parts:
+        if path.suffix not in (".py", ".md", ".json") or "dataset_annotation" in path.parts:
             continue
-        if path.suffix == ".md" and "prompts" not in path.parts:
+        if path.suffix in (".md", ".json") and "prompts" not in path.parts:
             continue
         digest.update(str(path.relative_to(ROOT)).encode())
         digest.update(path.read_bytes())

@@ -1,7 +1,7 @@
 {
-  "date": "2026-11-14T12:43:04+03:00",
-  "commit": "b488557209a4dce3968dac21f4895d96850e421a",
-  "code_sha256": "64a066c505a1b067ed68bef2d39142bed9755d4a374b70156635e7cfdff33c23",
+  "date": "2026-11-14T13:02:23+03:00",
+  "commit": "9464aed0d25f45dd1369e5ed5aedd76ee4bade7c",
+  "code_sha256": "222eeee3b24513599abd707c2f11b7f2eca2e57d4d2ce85027c2c7a90e5c8e1c",
   "working_tree": true,
   "scenario": "offline_api_clients",
   "real_api_calls": 0,
@@ -9,7 +9,7 @@
   "versions": [
     {
       "revision": "working_tree",
-      "commit": "b488557209a4dce3968dac21f4895d96850e421a",
+      "commit": "9464aed0d25f45dd1369e5ed5aedd76ee4bade7c",
       "main_sha256": "be5baab73163ec49c9d73363e41509e9c0f64c0a4020eefea7f18176969405a5",
       "status": "complete",
       "checks": {
@@ -20,23 +20,22 @@
         "environment_cases": 5
       },
       "passed": 88,
-      "offline_elapsed_seconds": 0.14427387799992175
+      "offline_elapsed_seconds": 0.27319314499982283
     },
     {
-      "revision": "b488557209a4dce3968dac21f4895d96850e421a",
-      "commit": "b488557209a4dce3968dac21f4895d96850e421a",
-      "main_sha256": "f74f124e721e1bd1a8f1c0bd67fe74047801e9ea171bc43cd03a622657cdb17f",
-      "status": "unavailable",
-      "reason": "В этой версии нет новых общих API-клиентов",
-      "missing": [
-        "APIClientSettings",
-        "GoogleDecisionClient",
-        "GoogleGenerationClient",
-        "JSONTransport",
-        "LLMError",
-        "OpenAICompatibleClient",
-        "generation_client"
-      ]
+      "revision": "9464aed0d25f45dd1369e5ed5aedd76ee4bade7c",
+      "commit": "9464aed0d25f45dd1369e5ed5aedd76ee4bade7c",
+      "main_sha256": "be5baab73163ec49c9d73363e41509e9c0f64c0a4020eefea7f18176969405a5",
+      "status": "complete",
+      "checks": {
+        "protocol_cases": 8,
+        "invalid_settings": 16,
+        "invalid_outputs": 36,
+        "http_cases": 23,
+        "environment_cases": 5
+      },
+      "passed": 88,
+      "offline_elapsed_seconds": 0.1085131149998233
     },
     {
       "revision": "3613e030db534ac6dcb502bd417f511ba3b79789",

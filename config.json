@@ -1,4 +1,4 @@
 {
-  "subcategory_extraction": "tfidf",
+  "subcategory_extraction": "google_decision",
   "draft_generation": "sample_llm"
 }

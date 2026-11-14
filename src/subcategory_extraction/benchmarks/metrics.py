@@ -1,12 +1,13 @@
 """Общие метрики для сравнения вариантов выделения категорий."""
 
 from main import VALID_MCIDS
+from sklearn.metrics import f1_score
 
 
 def score(expected: list[set[int]], predicted: list[set[int]]) -> dict:
     """Посчитать micro-F1, баллы и ошибки по категориям без зависимости от модели."""
-    if len(expected) != len(predicted):
-        raise ValueError("Размеры эталонов и предсказаний не совпадают")
+    if not expected or len(expected) != len(predicted):
+        raise ValueError("Нужны непустые эталоны и предсказания одинакового размера")
     if any(ids - VALID_MCIDS for ids in expected + predicted):
         raise ValueError("Неизвестная категория при расчёте метрик")
     counts = {
@@ -18,6 +19,17 @@ def score(expected: list[set[int]], predicted: list[set[int]]) -> dict:
         for cid in sorted(VALID_MCIDS)
     }
     totals = {name: sum(row[name] for row in counts.values()) for name in ("tp", "fp", "fn")}
-    denominator = 2 * totals["tp"] + totals["fp"] + totals["fn"]
-    micro_f1 = 2 * totals["tp"] / denominator if denominator else 0.0
-    return {"micro_f1": micro_f1, "points": 5 * micro_f1, **totals, "by_category": counts}
+    categories = sorted(VALID_MCIDS)
+    truth = [[int(cid in ids) for cid in categories] for ids in expected]
+    output = [[int(cid in ids) for cid in categories] for ids in predicted]
+    micro_f1 = float(f1_score(truth, output, average="micro", zero_division=0))
+    for row in counts.values():
+        row["precision"] = row["tp"] / (row["tp"] + row["fp"]) if row["tp"] + row["fp"] else 0.0
+        row["recall"] = row["tp"] / (row["tp"] + row["fn"]) if row["tp"] + row["fn"] else 0.0
+        size = 2 * row["tp"] + row["fp"] + row["fn"]
+        row["f1"] = 2 * row["tp"] / size if size else 0.0
+    return {
+        "micro_f1": micro_f1, "classification_points": 60 * micro_f1,
+        "macro_f1": float(f1_score(truth, output, average="macro", zero_division=0)),
+        **totals, "by_category": counts,
+    }

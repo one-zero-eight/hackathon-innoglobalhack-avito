@@ -1,0 +1,659 @@
+{
+  "date": "2026-11-14T13:03:42+03:00",
+  "commit": "9464aed0d25f45dd1369e5ed5aedd76ee4bade7c",
+  "code_sha256": "e1c6f8bd8127aa87e2be2fc1cae5d469ec9130f98bc4579e69afeacb3a59c365",
+  "working_tree": true,
+  "scenario": "offline_extraction_contract",
+  "real_api_calls": 0,
+  "current": {
+    "status": "complete",
+    "passed": 49,
+    "total": 49,
+    "implementation_sha256": "9617da0d7ed0aef51561256f31c15315ec0255eda5509f005cda0ccaadaa90e7",
+    "cases": [
+      {
+        "name": "no_targets",
+        "status": "passed"
+      },
+      {
+        "name": "multiple_targets_and_threshold_boundary",
+        "status": "passed"
+      },
+      {
+        "name": "deterministic_order",
+        "status": "passed"
+      },
+      {
+        "name": "source_101",
+        "status": "passed"
+      },
+      {
+        "name": "source_102",
+        "status": "passed"
+      },
+      {
+        "name": "source_103",
+        "status": "passed"
+      },
+      {
+        "name": "source_104",
+        "status": "passed"
+      },
+      {
+        "name": "source_105",
+        "status": "passed"
+      },
+      {
+        "name": "source_106",
+        "status": "passed"
+      },
+      {
+        "name": "empty_description",
+        "status": "passed"
+      },
+      {
+        "name": "whitespace_description",
+        "status": "passed"
+      },
+      {
+        "name": "not_json",
+        "status": "passed"
+      },
+      {
+        "name": "html",
+        "status": "passed"
+      },
+      {
+        "name": "array",
+        "status": "passed"
+      },
+      {
+        "name": "null",
+        "status": "passed"
+      },
+      {
+        "name": "missing_answers",
+        "status": "passed"
+      },
+      {
+        "name": "answers_array",
+        "status": "passed"
+      },
+      {
+        "name": "empty_answers",
+        "status": "passed"
+      },
+      {
+        "name": "boolean",
+        "status": "passed"
+      },
+      {
+        "name": "string",
+        "status": "passed"
+      },
+      {
+        "name": "negative",
+        "status": "passed"
+      },
+      {
+        "name": "too_large",
+        "status": "passed"
+      },
+      {
+        "name": "nan",
+        "status": "passed"
+      },
+      {
+        "name": "infinity",
+        "status": "passed"
+      },
+      {
+        "name": "null_probability",
+        "status": "passed"
+      },
+      {
+        "name": "missing_type",
+        "status": "passed"
+      },
+      {
+        "name": "wrong_type",
+        "status": "passed"
+      },
+      {
+        "name": "missing_probability",
+        "status": "passed"
+      },
+      {
+        "name": "null_answer",
+        "status": "passed"
+      },
+      {
+        "name": "string_confidence",
+        "status": "passed"
+      },
+      {
+        "name": "invalid_confidence",
+        "status": "passed"
+      },
+      {
+        "name": "missing_category",
+        "status": "passed"
+      },
+      {
+        "name": "extra_mc101",
+        "status": "passed"
+      },
+      {
+        "name": "extra_mc999",
+        "status": "passed"
+      },
+      {
+        "name": "empty_subset",
+        "status": "passed"
+      },
+      {
+        "name": "source_only_subset",
+        "status": "passed"
+      },
+      {
+        "name": "selected_subset",
+        "status": "passed"
+      },
+      {
+        "name": "unknown_subset",
+        "status": "passed"
+      },
+      {
+        "name": "boolean_subset",
+        "status": "passed"
+      },
+      {
+        "name": "threshold_-0.1",
+        "status": "passed"
+      },
+      {
+        "name": "threshold_1.1",
+        "status": "passed"
+      },
+      {
+        "name": "threshold_nan",
+        "status": "passed"
+      },
+      {
+        "name": "threshold_inf",
+        "status": "passed"
+      },
+      {
+        "name": "threshold_bad",
+        "status": "passed"
+      },
+      {
+        "name": "unknown_prompt",
+        "status": "passed"
+      },
+      {
+        "name": "baseline_prompt",
+        "status": "passed"
+      },
+      {
+        "name": "official_classification_metrics",
+        "status": "passed"
+      },
+      {
+        "name": "empty_labels_and_source_false_positive",
+        "status": "passed"
+      },
+      {
+        "name": "empty_dataset_rejected",
+        "status": "passed"
+      }
+    ]
+  },
+  "versions": [
+    {
+      "commit": "9464aed0d25f45dd1369e5ed5aedd76ee4bade7c",
+      "status": "failed",
+      "passed": 40,
+      "total": 49,
+      "implementation_sha256": "28c702d9bcab7892d606ad3b3624559e75537eff21570214fd9ef068b2abe185",
+      "cases": [
+        {
+          "name": "no_targets",
+          "status": "passed"
+        },
+        {
+          "name": "multiple_targets_and_threshold_boundary",
+          "status": "passed"
+        },
+        {
+          "name": "deterministic_order",
+          "status": "failed",
+          "error": "AssertionError: Ожидались категории [102, 104, 106], получены [106, 104, 102]"
+        },
+        {
+          "name": "source_101",
+          "status": "passed"
+        },
+        {
+          "name": "source_102",
+          "status": "passed"
+        },
+        {
+          "name": "source_103",
+          "status": "passed"
+        },
+        {
+          "name": "source_104",
+          "status": "passed"
+        },
+        {
+          "name": "source_105",
+          "status": "passed"
+        },
+        {
+          "name": "source_106",
+          "status": "passed"
+        },
+        {
+          "name": "empty_description",
+          "status": "failed",
+          "error": "AssertionError: Пустое описание вызвало API"
+        },
+        {
+          "name": "whitespace_description",
+          "status": "failed",
+          "error": "AssertionError: Пустое описание вызвало API"
+        },
+        {
+          "name": "not_json",
+          "status": "passed"
+        },
+        {
+          "name": "html",
+          "status": "passed"
+        },
+        {
+          "name": "array",
+          "status": "passed"
+        },
+        {
+          "name": "null",
+          "status": "passed"
+        },
+        {
+          "name": "missing_answers",
+          "status": "passed"
+        },
+        {
+          "name": "answers_array",
+          "status": "passed"
+        },
+        {
+          "name": "empty_answers",
+          "status": "passed"
+        },
+        {
+          "name": "boolean",
+          "status": "passed"
+        },
+        {
+          "name": "string",
+          "status": "passed"
+        },
+        {
+          "name": "negative",
+          "status": "passed"
+        },
+        {
+          "name": "too_large",
+          "status": "passed"
+        },
+        {
+          "name": "nan",
+          "status": "passed"
+        },
+        {
+          "name": "infinity",
+          "status": "passed"
+        },
+        {
+          "name": "null_probability",
+          "status": "passed"
+        },
+        {
+          "name": "missing_type",
+          "status": "failed",
+          "error": "AssertionError: Неверный ответ принят"
+        },
+        {
+          "name": "wrong_type",
+          "status": "failed",
+          "error": "AssertionError: Неверный ответ принят"
+        },
+        {
+          "name": "missing_probability",
+          "status": "passed"
+        },
+        {
+          "name": "null_answer",
+          "status": "passed"
+        },
+        {
+          "name": "string_confidence",
+          "status": "failed",
+          "error": "AssertionError: Неверный ответ принят"
+        },
+        {
+          "name": "invalid_confidence",
+          "status": "failed",
+          "error": "AssertionError: Неверный ответ принят"
+        },
+        {
+          "name": "missing_category",
+          "status": "passed"
+        },
+        {
+          "name": "extra_mc101",
+          "status": "passed"
+        },
+        {
+          "name": "extra_mc999",
+          "status": "passed"
+        },
+        {
+          "name": "empty_subset",
+          "status": "passed"
+        },
+        {
+          "name": "source_only_subset",
+          "status": "passed"
+        },
+        {
+          "name": "selected_subset",
+          "status": "passed"
+        },
+        {
+          "name": "unknown_subset",
+          "status": "passed"
+        },
+        {
+          "name": "boolean_subset",
+          "status": "passed"
+        },
+        {
+          "name": "threshold_-0.1",
+          "status": "passed"
+        },
+        {
+          "name": "threshold_1.1",
+          "status": "passed"
+        },
+        {
+          "name": "threshold_nan",
+          "status": "passed"
+        },
+        {
+          "name": "threshold_inf",
+          "status": "passed"
+        },
+        {
+          "name": "threshold_bad",
+          "status": "passed"
+        },
+        {
+          "name": "unknown_prompt",
+          "status": "passed"
+        },
+        {
+          "name": "baseline_prompt",
+          "status": "passed"
+        },
+        {
+          "name": "official_classification_metrics",
+          "status": "failed",
+          "error": "KeyError: 'classification_points'"
+        },
+        {
+          "name": "empty_labels_and_source_false_positive",
+          "status": "passed"
+        },
+        {
+          "name": "empty_dataset_rejected",
+          "status": "failed",
+          "error": "AssertionError: Пустой датасет принят"
+        }
+      ]
+    },
+    {
+      "commit": "3613e030db534ac6dcb502bd417f511ba3b79789",
+      "status": "failed",
+      "passed": 40,
+      "total": 49,
+      "implementation_sha256": "1e88046c5a8c00ab2575c4d7cdcedc8c9f992b992bb8553d70e2d133220663cb",
+      "cases": [
+        {
+          "name": "no_targets",
+          "status": "passed"
+        },
+        {
+          "name": "multiple_targets_and_threshold_boundary",
+          "status": "passed"
+        },
+        {
+          "name": "deterministic_order",
+          "status": "failed",
+          "error": "AssertionError: Ожидались категории [102, 104, 106], получены [106, 104, 102]"
+        },
+        {
+          "name": "source_101",
+          "status": "passed"
+        },
+        {
+          "name": "source_102",
+          "status": "passed"
+        },
+        {
+          "name": "source_103",
+          "status": "passed"
+        },
+        {
+          "name": "source_104",
+          "status": "passed"
+        },
+        {
+          "name": "source_105",
+          "status": "passed"
+        },
+        {
+          "name": "source_106",
+          "status": "passed"
+        },
+        {
+          "name": "empty_description",
+          "status": "failed",
+          "error": "AssertionError: Пустое описание вызвало API"
+        },
+        {
+          "name": "whitespace_description",
+          "status": "failed",
+          "error": "AssertionError: Пустое описание вызвало API"
+        },
+        {
+          "name": "not_json",
+          "status": "passed"
+        },
+        {
+          "name": "html",
+          "status": "passed"
+        },
+        {
+          "name": "array",
+          "status": "passed"
+        },
+        {
+          "name": "null",
+          "status": "passed"
+        },
+        {
+          "name": "missing_answers",
+          "status": "passed"
+        },
+        {
+          "name": "answers_array",
+          "status": "passed"
+        },
+        {
+          "name": "empty_answers",
+          "status": "passed"
+        },
+        {
+          "name": "boolean",
+          "status": "passed"
+        },
+        {
+          "name": "string",
+          "status": "passed"
+        },
+        {
+          "name": "negative",
+          "status": "passed"
+        },
+        {
+          "name": "too_large",
+          "status": "passed"
+        },
+        {
+          "name": "nan",
+          "status": "passed"
+        },
+        {
+          "name": "infinity",
+          "status": "passed"
+        },
+        {
+          "name": "null_probability",
+          "status": "passed"
+        },
+        {
+          "name": "missing_type",
+          "status": "failed",
+          "error": "AssertionError: Неверный ответ принят"
+        },
+        {
+          "name": "wrong_type",
+          "status": "failed",
+          "error": "AssertionError: Неверный ответ принят"
+        },
+        {
+          "name": "missing_probability",
+          "status": "passed"
+        },
+        {
+          "name": "null_answer",
+          "status": "passed"
+        },
+        {
+          "name": "string_confidence",
+          "status": "failed",
+          "error": "AssertionError: Неверный ответ принят"
+        },
+        {
+          "name": "invalid_confidence",
+          "status": "failed",
+          "error": "AssertionError: Неверный ответ принят"
+        },
+        {
+          "name": "missing_category",
+          "status": "passed"
+        },
+        {
+          "name": "extra_mc101",
+          "status": "passed"
+        },
+        {
+          "name": "extra_mc999",
+          "status": "passed"
+        },
+        {
+          "name": "empty_subset",
+          "status": "passed"
+        },
+        {
+          "name": "source_only_subset",
+          "status": "passed"
+        },
+        {
+          "name": "selected_subset",
+          "status": "passed"
+        },
+        {
+          "name": "unknown_subset",
+          "status": "passed"
+        },
+        {
+          "name": "boolean_subset",
+          "status": "passed"
+        },
+        {
+          "name": "threshold_-0.1",
+          "status": "passed"
+        },
+        {
+          "name": "threshold_1.1",
+          "status": "passed"
+        },
+        {
+          "name": "threshold_nan",
+          "status": "passed"
+        },
+        {
+          "name": "threshold_inf",
+          "status": "passed"
+        },
+        {
+          "name": "threshold_bad",
+          "status": "passed"
+        },
+        {
+          "name": "unknown_prompt",
+          "status": "passed"
+        },
+        {
+          "name": "baseline_prompt",
+          "status": "passed"
+        },
+        {
+          "name": "official_classification_metrics",
+          "status": "failed",
+          "error": "KeyError: 'classification_points'"
+        },
+        {
+          "name": "empty_labels_and_source_false_positive",
+          "status": "passed"
+        },
+        {
+          "name": "empty_dataset_rejected",
+          "status": "failed",
+          "error": "AssertionError: Пустой датасет принят"
+        }
+      ]
+    },
+    {
+      "commit": "8af86cf97fb36944a6fcd7ec6d315cd320a3f510",
+      "status": "unavailable",
+      "reason": "ValidationError: 1 validation error for PipelineConfig\ncategory_validation\n  Field required [type=missing, input_value={'subcategory_extraction'...draft_generation': None}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.14/v/missing"
+    },
+    {
+      "commit": "392ed0faf90ae2eaa9de93cc51dc99a7907e08bb",
+      "status": "unavailable",
+      "reason": "Модуль google_decision отсутствует"
+    },
+    {
+      "commit": "e7c6cbeaeab40a8edb93d057437f3e23f3bd2322",
+      "status": "unavailable",
+      "reason": "Модуль google_decision отсутствует"
+    }
+  ],
+  "status": "complete",
+  "offline_elapsed_seconds": 1.4453444119999403
+}
