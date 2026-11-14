@@ -1,5 +1,3 @@
-import type { MantineColor } from '@mantine/core'
-
 /** Микрокатегория из GET /api/microcategories. */
 export interface Microcategory {
   mcId: number
@@ -24,6 +22,21 @@ export interface DraftsRequest {
   mcId: number
 }
 
+/** Сплит датасета кейса (GET /api/dataset/*). */
+export type DatasetSplit = 'train' | 'test'
+
+/** Объявление из датасета кейса (GET /api/dataset/random). */
+export interface DatasetSample {
+  id: number
+  split: DatasetSplit
+  itemId: number | null
+  title: string
+  description: string
+  sourceMcId: number
+  foundMcIds: number[] | null
+  categories: string[] | null
+}
+
 /** Ошибка обращения к бэкенду с читаемым русским сообщением. */
 export class ApiError extends Error {
   readonly status: number
@@ -33,14 +46,6 @@ export class ApiError extends Error {
     this.name = 'ApiError'
     this.status = status
   }
-}
-
-/**
- * Акцент для подписи черновика: если целевая микрокатегория совпала с
- * исходной (не должно), карточка подсвечивается красным.
- */
-export function draftAccent(targetMcId: number, sourceMcId: number): MantineColor {
-  return targetMcId === sourceMcId ? 'red' : 'avito'
 }
 
 async function parseBody(response: Response): Promise<unknown> {
@@ -115,6 +120,30 @@ function assertDraftsResponse(value: unknown): DraftsResponse {
   return { drafts }
 }
 
+/** Приводит ответ GET /api/dataset/random к типу DatasetSample. */
+function assertDatasetSample(value: unknown): DatasetSample {
+  const sample = value as DatasetSample | null
+  if (
+    sample === null ||
+    typeof sample !== 'object' ||
+    typeof sample.description !== 'string' ||
+    typeof sample.sourceMcId !== 'number'
+  ) {
+    throw new ApiError('Некорректный ответ сервиса: ожидалось объявление из датасета.')
+  }
+
+  return {
+    id: typeof sample.id === 'number' ? sample.id : 0,
+    split: sample.split === 'test' ? 'test' : 'train',
+    itemId: typeof sample.itemId === 'number' ? sample.itemId : null,
+    title: typeof sample.title === 'string' ? sample.title : '',
+    description: sample.description,
+    sourceMcId: sample.sourceMcId,
+    foundMcIds: Array.isArray(sample.foundMcIds) ? sample.foundMcIds : null,
+    categories: Array.isArray(sample.categories) ? sample.categories : null,
+  }
+}
+
 /**
  * GET /api/microcategories — список микрокатегорий категории
  * «Ремонт и отделка».
@@ -134,6 +163,27 @@ export async function fetchMicrocategories(): Promise<Microcategory[]> {
   }
 
   return assertMicrocategories(await parseBody(response))
+}
+
+/**
+ * GET /api/dataset/random — случайное объявление датасета кейса
+ * для подстановки в форму примера.
+ */
+export async function fetchRandomSample(split: DatasetSplit): Promise<DatasetSample> {
+  let response: Response
+  try {
+    response = await fetch(`/api/dataset/random?split=${split}`, {
+      headers: { Accept: 'application/json' },
+    })
+  } catch {
+    throw new ApiError('Сервис недоступен. Проверьте, что запущен бэкенд.')
+  }
+
+  if (!response.ok) {
+    await throwHttpError(response)
+  }
+
+  return assertDatasetSample(await parseBody(response))
 }
 
 /**

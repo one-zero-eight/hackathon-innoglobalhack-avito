@@ -19,6 +19,9 @@
  * Базовые цвета страницы вне слоёв: приоритет выше Mantine-слоя, поэтому
  * фон страницы и цвет текста детерминированы. Поверхности карточек
  * (Paper/AppShell) остаются белыми через --mantine-color-body.
+ *
+ * Hex-значения фирменных цветов живут только здесь и в theme.ts:
+ * компоненты берут цвета из CSS-переменных Mantine (--mantine-color-*).
  */
 html {
   background-color: #f4f5f6;
@@ -30,4 +33,104 @@ body {
   margin: 0;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+:root {
+  /* Плавные переходы в фирменном диапазоне 150–200 мс (по умолчанию 150). */
+  --transition-duration: 180ms;
+
+  /* Радужная градиентная линия в стиле Avito (цвета из палитр темы). */
+  --avito-rainbow: linear-gradient(
+    90deg,
+    var(--mantine-color-brandGreen-5) 0%,
+    var(--mantine-color-avito-5) 28%,
+    var(--mantine-color-brandViolet-5) 55%,
+    var(--mantine-color-brandCoral-5) 78%,
+    var(--mantine-color-brandYellow-5) 100%
+  );
+}
+
+/* Цветная полоса-акцент под шапкой страницы. */
+.avito-accent-line {
+  block-size: 4px;
+  background: var(--avito-rainbow);
+  background-size: 200% 100%;
+}
+
+/* Карточка черновика: мягкий подъём при наведении + цветная топ-полоска. */
+.avito-card {
+  transition:
+    box-shadow var(--transition-duration) ease,
+    border-color var(--transition-duration) ease,
+    translate var(--transition-duration) ease;
+}
+
+@media (hover: hover) {
+  .avito-card:hover {
+    translate: 0 -2px;
+    border-color: var(--mantine-color-avito-3);
+    box-shadow: var(--mantine-shadow-sm);
+  }
+}
+
+.avito-card-accent {
+  block-size: 4px;
+  border-start-start-radius: var(--mantine-radius-sm);
+  border-start-end-radius: var(--mantine-radius-sm);
+}
+
+/* Ватермарк-лого: очень светлый, не мешает чтению, не ловит клики. */
+.avito-watermark {
+  position: absolute;
+  inset-block-end: -14px;
+  inset-inline-end: -6px;
+  inline-size: 190px;
+  opacity: 0.05;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* Пульсация фирменного знака в скелетоне загрузки. */
+@keyframes avito-pulse {
+  0%,
+  100% {
+    opacity: 0.35;
+    scale: 1;
+  }
+  50% {
+    opacity: 0.9;
+    scale: 1.06;
+  }
+}
+
+.avito-pulse {
+  animation: avito-pulse 1.4s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .avito-pulse {
+    animation: none;
+  }
+
+  .avito-card {
+    transition: none;
+  }
+}
+
+/*
+ * Тач-цели: поля ввода и кнопки не ниже 44 px. В Mantine по умолчанию
+ * size="sm" (36 px), а переменная --input-height вычисляется на обёртке
+ * InputWrapper, поэтому переопределяем её на элементах по стабильным
+ * именам классов; правило вне слоёв приоритетнее styles.css Mantine.
+ */
+.mantine-Input-wrapper,
+.mantine-Combobox-wrapper {
+  --input-height-sm: 2.75rem;
+  --input-height-md: 2.75rem;
+}
+
+/* Видимый фокус в фирменном синем — выше дефолтного outline Mantine. */
+:focus-visible {
+  outline: 2px solid var(--mantine-color-avito-7);
+  outline-offset: 2px;
 }

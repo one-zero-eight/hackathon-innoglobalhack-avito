@@ -1,5 +1,6 @@
-import { Badge, Card, Group, Stack, Text } from '@mantine/core'
-import { draftAccent, type Draft, type Microcategory } from '../api'
+import { Badge, Box, Card, Group, Stack, Text } from '@mantine/core'
+import { accentColor, badgeColors, microcategoryPalette } from '../theme'
+import type { Draft, Microcategory } from '../api'
 
 interface DraftCardProps {
   draft: Draft
@@ -14,19 +15,39 @@ function titleFor(microcategories: Microcategory[], mcId: number): string {
   return found?.title ?? `Микрокатегория ${mcId}`
 }
 
-/** Карточка одного черновика: бейдж категории, заголовок и текст. */
+/**
+ * Карточка одного черновика: цветная топ-полоска и бейдж микрокатегории
+ * в фирменной паре цветов, заголовок и текст объявления.
+ */
 export function DraftCard({ draft, microcategories, sourceMcId }: DraftCardProps) {
   const notGenerated = draft.title === null || draft.text === null
+  const sameAsSource = draft.mcId === sourceMcId
+
+  // Совпадение с исходной категорией — ошибка подбора, подсвечиваем красным.
+  const palette = sameAsSource ? null : microcategoryPalette(draft.mcId)
+  const badge = palette === null ? badgeColors('brandCoral') : badgeColors(palette)
+  const strip = palette === null ? accentColor('brandCoral') : accentColor(palette)
 
   return (
-    <Card withBorder shadow="xs" padding="md" radius="sm" bg="white">
-      <Stack gap="sm">
+    <Card
+      withBorder
+      shadow="xs"
+      padding={0}
+      radius="sm"
+      bg="white"
+      className="avito-card"
+      style={{ overflow: 'hidden' }}
+    >
+      <Box aria-hidden className="avito-card-accent" style={{ background: strip }} />
+
+      <Stack gap="sm" p="md">
         <Group gap="xs">
           <Badge
-            color={draftAccent(draft.mcId, sourceMcId)}
-            variant="light"
             radius="sm"
             size="md"
+            styles={{
+              root: { backgroundColor: badge.bg, color: badge.text },
+            }}
           >
             {draft.mcId} — {titleFor(microcategories, draft.mcId)}
           </Badge>
@@ -54,6 +75,12 @@ export function DraftCard({ draft, microcategories, sourceMcId }: DraftCardProps
           <Badge color="gray" variant="outline" radius="sm" w="fit-content">
             Текст не сгенерирован
           </Badge>
+        )}
+
+        {sameAsSource && (
+          <Text size="xs" c="brandCoral.8">
+            Совпало с исходной микрокатегорией — проверьте подбор.
+          </Text>
         )}
       </Stack>
     </Card>

@@ -1,6 +1,7 @@
-import { useCallback, useMemo, useState, type FormEvent } from 'react'
-import { Button, Group, Select, Stack, Textarea } from '@mantine/core'
-import type { DraftsRequest, Microcategory } from '../api'
+import { useCallback, useMemo, useRef, useState, type FormEvent } from 'react'
+import { Alert, Button, Group, Select, Stack, Text, Textarea } from '@mantine/core'
+import { fetchRandomSample, type DraftsRequest, type Microcategory } from '../api'
+import { AlertIcon, ShuffleIcon } from './icons'
 
 const MIN_DESCRIPTION_LENGTH = 10
 
@@ -45,6 +46,12 @@ export function DraftsForm({
   const [description, setDescription] = useState('')
   const [mcId, setMcId] = useState<string | null>(null)
   const [errors, setErrors] = useState<FormErrors>({})
+  const [sampleLoading, setSampleLoading] = useState(false)
+  const [sampleError, setSampleError] = useState<string | null>(null)
+
+  const descriptionRef = useRef<HTMLTextAreaElement>(null)
+  const mcIdRef = useRef<HTMLInputElement>(null)
+  const sampleRequestId = useRef(0)
 
   // Значение Select — строка; подписываем как «101 — Ремонт под ключ».
   const options = useMemo(
@@ -61,13 +68,55 @@ export function DraftsForm({
       event.preventDefault()
       const nextErrors = validate(description, mcId)
       setErrors(nextErrors)
-      if (nextErrors.description || nextErrors.mcId) {
+
+      // При ошибке валидации фокусируем первое невалидное поле.
+      if (nextErrors.description) {
+        descriptionRef.current?.focus()
         return
       }
+      if (nextErrors.mcId) {
+        mcIdRef.current?.focus()
+        return
+      }
+
       onSubmit({ description: description.trim(), mcId: Number(mcId) })
     },
     [description, mcId, onSubmit],
   )
+
+  // «Пример из датасета»: случайное объявление train-сплита подставляется
+  // в форму; исходная категория train-сэмплов всегда 101. Повторный клик
+  // отменяет эффект предыдущего ответа через счётчик запросов.
+  const handleLoadSample = useCallback(() => {
+    const requestId = ++sampleRequestId.current
+    setSampleLoading(true)
+    setSampleError(null)
+
+    fetchRandomSample('train')
+      .then((sample) => {
+        if (requestId !== sampleRequestId.current) {
+          return
+        }
+        setDescription(sample.description)
+        setMcId(String(sample.sourceMcId))
+        setErrors({})
+      })
+      .catch((error: unknown) => {
+        if (requestId !== sampleRequestId.current) {
+          return
+        }
+        const message =
+          error instanceof Error && error.message
+            ? error.message
+            : 'Не удалось загрузить пример из датасета.'
+        setSampleError(message)
+      })
+      .finally(() => {
+        if (requestId === sampleRequestId.current) {
+          setSampleLoading(false)
+        }
+      })
+  }, [])
 
   return (
     <form onSubmit={handleSubmit} noValidate>
@@ -84,6 +133,7 @@ export function DraftsForm({
           error={errors.description}
           disabled={disabled}
           withAsterisk
+          ref={descriptionRef}
         />
 
         <Select
@@ -99,13 +149,39 @@ export function DraftsForm({
           searchable
           withAsterisk
           nothingFoundMessage="Ничего не найдено"
+          ref={mcIdRef}
         />
 
         <Group>
           <Button type="submit" loading={loading} disabled={disabled}>
             Подобрать черновики
           </Button>
+          <Button
+            type="button"
+            variant="light"
+            onClick={handleLoadSample}
+            loading={sampleLoading}
+            disabled={disabled}
+            leftSection={<ShuffleIcon size={16} />}
+          >
+            Пример из датасета
+          </Button>
         </Group>
+
+        {/* Ошибка подстановки примера — ненавязчивый алерт с detail бэкенда. */}
+        {sampleError !== null && (
+          <Alert
+            color="red"
+            variant="light"
+            radius="sm"
+            icon={<AlertIcon size={16} />}
+            title="Не удалось подставить пример"
+            withCloseButton
+            onClose={() => setSampleError(null)}
+          >
+            <Text size="sm">{sampleError}</Text>
+          </Alert>
+        )}
       </Stack>
     </form>
   )
