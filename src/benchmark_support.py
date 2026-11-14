@@ -49,7 +49,31 @@ def timing(seconds: list[float]) -> dict[str, int | float]:
 
 
 def save_report(path: Path, report: dict[str, Any]) -> None:
-    """Записать отчёт атомарно, без вычисления или подстановки цены."""
+    """Обновить строки решений и атомарно записать отчёт без расчёта цены."""
+    if path.is_file() and isinstance(report.get("results"), dict):
+        previous = json.loads(path.read_text(encoding="utf-8"))
+        if isinstance(previous.get("results"), dict):
+            for key in ("scenario", "dataset_sha256", "sample_seed", "sample_size"):
+                if key in previous and key in report and previous[key] != report[key]:
+                    raise ValueError(f"Нельзя объединить разные протоколы: {key}; выберите другой --report")
+            before = previous.get("protocol", {}).get("dataset_sha256", previous.get("dataset_sha256"))
+            after = report.get("protocol", {}).get("dataset_sha256", report.get("dataset_sha256"))
+            if before is not None and after is not None and before != after:
+                raise ValueError("Нельзя объединить результаты разных датасетов; выберите другой --report")
+            retained = {}
+            for name, result in previous["results"].items():
+                if name in report["results"]:
+                    continue
+                result = dict(result)
+                result.setdefault("measurement_metadata", {
+                    key: previous[key] for key in (
+                        "date", "commit", "code_sha256", "working_tree", "mode", "protocol",
+                        "timing_scope", "sample_seed", "sample_size", "machine", "environment",
+                    )
+                    if key in previous
+                })
+                retained[name] = result
+            report["results"] = {**retained, **report["results"]}
     path.parent.mkdir(parents=True, exist_ok=True)
     temporary = path.with_suffix(".tmp")
     temporary.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
