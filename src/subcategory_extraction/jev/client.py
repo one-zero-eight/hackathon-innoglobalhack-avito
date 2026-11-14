@@ -6,12 +6,24 @@ import math
 import os
 from pathlib import Path
 from tempfile import NamedTemporaryFile
+from urllib.parse import urlsplit
 from urllib.request import Request, urlopen
 
 from main import LLMClient
 
-DEFAULT_MODEL = "jev-1.13.0"
-DEFAULT_ENDPOINT = "https://bestapi.fugue.pro/v1/systemone"
+DEFAULT_PROVIDER = "selectel"
+PROVIDERS = {
+    "selectel": {
+        "model": "typesafe/jev-1.13",
+        "endpoint": "https://api.selectel.ru/aig/v1/decisions",
+        "key": "SELECTEL_API_KEY",
+    },
+    "bestapi": {
+        "model": "jev-1.13.0",
+        "endpoint": "https://bestapi.fugue.pro/v1/systemone",
+        "key": "BESTAPI_API_KEY",
+    },
+}
 DEFAULT_CACHE_DIR = Path(__file__).resolve().parents[3] / "out/jev-cache"
 
 
@@ -19,9 +31,18 @@ class JevClient(LLMClient):
     """Запрашивать вероятности Noul у выбранной модели Jev без подмены."""
 
     def __init__(self) -> None:
-        super().__init__(os.getenv("JEV_MODEL") or DEFAULT_MODEL)
-        self.api_key = os.getenv("BESTAPI_API_KEY")
-        self.endpoint = os.getenv("JEV_ENDPOINT", DEFAULT_ENDPOINT)
+        self.provider = os.getenv("JEV_PROVIDER") or DEFAULT_PROVIDER
+        if self.provider not in PROVIDERS:
+            raise ValueError("JEV_PROVIDER должен быть selectel или bestapi")
+        settings = PROVIDERS[self.provider]
+        super().__init__(os.getenv("JEV_MODEL") or settings["model"])
+        self.api_key = os.getenv(settings["key"])
+        self.endpoint = os.getenv("JEV_ENDPOINT") or settings["endpoint"]
+        endpoint = urlsplit(self.endpoint)
+        if (endpoint.scheme != "https" or endpoint.username or endpoint.password
+                or endpoint.query or endpoint.fragment
+                or endpoint.hostname != urlsplit(settings["endpoint"]).hostname):
+            raise ValueError("JEV_ENDPOINT должен быть HTTPS-адресом выбранного провайдера")
         self.timeout = float(os.getenv("JEV_TIMEOUT", "60"))
         if not math.isfinite(self.timeout) or self.timeout <= 0:
             raise ValueError("JEV_TIMEOUT должен быть конечным положительным числом")
@@ -78,7 +99,8 @@ class JevClient(LLMClient):
             for name, question in questions.items()
         ):
             raise ValueError("Jev поддерживает вопросы Noul с текстом instructions")
-        payload = {"model": self.model_id, "state": prompt, "questions": questions}
+        state = {"text": prompt} if self.provider == "selectel" else prompt
+        payload = {"model": self.model_id, "state": state, "questions": questions}
         cache_key = hashlib.sha256(json.dumps(
             {"endpoint": self.endpoint, "payload": payload},
             ensure_ascii=False, sort_keys=True, separators=(",", ":"), allow_nan=False,
@@ -92,7 +114,7 @@ class JevClient(LLMClient):
             self.record_usage(result.get("usage"), cache_hit=True)
         else:
             if not self.api_key:
-                raise ValueError("Укажите BESTAPI_API_KEY в .env для запросов Jev")
+                raise ValueError(f"Укажите {PROVIDERS[self.provider]['key']} в .env для запросов Jev")
             request = Request(
                 self.endpoint,
                 data=json.dumps(payload, ensure_ascii=False, allow_nan=False).encode("utf-8"),
@@ -102,7 +124,11 @@ class JevClient(LLMClient):
                 },
                 method="POST",
             )
-            result = self._validate_response(self.request_json(request, self.timeout, urlopen), questions)
+            try:
+                response = self.request_json(request, self.timeout, urlopen)
+            except json.JSONDecodeError:
+                raise ValueError("Jev API вернул не JSON: возможна HTML-страница шлюза") from None
+            result = self._validate_response(response, questions)
             self._store_response(path, result)
         usage = result.get("usage")
         self.last_usage = usage if isinstance(usage, dict) else None

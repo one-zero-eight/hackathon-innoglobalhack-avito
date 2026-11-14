@@ -1,4 +1,4 @@
 {
-  "subcategory_extraction": "semantic_encoder_f1",
+  "subcategory_extraction": "jev",
   "draft_generation": "sample_llm"
 }

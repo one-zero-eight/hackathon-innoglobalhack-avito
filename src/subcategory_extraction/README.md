@@ -6,7 +6,7 @@
 - Интерфейс: `SubcategoryExtractionPipeline.run(PipelineInput) -> list[int]`
 - Варианты: `google_decision` (Google API, промпты baseline/guided),
   `tfidf` (локальная логистическая регрессия, JSON-артефакт),
-  `jev` (нативный Jev через BestAPI), `jev_tfidf` (среднее вероятностей),
+  `jev` (нативный Jev через Selectel), `jev_tfidf` (среднее вероятностей),
   `jev_retrieval` (размеченные соседи), `evidence_jev` (цитаты → Jev),
   `jev_arbiter` (сильный арбитр), `semantic_encoder` (fine-tuned RuBERT-tiny2),
   `semantic_encoder_calibrated` (validation-пороги),

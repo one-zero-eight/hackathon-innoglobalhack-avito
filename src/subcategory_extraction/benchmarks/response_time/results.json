@@ -1,7 +1,7 @@
 {
-  "date": "2026-11-14T18:59:24+03:00",
-  "commit": "45ff38d1c5b65ae90654b53261aa377cc96f13a3",
-  "code_sha256": "3946999259f93a4db45e354a06a12e6cbff64778b66253c27da547e540e90c0f",
+  "date": "2026-11-14T20:49:00+03:00",
+  "commit": "8c6fe87d8c63b7072bbad7aef71670f74ca1c6bb",
+  "code_sha256": "2d9d3f604557db6688508e60449f09e3ef1383dac1cf3d0ee536a2c334927a83",
   "working_tree": true,
   "sample_seed": 44,
   "sample_size": 10,
@@ -551,6 +551,263 @@
         "p95_seconds": 62.31264142074992,
         "min_seconds": 1.525885389999985,
         "max_seconds": 62.785381228000006
+      },
+      "measurement_metadata": {
+        "date": "2026-11-14T18:59:24+03:00",
+        "commit": "45ff38d1c5b65ae90654b53261aa377cc96f13a3",
+        "code_sha256": "3946999259f93a4db45e354a06a12e6cbff64778b66253c27da547e540e90c0f",
+        "timing_scope": null
+      }
+    },
+    "jev": {
+      "status": "complete",
+      "model": "typesafe/jev-1.13",
+      "rows": [
+        {
+          "group_id": "1755d70b12029ca196b7b0db67ab296db96a38e58bfa37db4f9eddc1e435d87e",
+          "seconds": 0.817215190999832,
+          "predicted": [
+            102,
+            103,
+            104,
+            105,
+            106
+          ],
+          "cache_hit": false,
+          "http_attempts": null,
+          "usage": {
+            "input_tokens": 2676,
+            "output_tokens": 99,
+            "total_tokens": 2775,
+            "cost": 0.014846448,
+            "cost_details": {
+              "input_cost": 0.014846448,
+              "output_cost": 0
+            }
+          }
+        },
+        {
+          "group_id": "df3453fa719bcc9c4120f73540192a23c48886d1d05117214da3af68fdc290c9",
+          "seconds": 0.9639042200001313,
+          "predicted": [
+            102,
+            103,
+            104,
+            105,
+            106
+          ],
+          "cache_hit": false,
+          "http_attempts": null,
+          "usage": {
+            "input_tokens": 3332,
+            "output_tokens": 99,
+            "total_tokens": 3431,
+            "cost": 0.018485936,
+            "cost_details": {
+              "input_cost": 0.018485936,
+              "output_cost": 0
+            }
+          }
+        },
+        {
+          "group_id": "270d30c0fee5b8ec5ce8309bc25a5dec6f0a874bdf86a75c9e6c29d1a30c80b1",
+          "seconds": 0.906358328999886,
+          "predicted": [
+            102,
+            103,
+            104,
+            105,
+            106
+          ],
+          "cache_hit": false,
+          "http_attempts": null,
+          "usage": {
+            "input_tokens": 5067,
+            "output_tokens": 99,
+            "total_tokens": 5166,
+            "cost": 0.028111716,
+            "cost_details": {
+              "input_cost": 0.028111716,
+              "output_cost": 0
+            }
+          }
+        },
+        {
+          "group_id": "716b71093f6ffcb8457d664a34eaeafd6b20130cfc8a637d2324960aea030387",
+          "seconds": 0.9210596230000192,
+          "predicted": [
+            102,
+            103,
+            104,
+            105,
+            106
+          ],
+          "cache_hit": false,
+          "http_attempts": null,
+          "usage": {
+            "input_tokens": 2178,
+            "output_tokens": 99,
+            "total_tokens": 2277,
+            "cost": 0.012083544,
+            "cost_details": {
+              "input_cost": 0.012083544,
+              "output_cost": 0
+            }
+          }
+        },
+        {
+          "group_id": "8d8689783ae7b2d19ae5d3e5a199cea32bf1458a91a5936230bdc502c4051cdf",
+          "seconds": 0.9453561440000158,
+          "predicted": [
+            103,
+            104,
+            105,
+            106
+          ],
+          "cache_hit": false,
+          "http_attempts": null,
+          "usage": {
+            "input_tokens": 2006,
+            "output_tokens": 99,
+            "total_tokens": 2105,
+            "cost": 0.011129288,
+            "cost_details": {
+              "input_cost": 0.011129288,
+              "output_cost": 0
+            }
+          }
+        },
+        {
+          "group_id": "bdcf8534a4ad2c0f2d370814f3b22e61e250e397c60d1c1dc45b54364947a03d",
+          "seconds": 1.101899979999871,
+          "predicted": [
+            102,
+            103,
+            104,
+            105,
+            106
+          ],
+          "cache_hit": false,
+          "http_attempts": null,
+          "usage": {
+            "input_tokens": 3487,
+            "output_tokens": 99,
+            "total_tokens": 3586,
+            "cost": 0.019345876,
+            "cost_details": {
+              "input_cost": 0.019345876,
+              "output_cost": 0
+            }
+          }
+        },
+        {
+          "group_id": "5524cc0b4bc58d27f2d87abc371da359477b802a890b3d21bc34fc51e0214caa",
+          "seconds": 1.2347508029997698,
+          "predicted": [
+            102,
+            104,
+            105,
+            106
+          ],
+          "cache_hit": false,
+          "http_attempts": null,
+          "usage": {
+            "input_tokens": 2470,
+            "output_tokens": 99,
+            "total_tokens": 2569,
+            "cost": 0.01370356,
+            "cost_details": {
+              "input_cost": 0.01370356,
+              "output_cost": 0
+            }
+          }
+        },
+        {
+          "group_id": "01feb66f2e21c5fb187fedd281f87e93c750cae9f62dd731f95d32ec0e2c0807",
+          "seconds": 1.0769438139996055,
+          "predicted": [
+            102,
+            103,
+            104,
+            105,
+            106
+          ],
+          "cache_hit": false,
+          "http_attempts": null,
+          "usage": {
+            "input_tokens": 3425,
+            "output_tokens": 99,
+            "total_tokens": 3524,
+            "cost": 0.0190019,
+            "cost_details": {
+              "input_cost": 0.0190019,
+              "output_cost": 0
+            }
+          }
+        },
+        {
+          "group_id": "1f07801ecf1efcabe5f51f854601df2993b41894476fb12115c72242d382ab08",
+          "seconds": 1.4763346069998988,
+          "predicted": [
+            104,
+            105
+          ],
+          "cache_hit": false,
+          "http_attempts": null,
+          "usage": {
+            "input_tokens": 3494,
+            "output_tokens": 99,
+            "total_tokens": 3593,
+            "cost": 0.019384712,
+            "cost_details": {
+              "input_cost": 0.019384712,
+              "output_cost": 0
+            }
+          }
+        },
+        {
+          "group_id": "b06fa5d52b80f154594a544c282106fb90f32dccc057b670b9ad89a60e27d185",
+          "seconds": 0.8192451529998834,
+          "predicted": [
+            102,
+            106
+          ],
+          "cache_hit": false,
+          "http_attempts": null,
+          "usage": {
+            "input_tokens": 2781,
+            "output_tokens": 99,
+            "total_tokens": 2880,
+            "cost": 0.015428988,
+            "cost_details": {
+              "input_cost": 0.015428988,
+              "output_cost": 0
+            }
+          }
+        }
+      ],
+      "model_provenance": {
+        "provider": "selectel",
+        "endpoint": "https://api.selectel.ru/aig/v1/decisions",
+        "model": "typesafe/jev-1.13",
+        "threshold": 0.5,
+        "prompt_sha256": "f05534059aa8ab3e29a281d39d65bfc3e5cbc887330787aba267abd8891728b7",
+        "cache_enabled": true
+      },
+      "timing_scope": {
+        "loading_included": false,
+        "first_call_included": true,
+        "cache_enabled": null,
+        "quota_wait_and_retries_included_if_any": true
+      },
+      "response_time": {
+        "calls": 10,
+        "total_seconds": 10.263067863998913,
+        "mean_seconds": 1.0263067863998914,
+        "median_seconds": 0.9546301820000735,
+        "p95_seconds": 1.3676218951998405,
+        "min_seconds": 0.817215190999832,
+        "max_seconds": 1.4763346069998988
       }
     }
   },

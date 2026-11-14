@@ -44,7 +44,7 @@ src/<service>/<module>/
 
 ```json
 {
-  "subcategory_extraction": "semantic_encoder_f1",
+  "subcategory_extraction": "jev",
   "draft_generation": "sample_llm"
 }
 ```
@@ -55,6 +55,15 @@ src/<service>/<module>/
 [qwen_decision](src/subcategory_extraction/qwen_decision/README.md).
 Доступен генератор `draft_generation/sample_llm`. `null` означает, что модуль
 не выбран. CLI выдаёт явную ошибку.
+
+Текущий Jev использует Selectel Decisions: `JEV_PROVIDER=selectel`,
+`JEV_MODEL=typesafe/jev-1.13`,
+`JEV_ENDPOINT=https://api.selectel.ru/aig/v1/decisions`.
+Задайте отдельный `SELECTEL_API_KEY` в `.env`; детали — в
+[README Jev](src/subcategory_extraction/jev/README.md).
+Новый Selectel-прогон: micro-F1 0.842415 на исходных 208 строках и
+0.816754 на 119 диагностических; среднее время run() на 10 входах — 1.026307 с.
+Данные и ограничения — в бенчмарках ниже.
 Варианты (например, `jev`, `embeddings` или `llm`) добавляются в
 `src/<service>/<module>/`; затем в конфиге указывается имя папки вместо `null`.
 Каждый вариант содержит `__init__.py` и `pipeline.py` с классом и интерфейсом
@@ -81,7 +90,7 @@ uv run python src/subcategory_extraction/benchmarks/classifier_methods/run.py --
 ```
 
 Эти команды проверяют сохранённые ответы без API и обучения. Для оценки
-текущих весов передайте `--methods <модуль>`. Исторический F1 выбранного
+текущих весов передайте `--methods <модуль>`. Исторический F1 модуля
 `semantic_encoder_f1` на 119 диагностических строках — 0.857143;
 это предварительная разметка, не независимый ручной эталон.
 Опубликованные веса Leo включены в модуль через Git LFS (`git lfs pull`).
@@ -110,7 +119,7 @@ draft_generation          черновик на каждую целевую ка
 
 ```bash
 uv sync
-cp .env.example .env          # заполнить LLM_API_KEY
+cp -n .env.example .env       # заполнить SELECTEL_API_KEY и LLM_API_KEY
 
 uv run python src/main.py --input data/input.json --output out/output.json
 ```
