@@ -1,5 +1,13 @@
 # improved_dataset
 
+> Локальный снимок для evaluation из
+> [коммита e3d0e0e](https://github.com/one-zero-eight/hackathon-innoglobalhack-avito/commit/e3d0e0e36aeddef637c6bc63cd8db4165f24005f):
+> импортированы `train.jsonl`, `reviewed_test.parquet`, `manifest.json` и
+> `annotation_policy.json` без изменений. Ниже сохранено описание автора;
+> остальные перечисленные файлы и команды переразметки относятся к исходному
+> коммиту и в эту ветку не перенесены. Команды обучения и фактическая оценка —
+> в [отчёте](../../src/subcategory_extraction/benchmarks/improved-dataset.md).
+
 Производная размеченная версия InnoGlobalHack × Avito.
 Исходники в `docs/innoglobalhack_avito/` не изменены.
 Дата разбора: 2026-11-14.

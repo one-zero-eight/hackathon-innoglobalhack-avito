@@ -21,7 +21,15 @@ def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--size", type=int, default=10)
     parser.add_argument("--report", type=Path, default=Path(__file__).with_name("results.json"))
+    parser.add_argument("--offline", action="store_true", help="Записать отсутствие свежего API-замера")
     args = parser.parse_args()
+    if args.offline:
+        save_report(args.report, {
+            **metadata(), "status": "unavailable", "module": "sample_llm",
+            "reason": "Внешний API отключён: свежие вызовы и latency не измерялись",
+            "fresh_api_requests": 0, "response_time": {"calls": 0},
+        })
+        return 1
     rows = validation_sample(args.size, seed=44, nonempty=True)
     pipeline = load_pipeline("draft_generation", PipelineConfig(subcategory_extraction=None, draft_generation="sample_llm"))
     report = {**metadata(), "sample_seed": 44, "sample_size": len(rows), "module": "sample_llm",

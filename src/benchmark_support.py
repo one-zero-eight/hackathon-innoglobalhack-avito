@@ -1,8 +1,10 @@
 """Общие данные, замеры времени и отчёты бенчмарков без расчёта стоимости."""
 
+from collections import Counter
 import hashlib
 import json
 import subprocess
+import unicodedata
 from datetime import datetime
 from pathlib import Path
 from statistics import mean, median
@@ -58,9 +60,21 @@ def validation_sample(size: int, seed: int = 43, nonempty: bool = False) -> list
     """Взять фиксированные группы из validation того же разбиения, что TF-IDF."""
     from random import Random
     from sklearn.model_selection import train_test_split
-    from subcategory_extraction.benchmarks.tfidf_quality.run import load_rows
+    from main import PipelineInput
 
-    rows = load_rows(TRAIN)
+    groups: dict[str, dict] = {}
+    for line in TRAIN.read_text(encoding="utf-8").splitlines():
+        row = json.loads(line)
+        inp = PipelineInput(description=row["description"], mcId=101)
+        targets = {target["mcId"] for target in row["found_microcategories"]}
+        key = " ".join(unicodedata.normalize("NFKC", inp.description).casefold().replace("ё", "е").split())
+        if key in groups and groups[key]["targets"] != targets:
+            raise ValueError("Конфликт меток одинаковых описаний")
+        groups.setdefault(key, {
+            "inp": inp, "targets": targets,
+            "group_id": hashlib.sha256(key.encode()).hexdigest(),
+        })
+    rows = list(groups.values())
     _, remaining = train_test_split(list(range(len(rows))), test_size=0.3, random_state=42)
     validation, _ = train_test_split(remaining, test_size=0.5, random_state=43)
     selected = [rows[index] for index in validation if not nonempty or rows[index]["targets"]]
@@ -72,3 +86,82 @@ def validation_sample(size: int, seed: int = 43, nonempty: bool = False) -> list
 def setup() -> None:
     """Загрузить окружение проекта без вывода секретов."""
     load_dotenv(ROOT / ".env")
+
+
+def replay_recorded_report(directory: Path, scenario: str, report_path: Path) -> None:
+    """Пересчитать сохранённые предсказания, не выдавая replay за новый inference."""
+    from main import MICROCATEGORIES
+    from run import calculate_metrics, prepare_rows, read_records
+
+    source = directory / "recorded-results.json"
+    if source.resolve() == report_path.resolve():
+        raise ValueError("Нельзя перезаписать исходную запись")
+    recorded = json.loads(source.read_text(encoding="utf-8"))
+    if scenario not in ("classifier_methods", "improved_dataset"):
+        raise ValueError(f"Неизвестный F1-сценарий: {scenario}")
+    dataset = ROOT / (
+        "docs/innoglobalhack_avito/public-test-dataset.parquet"
+        if scenario == "classifier_methods" else
+        "docs/improved_dataset/reviewed_test.parquet"
+    )
+    dataset_hash = hashlib.sha256(dataset.read_bytes()).hexdigest()
+    expected_hash = recorded["protocol"]["dataset_sha256"]
+    if dataset_hash != expected_hash:
+        raise ValueError("Датасет изменился относительно сохранённого отчёта")
+    actual_rows = prepare_rows(read_records(dataset), 101)
+    expected_rows = Counter(
+        (hashlib.sha256(row.inp.description.encode()).hexdigest(), tuple(sorted(row.expected)))
+        for row in actual_rows
+    )
+    saved_rows = Counter(
+        (row["description_sha256"], tuple(sorted(row["expected"]))) for row in recorded["rows"]
+    )
+    if saved_rows != expected_rows:
+        raise ValueError("Сохранённые строки не покрывают текущий датасет с учётом дубликатов")
+    report = {
+        **metadata(), "status": "running", "scenario": scenario,
+        "mode": "offline_recalculation_of_recorded_predictions",
+        "record_sha256": hashlib.sha256(source.read_bytes()).hexdigest(),
+        "recorded_at": recorded.get("created_at_utc", recorded.get("measured_at_utc")),
+        "dataset_sha256": dataset_hash,
+        "fresh_model_calls": 0, "fresh_api_requests": 0,
+        "model_response_time": None,
+        "timing_scope": "no fresh inference; historical timing remains in recorded-results.json",
+        "results": {},
+    }
+
+    def check(name: str, rows: list[dict], predictions: list, saved: dict) -> None:
+        """Проверить происхождение эталонов и точное совпадение пересчитанной метрики."""
+        if len(rows) != len(predictions) or not rows:
+            raise ValueError(f"{name}: неполное число предсказаний")
+        for row, prediction in zip(rows, predictions, strict=True):
+            if any(type(cid) is not int or cid not in MICROCATEGORIES or cid == 101
+                   for cid in prediction) or len(prediction) != len(set(prediction)):
+                raise ValueError(f"{name}: неверные категории")
+        metric = calculate_metrics(
+            [set(row["expected"]) for row in rows],
+            [set(prediction) for prediction in predictions],
+        )
+        if any(abs(metric[key] - saved[key]) > 1e-12 for key in ("micro_f1", "tp", "fp", "fn")):
+            raise ValueError(f"{name}: метрика не совпала с исходным отчётом")
+        report["results"][name] = {
+            "status": "complete", "rows": len(rows), "metrics": metric,
+            "recorded_metadata": recorded["results"][name].get("metadata"),
+        }
+
+    try:
+        for name, result in recorded["results"].items():
+            if result["status"] != "completed":
+                report["results"][name] = {"status": "unavailable", "reason": result.get("error")}
+                continue
+            check(name, recorded["rows"], result["predicted"], result["metrics"])
+        report["status"] = (
+            "complete" if all(item["status"] == "complete" for item in report["results"].values())
+            else "failed"
+        )
+    except Exception as error:
+        report.update(status="failed", error=f"{type(error).__name__}: {error}")
+        report.pop("results", None)
+        save_report(report_path, report)
+        raise
+    save_report(report_path, report)

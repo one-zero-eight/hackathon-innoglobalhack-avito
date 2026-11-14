@@ -16,10 +16,27 @@
 | `backlog/` | локальный бэклог (в `.gitignore`) |
 
 В каждом разделе — несколько вариантов: `<module>/pipeline.py` и, при
-необходимости, `<module>/prompts/`. Общие бенчмарки лежат в
-`benchmarks/<name>/`: `run.py` для запуска, `README.md` для описания
-и таблиц результатов. Экспериментальные решения тоже оформляем
+необходимости, `<module>/prompts/`. Общие `benchmarks/<name>/` с `run.py`,
+`README.md` и результатами остаются в корне раздела. Экспериментальные решения тоже оформляем
 как модули, без отдельной папки `experiments/`.
+
+Обученные модели храним внутри своего решения:
+
+```text
+src/<service>/<module>/
+├── __init__.py
+├── pipeline.py
+├── prompts/       # при необходимости
+└── artifacts/     # обученные веса, токенизатор, метаданные и калибровка
+```
+
+`artifacts/` включаем в Git и загружаем на GitHub вместе с решением;
+для файлов сверх лимита обычного GitHub Git используем Git LFS.
+Итоговые веса обучения и путь загрузки модуля по умолчанию должны указывать
+сюда; способ загрузки и воспроизведения весов описываем в README модуля.
+`semantic_encoder_f1` по умолчанию загружает модель из своей папки `artifacts/`.
+Временные checkpoint и отчёты полного обучения остаются в `out/`;
+выбранная итоговая модель копируется в модуль.
 
 ## Выбор реализации
 
@@ -27,13 +44,14 @@
 
 ```json
 {
-  "subcategory_extraction": "tfidf",
+  "subcategory_extraction": "semantic_encoder_f1",
   "draft_generation": "sample_llm"
 }
 ```
 
-Доступны `subcategory_extraction/google_decision`,
-`subcategory_extraction/tfidf`.
+Доступны `subcategory_extraction/google_decision`, `tfidf`, `jev`, `jev_tfidf`,
+`jev_retrieval`, `evidence_jev`, `jev_arbiter`, `semantic_encoder`,
+`semantic_encoder_calibrated`, `semantic_encoder_f1`, `jev_boundaries`.
 Доступен генератор `draft_generation/sample_llm`. `null` означает, что модуль
 не выбран. CLI выдаёт явную ошибку.
 Варианты (например, `jev`, `embeddings` или `llm`) добавляются в
@@ -42,8 +60,34 @@
 своего раздела (см. [AGENTS.md](AGENTS.md)). Переключение — только через конфиг,
 без изменения оркестрации. Несуществующий модуль вызывает ошибку.
 
-Для сравнения вариантов используем общие бенчмарки раздела: качество,
-время ответа и стоимость для конкретного сценария и выборки.
+Для сравнения вариантов используем общие бенчмарки раздела и фиксируем
+модуль в результатах. Скрипты переноса и обучения описаны в
+[subcategory_extraction/README.md](src/subcategory_extraction/README.md);
+исторические результаты с внешним SplitShift сохранены в
+истории Git; невоспроизводимые старые скрипты доступны в Git.
+
+## Бенчмарки выделения категорий
+
+Ровно четыре проверки: [ручная стоимость токенов](src/subcategory_extraction/benchmarks/cpu_costs/README.md),
+[F1 improved_dataset](src/subcategory_extraction/benchmarks/improved_dataset/README.md),
+[F1 InnoGlobalHack](src/subcategory_extraction/benchmarks/classifier_methods/README.md)
+и [время работы](src/subcategory_extraction/benchmarks/response_time/README.md).
+Новые бенчмарки и папки не создаём.
+
+```bash
+uv run python src/subcategory_extraction/benchmarks/improved_dataset/run.py --replay
+uv run python src/subcategory_extraction/benchmarks/classifier_methods/run.py --replay
+```
+
+Эти команды проверяют сохранённые ответы без API и обучения. Для оценки
+текущих весов передайте `--methods <модуль>`. Исторический F1 выбранного
+`semantic_encoder_f1` на 119 диагностических строках — 0.857143;
+это предварительная разметка, не независимый ручной эталон.
+Веса для текущего запуска готовятся отдельно по
+[инструкции модуля](src/subcategory_extraction/semantic_encoder_f1/README.md).
+
+Для [dataset_annotation](src/dataset_annotation/rubert_review/README.md) —
+только время применения сохранённых решений и шесть примеров с mcId.
 
 ## Пайплайн
 
@@ -77,12 +121,12 @@ uv run python src/main.py --input data/input.json --output out/output.json
 
 ```bash
 uv sync
-uv run python src/draft_generation/benchmarks/full_pipeline_evaluation/run.py --live --config run.config.json
+uv run python src/run.py --config run.config.json
 ```
 
 `run.config.json` задаёт датасет (`.parquet` или официальный `.jsonl`),
 путь к конфигу модулей, исходную категорию (101 для официальных данных),
-необязательный лимит строк и частоту логирования.
+путь отчёта, необязательный лимит строк и частоту логирования.
 Все относительные пути считаются от файла конфигурации.
 `pipeline_config` ссылается на обычный `config.json`: необходимо выбрать
 оба рабочих модуля, включая генератор. При `null` оценка завершается
@@ -94,13 +138,9 @@ uv run python src/draft_generation/benchmarks/full_pipeline_evaluation/run.py --
 `60 × micro-F1` (не итоговый балл за все критерии хакатона).
 Повторы не учитываются, ошибочный вывод исходной категории считается FP.
 Если все эталоны и ответы пусты, micro-F1 равен 0.
-Отчёт `src/draft_generation/benchmarks/full_pipeline_evaluation/live-results.json`
-содержит метрику, TP/FP/FN, конфигурацию, время, эталоны и полные ответы
-для каждой строки. Поле `report` конфига относится к прежнему `src/run.py`;
-бенчмарк сохраняет контрольную точку рядом со своим `run.py`. Ошибка обработки
-не превращается в пустой ответ: после ограниченных повторов прогон
-помечается неуспешным без итоговой метрики. `--resume` продолжает
-незавершённый прогон из сохранённых ответов, если код и входы не менялись.
+Отчёт `out/evaluation.json` содержит метрику, TP/FP/FN, конфигурацию,
+время, эталоны и полные ответы для каждой строки. Ошибка обработки
+не превращается в пустой ответ: прогон прекращается без новой метрики.
 
 `training_dataset` включает проверку нормализованных точных совпадений
 описаний с train; пересечения отражаются в отчёте и предупреждении,
@@ -109,63 +149,27 @@ uv run python src/draft_generation/benchmarks/full_pipeline_evaluation/run.py --
 Официальный test следует использовать для итоговой оценки после
 фиксации модели и порогов, не для их подбора.
 
-## Бенчмарки
-
-Каждый бенчмарк хранится отдельно:
-
-```text
-src/<раздел>/benchmarks/<название>/
-├── run.py
-└── README.md
-```
-
-В README — данные, команды запуска и актуальные результаты: качество,
-число вызовов, среднее/медиана/p95 времени ответа и стоимость.
-Если есть системные промпты, в сравнении показываем лучший по micro-F1
-на одной validation-выборке, а в отдельной таблице — каждый промпт.
-
-| Раздел | Бенчмарк | Сценарий |
-| --- | --- | --- |
-| Выделение | [Качество TF-IDF](src/subcategory_extraction/benchmarks/tfidf_quality/README.md) | Новое обучение; validation и отдельный holdout |
-| Выделение | [Сравнение промптов](src/subcategory_extraction/benchmarks/prompt_comparison/README.md) | TF-IDF и реальные baseline/guided Google на одних 32 входах |
-| Выделение | [Время ответа](src/subcategory_extraction/benchmarks/response_time/README.md) | Настоящие run() TF-IDF и Google на одних 10 входах |
-| Генерация | [Контракт sample_llm](src/draft_generation/benchmarks/sample_llm/README.md) | Офлайн-проверка схемы и транспорта |
-| Генерация | [Время ответа](src/draft_generation/benchmarks/response_time/README.md) | 10 настоящих вызовов, по одному черновику |
-| Полный пайплайн | [Оценка решения](src/draft_generation/benchmarks/full_pipeline_evaluation/README.md) | Реальные drafts на 208 строках и отдельная проверка оценщика |
-
-Стоимость в таблицах заполняется вручную человеком или агентом.
-Для локальных прогонов и подтверждённой бесплатной квоты — **«бесплатно»**.
-Скрипты измеряют время, но не вычисляют цену.
-
-Аудит, переразметка и сборка датасета не входят в эти бенчмарки.
-Нерабочие эксперименты со старым внешним кодом удалены из рабочей структуры;
-их прежние версии остаются в Git.
-
-Запуск из корня:
-
-```bash
-uv run python src/subcategory_extraction/benchmarks/tfidf_quality/run.py
-uv run python src/subcategory_extraction/benchmarks/prompt_comparison/run.py
-uv run python src/subcategory_extraction/benchmarks/response_time/run.py
-uv run python src/draft_generation/benchmarks/sample_llm/run.py
-uv run python src/draft_generation/benchmarks/response_time/run.py
-uv run python src/draft_generation/benchmarks/full_pipeline_evaluation/run.py
-uv run python src/draft_generation/benchmarks/full_pipeline_evaluation/run.py --live --config run.config.json
-```
-
-Сравнение промптов, задержки Google/генерации и полный `--live` обращаются
-к реальному API. Для подтверждённого пользователем текущего ключа используется
-бесплатная квота. Измерения включают фактические ожидания и повторы запросов.
-
 ## Контрибьюшн
 
 1. Ветка на каждую фичу: `<username>/feature/<slug>`. В `main` — только через PR.
 2. Бэклог локальный: `backlog/{TODO,PROCESS,REVIEW,DONE}`,
    задача перемещается по папкам по мере работы.
-3. Новый бенчмарк — папка `src/<service>/benchmarks/<name>/` с `run.py`
-   и `README.md`. Перед коммитом прогнать на всех версиях кода
-   и обновить таблицы прогонов.
+3. Новые бенчмарки и папки для них не создаём. Используем существующие
+   сценарии и обновляем их таблицы результатов; набор закреплён в AGENTS.md.
 4. Правки в чужих сервисах — через свою ветку и с согласия автора.
 5. Контракт входа/выхода не меняем без согласования со всей командой.
 
 Подробнее — в [AGENTS.md](AGENTS.md).
+
+## CPU и стоимость внешних моделей
+
+Исторический замер на исходных 208 строках: RuBERT-tiny2 на CPU дал micro-F1
+0.786704, медиану 3.58 мс на уникальный вход на Apple M4 Pro. Это дообученная
+компактная модель, не TinyBERT. Замер не относится к новым весам `improved_dataset`.
+
+Все API-клиенты теперь учитывают usage, повторы и локальный/provider cache.
+Обычный CLI дополнительно сохраняет `<output>.costs.json`, включая ошибки;
+`run.py` сохраняет расходы; в бенчмарках стоимость токенов вносится вручную. Тарифы задаются через
+`LLM_PRICING_FILE` по точному endpoint/model; неизвестная цена — `null`, не ноль.
+
+[Ручной учёт стоимости токенов](src/subcategory_extraction/benchmarks/cpu_costs/README.md).

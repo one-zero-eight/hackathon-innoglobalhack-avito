@@ -10,7 +10,7 @@
   промпты — в `<module>/prompts/`.
 - Выбор: ключ `draft_generation` в корневом `config.json`
 - `null` — модуль не выбран.
-- Бенчмарки: `benchmarks/<name>/` (`run.py` + `README.md`)
+- Бенчмарки: `benchmarks/<name>/` с `run.py`, `README.md` и результатами.
 
 ## sample_llm
 
@@ -41,8 +41,3 @@ JSON-схема `title`/`text` передаётся в API из той же мо
 ```bash
 uv run python src/draft_generation/benchmarks/sample_llm/run.py
 ```
-
-Реальная генерация и время ответа: [benchmarks/response_time/README.md](benchmarks/response_time/README.md).
-Полная оценка: [benchmarks/full_pipeline_evaluation/README.md](benchmarks/full_pipeline_evaluation/README.md).
-Стоимость записывается вручную в таблицах; для подтверждённой бесплатной
-квоты и локальных прогонов — «бесплатно».

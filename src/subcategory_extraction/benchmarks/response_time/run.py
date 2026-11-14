@@ -11,6 +11,7 @@ from time import perf_counter
 
 from benchmark_support import metadata, save_report, setup, timing, validation_sample
 from main import PipelineConfig, load_pipeline
+from subcategory_extraction.benchmarks.classifier_methods.run import METHODS
 
 
 def main() -> int:
@@ -18,14 +19,19 @@ def main() -> int:
     setup()
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--size", type=int, default=10)
-    parser.add_argument("--module", choices=("all", "tfidf", "google_decision"), default="all")
+    parser.add_argument("--module", choices=METHODS, default="tfidf")
     parser.add_argument("--report", type=Path, default=Path(__file__).with_name("results.json"))
     args = parser.parse_args()
     rows = validation_sample(args.size, seed=44)
     report = {**metadata(), "sample_seed": 44, "sample_size": len(rows), "results": {}}
-    modules = ("tfidf", "google_decision") if args.module == "all" else (args.module,)
+    modules = (args.module,)
     for module in modules:
-        pipeline = load_pipeline("subcategory_extraction", PipelineConfig(subcategory_extraction=module, draft_generation=None))
+        try:
+            pipeline = load_pipeline("subcategory_extraction", PipelineConfig(subcategory_extraction=module, draft_generation=None))
+        except Exception as exc:
+            report["results"][module] = {"status": "failed", "error": f"{type(exc).__name__}: {exc}", "response_time": {"calls": 0}}
+            save_report(args.report, report)
+            return 1
         result = {"status": "running", "model": getattr(getattr(pipeline, "client", None), "model_id", module), "rows": []}
         report["results"][module] = result
         durations = []

@@ -15,11 +15,13 @@ from sklearn.metrics import f1_score
 from sklearn.preprocessing import MultiLabelBinarizer
 
 from main import (
+    LLMCostLedger,
     MICROCATEGORIES,
     McId,
     PipelineInput,
     load_config,
     run_pipeline,
+    track_llm_costs,
 )
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -182,14 +184,21 @@ def evaluate(config_path: Path) -> dict[str, Any]:
     report_path = resolve_path(base, config.report)
     if report_path in {dataset, pipeline_path, config_path, training_path}:
         raise ValueError("Путь отчёта не должен совпадать с входными файлами")
+    cost_path = Path(str(report_path) + ".costs.json")
+    if cost_path in {dataset, pipeline_path, config_path, training_path}:
+        raise ValueError("Отчёт стоимости не должен совпадать с входными файлами")
+    costs = LLMCostLedger()
     overlap = audit_overlap(rows, training_path)
     predictions: list[set[int]] = []
     results = []
     started = time.perf_counter()
     for index, row in enumerate(rows, start=1):
         try:
-            output = run_pipeline(row.inp, pipeline_config)
+            with track_llm_costs(costs):
+                output = run_pipeline(row.inp, pipeline_config)
         except Exception:
+            cost_path.parent.mkdir(parents=True, exist_ok=True)
+            cost_path.write_text(json.dumps(costs.summary(), ensure_ascii=False, indent=2), encoding="utf-8")
             logger.exception("Ошибка решения на строке %d; итоговая метрика не рассчитана", index)
             raise
         # Дубли не дают TP; исходная категория, ошибочно выданная решением, даёт FP.
@@ -215,6 +224,7 @@ def evaluate(config_path: Path) -> dict[str, Any]:
         "elapsed_seconds": elapsed,
         "seconds_per_row": elapsed / len(rows),
         "overlap": overlap,
+        "costs": costs.summary(),
         "results": results,
     }
     report_path.parent.mkdir(parents=True, exist_ok=True)

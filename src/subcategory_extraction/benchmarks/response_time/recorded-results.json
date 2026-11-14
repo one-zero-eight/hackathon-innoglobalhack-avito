@@ -1,0 +1,261 @@
+{
+  "date": "2026-11-14T11:40:46+03:00",
+  "commit": "cd0f310841174f3cbae612c4c44e2d27d31568be",
+  "code_sha256": "e9832f9f4add55e3069ca239dbb0e49346f38dd1745a2d05752085e9bebb7cc1",
+  "working_tree": true,
+  "sample_seed": 44,
+  "sample_size": 10,
+  "results": {
+    "tfidf": {
+      "status": "complete",
+      "model": "tfidf",
+      "rows": [
+        {
+          "group_id": "1755d70b12029ca196b7b0db67ab296db96a38e58bfa37db4f9eddc1e435d87e",
+          "seconds": 0.002532375045120716,
+          "predicted": [
+            102,
+            103,
+            104,
+            105,
+            106
+          ]
+        },
+        {
+          "group_id": "df3453fa719bcc9c4120f73540192a23c48886d1d05117214da3af68fdc290c9",
+          "seconds": 0.0014145420864224434,
+          "predicted": [
+            102,
+            103,
+            104,
+            105,
+            106
+          ]
+        },
+        {
+          "group_id": "270d30c0fee5b8ec5ce8309bc25a5dec6f0a874bdf86a75c9e6c29d1a30c80b1",
+          "seconds": 0.0014885000418871641,
+          "predicted": [
+            102,
+            103,
+            104,
+            105,
+            106
+          ]
+        },
+        {
+          "group_id": "716b71093f6ffcb8457d664a34eaeafd6b20130cfc8a637d2324960aea030387",
+          "seconds": 0.0006535840220749378,
+          "predicted": []
+        },
+        {
+          "group_id": "8d8689783ae7b2d19ae5d3e5a199cea32bf1458a91a5936230bdc502c4051cdf",
+          "seconds": 0.00048570800572633743,
+          "predicted": [
+            102,
+            103,
+            104,
+            105,
+            106
+          ]
+        },
+        {
+          "group_id": "bdcf8534a4ad2c0f2d370814f3b22e61e250e397c60d1c1dc45b54364947a03d",
+          "seconds": 0.0008777498733252287,
+          "predicted": [
+            102,
+            103,
+            104,
+            105,
+            106
+          ]
+        },
+        {
+          "group_id": "5524cc0b4bc58d27f2d87abc371da359477b802a890b3d21bc34fc51e0214caa",
+          "seconds": 0.0005661249160766602,
+          "predicted": [
+            104,
+            105
+          ]
+        },
+        {
+          "group_id": "01feb66f2e21c5fb187fedd281f87e93c750cae9f62dd731f95d32ec0e2c0807",
+          "seconds": 0.0007539170328527689,
+          "predicted": [
+            102,
+            103,
+            104,
+            105,
+            106
+          ]
+        },
+        {
+          "group_id": "1f07801ecf1efcabe5f51f854601df2993b41894476fb12115c72242d382ab08",
+          "seconds": 0.0010957908816635609,
+          "predicted": [
+            104,
+            105
+          ]
+        },
+        {
+          "group_id": "b06fa5d52b80f154594a544c282106fb90f32dccc057b670b9ad89a60e27d185",
+          "seconds": 0.0006227910052984953,
+          "predicted": [
+            102,
+            106
+          ]
+        }
+      ],
+      "response_time": {
+        "calls": 10,
+        "total_seconds": 0.010491082910448313,
+        "mean_seconds": 0.0010491082910448312,
+        "median_seconds": 0.0008158334530889988,
+        "p95_seconds": 0.0020626312936656167,
+        "min_seconds": 0.00048570800572633743,
+        "max_seconds": 0.002532375045120716
+      }
+    },
+    "google_decision": {
+      "status": "complete",
+      "model": "gemini-decision-1",
+      "rows": [
+        {
+          "group_id": "1755d70b12029ca196b7b0db67ab296db96a38e58bfa37db4f9eddc1e435d87e",
+          "seconds": 0.6771173749584705,
+          "predicted": [
+            105,
+            103,
+            106,
+            104,
+            102
+          ]
+        },
+        {
+          "group_id": "df3453fa719bcc9c4120f73540192a23c48886d1d05117214da3af68fdc290c9",
+          "seconds": 0.7397314158733934,
+          "predicted": [
+            102,
+            103,
+            105,
+            104,
+            106
+          ]
+        },
+        {
+          "group_id": "270d30c0fee5b8ec5ce8309bc25a5dec6f0a874bdf86a75c9e6c29d1a30c80b1",
+          "seconds": 0.8456129999831319,
+          "predicted": [
+            106,
+            104,
+            102,
+            103,
+            105
+          ]
+        },
+        {
+          "group_id": "716b71093f6ffcb8457d664a34eaeafd6b20130cfc8a637d2324960aea030387",
+          "seconds": 0.9019562078174204,
+          "predicted": [
+            105,
+            102,
+            103,
+            106,
+            104
+          ]
+        },
+        {
+          "group_id": "8d8689783ae7b2d19ae5d3e5a199cea32bf1458a91a5936230bdc502c4051cdf",
+          "seconds": 0.7140151250641793,
+          "predicted": [
+            104,
+            103,
+            105,
+            106
+          ]
+        },
+        {
+          "group_id": "bdcf8534a4ad2c0f2d370814f3b22e61e250e397c60d1c1dc45b54364947a03d",
+          "seconds": 0.8568789579439908,
+          "predicted": [
+            106,
+            103,
+            105,
+            102,
+            104
+          ]
+        },
+        {
+          "group_id": "5524cc0b4bc58d27f2d87abc371da359477b802a890b3d21bc34fc51e0214caa",
+          "seconds": 0.7881940419320017,
+          "predicted": [
+            104,
+            106,
+            102,
+            105
+          ]
+        },
+        {
+          "group_id": "01feb66f2e21c5fb187fedd281f87e93c750cae9f62dd731f95d32ec0e2c0807",
+          "seconds": 0.6597196660004556,
+          "predicted": [
+            105,
+            104,
+            103,
+            102,
+            106
+          ]
+        },
+        {
+          "group_id": "1f07801ecf1efcabe5f51f854601df2993b41894476fb12115c72242d382ab08",
+          "seconds": 0.8655543748755008,
+          "predicted": [
+            104,
+            105
+          ]
+        },
+        {
+          "group_id": "b06fa5d52b80f154594a544c282106fb90f32dccc057b670b9ad89a60e27d185",
+          "seconds": 0.6586045420262963,
+          "predicted": [
+            102,
+            106
+          ]
+        }
+      ],
+      "response_time": {
+        "calls": 10,
+        "total_seconds": 7.707384706474841,
+        "mean_seconds": 0.770738470647484,
+        "median_seconds": 0.7639627289026976,
+        "p95_seconds": 0.8855753829935565,
+        "min_seconds": 0.6586045420262963,
+        "max_seconds": 0.9019562078174204
+      }
+    }
+  },
+  "status": "complete",
+  "historical_runs": [
+    {
+      "module": "semantic_encoder_f1",
+      "source_commit": "e814b58",
+      "source_path": "src/subcategory_extraction/benchmarks/results/rubert-f1-plan.json",
+      "source_sha256": "0ccaba53050a0e785f9cc7608ea122f5d496d19e038c2d3aebfb260f619ec58c",
+      "date": "2026-11-14T12:36:16.825168+00:00",
+      "dataset_sha256": "0af183508c1501425a1330675ceb8923dfe130fff3f86e418ebe3ec4baba34a2",
+      "timing": {
+        "device": "cpu",
+        "run_calls": 119,
+        "api_requests": 0,
+        "model_load_seconds": 0.031265083998732734,
+        "median_ms": 3.1958330000634305,
+        "p95_nearest_rank_ms": 11.021334001270588,
+        "mean_ms": 4.776391781330453,
+        "torch_threads": 10,
+        "process_peak_rss_bytes": 1673691136,
+        "rss_scope": "macOS process peak across evaluation of several models; not isolated student-only RAM",
+        "latency_scope": "sequential actual production run on119; excludes loading, includes first call"
+      }
+    }
+  ]
+}

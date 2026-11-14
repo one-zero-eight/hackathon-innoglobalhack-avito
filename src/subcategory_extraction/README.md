@@ -5,25 +5,29 @@
 
 - Интерфейс: `SubcategoryExtractionPipeline.run(PipelineInput) -> list[int]`
 - Варианты: `google_decision` (Google API, промпты baseline/guided),
-  `tfidf` (локальная логистическая регрессия, JSON-артефакт).
+  `tfidf` (локальная логистическая регрессия, JSON-артефакт),
+  `jev` (нативный Jev через BestAPI), `jev_tfidf` (среднее вероятностей),
+  `jev_retrieval` (размеченные соседи), `evidence_jev` (цитаты → Jev),
+  `jev_arbiter` (сильный арбитр), `semantic_encoder` (fine-tuned RuBERT-tiny2),
+  `semantic_encoder_calibrated` (validation-пороги),
+  `semantic_encoder_f1` (выбор checkpoint, окна/attention и дистилляция; CPU),
+  `jev_boundaries` (точные границы категорий).
 - Выбор: ключ `subcategory_extraction` в корневом `config.json`
 - `null` — модуль не выбран.
-- Бенчмарки: `benchmarks/<name>/` (`run.py` + `README.md`)
-- Google: `LLM_MODEL_ID=gemini-decision-1`, `LLM_API_KEY` или
-  `GOOGLE_API_KEY`; `GOOGLE_DECISION_PROMPT=guided`, порог
-  `GOOGLE_DECISION_THRESHOLD=0.5`. Запросы отправляются только в `run()`.
-- TF-IDF: сначала обучите артефакт на официальном train:
-  `uv run python src/subcategory_extraction/benchmarks/tfidf_quality/run.py`.
-  По умолчанию веса в `out/tfidf.json`; другой путь задаётся
-  `TFIDF_ARTIFACT_PATH`. Артефакт — JSON, не исполняемый pickle.
-  Все описания с одинаковой NFKC/casefold/ё→е/whitespace-нормализацией
-  объединены до train/validation/holdout-разбиения. Порог выбирается только
-  на validation. Близкие, но не идентичные шаблоны отдельно не группируются.
-  Train имеет только исходную категорию 101; качество для других исходных
-  категорий и распознавание 101 этим прогоном не подтверждены.
-- [Сравнение промптов](benchmarks/prompt_comparison/README.md): TF-IDF и оба
-  текущих промпта Google на одной validation-выборке, с реальными API-вызовами.
-- [Время ответа](benchmarks/response_time/README.md): 10 одинаковых входов,
-  среднее, медиана, p95; стоимость в README заполняется вручную.
-- Для полного CLI выберите оба модуля в `config.json` и настройте генератор
-  по [draft_generation/README.md](../draft_generation/README.md).
+- Результат содержит только дополнительные mcId, исходная категория исключена.
+
+## Четыре проверки
+
+[Общий список и команды](benchmarks/README.md). Новые бенчмарки и папки запрещены.
+
+- [Стоимость токенов](benchmarks/cpu_costs/README.md) — ручная запись.
+- [F1 improved_dataset](benchmarks/improved_dataset/README.md) — 119 строк.
+- [F1 InnoGlobalHack](benchmarks/classifier_methods/README.md) — 208 строк.
+- [Время работы](benchmarks/response_time/README.md) — настоящие вызовы `run()`.
+
+Оба F1-runner по умолчанию проверяют сохранённые ответы без API и обучения.
+Для оценки текущего модуля передайте `--methods <имя>`; параметры и пути
+к весам берутся из `.env`. Подготовка весов описана в README модулей,
+код обучения хранится внутри модуля. Старые эксперименты доступны в истории Git.
+
+[dataset_annotation: время и шесть примеров с mcId](../dataset_annotation/rubert_review/README.md).

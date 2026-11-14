@@ -1,4 +1,4 @@
 {
-  "subcategory_extraction": "tfidf",
+  "subcategory_extraction": "semantic_encoder_f1",
   "draft_generation": "sample_llm"
 }

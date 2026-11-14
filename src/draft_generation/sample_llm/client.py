@@ -50,8 +50,7 @@ class SampleLLMClient(LLMClient):
         )
         for attempt in range(self.max_attempts):
             try:
-                with urlopen(request, timeout=self.timeout) as response:
-                    result = json.load(response)
+                result = self.request_json(request, self.timeout, urlopen)
                 break
             except (HTTPError, TimeoutError) as exc:
                 if isinstance(exc, HTTPError) and exc.code not in (429, 500, 502, 503, 504):
