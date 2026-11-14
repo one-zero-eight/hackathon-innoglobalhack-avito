@@ -12,7 +12,7 @@ from time import perf_counter
 from main import MICROCATEGORIES
 
 ROOT = Path(__file__).resolve().parents[4]
-DEFAULT_TRAIN = ROOT / "out/youla-1469-decision-1.jsonl"
+DEFAULT_TRAIN = Path(__file__).resolve().parents[1] / "data/youla-1469-decision-1.jsonl"
 DEFAULT_REPORT = Path(__file__).with_name("results.json")
 
 

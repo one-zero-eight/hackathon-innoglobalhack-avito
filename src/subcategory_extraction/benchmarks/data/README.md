@@ -5,6 +5,15 @@
 | [Youla с разметкой](youla-859-annotated.jsonl) | 859 | `out/youla-800-plus-plastering-labels.jsonl`. Обучение в бенчмарке переноса на InnoGlobalHack |
 | [Youla, исходные объявления](youla-1469-raw.jsonl) | 1 469 | `out/youla-1469.jsonl`. Корпус для дальнейшей разметки |
 | [Яндекс Исполнители, исходные профили](yandex-1492-raw.jsonl) | 1 492 | `out/yandex/profiles-1492.jsonl`. Корпус для отдельного эксперимента |
+| [Youla, Decision 1](youla-1469-decision-1.jsonl) | 1 469 | 1 468 валидных разметок, одна строка с `prohibited_content` |
+| [Яндекс Исполнители, Decision 1](yandex-1492-decision-1.jsonl) | 1 492 | 1 492 валидных разметки |
+
+В двух полных снимках Decision 1 каждая строка содержит исходную запись
+`source`, настройки разметки `configuration`, оценки `probabilities`
+и список `found_microcategories` при пороге 0.50. У заблокированной строки
+Youla оценки и список равны `null`. Снимки сохраняют метку 101, а бенчмарк
+переноса оценивает категории 102–106.
+
 
 Youla содержит `platform`, `url`, `sample_mc_id`, `title`, `description`
 и `source_type`. `sample_mc_id` отражает предварительное соответствие
