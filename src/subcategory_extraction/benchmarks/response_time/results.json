@@ -1,7 +1,7 @@
 {
-  "date": "2026-11-14T17:45:19+03:00",
-  "commit": "3768d7620d45714391e655db34803d1243248533",
-  "code_sha256": "051dacd86e2f13ad7fb699c517df13b36f056c305949b7cc544a4860c24ce696",
+  "date": "2026-11-14T18:59:24+03:00",
+  "commit": "45ff38d1c5b65ae90654b53261aa377cc96f13a3",
+  "code_sha256": "3946999259f93a4db45e354a06a12e6cbff64778b66253c27da547e540e90c0f",
   "working_tree": true,
   "sample_seed": 44,
   "sample_size": 10,
@@ -12,364 +12,158 @@
       "rows": [
         {
           "group_id": "1755d70b12029ca196b7b0db67ab296db96a38e58bfa37db4f9eddc1e435d87e",
-          "seconds": 0.003558875061571598,
+          "seconds": 0.004455933999906847,
           "predicted": [
             102,
             103,
             104,
             105,
             106
-          ]
+          ],
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null
         },
         {
           "group_id": "df3453fa719bcc9c4120f73540192a23c48886d1d05117214da3af68fdc290c9",
-          "seconds": 0.002023667097091675,
+          "seconds": 0.00295574899996609,
           "predicted": [
             102,
             103,
             104,
             105,
             106
-          ]
+          ],
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null
         },
         {
           "group_id": "270d30c0fee5b8ec5ce8309bc25a5dec6f0a874bdf86a75c9e6c29d1a30c80b1",
-          "seconds": 0.0019034580327570438,
+          "seconds": 0.004345047000015256,
           "predicted": [
             102,
             103,
             104,
             105,
             106
-          ]
+          ],
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null
         },
         {
           "group_id": "716b71093f6ffcb8457d664a34eaeafd6b20130cfc8a637d2324960aea030387",
-          "seconds": 0.00132116605527699,
+          "seconds": 0.0040738599998348946,
           "predicted": [
             102,
             103,
             106
-          ]
+          ],
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null
         },
         {
           "group_id": "8d8689783ae7b2d19ae5d3e5a199cea32bf1458a91a5936230bdc502c4051cdf",
-          "seconds": 0.0011360419448465109,
+          "seconds": 0.0046251839999058575,
           "predicted": [
             102,
             103,
             104,
             105,
             106
-          ]
+          ],
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null
         },
         {
           "group_id": "bdcf8534a4ad2c0f2d370814f3b22e61e250e397c60d1c1dc45b54364947a03d",
-          "seconds": 0.0017475001513957977,
+          "seconds": 0.005683702999931484,
           "predicted": [
             102,
             103,
             104,
             105,
             106
-          ]
+          ],
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null
         },
         {
           "group_id": "5524cc0b4bc58d27f2d87abc371da359477b802a890b3d21bc34fc51e0214caa",
-          "seconds": 0.0012545830104500055,
+          "seconds": 0.0048463449998052965,
           "predicted": [
             102,
             103,
             104,
             105,
             106
-          ]
+          ],
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null
         },
         {
           "group_id": "01feb66f2e21c5fb187fedd281f87e93c750cae9f62dd731f95d32ec0e2c0807",
-          "seconds": 0.0013702919241040945,
+          "seconds": 0.005306219999965833,
           "predicted": [
             102,
             103,
             104,
             105,
             106
-          ]
+          ],
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null
         },
         {
           "group_id": "1f07801ecf1efcabe5f51f854601df2993b41894476fb12115c72242d382ab08",
-          "seconds": 0.0016746658366173506,
+          "seconds": 0.005900104000147621,
           "predicted": [
             102,
             104,
             105
-          ]
+          ],
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null
         },
         {
           "group_id": "b06fa5d52b80f154594a544c282106fb90f32dccc057b670b9ad89a60e27d185",
-          "seconds": 0.0013051668647676706,
+          "seconds": 0.004851446999964537,
           "predicted": [
             102,
             106
-          ]
+          ],
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null
         }
       ],
+      "timing_scope": {
+        "loading_included": false,
+        "first_call_included": true,
+        "cache_enabled": null,
+        "quota_wait_and_retries_included_if_any": true
+      },
       "response_time": {
         "calls": 10,
-        "total_seconds": 0.017295415978878736,
-        "mean_seconds": 0.0017295415978878736,
-        "median_seconds": 0.0015224788803607225,
-        "p95_seconds": 0.002868031477555631,
-        "min_seconds": 0.0011360419448465109,
-        "max_seconds": 0.003558875061571598
+        "total_seconds": 0.04704359299944372,
+        "mean_seconds": 0.004704359299944371,
+        "median_seconds": 0.004735764499855577,
+        "p95_seconds": 0.0058027235500503595,
+        "min_seconds": 0.00295574899996609,
+        "max_seconds": 0.005900104000147621
       },
-      "model_provenance": {
-        "train": "docs/improved_dataset/train.jsonl",
-        "train_sha256": "d365141906cd7e2a1d66792aa2e37661d8bcdcd0a4bbaf3781649a9108238b76",
-        "rows": 4851,
-        "source_mc_id": 101,
-        "trained_categories": [
-          102,
-          103,
-          104,
-          105,
-          106
-        ],
-        "code_sha256": {
-          "pipeline.py": "21b98119dfc548e2582bba5b2a2903867da42b57aace58da3fe6bf14a32df65f",
-          "train.py": "e5c09f0580ebbdf2f9defbdf33ad1f07fca6f08b5be0db200638b9346ed9b925"
-        },
-        "model": "combined",
-        "keywords_per_category": 40,
-        "C": 4,
-        "max_iter": 500,
-        "threshold": 0.5,
-        "selection": "fixed before test; no validation or test tuning; all groups remain in train",
-        "python": "3.13.15",
-        "sklearn": "1.9.1",
-        "numpy": "2.5.4",
-        "artifact_sha256": "d06457a8c082171a096da05d18812528247c8c90e3c06157dc93e5ea6b65f3fa",
-        "keywords": {
-          "102": [
-            "стен",
-            "отделка",
-            "отделки",
-            "пола",
-            "отделочные",
-            "выравнивание",
-            "шпаклёвка",
-            "отделка квартир",
-            "штукатурка",
-            "отделочные работы",
-            "внутренняя",
-            "внутренняя отделка",
-            "выравнивание стен",
-            "отделку",
-            "обоев",
-            "потолков",
-            "ремонт комнаты",
-            "покраска",
-            "поклейка",
-            "поклейка обоев",
-            "помещения",
-            "укладка",
-            "комнат",
-            "ламината",
-            "стен потолков",
-            "покрытий",
-            "квартир ремонт",
-            "монтаж",
-            "покраска стен",
-            "отделке",
-            "мастер по",
-            "дверей",
-            "стяжка пола",
-            "по ремонту",
-            "капитальный",
-            "пенсионерам",
-            "квартир отделка",
-            "демонтаж",
-            "укладка ламината",
-            "ремонт квартир"
-          ],
-          "103": [
-            "плитки",
-            "укладка плитки",
-            "поклейка обоев",
-            "поклейка",
-            "обоев",
-            "штукатурка",
-            "керамогранита",
-            "ванной",
-            "укладка",
-            "ламината",
-            "ремонт ванной",
-            "плитки керамогранита",
-            "санузла",
-            "укладка ламината",
-            "покраска стен",
-            "ванной комнаты",
-            "сантехнические",
-            "установка",
-            "сантехнические работы",
-            "стяжка",
-            "потолков",
-            "кварцвинила",
-            "кухни",
-            "гипсокартона",
-            "капитальный",
-            "ремонт санузла",
-            "выравнивание",
-            "дверей",
-            "чистовая",
-            "покраска",
-            "чистовая отделка",
-            "косметический",
-            "сантехники",
-            "санузлов",
-            "стен потолков",
-            "капитальный ремонт",
-            "линолеума",
-            "стяжка пола",
-            "ремонт кухни",
-            "черновая"
-          ],
-          "104": [
-            "плитки",
-            "ремонт ванной",
-            "укладка плитки",
-            "сантехнические",
-            "сантехники",
-            "сантехнические работы",
-            "ванной",
-            "стяжка",
-            "санузла",
-            "установка",
-            "дверей",
-            "ванной комнаты",
-            "керамогранита",
-            "сантехника",
-            "стяжка пола",
-            "чистовая",
-            "чистовая отделка",
-            "капитальный",
-            "черновая",
-            "разводка",
-            "плитки керамогранита",
-            "кухни",
-            "ремонт санузла",
-            "штукатурка",
-            "канализации",
-            "капитальный ремонт",
-            "санузлов",
-            "ремонт кухни",
-            "косметический",
-            "черновая чистовая",
-            "гипсокартона",
-            "электрика",
-            "черновая отделка",
-            "потолков",
-            "новостройке",
-            "обоев",
-            "жилья",
-            "кухни ремонт",
-            "поклейка обоев",
-            "электрики"
-          ],
-          "105": [
-            "дверей",
-            "стяжка",
-            "сантехнические",
-            "сантехнические работы",
-            "установка",
-            "стяжка пола",
-            "плитки",
-            "укладка плитки",
-            "черновая",
-            "сантехника",
-            "электрика",
-            "штукатурка",
-            "сантехники",
-            "чистовая отделка",
-            "чистовая",
-            "разводка",
-            "плитки керамогранита",
-            "розеток",
-            "капитальный",
-            "электрики",
-            "ремонт ванной",
-            "керамогранита",
-            "санузла",
-            "межкомнатных дверей",
-            "черновая чистовая",
-            "потолков",
-            "черновая отделка",
-            "межкомнатных",
-            "косметический",
-            "гипсокартона",
-            "установка межкомнатных",
-            "обоев",
-            "капитальный ремонт",
-            "поклейка обоев",
-            "вторичного",
-            "выключателей",
-            "ремонт вторичного",
-            "вторичного жилья",
-            "поклейка",
-            "ванной"
-          ],
-          "106": [
-            "покраска",
-            "обоев",
-            "шпаклёвка",
-            "поклейка",
-            "поклейка обоев",
-            "штукатурка",
-            "ламината",
-            "покраска стен",
-            "отделка квартир",
-            "мастер по",
-            "стен",
-            "укладка ламината",
-            "ремонт комнаты",
-            "покрытий",
-            "квартир ремонт",
-            "дверей",
-            "выравнивание стен",
-            "квартир отделка",
-            "пола",
-            "отделочные работы",
-            "ищут",
-            "укладка",
-            "гипсокартона",
-            "кварцвинила",
-            "выравнивание",
-            "пенсионерам",
-            "напольных",
-            "комнат",
-            "потолков",
-            "перегородок",
-            "отделочные",
-            "шпаклёвка стен",
-            "помещения",
-            "по ремонту",
-            "малярные",
-            "линолеума",
-            "напольных покрытий",
-            "стен потолков",
-            "мастер",
-            "малярные работы"
-          ]
-        },
-        "module": "learned_keywords",
-        "model_commit": "3768d7620d45714391e655db34803d1243248533",
-        "platform": "macOS-27.0.1-arm64-arm-64bit-Mach-O",
-        "scipy": "1.18.1",
-        "threads": {
-          "OMP_NUM_THREADS": 1,
-          "OPENBLAS_NUM_THREADS": 1
-        },
-        "artifact": "src/subcategory_extraction/learned_keywords/artifacts/learned-keywords.json"
+      "measurement_metadata": {
+        "date": "2026-11-14T18:50:11+03:00",
+        "commit": "45ff38d1c5b65ae90654b53261aa377cc96f13a3",
+        "code_sha256": "08723f933f9ccbae72e5c7db5bc6a463d76b971b98df5232c8e8d72bcca9c603",
+        "timing_scope": null
       }
     },
     "semantic_encoder_f1": {
@@ -568,18 +362,197 @@
         },
         "training_dataset_sha256": "b7118d68086624fbeab43839f22a635d4e325e4ee339f22d4aa0ad3c2e986615"
       }
+    },
+    "qwen_decision": {
+      "status": "complete",
+      "model": "decision-model-preview",
+      "rows": [
+        {
+          "group_id": "1755d70b12029ca196b7b0db67ab296db96a38e58bfa37db4f9eddc1e435d87e",
+          "seconds": 62.785381228000006,
+          "predicted": [
+            102,
+            103,
+            104,
+            105,
+            106
+          ],
+          "cache_hit": false,
+          "http_attempts": 1,
+          "usage": {
+            "input_tokens": 3787
+          }
+        },
+        {
+          "group_id": "df3453fa719bcc9c4120f73540192a23c48886d1d05117214da3af68fdc290c9",
+          "seconds": 2.8658487859997877,
+          "predicted": [
+            102,
+            103,
+            104,
+            105,
+            106
+          ],
+          "cache_hit": false,
+          "http_attempts": 1,
+          "usage": {
+            "input_tokens": 4214
+          }
+        },
+        {
+          "group_id": "270d30c0fee5b8ec5ce8309bc25a5dec6f0a874bdf86a75c9e6c29d1a30c80b1",
+          "seconds": 3.8037470300000678,
+          "predicted": [
+            102,
+            103,
+            104,
+            105,
+            106
+          ],
+          "cache_hit": false,
+          "http_attempts": 1,
+          "usage": {
+            "input_tokens": 5193
+          }
+        },
+        {
+          "group_id": "716b71093f6ffcb8457d664a34eaeafd6b20130cfc8a637d2324960aea030387",
+          "seconds": 1.525885389999985,
+          "predicted": [
+            102,
+            103,
+            104,
+            105,
+            106
+          ],
+          "cache_hit": false,
+          "http_attempts": 1,
+          "usage": {
+            "input_tokens": 3597
+          }
+        },
+        {
+          "group_id": "8d8689783ae7b2d19ae5d3e5a199cea32bf1458a91a5936230bdc502c4051cdf",
+          "seconds": 1.7341556719998152,
+          "predicted": [
+            102,
+            103,
+            104,
+            105,
+            106
+          ],
+          "cache_hit": false,
+          "http_attempts": 1,
+          "usage": {
+            "input_tokens": 3482
+          }
+        },
+        {
+          "group_id": "bdcf8534a4ad2c0f2d370814f3b22e61e250e397c60d1c1dc45b54364947a03d",
+          "seconds": 1.9760883199996897,
+          "predicted": [
+            102,
+            104,
+            105
+          ],
+          "cache_hit": false,
+          "http_attempts": 1,
+          "usage": {
+            "input_tokens": 4355
+          }
+        },
+        {
+          "group_id": "5524cc0b4bc58d27f2d87abc371da359477b802a890b3d21bc34fc51e0214caa",
+          "seconds": 2.8344641560001946,
+          "predicted": [
+            102,
+            103,
+            104,
+            105,
+            106
+          ],
+          "cache_hit": false,
+          "http_attempts": 1,
+          "usage": {
+            "input_tokens": 3784
+          }
+        },
+        {
+          "group_id": "01feb66f2e21c5fb187fedd281f87e93c750cae9f62dd731f95d32ec0e2c0807",
+          "seconds": 61.734848322999824,
+          "predicted": [
+            102,
+            103,
+            104,
+            105,
+            106
+          ],
+          "cache_hit": false,
+          "http_attempts": 1,
+          "usage": {
+            "input_tokens": 4233
+          }
+        },
+        {
+          "group_id": "1f07801ecf1efcabe5f51f854601df2993b41894476fb12115c72242d382ab08",
+          "seconds": 2.1653952669998944,
+          "predicted": [
+            102,
+            104,
+            105
+          ],
+          "cache_hit": false,
+          "http_attempts": 1,
+          "usage": {
+            "input_tokens": 4344
+          }
+        },
+        {
+          "group_id": "b06fa5d52b80f154594a544c282106fb90f32dccc057b670b9ad89a60e27d185",
+          "seconds": 1.6682121980002194,
+          "predicted": [
+            102,
+            106
+          ],
+          "cache_hit": false,
+          "http_attempts": 1,
+          "usage": {
+            "input_tokens": 3895
+          }
+        }
+      ],
+      "model_provenance": {
+        "model": "decision-model-preview",
+        "endpoint": "https://token-plan.maas.qianwenaiapi.com/compatible-mode/v1/systemone",
+        "prompt": "boundaries",
+        "prompt_sha256": "e2f2644d4b671352aff8f19728efe63ae31b3534c135cd6054fd6a8a56fd7bc2",
+        "thresholds": {
+          "101": 0.5,
+          "102": 0.21999999999999997,
+          "103": 0.64,
+          "104": 0.55,
+          "105": 0.5,
+          "106": 0.66
+        },
+        "calibration_sha256": "93b7828d87663965313dc05a1d6003f0bd2083d38bfe43d038da016f5c68bfe6",
+        "training_dataset": "docs/improved_dataset/train.jsonl"
+      },
+      "timing_scope": {
+        "loading_included": false,
+        "first_call_included": true,
+        "cache_enabled": false,
+        "quota_wait_and_retries_included_if_any": true
+      },
+      "response_time": {
+        "calls": 10,
+        "total_seconds": 143.09402636999948,
+        "mean_seconds": 14.309402636999948,
+        "median_seconds": 2.4999297115000445,
+        "p95_seconds": 62.31264142074992,
+        "min_seconds": 1.525885389999985,
+        "max_seconds": 62.785381228000006
+      }
     }
   },
-  "status": "complete",
-  "timing_scope": {
-    "model_loading_included": false,
-    "dataset_loading_included": false,
-    "first_call_included": true,
-    "warmup": false,
-    "prediction_cache": false,
-    "quota_waits": false,
-    "retries": false,
-    "percentile": "numpy linear",
-    "sample": "10 original-train validation groups, seed=44; latency only, not held-out quality"
-  }
+  "status": "complete"
 }

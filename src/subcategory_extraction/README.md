@@ -11,7 +11,9 @@
   `jev_arbiter` (сильный арбитр), `semantic_encoder` (fine-tuned RuBERT-tiny2),
   `semantic_encoder_calibrated` (validation-пороги),
   `semantic_encoder_f1` (выбор checkpoint, окна/attention и дистилляция; CPU),
-  `jev_boundaries` (точные границы категорий).
+  `jev_boundaries` (точные границы категорий),
+  [qwen_decision](qwen_decision/README.md) (Qwen Token Plan System One,
+  выбор промпта и порогов только по train).
 - Выбор: ключ `subcategory_extraction` в корневом `config.json`
 - `null` — модуль не выбран.
 - Результат содержит только дополнительные mcId, исходная категория исключена.

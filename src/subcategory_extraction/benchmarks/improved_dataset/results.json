@@ -1,7 +1,7 @@
 {
-  "date": "2026-11-14T17:44:56+03:00",
-  "commit": "3768d7620d45714391e655db34803d1243248533",
-  "code_sha256": "051dacd86e2f13ad7fb699c517df13b36f056c305949b7cc544a4860c24ce696",
+  "date": "2026-11-14T18:56:29+03:00",
+  "commit": "45ff38d1c5b65ae90654b53261aa377cc96f13a3",
+  "code_sha256": "3946999259f93a4db45e354a06a12e6cbff64778b66253c27da547e540e90c0f",
   "working_tree": true,
   "status": "complete",
   "scenario": "improved_dataset",
@@ -15,7 +15,7 @@
   "overlap": {
     "checked": true,
     "method": "normalized_exact_description",
-    "training_dataset": "/Users/arsenijsekin/Documents/Codex/2026-11-13/https-github-com-one-zero-eight/hackathon-innoglobalhack-avito/docs/improved_dataset/train.jsonl",
+    "training_dataset": "/home/zolotarev/PycharmProjects/hackathon-innoglobalhack-avito/docs/improved_dataset/train.jsonl",
     "overlapping_rows": 0,
     "row_numbers": []
   },
@@ -1332,6 +1332,723 @@
           102
         ]
       ],
+      "inference": [
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null
+        }
+      ],
+      "workers": 4,
       "metrics": {
         "micro_f1": 0.8009478672985783,
         "classification_points": 48.056872037914694,
@@ -1339,253 +2056,24 @@
         "fp": 44,
         "fn": 40
       },
-      "model_provenance": {
-        "train": "docs/improved_dataset/train.jsonl",
-        "train_sha256": "d365141906cd7e2a1d66792aa2e37661d8bcdcd0a4bbaf3781649a9108238b76",
-        "rows": 4851,
-        "source_mc_id": 101,
-        "trained_categories": [
-          102,
-          103,
-          104,
-          105,
-          106
-        ],
-        "code_sha256": {
-          "pipeline.py": "21b98119dfc548e2582bba5b2a2903867da42b57aace58da3fe6bf14a32df65f",
-          "train.py": "e5c09f0580ebbdf2f9defbdf33ad1f07fca6f08b5be0db200638b9346ed9b925"
+      "measurement_metadata": {
+        "date": "2026-11-14T18:56:29+03:00",
+        "commit": "45ff38d1c5b65ae90654b53261aa377cc96f13a3",
+        "code_sha256": "3946999259f93a4db45e354a06a12e6cbff64778b66253c27da547e540e90c0f",
+        "mode": "pipeline_run",
+        "protocol": {
+          "dataset_sha256": "0af183508c1501425a1330675ceb8923dfe130fff3f86e418ebe3ec4baba34a2",
+          "training_sha256": "d365141906cd7e2a1d66792aa2e37661d8bcdcd0a4bbaf3781649a9108238b76",
+          "rows": 119,
+          "source_mc_id_assumption": 101
         },
-        "model": "combined",
-        "keywords_per_category": 40,
-        "C": 4,
-        "max_iter": 500,
-        "threshold": 0.5,
-        "selection": "fixed before test; no validation or test tuning; all groups remain in train",
-        "python": "3.13.15",
-        "sklearn": "1.9.1",
-        "numpy": "2.5.4",
-        "artifact_sha256": "d06457a8c082171a096da05d18812528247c8c90e3c06157dc93e5ea6b65f3fa",
-        "keywords": {
-          "102": [
-            "стен",
-            "отделка",
-            "отделки",
-            "пола",
-            "отделочные",
-            "выравнивание",
-            "шпаклёвка",
-            "отделка квартир",
-            "штукатурка",
-            "отделочные работы",
-            "внутренняя",
-            "внутренняя отделка",
-            "выравнивание стен",
-            "отделку",
-            "обоев",
-            "потолков",
-            "ремонт комнаты",
-            "покраска",
-            "поклейка",
-            "поклейка обоев",
-            "помещения",
-            "укладка",
-            "комнат",
-            "ламината",
-            "стен потолков",
-            "покрытий",
-            "квартир ремонт",
-            "монтаж",
-            "покраска стен",
-            "отделке",
-            "мастер по",
-            "дверей",
-            "стяжка пола",
-            "по ремонту",
-            "капитальный",
-            "пенсионерам",
-            "квартир отделка",
-            "демонтаж",
-            "укладка ламината",
-            "ремонт квартир"
-          ],
-          "103": [
-            "плитки",
-            "укладка плитки",
-            "поклейка обоев",
-            "поклейка",
-            "обоев",
-            "штукатурка",
-            "керамогранита",
-            "ванной",
-            "укладка",
-            "ламината",
-            "ремонт ванной",
-            "плитки керамогранита",
-            "санузла",
-            "укладка ламината",
-            "покраска стен",
-            "ванной комнаты",
-            "сантехнические",
-            "установка",
-            "сантехнические работы",
-            "стяжка",
-            "потолков",
-            "кварцвинила",
-            "кухни",
-            "гипсокартона",
-            "капитальный",
-            "ремонт санузла",
-            "выравнивание",
-            "дверей",
-            "чистовая",
-            "покраска",
-            "чистовая отделка",
-            "косметический",
-            "сантехники",
-            "санузлов",
-            "стен потолков",
-            "капитальный ремонт",
-            "линолеума",
-            "стяжка пола",
-            "ремонт кухни",
-            "черновая"
-          ],
-          "104": [
-            "плитки",
-            "ремонт ванной",
-            "укладка плитки",
-            "сантехнические",
-            "сантехники",
-            "сантехнические работы",
-            "ванной",
-            "стяжка",
-            "санузла",
-            "установка",
-            "дверей",
-            "ванной комнаты",
-            "керамогранита",
-            "сантехника",
-            "стяжка пола",
-            "чистовая",
-            "чистовая отделка",
-            "капитальный",
-            "черновая",
-            "разводка",
-            "плитки керамогранита",
-            "кухни",
-            "ремонт санузла",
-            "штукатурка",
-            "канализации",
-            "капитальный ремонт",
-            "санузлов",
-            "ремонт кухни",
-            "косметический",
-            "черновая чистовая",
-            "гипсокартона",
-            "электрика",
-            "черновая отделка",
-            "потолков",
-            "новостройке",
-            "обоев",
-            "жилья",
-            "кухни ремонт",
-            "поклейка обоев",
-            "электрики"
-          ],
-          "105": [
-            "дверей",
-            "стяжка",
-            "сантехнические",
-            "сантехнические работы",
-            "установка",
-            "стяжка пола",
-            "плитки",
-            "укладка плитки",
-            "черновая",
-            "сантехника",
-            "электрика",
-            "штукатурка",
-            "сантехники",
-            "чистовая отделка",
-            "чистовая",
-            "разводка",
-            "плитки керамогранита",
-            "розеток",
-            "капитальный",
-            "электрики",
-            "ремонт ванной",
-            "керамогранита",
-            "санузла",
-            "межкомнатных дверей",
-            "черновая чистовая",
-            "потолков",
-            "черновая отделка",
-            "межкомнатных",
-            "косметический",
-            "гипсокартона",
-            "установка межкомнатных",
-            "обоев",
-            "капитальный ремонт",
-            "поклейка обоев",
-            "вторичного",
-            "выключателей",
-            "ремонт вторичного",
-            "вторичного жилья",
-            "поклейка",
-            "ванной"
-          ],
-          "106": [
-            "покраска",
-            "обоев",
-            "шпаклёвка",
-            "поклейка",
-            "поклейка обоев",
-            "штукатурка",
-            "ламината",
-            "покраска стен",
-            "отделка квартир",
-            "мастер по",
-            "стен",
-            "укладка ламината",
-            "ремонт комнаты",
-            "покрытий",
-            "квартир ремонт",
-            "дверей",
-            "выравнивание стен",
-            "квартир отделка",
-            "пола",
-            "отделочные работы",
-            "ищут",
-            "укладка",
-            "гипсокартона",
-            "кварцвинила",
-            "выравнивание",
-            "пенсионерам",
-            "напольных",
-            "комнат",
-            "потолков",
-            "перегородок",
-            "отделочные",
-            "шпаклёвка стен",
-            "помещения",
-            "по ремонту",
-            "малярные",
-            "линолеума",
-            "напольных покрытий",
-            "стен потолков",
-            "мастер",
-            "малярные работы"
-          ]
-        },
-        "module": "learned_keywords",
-        "model_commit": "3768d7620d45714391e655db34803d1243248533",
-        "platform": "macOS-27.0.1-arm64-arm-64bit-Mach-O",
-        "scipy": "1.18.1",
-        "threads": {
-          "OMP_NUM_THREADS": 1,
-          "OPENBLAS_NUM_THREADS": 1
-        },
-        "artifact": "src/subcategory_extraction/learned_keywords/artifacts/learned-keywords.json"
+        "overlap": {
+          "checked": true,
+          "method": "normalized_exact_description",
+          "training_dataset": "/home/zolotarev/PycharmProjects/hackathon-innoglobalhack-avito/docs/improved_dataset/train.jsonl",
+          "overlapping_rows": 0,
+          "row_numbers": []
+        }
       }
     },
     "semantic_encoder_f1": {
@@ -2106,20 +2594,2247 @@
           "row_numbers": []
         }
       }
-    }
-  },
-  "model_training_overlap": {
-    "actual_training_overlap": {
-      "checked": true,
-      "method": "normalized_exact_description",
-      "training_dataset": "/Users/arsenijsekin/Documents/Codex/2026-11-13/https-github-com-one-zero-eight/hackathon-innoglobalhack-avito/docs/improved_dataset/train.jsonl",
-      "overlapping_rows": 0,
-      "row_numbers": []
     },
-    "near_overlap": {
-      "method": "word_set_jaccard >= 0.9; heuristic, not exhaustive semantic search",
-      "overlapping_rows": 0,
-      "row_numbers": []
+    "qwen_decision": {
+      "status": "completed",
+      "predicted": [
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        [
+          102
+        ],
+        [
+          102,
+          105
+        ],
+        [
+          102,
+          104,
+          105,
+          106
+        ],
+        [
+          102
+        ],
+        [
+          102,
+          105
+        ],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        [
+          105
+        ],
+        [
+          102,
+          104,
+          105
+        ],
+        [
+          102
+        ],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        [
+          102,
+          106
+        ],
+        [
+          102,
+          104,
+          105,
+          106
+        ],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        [
+          102
+        ],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        [
+          102,
+          103,
+          104
+        ],
+        [
+          102,
+          103,
+          106
+        ],
+        [
+          102,
+          105,
+          106
+        ],
+        [
+          102,
+          106
+        ],
+        [
+          102
+        ],
+        [
+          102,
+          105
+        ],
+        [
+          102
+        ],
+        [],
+        [
+          102,
+          106
+        ],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        [
+          102
+        ],
+        [
+          102
+        ],
+        [
+          102,
+          103,
+          104,
+          106
+        ],
+        [
+          102
+        ],
+        [
+          102,
+          104,
+          105,
+          106
+        ],
+        [
+          102,
+          106
+        ],
+        [],
+        [
+          102,
+          104,
+          105,
+          106
+        ],
+        [
+          102,
+          103,
+          106
+        ],
+        [],
+        [],
+        [
+          102,
+          103
+        ],
+        [
+          102,
+          104,
+          105,
+          106
+        ],
+        [
+          102,
+          106
+        ],
+        [
+          103
+        ],
+        [
+          102
+        ],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        [],
+        [
+          102
+        ],
+        [
+          102,
+          105
+        ],
+        [
+          102
+        ],
+        [
+          102
+        ],
+        [
+          102,
+          104,
+          105
+        ],
+        [
+          102,
+          104,
+          105,
+          106
+        ],
+        [
+          102,
+          104,
+          105,
+          106
+        ],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        [
+          102
+        ],
+        [
+          102
+        ],
+        [
+          102,
+          104,
+          105,
+          106
+        ],
+        [
+          102,
+          104,
+          105
+        ],
+        [
+          102
+        ],
+        [
+          102,
+          104
+        ],
+        [
+          102,
+          106
+        ],
+        [
+          102,
+          103,
+          105,
+          106
+        ],
+        [],
+        [
+          102,
+          106
+        ],
+        [
+          102,
+          103,
+          104,
+          105
+        ],
+        [
+          102,
+          104,
+          105
+        ],
+        [
+          102,
+          103,
+          105,
+          106
+        ],
+        [
+          102,
+          106
+        ],
+        [
+          102,
+          106
+        ],
+        [
+          102
+        ],
+        [
+          102,
+          103,
+          106
+        ],
+        [
+          102
+        ],
+        [],
+        [
+          102
+        ],
+        [
+          102,
+          105
+        ],
+        [
+          102,
+          106
+        ],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        [
+          102,
+          106
+        ],
+        [
+          102,
+          104,
+          105
+        ],
+        [
+          103,
+          104
+        ],
+        [
+          102,
+          104
+        ],
+        [
+          102
+        ],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        [],
+        [
+          103
+        ],
+        [
+          102
+        ],
+        [
+          102
+        ],
+        [
+          102
+        ],
+        [],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        [
+          102,
+          104,
+          105
+        ],
+        [],
+        [
+          102
+        ],
+        [
+          102
+        ],
+        [
+          102
+        ],
+        [
+          102,
+          103,
+          106
+        ],
+        [
+          102,
+          104,
+          105,
+          106
+        ],
+        [
+          102,
+          106
+        ],
+        [
+          102
+        ],
+        [
+          102
+        ],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        [
+          102,
+          103,
+          104,
+          105
+        ],
+        [
+          102,
+          105
+        ],
+        [
+          102
+        ],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        [
+          102
+        ],
+        [
+          102,
+          103,
+          104
+        ],
+        [
+          103,
+          104
+        ],
+        [
+          102,
+          104,
+          105
+        ],
+        [
+          102,
+          106
+        ],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        [
+          102,
+          105,
+          106
+        ],
+        [
+          102
+        ],
+        [
+          102,
+          104,
+          105
+        ],
+        [
+          102,
+          103,
+          105,
+          106
+        ],
+        [
+          102
+        ],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        []
+      ],
+      "inference": [
+        {
+          "cache_hit": false,
+          "http_attempts": 2,
+          "usage": {
+            "input_tokens": 3968
+          },
+          "probabilities": {
+            "102": 0.82,
+            "103": 0.79,
+            "104": 0.68,
+            "105": 0.8,
+            "106": 0.82
+          }
+        },
+        {
+          "cache_hit": false,
+          "http_attempts": 1,
+          "usage": {
+            "input_tokens": 3883
+          },
+          "probabilities": {
+            "102": 0.34,
+            "103": 0.11,
+            "104": 0.18,
+            "105": 0.16,
+            "106": 0.25
+          }
+        },
+        {
+          "cache_hit": false,
+          "http_attempts": 1,
+          "usage": {
+            "input_tokens": 4039
+          },
+          "probabilities": {
+            "102": 0.61,
+            "103": 0.57,
+            "104": 0.53,
+            "105": 0.58,
+            "106": 0.59
+          }
+        },
+        {
+          "cache_hit": false,
+          "http_attempts": 1,
+          "usage": {
+            "input_tokens": 3718
+          },
+          "probabilities": {
+            "102": 0.33,
+            "103": 0.31,
+            "104": 0.69,
+            "105": 0.73,
+            "106": 0.72
+          }
+        },
+        {
+          "cache_hit": false,
+          "http_attempts": 1,
+          "usage": {
+            "input_tokens": 3440
+          },
+          "probabilities": {
+            "102": 0.48,
+            "103": 0.05,
+            "104": 0.3,
+            "105": 0.19,
+            "106": 0.47
+          }
+        },
+        {
+          "cache_hit": false,
+          "http_attempts": 1,
+          "usage": {
+            "input_tokens": 4438
+          },
+          "probabilities": {
+            "102": 0.29,
+            "103": 0.25,
+            "104": 0.51,
+            "105": 0.69,
+            "106": 0.35
+          }
+        },
+        {
+          "cache_hit": false,
+          "http_attempts": 1,
+          "usage": {
+            "input_tokens": 4177
+          },
+          "probabilities": {
+            "102": 0.71,
+            "103": 0.69,
+            "104": 0.6,
+            "105": 0.58,
+            "106": 0.77
+          }
+        },
+        {
+          "cache_hit": false,
+          "http_attempts": 1,
+          "usage": {
+            "input_tokens": 3448
+          },
+          "probabilities": {
+            "102": 0.21,
+            "103": 0.1,
+            "104": 0.18,
+            "105": 0.73,
+            "106": 0.63
+          }
+        },
+        {
+          "cache_hit": false,
+          "http_attempts": 1,
+          "usage": {
+            "input_tokens": 4153
+          },
+          "probabilities": {
+            "102": 0.7,
+            "103": 0.37,
+            "104": 0.65,
+            "105": 0.74,
+            "106": 0.5
+          }
+        },
+        {
+          "cache_hit": true,
+          "http_attempts": 0,
+          "usage": {
+            "input_tokens": 3448
+          },
+          "probabilities": {
+            "102": 0.56,
+            "103": 0.47,
+            "104": 0.36,
+            "105": 0.47,
+            "106": 0.56
+          }
+        },
+        {
+          "cache_hit": true,
+          "http_attempts": 0,
+          "usage": {
+            "input_tokens": 4307
+          },
+          "probabilities": {
+            "102": 0.81,
+            "103": 0.86,
+            "104": 0.87,
+            "105": 0.85,
+            "106": 0.81
+          }
+        },
+        {
+          "cache_hit": true,
+          "http_attempts": 0,
+          "usage": {
+            "input_tokens": 3618
+          },
+          "probabilities": {
+            "102": 0.56,
+            "103": 0.6,
+            "104": 0.46,
+            "105": 0.46,
+            "106": 0.75
+          }
+        },
+        {
+          "cache_hit": false,
+          "http_attempts": 1,
+          "usage": {
+            "input_tokens": 3794
+          },
+          "probabilities": {
+            "102": 0.82,
+            "103": 0.43,
+            "104": 0.62,
+            "105": 0.59,
+            "106": 0.79
+          }
+        },
+        {
+          "cache_hit": false,
+          "http_attempts": 1,
+          "usage": {
+            "input_tokens": 3804
+          },
+          "probabilities": {
+            "102": 0.78,
+            "103": 0.64,
+            "104": 0.61,
+            "105": 0.61,
+            "106": 0.79
+          }
+        },
+        {
+          "cache_hit": false,
+          "http_attempts": 1,
+          "usage": {
+            "input_tokens": 3617
+          },
+          "probabilities": {
+            "102": 0.36,
+            "103": 0.58,
+            "104": 0.24,
+            "105": 0.14,
+            "106": 0.65
+          }
+        },
+        {
+          "cache_hit": false,
+          "http_attempts": 1,
+          "usage": {
+            "input_tokens": 4077
+          },
+          "probabilities": {
+            "102": 0.76,
+            "103": 0.71,
+            "104": 0.67,
+            "105": 0.71,
+            "106": 0.66
+          }
+        },
+        {
+          "cache_hit": false,
+          "http_attempts": 1,
+          "usage": {
+            "input_tokens": 3924
+          },
+          "probabilities": {
+            "102": 0.55,
+            "103": 0.65,
+            "104": 0.57,
+            "105": 0.43,
+            "106": 0.51
+          }
+        },
+        {
+          "cache_hit": false,
+          "http_attempts": 1,
+          "usage": {
+            "input_tokens": 4815
+          },
+          "probabilities": {
+            "102": 0.82,
+            "103": 0.81,
+            "104": 0.52,
+            "105": 0.41,
+            "106": 0.85
+          }
+        },
+        {
+          "cache_hit": false,
+          "http_attempts": 1,
+          "usage": {
+            "input_tokens": 4038
+          },
+          "probabilities": {
+            "102": 0.6,
+            "103": 0.47,
+            "104": 0.49,
+            "105": 0.51,
+            "106": 0.72
+          }
+        },
+        {
+          "cache_hit": false,
+          "http_attempts": 1,
+          "usage": {
+            "input_tokens": 3612
+          },
+          "probabilities": {
+            "102": 0.55,
+            "103": 0.58,
+            "104": 0.5,
+            "105": 0.43,
+            "106": 0.74
+          }
+        },
+        {
+          "cache_hit": false,
+          "http_attempts": 1,
+          "usage": {
+            "input_tokens": 4540
+          },
+          "probabilities": {
+            "102": 0.33,
+            "103": 0.25,
+            "104": 0.23,
+            "105": 0.18,
+            "106": 0.37
+          }
+        },
+        {
+          "cache_hit": false,
+          "http_attempts": 1,
+          "usage": {
+            "input_tokens": 4251
+          },
+          "probabilities": {
+            "102": 0.49,
+            "103": 0.46,
+            "104": 0.46,
+            "105": 0.58,
+            "106": 0.51
+          }
+        },
+        {
+          "cache_hit": false,
+          "http_attempts": 1,
+          "usage": {
+            "input_tokens": 5009
+          },
+          "probabilities": {
+            "102": 0.66,
+            "103": 0.57,
+            "104": 0.47,
+            "105": 0.46,
+            "106": 0.41
+          }
+        },
+        {
+          "cache_hit": false,
+          "http_attempts": 1,
+          "usage": {
+            "input_tokens": 3619
+          },
+          "probabilities": {
+            "102": 0.21,
+            "103": 0.26,
+            "104": 0.16,
+            "105": 0.22,
+            "106": 0.25
+          }
+        },
+        {
+          "cache_hit": false,
+          "http_attempts": 1,
+          "usage": {
+            "input_tokens": 4455
+          },
+          "probabilities": {
+            "102": 0.7,
+            "103": 0.62,
+            "104": 0.53,
+            "105": 0.46,
+            "106": 0.72
+          }
+        },
+        {
+          "cache_hit": false,
+          "http_attempts": 1,
+          "usage": {
+            "input_tokens": 4149
+          },
+          "probabilities": {
+            "102": 0.77,
+            "103": 0.8,
+            "104": 0.78,
+            "105": 0.76,
+            "106": 0.7
+          }
+        },
+        {
+          "cache_hit": false,
+          "http_attempts": 1,
+          "usage": {
+            "input_tokens": 3862
+          },
+          "probabilities": {
+            "102": 0.75,
+            "103": 0.17,
+            "104": 0.34,
+            "105": 0.31,
+            "106": 0.64
+          }
+        },
+        {
+          "cache_hit": false,
+          "http_attempts": 1,
+          "usage": {
+            "input_tokens": 3879
+          },
+          "probabilities": {
+            "102": 0.28,
+            "103": 0.08,
+            "104": 0.13,
+            "105": 0.12,
+            "106": 0.3
+          }
+        },
+        {
+          "cache_hit": false,
+          "http_attempts": 1,
+          "usage": {
+            "input_tokens": 4315
+          },
+          "probabilities": {
+            "102": 0.76,
+            "103": 0.81,
+            "104": 0.61,
+            "105": 0.43,
+            "106": 0.78
+          }
+        },
+        {
+          "cache_hit": false,
+          "http_attempts": 1,
+          "usage": {
+            "input_tokens": 4058
+          },
+          "probabilities": {
+            "102": 0.41,
+            "103": 0.42,
+            "104": 0.43,
+            "105": 0.28,
+            "106": 0.41
+          }
+        },
+        {
+          "cache_hit": true,
+          "http_attempts": 0,
+          "usage": {
+            "input_tokens": 4638
+          },
+          "probabilities": {
+            "102": 0.77,
+            "103": 0.63,
+            "104": 0.79,
+            "105": 0.77,
+            "106": 0.7
+          }
+        },
+        {
+          "cache_hit": true,
+          "http_attempts": 0,
+          "usage": {
+            "input_tokens": 3739
+          },
+          "probabilities": {
+            "102": 0.74,
+            "103": 0.36,
+            "104": 0.41,
+            "105": 0.39,
+            "106": 0.71
+          }
+        },
+        {
+          "cache_hit": true,
+          "http_attempts": 0,
+          "usage": {
+            "input_tokens": 3613
+          },
+          "probabilities": {
+            "102": 0.07,
+            "103": 0.05,
+            "104": 0.09,
+            "105": 0.08,
+            "106": 0.14
+          }
+        },
+        {
+          "cache_hit": true,
+          "http_attempts": 0,
+          "usage": {
+            "input_tokens": 4467
+          },
+          "probabilities": {
+            "102": 0.76,
+            "103": 0.63,
+            "104": 0.62,
+            "105": 0.55,
+            "106": 0.75
+          }
+        },
+        {
+          "cache_hit": false,
+          "http_attempts": 1,
+          "usage": {
+            "input_tokens": 3435
+          },
+          "probabilities": {
+            "102": 0.76,
+            "103": 0.7,
+            "104": 0.25,
+            "105": 0.34,
+            "106": 0.76
+          }
+        },
+        {
+          "cache_hit": true,
+          "http_attempts": 0,
+          "usage": {
+            "input_tokens": 3468
+          },
+          "probabilities": {
+            "102": 0.2,
+            "103": 0.09,
+            "104": 0.39,
+            "105": 0.14,
+            "106": 0.44
+          }
+        },
+        {
+          "cache_hit": false,
+          "http_attempts": 1,
+          "usage": {
+            "input_tokens": 3628
+          },
+          "probabilities": {
+            "102": 0.14,
+            "103": 0.13,
+            "104": 0.16,
+            "105": 0.08,
+            "106": 0.24
+          }
+        },
+        {
+          "cache_hit": true,
+          "http_attempts": 0,
+          "usage": {
+            "input_tokens": 3610
+          },
+          "probabilities": {
+            "102": 0.23,
+            "103": 0.67,
+            "104": 0.48,
+            "105": 0.31,
+            "106": 0.59
+          }
+        },
+        {
+          "cache_hit": false,
+          "http_attempts": 1,
+          "usage": {
+            "input_tokens": 4046
+          },
+          "probabilities": {
+            "102": 0.61,
+            "103": 0.6,
+            "104": 0.71,
+            "105": 0.66,
+            "106": 0.66
+          }
+        },
+        {
+          "cache_hit": false,
+          "http_attempts": 1,
+          "usage": {
+            "input_tokens": 3786
+          },
+          "probabilities": {
+            "102": 0.73,
+            "103": 0.28,
+            "104": 0.3,
+            "105": 0.25,
+            "106": 0.74
+          }
+        },
+        {
+          "cache_hit": true,
+          "http_attempts": 0,
+          "usage": {
+            "input_tokens": 3614
+          },
+          "probabilities": {
+            "102": 0.21,
+            "103": 0.86,
+            "104": 0.45,
+            "105": 0.1,
+            "106": 0.13
+          }
+        },
+        {
+          "cache_hit": false,
+          "http_attempts": 1,
+          "usage": {
+            "input_tokens": 3653
+          },
+          "probabilities": {
+            "102": 0.41,
+            "103": 0.31,
+            "104": 0.41,
+            "105": 0.25,
+            "106": 0.51
+          }
+        },
+        {
+          "cache_hit": false,
+          "http_attempts": 1,
+          "usage": {
+            "input_tokens": 3423
+          },
+          "probabilities": {
+            "102": 0.88,
+            "103": 0.71,
+            "104": 0.68,
+            "105": 0.79,
+            "106": 0.84
+          }
+        },
+        {
+          "cache_hit": false,
+          "http_attempts": 1,
+          "usage": {
+            "input_tokens": 4512
+          },
+          "probabilities": {
+            "102": 0.19,
+            "103": 0.15,
+            "104": 0.23,
+            "105": 0.24,
+            "106": 0.39
+          }
+        },
+        {
+          "cache_hit": false,
+          "http_attempts": 1,
+          "usage": {
+            "input_tokens": 3685
+          },
+          "probabilities": {
+            "102": 0.8,
+            "103": 0.43,
+            "104": 0.53,
+            "105": 0.39,
+            "106": 0.64
+          }
+        },
+        {
+          "cache_hit": false,
+          "http_attempts": 1,
+          "usage": {
+            "input_tokens": 4522
+          },
+          "probabilities": {
+            "102": 0.49,
+            "103": 0.48,
+            "104": 0.48,
+            "105": 0.53,
+            "106": 0.61
+          }
+        },
+        {
+          "cache_hit": false,
+          "http_attempts": 1,
+          "usage": {
+            "input_tokens": 3539
+          },
+          "probabilities": {
+            "102": 0.39,
+            "103": 0.33,
+            "104": 0.32,
+            "105": 0.31,
+            "106": 0.56
+          }
+        },
+        {
+          "cache_hit": false,
+          "http_attempts": 1,
+          "usage": {
+            "input_tokens": 4420
+          },
+          "probabilities": {
+            "102": 0.51,
+            "103": 0.58,
+            "104": 0.38,
+            "105": 0.36,
+            "106": 0.46
+          }
+        },
+        {
+          "cache_hit": false,
+          "http_attempts": 1,
+          "usage": {
+            "input_tokens": 3572
+          },
+          "probabilities": {
+            "102": 0.39,
+            "103": 0.46,
+            "104": 0.81,
+            "105": 0.62,
+            "106": 0.58
+          }
+        },
+        {
+          "cache_hit": false,
+          "http_attempts": 1,
+          "usage": {
+            "input_tokens": 3425
+          },
+          "probabilities": {
+            "102": 0.78,
+            "103": 0.56,
+            "104": 0.55,
+            "105": 0.59,
+            "106": 0.73
+          }
+        },
+        {
+          "cache_hit": false,
+          "http_attempts": 1,
+          "usage": {
+            "input_tokens": 3427
+          },
+          "probabilities": {
+            "102": 0.82,
+            "103": 0.59,
+            "104": 0.6,
+            "105": 0.72,
+            "106": 0.8
+          }
+        },
+        {
+          "cache_hit": false,
+          "http_attempts": 1,
+          "usage": {
+            "input_tokens": 4140
+          },
+          "probabilities": {
+            "102": 0.71,
+            "103": 0.68,
+            "104": 0.6,
+            "105": 0.62,
+            "106": 0.77
+          }
+        },
+        {
+          "cache_hit": false,
+          "http_attempts": 1,
+          "usage": {
+            "input_tokens": 3427
+          },
+          "probabilities": {
+            "102": 0.85,
+            "103": 0.68,
+            "104": 0.68,
+            "105": 0.78,
+            "106": 0.85
+          }
+        },
+        {
+          "cache_hit": false,
+          "http_attempts": 1,
+          "usage": {
+            "input_tokens": 4161
+          },
+          "probabilities": {
+            "102": 0.77,
+            "103": 0.81,
+            "104": 0.83,
+            "105": 0.81,
+            "106": 0.73
+          }
+        },
+        {
+          "cache_hit": false,
+          "http_attempts": 1,
+          "usage": {
+            "input_tokens": 3469
+          },
+          "probabilities": {
+            "102": 0.27,
+            "103": 0.18,
+            "104": 0.5,
+            "105": 0.3,
+            "106": 0.33
+          }
+        },
+        {
+          "cache_hit": false,
+          "http_attempts": 1,
+          "usage": {
+            "input_tokens": 4118
+          },
+          "probabilities": {
+            "102": 0.42,
+            "103": 0.33,
+            "104": 0.49,
+            "105": 0.4,
+            "106": 0.47
+          }
+        },
+        {
+          "cache_hit": false,
+          "http_attempts": 1,
+          "usage": {
+            "input_tokens": 4715
+          },
+          "probabilities": {
+            "102": 0.74,
+            "103": 0.63,
+            "104": 0.79,
+            "105": 0.7,
+            "106": 0.68
+          }
+        },
+        {
+          "cache_hit": false,
+          "http_attempts": 1,
+          "usage": {
+            "input_tokens": 4500
+          },
+          "probabilities": {
+            "102": 0.39,
+            "103": 0.31,
+            "104": 0.57,
+            "105": 0.72,
+            "106": 0.42
+          }
+        },
+        {
+          "cache_hit": false,
+          "http_attempts": 1,
+          "usage": {
+            "input_tokens": 4326
+          },
+          "probabilities": {
+            "102": 0.44,
+            "103": 0.33,
+            "104": 0.49,
+            "105": 0.45,
+            "106": 0.47
+          }
+        },
+        {
+          "cache_hit": false,
+          "http_attempts": 1,
+          "usage": {
+            "input_tokens": 4050
+          },
+          "probabilities": {
+            "102": 0.43,
+            "103": 0.42,
+            "104": 0.68,
+            "105": 0.44,
+            "106": 0.46
+          }
+        },
+        {
+          "cache_hit": false,
+          "http_attempts": 1,
+          "usage": {
+            "input_tokens": 3802
+          },
+          "probabilities": {
+            "102": 0.8,
+            "103": 0.37,
+            "104": 0.37,
+            "105": 0.35,
+            "106": 0.79
+          }
+        },
+        {
+          "cache_hit": false,
+          "http_attempts": 1,
+          "usage": {
+            "input_tokens": 3428
+          },
+          "probabilities": {
+            "102": 0.9,
+            "103": 0.82,
+            "104": 0.5,
+            "105": 0.71,
+            "106": 0.86
+          }
+        },
+        {
+          "cache_hit": false,
+          "http_attempts": 1,
+          "usage": {
+            "input_tokens": 3610
+          },
+          "probabilities": {
+            "102": 0.19,
+            "103": 0.11,
+            "104": 0.12,
+            "105": 0.1,
+            "106": 0.47
+          }
+        },
+        {
+          "cache_hit": false,
+          "http_attempts": 1,
+          "usage": {
+            "input_tokens": 3442
+          },
+          "probabilities": {
+            "102": 0.72,
+            "103": 0.56,
+            "104": 0.42,
+            "105": 0.46,
+            "106": 0.69
+          }
+        },
+        {
+          "cache_hit": false,
+          "http_attempts": 1,
+          "usage": {
+            "input_tokens": 4046
+          },
+          "probabilities": {
+            "102": 0.7,
+            "103": 0.65,
+            "104": 0.66,
+            "105": 0.72,
+            "106": 0.25
+          }
+        },
+        {
+          "cache_hit": false,
+          "http_attempts": 1,
+          "usage": {
+            "input_tokens": 4355
+          },
+          "probabilities": {
+            "102": 0.63,
+            "103": 0.63,
+            "104": 0.57,
+            "105": 0.6,
+            "106": 0.6
+          }
+        },
+        {
+          "cache_hit": false,
+          "http_attempts": 1,
+          "usage": {
+            "input_tokens": 3432
+          },
+          "probabilities": {
+            "102": 0.75,
+            "103": 0.68,
+            "104": 0.48,
+            "105": 0.67,
+            "106": 0.73
+          }
+        },
+        {
+          "cache_hit": true,
+          "http_attempts": 0,
+          "usage": {
+            "input_tokens": 3615
+          },
+          "probabilities": {
+            "102": 0.6,
+            "103": 0.47,
+            "104": 0.25,
+            "105": 0.19,
+            "106": 0.77
+          }
+        },
+        {
+          "cache_hit": false,
+          "http_attempts": 1,
+          "usage": {
+            "input_tokens": 3583
+          },
+          "probabilities": {
+            "102": 0.55,
+            "103": 0.48,
+            "104": 0.17,
+            "105": 0.1,
+            "106": 0.66
+          }
+        },
+        {
+          "cache_hit": false,
+          "http_attempts": 1,
+          "usage": {
+            "input_tokens": 3618
+          },
+          "probabilities": {
+            "102": 0.26,
+            "103": 0.11,
+            "104": 0.21,
+            "105": 0.22,
+            "106": 0.45
+          }
+        },
+        {
+          "cache_hit": false,
+          "http_attempts": 1,
+          "usage": {
+            "input_tokens": 4884
+          },
+          "probabilities": {
+            "102": 0.87,
+            "103": 0.74,
+            "104": 0.25,
+            "105": 0.19,
+            "106": 0.77
+          }
+        },
+        {
+          "cache_hit": false,
+          "http_attempts": 1,
+          "usage": {
+            "input_tokens": 4050
+          },
+          "probabilities": {
+            "102": 0.47,
+            "103": 0.41,
+            "104": 0.49,
+            "105": 0.45,
+            "106": 0.56
+          }
+        },
+        {
+          "cache_hit": false,
+          "http_attempts": 1,
+          "usage": {
+            "input_tokens": 3743
+          },
+          "probabilities": {
+            "102": 0.15,
+            "103": 0.08,
+            "104": 0.11,
+            "105": 0.06,
+            "106": 0.61
+          }
+        },
+        {
+          "cache_hit": false,
+          "http_attempts": 1,
+          "usage": {
+            "input_tokens": 3612
+          },
+          "probabilities": {
+            "102": 0.27,
+            "103": 0.13,
+            "104": 0.2,
+            "105": 0.13,
+            "106": 0.26
+          }
+        },
+        {
+          "cache_hit": false,
+          "http_attempts": 1,
+          "usage": {
+            "input_tokens": 3477
+          },
+          "probabilities": {
+            "102": 0.35,
+            "103": 0.23,
+            "104": 0.28,
+            "105": 0.66,
+            "106": 0.64
+          }
+        },
+        {
+          "cache_hit": false,
+          "http_attempts": 1,
+          "usage": {
+            "input_tokens": 3615
+          },
+          "probabilities": {
+            "102": 0.54,
+            "103": 0.34,
+            "104": 0.14,
+            "105": 0.15,
+            "106": 0.77
+          }
+        },
+        {
+          "cache_hit": false,
+          "http_attempts": 1,
+          "usage": {
+            "input_tokens": 4166
+          },
+          "probabilities": {
+            "102": 0.73,
+            "103": 0.73,
+            "104": 0.7,
+            "105": 0.66,
+            "106": 0.76
+          }
+        },
+        {
+          "cache_hit": false,
+          "http_attempts": 1,
+          "usage": {
+            "input_tokens": 3608
+          },
+          "probabilities": {
+            "102": 0.45,
+            "103": 0.37,
+            "104": 0.46,
+            "105": 0.28,
+            "106": 0.73
+          }
+        },
+        {
+          "cache_hit": false,
+          "http_attempts": 1,
+          "usage": {
+            "input_tokens": 4333
+          },
+          "probabilities": {
+            "102": 0.61,
+            "103": 0.53,
+            "104": 0.71,
+            "105": 0.68,
+            "106": 0.6
+          }
+        },
+        {
+          "cache_hit": false,
+          "http_attempts": 1,
+          "usage": {
+            "input_tokens": 3610
+          },
+          "probabilities": {
+            "102": 0.19,
+            "103": 0.88,
+            "104": 0.67,
+            "105": 0.22,
+            "106": 0.16
+          }
+        },
+        {
+          "cache_hit": false,
+          "http_attempts": 1,
+          "usage": {
+            "input_tokens": 3608
+          },
+          "probabilities": {
+            "102": 0.23,
+            "103": 0.62,
+            "104": 0.59,
+            "105": 0.31,
+            "106": 0.57
+          }
+        },
+        {
+          "cache_hit": false,
+          "http_attempts": 1,
+          "usage": {
+            "input_tokens": 3608
+          },
+          "probabilities": {
+            "102": 0.31,
+            "103": 0.36,
+            "104": 0.45,
+            "105": 0.31,
+            "106": 0.6
+          }
+        },
+        {
+          "cache_hit": false,
+          "http_attempts": 1,
+          "usage": {
+            "input_tokens": 4066
+          },
+          "probabilities": {
+            "102": 0.46,
+            "103": 0.73,
+            "104": 0.58,
+            "105": 0.72,
+            "106": 0.73
+          }
+        },
+        {
+          "cache_hit": false,
+          "http_attempts": 1,
+          "usage": {
+            "input_tokens": 3612
+          },
+          "probabilities": {
+            "102": 0.19,
+            "103": 0.62,
+            "104": 0.48,
+            "105": 0.28,
+            "106": 0.6
+          }
+        },
+        {
+          "cache_hit": false,
+          "http_attempts": 1,
+          "usage": {
+            "input_tokens": 3620
+          },
+          "probabilities": {
+            "102": 0.12,
+            "103": 0.85,
+            "104": 0.43,
+            "105": 0.07,
+            "106": 0.08
+          }
+        },
+        {
+          "cache_hit": false,
+          "http_attempts": 1,
+          "usage": {
+            "input_tokens": 3616
+          },
+          "probabilities": {
+            "102": 0.25,
+            "103": 0.11,
+            "104": 0.22,
+            "105": 0.23,
+            "106": 0.45
+          }
+        },
+        {
+          "cache_hit": false,
+          "http_attempts": 1,
+          "usage": {
+            "input_tokens": 3451
+          },
+          "probabilities": {
+            "102": 0.79,
+            "103": 0.19,
+            "104": 0.29,
+            "105": 0.2,
+            "106": 0.41
+          }
+        },
+        {
+          "cache_hit": false,
+          "http_attempts": 1,
+          "usage": {
+            "input_tokens": 3589
+          },
+          "probabilities": {
+            "102": 0.33,
+            "103": 0.29,
+            "104": 0.43,
+            "105": 0.43,
+            "106": 0.49
+          }
+        },
+        {
+          "cache_hit": false,
+          "http_attempts": 1,
+          "usage": {
+            "input_tokens": 3634
+          },
+          "probabilities": {
+            "102": 0.16,
+            "103": 0.08,
+            "104": 0.11,
+            "105": 0.09,
+            "106": 0.25
+          }
+        },
+        {
+          "cache_hit": false,
+          "http_attempts": 1,
+          "usage": {
+            "input_tokens": 3444
+          },
+          "probabilities": {
+            "102": 0.81,
+            "103": 0.82,
+            "104": 0.56,
+            "105": 0.63,
+            "106": 0.8
+          }
+        },
+        {
+          "cache_hit": false,
+          "http_attempts": 1,
+          "usage": {
+            "input_tokens": 4144
+          },
+          "probabilities": {
+            "102": 0.64,
+            "103": 0.4,
+            "104": 0.66,
+            "105": 0.65,
+            "106": 0.41
+          }
+        },
+        {
+          "cache_hit": false,
+          "http_attempts": 1,
+          "usage": {
+            "input_tokens": 3612
+          },
+          "probabilities": {
+            "102": 0.19,
+            "103": 0.07,
+            "104": 0.1,
+            "105": 0.09,
+            "106": 0.46
+          }
+        },
+        {
+          "cache_hit": false,
+          "http_attempts": 1,
+          "usage": {
+            "input_tokens": 3455
+          },
+          "probabilities": {
+            "102": 0.85,
+            "103": 0.19,
+            "104": 0.14,
+            "105": 0.11,
+            "106": 0.28
+          }
+        },
+        {
+          "cache_hit": false,
+          "http_attempts": 1,
+          "usage": {
+            "input_tokens": 4561
+          },
+          "probabilities": {
+            "102": 0.48,
+            "103": 0.37,
+            "104": 0.43,
+            "105": 0.38,
+            "106": 0.47
+          }
+        },
+        {
+          "cache_hit": false,
+          "http_attempts": 1,
+          "usage": {
+            "input_tokens": 3653
+          },
+          "probabilities": {
+            "102": 0.43,
+            "103": 0.42,
+            "104": 0.53,
+            "105": 0.31,
+            "106": 0.56
+          }
+        },
+        {
+          "cache_hit": false,
+          "http_attempts": 1,
+          "usage": {
+            "input_tokens": 4829
+          },
+          "probabilities": {
+            "102": 0.83,
+            "103": 0.82,
+            "104": 0.49,
+            "105": 0.38,
+            "106": 0.83
+          }
+        },
+        {
+          "cache_hit": false,
+          "http_attempts": 1,
+          "usage": {
+            "input_tokens": 4685
+          },
+          "probabilities": {
+            "102": 0.77,
+            "103": 0.63,
+            "104": 0.72,
+            "105": 0.73,
+            "106": 0.77
+          }
+        },
+        {
+          "cache_hit": false,
+          "http_attempts": 1,
+          "usage": {
+            "input_tokens": 3604
+          },
+          "probabilities": {
+            "102": 0.38,
+            "103": 0.25,
+            "104": 0.16,
+            "105": 0.15,
+            "106": 0.69
+          }
+        },
+        {
+          "cache_hit": false,
+          "http_attempts": 1,
+          "usage": {
+            "input_tokens": 3612
+          },
+          "probabilities": {
+            "102": 0.31,
+            "103": 0.13,
+            "104": 0.25,
+            "105": 0.25,
+            "106": 0.51
+          }
+        },
+        {
+          "cache_hit": false,
+          "http_attempts": 1,
+          "usage": {
+            "input_tokens": 3613
+          },
+          "probabilities": {
+            "102": 0.46,
+            "103": 0.36,
+            "104": 0.21,
+            "105": 0.18,
+            "106": 0.64
+          }
+        },
+        {
+          "cache_hit": false,
+          "http_attempts": 1,
+          "usage": {
+            "input_tokens": 5059
+          },
+          "probabilities": {
+            "102": 0.92,
+            "103": 0.86,
+            "104": 0.86,
+            "105": 0.87,
+            "106": 0.86
+          }
+        },
+        {
+          "cache_hit": false,
+          "http_attempts": 1,
+          "usage": {
+            "input_tokens": 4949
+          },
+          "probabilities": {
+            "102": 0.86,
+            "103": 0.83,
+            "104": 0.71,
+            "105": 0.79,
+            "106": 0.81
+          }
+        },
+        {
+          "cache_hit": false,
+          "http_attempts": 1,
+          "usage": {
+            "input_tokens": 4804
+          },
+          "probabilities": {
+            "102": 0.87,
+            "103": 0.79,
+            "104": 0.79,
+            "105": 0.79,
+            "106": 0.63
+          }
+        },
+        {
+          "cache_hit": false,
+          "http_attempts": 1,
+          "usage": {
+            "input_tokens": 4476
+          },
+          "probabilities": {
+            "102": 0.71,
+            "103": 0.26,
+            "104": 0.46,
+            "105": 0.58,
+            "106": 0.39
+          }
+        },
+        {
+          "cache_hit": false,
+          "http_attempts": 1,
+          "usage": {
+            "input_tokens": 4423
+          },
+          "probabilities": {
+            "102": 0.52,
+            "103": 0.58,
+            "104": 0.37,
+            "105": 0.34,
+            "106": 0.45
+          }
+        },
+        {
+          "cache_hit": false,
+          "http_attempts": 1,
+          "usage": {
+            "input_tokens": 3427
+          },
+          "probabilities": {
+            "102": 0.87,
+            "103": 0.67,
+            "104": 0.67,
+            "105": 0.78,
+            "106": 0.85
+          }
+        },
+        {
+          "cache_hit": false,
+          "http_attempts": 1,
+          "usage": {
+            "input_tokens": 3605
+          },
+          "probabilities": {
+            "102": 0.47,
+            "103": 0.56,
+            "104": 0.31,
+            "105": 0.25,
+            "106": 0.63
+          }
+        },
+        {
+          "cache_hit": false,
+          "http_attempts": 1,
+          "usage": {
+            "input_tokens": 3625
+          },
+          "probabilities": {
+            "102": 0.26,
+            "103": 0.83,
+            "104": 0.71,
+            "105": 0.13,
+            "106": 0.12
+          }
+        },
+        {
+          "cache_hit": false,
+          "http_attempts": 1,
+          "usage": {
+            "input_tokens": 3614
+          },
+          "probabilities": {
+            "102": 0.18,
+            "103": 0.84,
+            "104": 0.62,
+            "105": 0.11,
+            "106": 0.1
+          }
+        },
+        {
+          "cache_hit": false,
+          "http_attempts": 1,
+          "usage": {
+            "input_tokens": 3609
+          },
+          "probabilities": {
+            "102": 0.25,
+            "103": 0.38,
+            "104": 0.72,
+            "105": 0.56,
+            "106": 0.42
+          }
+        },
+        {
+          "cache_hit": false,
+          "http_attempts": 1,
+          "usage": {
+            "input_tokens": 3607
+          },
+          "probabilities": {
+            "102": 0.43,
+            "103": 0.31,
+            "104": 0.48,
+            "105": 0.37,
+            "106": 0.71
+          }
+        },
+        {
+          "cache_hit": false,
+          "http_attempts": 1,
+          "usage": {
+            "input_tokens": 4810
+          },
+          "probabilities": {
+            "102": 0.82,
+            "103": 0.82,
+            "104": 0.65,
+            "105": 0.57,
+            "106": 0.83
+          }
+        },
+        {
+          "cache_hit": false,
+          "http_attempts": 1,
+          "usage": {
+            "input_tokens": 3431
+          },
+          "probabilities": {
+            "102": 0.65,
+            "103": 0.56,
+            "104": 0.38,
+            "105": 0.53,
+            "106": 0.68
+          }
+        },
+        {
+          "cache_hit": false,
+          "http_attempts": 1,
+          "usage": {
+            "input_tokens": 3610
+          },
+          "probabilities": {
+            "102": 0.36,
+            "103": 0.25,
+            "104": 0.43,
+            "105": 0.26,
+            "106": 0.45
+          }
+        },
+        {
+          "cache_hit": false,
+          "http_attempts": 1,
+          "usage": {
+            "input_tokens": 3676
+          },
+          "probabilities": {
+            "102": 0.65,
+            "103": 0.58,
+            "104": 0.74,
+            "105": 0.8,
+            "106": 0.59
+          }
+        },
+        {
+          "cache_hit": false,
+          "http_attempts": 1,
+          "usage": {
+            "input_tokens": 3429
+          },
+          "probabilities": {
+            "102": 0.87,
+            "103": 0.7,
+            "104": 0.46,
+            "105": 0.62,
+            "106": 0.78
+          }
+        },
+        {
+          "cache_hit": false,
+          "http_attempts": 1,
+          "usage": {
+            "input_tokens": 3977
+          },
+          "probabilities": {
+            "102": 0.44,
+            "103": 0.41,
+            "104": 0.52,
+            "105": 0.45,
+            "106": 0.46
+          }
+        },
+        {
+          "cache_hit": false,
+          "http_attempts": 1,
+          "usage": {
+            "input_tokens": 4474
+          },
+          "probabilities": {
+            "102": 0.74,
+            "103": 0.69,
+            "104": 0.61,
+            "105": 0.54,
+            "106": 0.76
+          }
+        },
+        {
+          "cache_hit": false,
+          "http_attempts": 1,
+          "usage": {
+            "input_tokens": 3607
+          },
+          "probabilities": {
+            "102": 0.1,
+            "103": 0.07,
+            "104": 0.1,
+            "105": 0.06,
+            "106": 0.17
+          }
+        }
+      ],
+      "workers": 4,
+      "model_provenance": {
+        "model": "decision-model-preview",
+        "endpoint": "https://token-plan.maas.qianwenaiapi.com/compatible-mode/v1/systemone",
+        "prompt": "boundaries",
+        "prompt_sha256": "e2f2644d4b671352aff8f19728efe63ae31b3534c135cd6054fd6a8a56fd7bc2",
+        "thresholds": {
+          "101": 0.5,
+          "102": 0.21999999999999997,
+          "103": 0.64,
+          "104": 0.55,
+          "105": 0.5,
+          "106": 0.66
+        },
+        "calibration_sha256": "93b7828d87663965313dc05a1d6003f0bd2083d38bfe43d038da016f5c68bfe6",
+        "training_dataset": "docs/improved_dataset/train.jsonl"
+      },
+      "model_training_overlap": {
+        "checked": true,
+        "method": "normalized_exact_description",
+        "training_dataset": "/home/zolotarev/PycharmProjects/hackathon-innoglobalhack-avito/docs/improved_dataset/train.jsonl",
+        "overlapping_rows": 0,
+        "row_numbers": []
+      },
+      "metrics": {
+        "micro_f1": 0.6489795918367347,
+        "classification_points": 38.93877551020408,
+        "tp": 159,
+        "fp": 122,
+        "fn": 50
+      },
+      "fixed_threshold_metrics": {
+        "mode": "same_recorded_probabilities_with_fixed_0.5_not_a_new_model_run",
+        "metrics": {
+          "micro_f1": 0.6183953033268101,
+          "classification_points": 37.10371819960861,
+          "tp": 158,
+          "fp": 144,
+          "fn": 51
+        }
+      },
+      "measurement_metadata": {
+        "date": "2026-11-14T18:56:29+03:00",
+        "commit": "45ff38d1c5b65ae90654b53261aa377cc96f13a3",
+        "code_sha256": "3946999259f93a4db45e354a06a12e6cbff64778b66253c27da547e540e90c0f",
+        "mode": "pipeline_run",
+        "protocol": {
+          "dataset_sha256": "0af183508c1501425a1330675ceb8923dfe130fff3f86e418ebe3ec4baba34a2",
+          "training_sha256": "d365141906cd7e2a1d66792aa2e37661d8bcdcd0a4bbaf3781649a9108238b76",
+          "rows": 119,
+          "source_mc_id_assumption": 101
+        },
+        "overlap": {
+          "checked": true,
+          "method": "normalized_exact_description",
+          "training_dataset": "/home/zolotarev/PycharmProjects/hackathon-innoglobalhack-avito/docs/improved_dataset/train.jsonl",
+          "overlapping_rows": 0,
+          "row_numbers": []
+        }
+      }
     }
   }
 }
