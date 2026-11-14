@@ -75,5 +75,5 @@ class SubcategoryExtractionPipeline(BasePipeline):
             "model": self.client.model_id, "endpoint": self.client.endpoint,
             "prompt": self.prompt_variant, "prompt_sha256": self.prompt_sha256,
             "thresholds": self.thresholds, "calibration_sha256": self.calibration_sha256,
-            "training_dataset": "docs/improved_dataset/train.jsonl" if self.calibration_sha256 else None,
+            "training_dataset": "manual_train" if self.calibration_sha256 else None,
         }

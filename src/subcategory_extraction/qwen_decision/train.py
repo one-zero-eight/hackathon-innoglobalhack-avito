@@ -16,6 +16,7 @@ from random import Random
 import numpy as np
 
 from benchmark_support import metadata, save_report, setup
+from database import table_sha256
 from main import MICROCATEGORIES
 from run import EvaluationRow, read_records, prepare_rows
 from subcategory_extraction.qwen_decision.pipeline import (
@@ -26,7 +27,8 @@ from subcategory_extraction.semantic_encoder_f1.robust_thresholds import (
 )
 
 ROOT = Path(__file__).resolve().parents[3]
-TRAIN = ROOT / "docs/improved_dataset/train.jsonl"
+# Подбор промпта и порогов на ручной смысловой разметке train из PostgreSQL.
+TRAIN_TABLE = "manual_train"
 REPORT = ROOT / "src/subcategory_extraction/benchmarks/improved_dataset/qwen-training-results.json"
 SEED = 20261114
 CATEGORIES = [cid for cid in MICROCATEGORIES if cid != 101]
@@ -69,11 +71,11 @@ def main() -> None:
     args = parser.parse_args()
     if args.fit_size < 30 or args.control_size < 20 or not 1 <= args.workers <= 8:
         parser.error("Нужны fit >= 30, control >= 20 и workers 1..8")
-    protected = {TRAIN.resolve(), DEFAULT_CALIBRATION.resolve()}
+    protected = {DEFAULT_CALIBRATION.resolve()}
     if args.report.resolve() in protected or args.report.name == "recorded-results.json":
-        parser.error("Отчёт не должен перезаписывать train, калибровку или исторические ответы")
+        parser.error("Отчёт не должен перезаписывать калибровку или исторические ответы")
     setup()
-    records = read_records(TRAIN)
+    records = read_records(TRAIN_TABLE)
     rows = prepare_rows(records, 101)
     groups = validation_groups(records)
     representatives = {}
@@ -90,8 +92,8 @@ def main() -> None:
     labels = np.array([[cid in row.expected for cid in CATEGORIES] for row in fit], dtype=bool)
     report = {
         **metadata(), "status": "running", "mode": "train_only_prompt_and_threshold_selection",
-        "train": str(TRAIN.relative_to(ROOT)),
-        "train_sha256": hashlib.sha256(TRAIN.read_bytes()).hexdigest(),
+        "train": TRAIN_TABLE,
+        "train_sha256": table_sha256(TRAIN_TABLE),
         "model": None, "endpoint": None, "seed": SEED,
         "grouping": {"method": "char_wb_3_5_tfidf_cosine_components", "similarity": 0.85,
                      "total_rows": len(rows), "total_groups": len(representatives),

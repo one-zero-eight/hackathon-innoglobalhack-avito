@@ -1,4 +1,4 @@
-"""Обучение TF-IDF и бинарных фраз только на исправленном train InnoGlobalHack."""
+"""Обучение TF-IDF и бинарных фраз на train InnoGlobalHack из PostgreSQL."""
 
 import hashlib
 import json
@@ -14,11 +14,14 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.feature_selection import chi2
 from sklearn.linear_model import LogisticRegression
 
+from database import read_records as database_read_records, table_sha256
 from main import MICROCATEGORIES, PipelineInput
 from subcategory_extraction.learned_keywords.pipeline import DEFAULT_ARTIFACT
 
 ROOT = Path(__file__).resolve().parents[3]
-TRAIN = ROOT / "docs/improved_dataset/train.jsonl"
+# Обучаемся на ручной смысловой разметке train из PostgreSQL
+# (преемник прежнего docs/improved_dataset/train.jsonl).
+TRAIN_TABLE = "manual_train"
 KEYWORDS_PER_CATEGORY = 40
 REGULARIZATION = 4
 MAX_ITERATIONS = 500
@@ -28,8 +31,7 @@ SOURCE_MC_ID = 101
 def load_training() -> tuple[list[str], list[set[int]]]:
     """Проверить контракт и убрать точные нормализованные дубликаты train."""
     groups: dict[str, tuple[str, set[int]]] = {}
-    for line in TRAIN.read_text(encoding="utf-8").splitlines():
-        row = json.loads(line)
+    for row in database_read_records(TRAIN_TABLE):
         inp = PipelineInput(description=row["description"], mcId=SOURCE_MC_ID)
         labels = [item["mcId"] for item in row["found_microcategories"]]
         if any(type(cid) is not int or cid not in MICROCATEGORIES or cid == inp.mc_id for cid in labels):
@@ -79,7 +81,7 @@ def main() -> None:
     DEFAULT_ARTIFACT.parent.mkdir(parents=True, exist_ok=True)
     DEFAULT_ARTIFACT.write_text(json.dumps(artifact, ensure_ascii=False, allow_nan=False) + "\n", encoding="utf-8")
     metadata = {
-        "train": str(TRAIN.relative_to(ROOT)), "train_sha256": hashlib.sha256(TRAIN.read_bytes()).hexdigest(),
+        "train": TRAIN_TABLE, "train_sha256": table_sha256(TRAIN_TABLE),
         "rows": len(texts), "source_mc_id": SOURCE_MC_ID, "trained_categories": categories[1:],
         "code_sha256": {name: hashlib.sha256((Path(__file__).parent / name).read_bytes()).hexdigest()
                         for name in ("pipeline.py", "train.py")},
