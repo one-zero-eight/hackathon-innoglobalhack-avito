@@ -3,10 +3,12 @@
 import json
 import math
 import os
+from urllib.error import HTTPError, URLError
 from urllib.parse import urlsplit
 from urllib.request import ProxyHandler, Request, build_opener
 
 from main import LLMClient
+from subcategory_extraction.local_jev.runtime import ensure_server
 
 DEFAULT_BASE_URL = "http://127.0.0.1:8017"
 DEFAULT_MODEL = "jevos-v5"
@@ -33,11 +35,27 @@ class LocalJevClient(LLMClient):
         self.last_cache_hit = False
         self.last_attempts = 0
         self.last_usage: dict | None = None
-        with self.opener.open(base_url + "/health", timeout=self.timeout) as response:
-            self.health = json.load(response)
-        if (not isinstance(self.health, dict) or self.health.get("status") != "ready"
-                or self.health.get("model") != self.model_id):
-            raise ValueError("Локальный Jev не готов или обслуживает другую модель")
+        autostart = os.getenv("LOCAL_JEV_AUTOSTART", "1")
+        if autostart not in ("0", "1"):
+            raise ValueError("LOCAL_JEV_AUTOSTART должен быть 0 или 1")
+
+        def health_check() -> dict:
+            """Проверить готовность и имя модели без длительного ожидания соединения."""
+            with self.opener.open(base_url + "/health", timeout=min(self.timeout, 2)) as response:
+                health = json.load(response)
+            if (not isinstance(health, dict) or health.get("status") != "ready"
+                    or health.get("model") != self.model_id):
+                raise ValueError("Локальный Jev не готов или обслуживает другую модель")
+            return health
+
+        try:
+            self.health = health_check()
+        except HTTPError:
+            raise
+        except URLError:
+            if autostart == "0" or self.model_id != DEFAULT_MODEL:
+                raise
+            self.health = ensure_server(base_url, health_check, self.api_key)
 
     def complete(self, prompt: str, **kwargs: object) -> str:
         """Отправить настоящий запрос и проверить точное соответствие ответов."""
