@@ -183,7 +183,7 @@ def check_contract(source_root: Path) -> dict[str, Any]:
         """Проверить официальный вес классификации и известные TP/FP/FN."""
         from subcategory_extraction.benchmarks.metrics import score
         result = score([{102, 105}], [{102, 104}])
-        require(result["micro_f1"] == 0.5 and result["classification_points"] == 30, "Неверная формула или вес классификации")
+        require(result["micro_f1"] == 0.5 and result["classification_points"] == 2.5, "Неверная формула или вес классификации по PDF")
         require((result["tp"], result["fp"], result["fn"]) == (1, 1, 1), "Неверные TP/FP/FN")
         require(result["by_category"][102]["precision"] == 1 and result["by_category"][105]["recall"] == 0, "Неверные метрики категории")
 

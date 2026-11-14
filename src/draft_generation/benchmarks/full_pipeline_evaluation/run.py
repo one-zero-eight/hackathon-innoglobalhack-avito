@@ -8,15 +8,16 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[3]))
 import argparse
 import logging
 from time import perf_counter
+from typing import Any
 
 from benchmark_support import metadata, save_report, setup, timing
 
 
-def check() -> None:
+def check() -> dict[str, Any]:
     """Повторить контрольные метрики, чтение Parquet и аудит пересечений."""
     from run import ROOT, audit_overlap, calculate_metrics, prepare_rows, read_records
     assert calculate_metrics([{102, 105}], [{102, 104}]) == {
-        "micro_f1": 0.5, "classification_points": 30.0, "tp": 1, "fp": 1, "fn": 1,
+        "micro_f1": 0.5, "classification_points": 2.5, "tp": 1, "fp": 1, "fn": 1,
     }
     assert calculate_metrics([set()], [set()])["micro_f1"] == 0
     assert calculate_metrics([{102}], [{101, 102}])["fp"] == 1
@@ -31,6 +32,64 @@ def check() -> None:
     logging.info("Формула и крайние случаи: OK; Parquet: %d строк; пересечения: %d",
                  len(rows), overlap["overlapping_rows"])
     check_checkpoint()
+    return check_pdf_scoring()
+
+
+def check_pdf_scoring() -> dict[str, Any]:
+    """Сопоставить оба scorer с независимой формулой из первой страницы PDF."""
+    import hashlib
+    import math
+    from random import Random
+
+    from main import MICROCATEGORIES
+    from run import CLASSIFICATION_POINTS, ROOT, calculate_metrics
+    from subcategory_extraction.benchmarks.metrics import score
+
+    cases = [
+        ("pdf_example", [{102, 104}], [{102, 105}]),
+        ("global_micro_not_sample_average", [{102, 103, 104, 105}, {106}], [{102, 103, 104, 105}, set()]),
+        ("source_category_is_false_positive", [{104}], [{101, 104}]),
+        ("empty_labels", [set()], [set()]),
+        ("all_false_positives", [set()], [{102, 104}]),
+        ("all_false_negatives", [{102, 104}], [set()]),
+        ("perfect", [{102, 104}], [{102, 104}]),
+    ]
+    random = Random(43)
+    for index in range(1000):
+        size = random.randint(1, 25)
+        truth = [{cid for cid in MICROCATEGORIES if cid != 101 and random.random() < 0.4} for _ in range(size)]
+        predicted = [{cid for cid in MICROCATEGORIES if random.random() < 0.4} for _ in range(size)]
+        cases.append((f"random_{index}", truth, predicted))
+    if CLASSIFICATION_POINTS != 5:
+        raise AssertionError("PDF задаёт пять баллов за классификацию")
+    examples = []
+    for name, truth, predicted in cases:
+        tp = sum(len(a.intersection(b)) for a, b in zip(truth, predicted, strict=True))
+        fp = sum(len(b.difference(a)) for a, b in zip(truth, predicted, strict=True))
+        fn = sum(len(a.difference(b)) for a, b in zip(truth, predicted, strict=True))
+        denominator = 2 * tp + fp + fn
+        independent = 2 * tp / denominator if denominator else 0.0
+        for implementation in (calculate_metrics, score):
+            result = implementation(truth, predicted)
+            if not math.isclose(result["micro_f1"], independent, abs_tol=1e-12):
+                raise AssertionError(f"micro-F1 не совпал с формулой PDF: {name}")
+            if not math.isclose(result["classification_points"], 5 * independent, abs_tol=1e-12):
+                raise AssertionError(f"Баллы не совпали с PDF: {name}")
+            if (result["tp"], result["fp"], result["fn"]) != (tp, fp, fn):
+                raise AssertionError(f"Счётчики не совпали с PDF: {name}")
+        if not name.startswith("random_"):
+            examples.append({"name": name, "tp": tp, "fp": fp, "fn": fn, "micro_f1": independent,
+                             "classification_points": 5 * independent})
+    pdf = ROOT / "docs/Критерии авито.pdf"
+    return {
+        "source": str(pdf.relative_to(ROOT)), "page": 1,
+        "source_sha256": hashlib.sha256(pdf.read_bytes()).hexdigest(),
+        "formula": "2 * sum(TP) / (2 * sum(TP) + sum(FP) + sum(FN))",
+        "classification_max_points": 5, "zero_denominator": 0,
+        "independent_cases": len(cases), "implementations": 2,
+        "random_seed": 43, "status": "complete", "examples": examples,
+        "model_quality_evaluation": False,
+    }
 
 
 def check_checkpoint() -> None:
@@ -60,6 +119,12 @@ def check_checkpoint() -> None:
             assert run_live(config_path, report_path, resume=False) == 0
         assert execute.call_count == 2
         original = json.loads(report_path.read_text())
+        assert original["metrics"]["classification_points"] == 5
+        repeated = PipelineOutput(drafts=[output.drafts[0], output.drafts[0]])
+        with patch("main.run_pipeline", return_value=repeated):
+            assert run_live(config_path, root / "duplicates.json", resume=False) == 0
+        duplicates = json.loads((root / "duplicates.json").read_text())
+        assert duplicates["metrics"] == original["metrics"]
         with patch("main.run_pipeline") as execute:
             assert run_live(config_path, report_path, resume=True) == 0
         assert execute.call_count == 0
@@ -90,8 +155,8 @@ def run_live(config_path: Path, report_path: Path, resume: bool) -> int:
     import json
     import os
 
-    from main import PipelineOutput, load_config, run_pipeline
-    from run import RunConfig, audit_overlap, calculate_metrics, prepare_rows, read_records, resolve_path
+    from main import PipelineOutput, load_config, load_pipeline, run_pipeline
+    from run import CLASSIFICATION_POINTS, RunConfig, audit_overlap, calculate_metrics, prepare_rows, read_records, resolve_path
 
     config_path = config_path.resolve()
     config = RunConfig.model_validate_json(config_path.read_text(encoding="utf-8"))
@@ -125,6 +190,15 @@ def run_live(config_path: Path, report_path: Path, resume: bool) -> int:
                   "rows": len(rows), "limited": config.limit is not None,
                   "pipeline_config": selected.model_dump(), "run_config": config.model_dump(),
                   "overlap": audit_overlap(rows, training), "results": [], "sessions": []}
+        report["scoring"] = {"source": "docs/Критерии авито.pdf", "classification_max_points": CLASSIFICATION_POINTS,
+                             "average": "micro", "zero_division": 0, "predictions": "unique mcId from final drafts"}
+        report["model_settings"] = {}
+        for service in ("subcategory_extraction", "draft_generation"):
+            pipeline = load_pipeline(service, selected)
+            settings = pipeline.client.settings.model_dump()
+            report["model_settings"][service] = {"module": getattr(selected, service), **settings}
+            if service == "subcategory_extraction":
+                report["model_settings"][service].update(prompt=pipeline.settings.prompt, threshold=pipeline.threshold)
     report.update(status="running")
     report.pop("error", None)
     session = {**metadata(), "resumed": resume, "starting_row": len(report["results"]) + 1}
@@ -184,8 +258,8 @@ def main() -> int:
         parser.error("--resume требует --live")
     started = perf_counter()
     report = {**metadata(), "scenario": "offline"}
-    check()
-    report.update(status="complete", rows=208, overlapping_rows=24, checkpoint_checks=4,
+    report["scoring_audit"] = check()
+    report.update(status="complete", rows=208, overlapping_rows=24, checkpoint_checks=5,
                   elapsed_seconds=perf_counter() - started)
     save_report(args.report or Path(__file__).with_name("checks-results.json"), report)
     return 0

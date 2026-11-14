@@ -1,7 +1,7 @@
 {
-  "date": "2026-11-14T13:27:03+03:00",
-  "commit": "2c65c3fc74963e6ae03d842802bf833206f92f08",
-  "code_sha256": "20eae115e95e6ff2162a08f927a787957d5f3411c5d1bb427bcbe0bcc107088e",
+  "date": "2026-11-14T14:28:36+03:00",
+  "commit": "d04ad176498ac7bee4ab88160f3068b92a8496dc",
+  "code_sha256": "9bdf43879f3b044b987ecbee40042988fa0efdacf2f0a482992c0f8e2b3a788f",
   "working_tree": true,
   "scenario": "offline_extraction_contract",
   "real_api_calls": 0,
@@ -211,11 +211,11 @@
   },
   "versions": [
     {
-      "commit": "2c65c3fc74963e6ae03d842802bf833206f92f08",
-      "status": "complete",
-      "passed": 49,
+      "commit": "d04ad176498ac7bee4ab88160f3068b92a8496dc",
+      "status": "failed",
+      "passed": 48,
       "total": 49,
-      "implementation_sha256": "9617da0d7ed0aef51561256f31c15315ec0255eda5509f005cda0ccaadaa90e7",
+      "implementation_sha256": "82d62e3f375d8480cf547cfd49a4a8089305ea8bd29fb277699dddc05d01af31",
       "cases": [
         {
           "name": "no_targets",
@@ -403,7 +403,214 @@
         },
         {
           "name": "official_classification_metrics",
+          "status": "failed",
+          "error": "AssertionError: Неверная формула или вес классификации по PDF"
+        },
+        {
+          "name": "empty_labels_and_source_false_positive",
           "status": "passed"
+        },
+        {
+          "name": "empty_dataset_rejected",
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "commit": "b08f4e4528ec1d9f4db5c012963ec36bb1689555",
+      "status": "failed",
+      "passed": 48,
+      "total": 49,
+      "implementation_sha256": "82d62e3f375d8480cf547cfd49a4a8089305ea8bd29fb277699dddc05d01af31",
+      "cases": [
+        {
+          "name": "no_targets",
+          "status": "passed"
+        },
+        {
+          "name": "multiple_targets_and_threshold_boundary",
+          "status": "passed"
+        },
+        {
+          "name": "deterministic_order",
+          "status": "passed"
+        },
+        {
+          "name": "source_101",
+          "status": "passed"
+        },
+        {
+          "name": "source_102",
+          "status": "passed"
+        },
+        {
+          "name": "source_103",
+          "status": "passed"
+        },
+        {
+          "name": "source_104",
+          "status": "passed"
+        },
+        {
+          "name": "source_105",
+          "status": "passed"
+        },
+        {
+          "name": "source_106",
+          "status": "passed"
+        },
+        {
+          "name": "empty_description",
+          "status": "passed"
+        },
+        {
+          "name": "whitespace_description",
+          "status": "passed"
+        },
+        {
+          "name": "not_json",
+          "status": "passed"
+        },
+        {
+          "name": "html",
+          "status": "passed"
+        },
+        {
+          "name": "array",
+          "status": "passed"
+        },
+        {
+          "name": "null",
+          "status": "passed"
+        },
+        {
+          "name": "missing_answers",
+          "status": "passed"
+        },
+        {
+          "name": "answers_array",
+          "status": "passed"
+        },
+        {
+          "name": "empty_answers",
+          "status": "passed"
+        },
+        {
+          "name": "boolean",
+          "status": "passed"
+        },
+        {
+          "name": "string",
+          "status": "passed"
+        },
+        {
+          "name": "negative",
+          "status": "passed"
+        },
+        {
+          "name": "too_large",
+          "status": "passed"
+        },
+        {
+          "name": "nan",
+          "status": "passed"
+        },
+        {
+          "name": "infinity",
+          "status": "passed"
+        },
+        {
+          "name": "null_probability",
+          "status": "passed"
+        },
+        {
+          "name": "missing_type",
+          "status": "passed"
+        },
+        {
+          "name": "wrong_type",
+          "status": "passed"
+        },
+        {
+          "name": "missing_probability",
+          "status": "passed"
+        },
+        {
+          "name": "null_answer",
+          "status": "passed"
+        },
+        {
+          "name": "string_confidence",
+          "status": "passed"
+        },
+        {
+          "name": "invalid_confidence",
+          "status": "passed"
+        },
+        {
+          "name": "missing_category",
+          "status": "passed"
+        },
+        {
+          "name": "extra_mc101",
+          "status": "passed"
+        },
+        {
+          "name": "extra_mc999",
+          "status": "passed"
+        },
+        {
+          "name": "empty_subset",
+          "status": "passed"
+        },
+        {
+          "name": "source_only_subset",
+          "status": "passed"
+        },
+        {
+          "name": "selected_subset",
+          "status": "passed"
+        },
+        {
+          "name": "unknown_subset",
+          "status": "passed"
+        },
+        {
+          "name": "boolean_subset",
+          "status": "passed"
+        },
+        {
+          "name": "threshold_-0.1",
+          "status": "passed"
+        },
+        {
+          "name": "threshold_1.1",
+          "status": "passed"
+        },
+        {
+          "name": "threshold_nan",
+          "status": "passed"
+        },
+        {
+          "name": "threshold_inf",
+          "status": "passed"
+        },
+        {
+          "name": "threshold_bad",
+          "status": "passed"
+        },
+        {
+          "name": "unknown_prompt",
+          "status": "passed"
+        },
+        {
+          "name": "baseline_prompt",
+          "status": "passed"
+        },
+        {
+          "name": "official_classification_metrics",
+          "status": "failed",
+          "error": "AssertionError: Неверная формула или вес классификации по PDF"
         },
         {
           "name": "empty_labels_and_source_false_positive",
@@ -417,8 +624,8 @@
     },
     {
       "commit": "e58bf075c1a45d000287ab223681c9e6d2a778ed",
-      "status": "complete",
-      "passed": 49,
+      "status": "failed",
+      "passed": 48,
       "total": 49,
       "implementation_sha256": "9617da0d7ed0aef51561256f31c15315ec0255eda5509f005cda0ccaadaa90e7",
       "cases": [
@@ -608,7 +815,8 @@
         },
         {
           "name": "official_classification_metrics",
-          "status": "passed"
+          "status": "failed",
+          "error": "AssertionError: Неверная формула или вес классификации по PDF"
         },
         {
           "name": "empty_labels_and_source_false_positive",
@@ -1065,5 +1273,5 @@
     }
   ],
   "status": "complete",
-  "offline_elapsed_seconds": 3.3821674629998597
+  "offline_elapsed_seconds": 4.47188459500012
 }

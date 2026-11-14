@@ -1,6 +1,7 @@
 """Общие метрики для сравнения вариантов выделения категорий."""
 
 from main import VALID_MCIDS
+from run import CLASSIFICATION_POINTS
 from sklearn.metrics import f1_score
 
 
@@ -29,7 +30,7 @@ def score(expected: list[set[int]], predicted: list[set[int]]) -> dict:
         size = 2 * row["tp"] + row["fp"] + row["fn"]
         row["f1"] = 2 * row["tp"] / size if size else 0.0
     return {
-        "micro_f1": micro_f1, "classification_points": 60 * micro_f1,
+        "micro_f1": micro_f1, "classification_points": CLASSIFICATION_POINTS * micro_f1,
         "macro_f1": float(f1_score(truth, output, average="macro", zero_division=0)),
         **totals, "by_category": counts,
     }

@@ -8,13 +8,16 @@ authors = [
 ]
 requires-python = ">=3.13"
 dependencies = [
+    "fastapi>=0.162.7",
     "pyarrow>=23",
     "pydantic>=2",
     "python-dotenv>=1",
     "scikit-learn>=1.9.1",
+    "uvicorn>=0.54.0",
 ]
 
 [dependency-groups]
 dev = [
+    "httpx2>=2.16.0",
     "pandas>=3.1.1",
 ]

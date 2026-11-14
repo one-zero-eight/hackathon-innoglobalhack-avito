@@ -5,6 +5,8 @@
 
 ## Запуск
 
+[Пошаговая ручная проверка CLI, API и всех бенчмарков](docs/manual-testing.md).
+
 ```bash
 uv sync
 cp .env.example .env
@@ -33,6 +35,16 @@ uv run python src/main.py --input data/input.json --output out/output.json
 исполнителем; формат ответа и таблица категорий зафиксированы кейсом.
 
 ## Реализации и настройки
+
+HTTP-интерфейс с тем же JSON-контрактом:
+
+```bash
+uv run uvicorn --app-dir src api:app --host 127.0.0.1 --port 8000
+```
+
+`POST /drafts` принимает объявление в JSON-теле и возвращает JSON `drafts`.
+Swagger UI: `http://127.0.0.1:8000/docs`, проверка сервера: `GET /health`.
+Подробности и curl-пример — в [HTTP API](docs/http-api.md).
 
 ```json
 {
@@ -110,7 +122,9 @@ uv run python src/draft_generation/benchmarks/full_pipeline_evaluation/run.py --
 
 Итоговые 208 записей test используются после фиксации настроек. Оценщик
 сверяет названия категорий, проверяет нормализованное пересечение с train
-и считает sklearn micro-F1 по mcId из итоговых drafts; баллы — 60 × micro-F1.
+и считает sklearn micro-F1 по mcId из итоговых drafts; по
+`docs/Критерии авито.pdf` баллы — 5 × micro-F1. Markdown-редакция критериев
+содержит другую шкалу; текущая проверка использует явно запрошенный PDF.
 Найденные 24 пересечения отражаются в отчёте, строки не удаляются.
 `--resume` принимает только совпадающий отпечаток данных, кода и настроек,
 проверяет сохранённые предсказания и не вызывает модель для готовых строк.

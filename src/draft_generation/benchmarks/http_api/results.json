@@ -1,0 +1,63 @@
+{
+  "date": "2026-11-14T14:51:38+03:00",
+  "commit": "d04ad176498ac7bee4ab88160f3068b92a8496dc",
+  "code_sha256": "dc3e4dccfd0bc1b9579e4103cb6e4ceb7dca5f88625bc2e85bf829a10840c632",
+  "working_tree": true,
+  "scenario": "offline_http_api_contract",
+  "status": "complete",
+  "real_model_calls": 0,
+  "passed": 18,
+  "cases": [
+    "json_request_and_response",
+    "empty_drafts",
+    "invalid_input_0",
+    "invalid_input_1",
+    "invalid_input_2",
+    "invalid_input_3",
+    "invalid_input_4",
+    "invalid_input_5",
+    "invalid_input_6",
+    "invalid_input_7",
+    "health_without_models",
+    "swagger_without_models",
+    "openapi_aliases_and_errors",
+    "post_only",
+    "upstream_error_502",
+    "invalid_model_output_502",
+    "blocking_pipeline_in_worker_thread",
+    "invalid_configuration_fails_startup"
+  ],
+  "offline_elapsed_seconds": 0.11712065299980168,
+  "versions": [
+    {
+      "commit": "d04ad176498ac7bee4ab88160f3068b92a8496dc",
+      "status": "unavailable",
+      "reason": "HTTP-адаптер отсутствует"
+    },
+    {
+      "commit": "b08f4e4528ec1d9f4db5c012963ec36bb1689555",
+      "status": "unavailable",
+      "reason": "HTTP-адаптер отсутствует"
+    },
+    {
+      "commit": "9464aed0d25f45dd1369e5ed5aedd76ee4bade7c",
+      "status": "unavailable",
+      "reason": "HTTP-адаптер отсутствует"
+    },
+    {
+      "commit": "3613e030db534ac6dcb502bd417f511ba3b79789",
+      "status": "unavailable",
+      "reason": "HTTP-адаптер отсутствует"
+    },
+    {
+      "commit": "392ed0faf90ae2eaa9de93cc51dc99a7907e08bb",
+      "status": "unavailable",
+      "reason": "HTTP-адаптер отсутствует"
+    },
+    {
+      "commit": "e7c6cbeaeab40a8edb93d057437f3e23f3bd2322",
+      "status": "unavailable",
+      "reason": "HTTP-адаптер отсутствует"
+    }
+  ]
+}

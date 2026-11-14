@@ -1,0 +1,100 @@
+{
+  "date": "2026-11-14T14:32:22+03:00",
+  "commit": "d04ad176498ac7bee4ab88160f3068b92a8496dc",
+  "code_sha256": "9bdf43879f3b044b987ecbee40042988fa0efdacf2f0a482992c0f8e2b3a788f",
+  "working_tree": true,
+  "scenario": "live",
+  "fingerprint": "5d996b8712fd538ab656c7b82fde7470f1521239a5882da8d7c7e32ec8dd7908",
+  "rows": 208,
+  "limited": false,
+  "pipeline_config": {
+    "subcategory_extraction": "google_decision",
+    "draft_generation": "llm"
+  },
+  "run_config": {
+    "pipeline_config": "config.json",
+    "dataset": "docs/innoglobalhack_avito/public-test-dataset.parquet",
+    "training_dataset": "docs/innoglobalhack_avito/public-train-annotated.jsonl",
+    "report": "out/evaluation.json",
+    "source_mc_id": 101,
+    "limit": null,
+    "log_every": 10
+  },
+  "overlap": {
+    "checked": true,
+    "method": "normalized_exact_description",
+    "training_dataset": "/home/zolotarev/PycharmProjects/hackathon-innoglobalhack-avito/docs/innoglobalhack_avito/public-train-annotated.jsonl",
+    "overlapping_rows": 24,
+    "row_numbers": [
+      2,
+      10,
+      20,
+      46,
+      62,
+      65,
+      68,
+      77,
+      78,
+      79,
+      84,
+      88,
+      106,
+      108,
+      129,
+      142,
+      147,
+      154,
+      174,
+      179,
+      187,
+      191,
+      198,
+      203
+    ]
+  },
+  "results": [],
+  "sessions": [
+    {
+      "date": "2026-11-14T14:32:23+03:00",
+      "commit": "d04ad176498ac7bee4ab88160f3068b92a8496dc",
+      "code_sha256": "9bdf43879f3b044b987ecbee40042988fa0efdacf2f0a482992c0f8e2b3a788f",
+      "working_tree": true,
+      "resumed": false,
+      "starting_row": 1,
+      "elapsed_seconds": 7.114945819000241
+    }
+  ],
+  "scoring": {
+    "source": "docs/Критерии авито.pdf",
+    "classification_max_points": 5,
+    "average": "micro",
+    "zero_division": 0,
+    "predictions": "unique mcId from final drafts"
+  },
+  "model_settings": {
+    "subcategory_extraction": {
+      "module": "google_decision",
+      "model_id": "gemini-decision-1",
+      "endpoint": "https://generativelanguage.googleapis.com/v1beta/decisions",
+      "timeout": 60.0,
+      "max_attempts": 3,
+      "retry_delay": 1.0,
+      "response_mode": "prompt",
+      "prompt": "guided",
+      "threshold": 0.5
+    },
+    "draft_generation": {
+      "module": "llm",
+      "model_id": "gemma-4-31b-it",
+      "endpoint": "https://generativelanguage.googleapis.com/v1beta/models/gemma-4-31b-it:generateContent",
+      "timeout": 60.0,
+      "max_attempts": 3,
+      "retry_delay": 1.0,
+      "response_mode": "prompt"
+    }
+  },
+  "status": "failed",
+  "error": "LLMError: API завершился с HTTP 500; попыток: 3",
+  "failed_row": 1,
+  "elapsed_seconds": 7.114945819000241
+}

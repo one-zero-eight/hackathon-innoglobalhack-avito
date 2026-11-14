@@ -1,0 +1,1103 @@
+{
+  "date": "2026-11-14T14:33:46+03:00",
+  "commit": "d04ad176498ac7bee4ab88160f3068b92a8496dc",
+  "code_sha256": "9bdf43879f3b044b987ecbee40042988fa0efdacf2f0a482992c0f8e2b3a788f",
+  "working_tree": true,
+  "scenario": "offline_generation_contract",
+  "real_api_calls": 0,
+  "current": {
+    "status": "complete",
+    "passed": 64,
+    "total": 64,
+    "providers": [
+      "google",
+      "openai_compatible"
+    ],
+    "cases": [
+      {
+        "name": "google:unique_targets_and_payload",
+        "status": "passed"
+      },
+      {
+        "name": "google:empty_targets",
+        "status": "passed"
+      },
+      {
+        "name": "google:invalid_targets_0",
+        "status": "passed"
+      },
+      {
+        "name": "google:invalid_targets_1",
+        "status": "passed"
+      },
+      {
+        "name": "google:invalid_targets_2",
+        "status": "passed"
+      },
+      {
+        "name": "google:invalid_targets_3",
+        "status": "passed"
+      },
+      {
+        "name": "google:invalid_targets_4",
+        "status": "passed"
+      },
+      {
+        "name": "google:invalid_targets_5",
+        "status": "passed"
+      },
+      {
+        "name": "google:invalid_targets_6",
+        "status": "passed"
+      },
+      {
+        "name": "google:invalid_targets_7",
+        "status": "passed"
+      },
+      {
+        "name": "google:blank_source",
+        "status": "passed"
+      },
+      {
+        "name": "google:invalid_json_0",
+        "status": "passed"
+      },
+      {
+        "name": "google:invalid_json_1",
+        "status": "passed"
+      },
+      {
+        "name": "google:invalid_json_2",
+        "status": "passed"
+      },
+      {
+        "name": "google:invalid_json_3",
+        "status": "passed"
+      },
+      {
+        "name": "google:invalid_json_4",
+        "status": "passed"
+      },
+      {
+        "name": "google:invalid_json_5",
+        "status": "passed"
+      },
+      {
+        "name": "google:invalid_json_6",
+        "status": "passed"
+      },
+      {
+        "name": "google:invalid_json_7",
+        "status": "passed"
+      },
+      {
+        "name": "google:invalid_json_8",
+        "status": "passed"
+      },
+      {
+        "name": "google:invalid_json_9",
+        "status": "passed"
+      },
+      {
+        "name": "google:invalid_json_10",
+        "status": "passed"
+      },
+      {
+        "name": "google:invalid_json_11",
+        "status": "passed"
+      },
+      {
+        "name": "google:invalid_json_12",
+        "status": "passed"
+      },
+      {
+        "name": "google:invalid_json_13",
+        "status": "passed"
+      },
+      {
+        "name": "google:invalid_json_14",
+        "status": "passed"
+      },
+      {
+        "name": "google:partial_failure",
+        "status": "passed"
+      },
+      {
+        "name": "google:all_source_categories",
+        "status": "passed"
+      },
+      {
+        "name": "google:source_as_json_data",
+        "status": "passed"
+      },
+      {
+        "name": "google:cli_success",
+        "status": "passed"
+      },
+      {
+        "name": "google:cli_empty_targets",
+        "status": "passed"
+      },
+      {
+        "name": "google:cli_failure_preserves_output",
+        "status": "passed"
+      },
+      {
+        "name": "openai_compatible:unique_targets_and_payload",
+        "status": "passed"
+      },
+      {
+        "name": "openai_compatible:empty_targets",
+        "status": "passed"
+      },
+      {
+        "name": "openai_compatible:invalid_targets_0",
+        "status": "passed"
+      },
+      {
+        "name": "openai_compatible:invalid_targets_1",
+        "status": "passed"
+      },
+      {
+        "name": "openai_compatible:invalid_targets_2",
+        "status": "passed"
+      },
+      {
+        "name": "openai_compatible:invalid_targets_3",
+        "status": "passed"
+      },
+      {
+        "name": "openai_compatible:invalid_targets_4",
+        "status": "passed"
+      },
+      {
+        "name": "openai_compatible:invalid_targets_5",
+        "status": "passed"
+      },
+      {
+        "name": "openai_compatible:invalid_targets_6",
+        "status": "passed"
+      },
+      {
+        "name": "openai_compatible:invalid_targets_7",
+        "status": "passed"
+      },
+      {
+        "name": "openai_compatible:blank_source",
+        "status": "passed"
+      },
+      {
+        "name": "openai_compatible:invalid_json_0",
+        "status": "passed"
+      },
+      {
+        "name": "openai_compatible:invalid_json_1",
+        "status": "passed"
+      },
+      {
+        "name": "openai_compatible:invalid_json_2",
+        "status": "passed"
+      },
+      {
+        "name": "openai_compatible:invalid_json_3",
+        "status": "passed"
+      },
+      {
+        "name": "openai_compatible:invalid_json_4",
+        "status": "passed"
+      },
+      {
+        "name": "openai_compatible:invalid_json_5",
+        "status": "passed"
+      },
+      {
+        "name": "openai_compatible:invalid_json_6",
+        "status": "passed"
+      },
+      {
+        "name": "openai_compatible:invalid_json_7",
+        "status": "passed"
+      },
+      {
+        "name": "openai_compatible:invalid_json_8",
+        "status": "passed"
+      },
+      {
+        "name": "openai_compatible:invalid_json_9",
+        "status": "passed"
+      },
+      {
+        "name": "openai_compatible:invalid_json_10",
+        "status": "passed"
+      },
+      {
+        "name": "openai_compatible:invalid_json_11",
+        "status": "passed"
+      },
+      {
+        "name": "openai_compatible:invalid_json_12",
+        "status": "passed"
+      },
+      {
+        "name": "openai_compatible:invalid_json_13",
+        "status": "passed"
+      },
+      {
+        "name": "openai_compatible:invalid_json_14",
+        "status": "passed"
+      },
+      {
+        "name": "openai_compatible:partial_failure",
+        "status": "passed"
+      },
+      {
+        "name": "openai_compatible:all_source_categories",
+        "status": "passed"
+      },
+      {
+        "name": "openai_compatible:source_as_json_data",
+        "status": "passed"
+      },
+      {
+        "name": "openai_compatible:cli_success",
+        "status": "passed"
+      },
+      {
+        "name": "openai_compatible:cli_empty_targets",
+        "status": "passed"
+      },
+      {
+        "name": "openai_compatible:cli_failure_preserves_output",
+        "status": "passed"
+      }
+    ]
+  },
+  "versions": [
+    {
+      "commit": "d04ad176498ac7bee4ab88160f3068b92a8496dc",
+      "status": "complete",
+      "passed": 64,
+      "total": 64,
+      "providers": [
+        "google",
+        "openai_compatible"
+      ],
+      "cases": [
+        {
+          "name": "google:unique_targets_and_payload",
+          "status": "passed"
+        },
+        {
+          "name": "google:empty_targets",
+          "status": "passed"
+        },
+        {
+          "name": "google:invalid_targets_0",
+          "status": "passed"
+        },
+        {
+          "name": "google:invalid_targets_1",
+          "status": "passed"
+        },
+        {
+          "name": "google:invalid_targets_2",
+          "status": "passed"
+        },
+        {
+          "name": "google:invalid_targets_3",
+          "status": "passed"
+        },
+        {
+          "name": "google:invalid_targets_4",
+          "status": "passed"
+        },
+        {
+          "name": "google:invalid_targets_5",
+          "status": "passed"
+        },
+        {
+          "name": "google:invalid_targets_6",
+          "status": "passed"
+        },
+        {
+          "name": "google:invalid_targets_7",
+          "status": "passed"
+        },
+        {
+          "name": "google:blank_source",
+          "status": "passed"
+        },
+        {
+          "name": "google:invalid_json_0",
+          "status": "passed"
+        },
+        {
+          "name": "google:invalid_json_1",
+          "status": "passed"
+        },
+        {
+          "name": "google:invalid_json_2",
+          "status": "passed"
+        },
+        {
+          "name": "google:invalid_json_3",
+          "status": "passed"
+        },
+        {
+          "name": "google:invalid_json_4",
+          "status": "passed"
+        },
+        {
+          "name": "google:invalid_json_5",
+          "status": "passed"
+        },
+        {
+          "name": "google:invalid_json_6",
+          "status": "passed"
+        },
+        {
+          "name": "google:invalid_json_7",
+          "status": "passed"
+        },
+        {
+          "name": "google:invalid_json_8",
+          "status": "passed"
+        },
+        {
+          "name": "google:invalid_json_9",
+          "status": "passed"
+        },
+        {
+          "name": "google:invalid_json_10",
+          "status": "passed"
+        },
+        {
+          "name": "google:invalid_json_11",
+          "status": "passed"
+        },
+        {
+          "name": "google:invalid_json_12",
+          "status": "passed"
+        },
+        {
+          "name": "google:invalid_json_13",
+          "status": "passed"
+        },
+        {
+          "name": "google:invalid_json_14",
+          "status": "passed"
+        },
+        {
+          "name": "google:partial_failure",
+          "status": "passed"
+        },
+        {
+          "name": "google:all_source_categories",
+          "status": "passed"
+        },
+        {
+          "name": "google:source_as_json_data",
+          "status": "passed"
+        },
+        {
+          "name": "google:cli_success",
+          "status": "passed"
+        },
+        {
+          "name": "google:cli_empty_targets",
+          "status": "passed"
+        },
+        {
+          "name": "google:cli_failure_preserves_output",
+          "status": "passed"
+        },
+        {
+          "name": "openai_compatible:unique_targets_and_payload",
+          "status": "passed"
+        },
+        {
+          "name": "openai_compatible:empty_targets",
+          "status": "passed"
+        },
+        {
+          "name": "openai_compatible:invalid_targets_0",
+          "status": "passed"
+        },
+        {
+          "name": "openai_compatible:invalid_targets_1",
+          "status": "passed"
+        },
+        {
+          "name": "openai_compatible:invalid_targets_2",
+          "status": "passed"
+        },
+        {
+          "name": "openai_compatible:invalid_targets_3",
+          "status": "passed"
+        },
+        {
+          "name": "openai_compatible:invalid_targets_4",
+          "status": "passed"
+        },
+        {
+          "name": "openai_compatible:invalid_targets_5",
+          "status": "passed"
+        },
+        {
+          "name": "openai_compatible:invalid_targets_6",
+          "status": "passed"
+        },
+        {
+          "name": "openai_compatible:invalid_targets_7",
+          "status": "passed"
+        },
+        {
+          "name": "openai_compatible:blank_source",
+          "status": "passed"
+        },
+        {
+          "name": "openai_compatible:invalid_json_0",
+          "status": "passed"
+        },
+        {
+          "name": "openai_compatible:invalid_json_1",
+          "status": "passed"
+        },
+        {
+          "name": "openai_compatible:invalid_json_2",
+          "status": "passed"
+        },
+        {
+          "name": "openai_compatible:invalid_json_3",
+          "status": "passed"
+        },
+        {
+          "name": "openai_compatible:invalid_json_4",
+          "status": "passed"
+        },
+        {
+          "name": "openai_compatible:invalid_json_5",
+          "status": "passed"
+        },
+        {
+          "name": "openai_compatible:invalid_json_6",
+          "status": "passed"
+        },
+        {
+          "name": "openai_compatible:invalid_json_7",
+          "status": "passed"
+        },
+        {
+          "name": "openai_compatible:invalid_json_8",
+          "status": "passed"
+        },
+        {
+          "name": "openai_compatible:invalid_json_9",
+          "status": "passed"
+        },
+        {
+          "name": "openai_compatible:invalid_json_10",
+          "status": "passed"
+        },
+        {
+          "name": "openai_compatible:invalid_json_11",
+          "status": "passed"
+        },
+        {
+          "name": "openai_compatible:invalid_json_12",
+          "status": "passed"
+        },
+        {
+          "name": "openai_compatible:invalid_json_13",
+          "status": "passed"
+        },
+        {
+          "name": "openai_compatible:invalid_json_14",
+          "status": "passed"
+        },
+        {
+          "name": "openai_compatible:partial_failure",
+          "status": "passed"
+        },
+        {
+          "name": "openai_compatible:all_source_categories",
+          "status": "passed"
+        },
+        {
+          "name": "openai_compatible:source_as_json_data",
+          "status": "passed"
+        },
+        {
+          "name": "openai_compatible:cli_success",
+          "status": "passed"
+        },
+        {
+          "name": "openai_compatible:cli_empty_targets",
+          "status": "passed"
+        },
+        {
+          "name": "openai_compatible:cli_failure_preserves_output",
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "commit": "b08f4e4528ec1d9f4db5c012963ec36bb1689555",
+      "status": "complete",
+      "passed": 64,
+      "total": 64,
+      "providers": [
+        "google",
+        "openai_compatible"
+      ],
+      "cases": [
+        {
+          "name": "google:unique_targets_and_payload",
+          "status": "passed"
+        },
+        {
+          "name": "google:empty_targets",
+          "status": "passed"
+        },
+        {
+          "name": "google:invalid_targets_0",
+          "status": "passed"
+        },
+        {
+          "name": "google:invalid_targets_1",
+          "status": "passed"
+        },
+        {
+          "name": "google:invalid_targets_2",
+          "status": "passed"
+        },
+        {
+          "name": "google:invalid_targets_3",
+          "status": "passed"
+        },
+        {
+          "name": "google:invalid_targets_4",
+          "status": "passed"
+        },
+        {
+          "name": "google:invalid_targets_5",
+          "status": "passed"
+        },
+        {
+          "name": "google:invalid_targets_6",
+          "status": "passed"
+        },
+        {
+          "name": "google:invalid_targets_7",
+          "status": "passed"
+        },
+        {
+          "name": "google:blank_source",
+          "status": "passed"
+        },
+        {
+          "name": "google:invalid_json_0",
+          "status": "passed"
+        },
+        {
+          "name": "google:invalid_json_1",
+          "status": "passed"
+        },
+        {
+          "name": "google:invalid_json_2",
+          "status": "passed"
+        },
+        {
+          "name": "google:invalid_json_3",
+          "status": "passed"
+        },
+        {
+          "name": "google:invalid_json_4",
+          "status": "passed"
+        },
+        {
+          "name": "google:invalid_json_5",
+          "status": "passed"
+        },
+        {
+          "name": "google:invalid_json_6",
+          "status": "passed"
+        },
+        {
+          "name": "google:invalid_json_7",
+          "status": "passed"
+        },
+        {
+          "name": "google:invalid_json_8",
+          "status": "passed"
+        },
+        {
+          "name": "google:invalid_json_9",
+          "status": "passed"
+        },
+        {
+          "name": "google:invalid_json_10",
+          "status": "passed"
+        },
+        {
+          "name": "google:invalid_json_11",
+          "status": "passed"
+        },
+        {
+          "name": "google:invalid_json_12",
+          "status": "passed"
+        },
+        {
+          "name": "google:invalid_json_13",
+          "status": "passed"
+        },
+        {
+          "name": "google:invalid_json_14",
+          "status": "passed"
+        },
+        {
+          "name": "google:partial_failure",
+          "status": "passed"
+        },
+        {
+          "name": "google:all_source_categories",
+          "status": "passed"
+        },
+        {
+          "name": "google:source_as_json_data",
+          "status": "passed"
+        },
+        {
+          "name": "google:cli_success",
+          "status": "passed"
+        },
+        {
+          "name": "google:cli_empty_targets",
+          "status": "passed"
+        },
+        {
+          "name": "google:cli_failure_preserves_output",
+          "status": "passed"
+        },
+        {
+          "name": "openai_compatible:unique_targets_and_payload",
+          "status": "passed"
+        },
+        {
+          "name": "openai_compatible:empty_targets",
+          "status": "passed"
+        },
+        {
+          "name": "openai_compatible:invalid_targets_0",
+          "status": "passed"
+        },
+        {
+          "name": "openai_compatible:invalid_targets_1",
+          "status": "passed"
+        },
+        {
+          "name": "openai_compatible:invalid_targets_2",
+          "status": "passed"
+        },
+        {
+          "name": "openai_compatible:invalid_targets_3",
+          "status": "passed"
+        },
+        {
+          "name": "openai_compatible:invalid_targets_4",
+          "status": "passed"
+        },
+        {
+          "name": "openai_compatible:invalid_targets_5",
+          "status": "passed"
+        },
+        {
+          "name": "openai_compatible:invalid_targets_6",
+          "status": "passed"
+        },
+        {
+          "name": "openai_compatible:invalid_targets_7",
+          "status": "passed"
+        },
+        {
+          "name": "openai_compatible:blank_source",
+          "status": "passed"
+        },
+        {
+          "name": "openai_compatible:invalid_json_0",
+          "status": "passed"
+        },
+        {
+          "name": "openai_compatible:invalid_json_1",
+          "status": "passed"
+        },
+        {
+          "name": "openai_compatible:invalid_json_2",
+          "status": "passed"
+        },
+        {
+          "name": "openai_compatible:invalid_json_3",
+          "status": "passed"
+        },
+        {
+          "name": "openai_compatible:invalid_json_4",
+          "status": "passed"
+        },
+        {
+          "name": "openai_compatible:invalid_json_5",
+          "status": "passed"
+        },
+        {
+          "name": "openai_compatible:invalid_json_6",
+          "status": "passed"
+        },
+        {
+          "name": "openai_compatible:invalid_json_7",
+          "status": "passed"
+        },
+        {
+          "name": "openai_compatible:invalid_json_8",
+          "status": "passed"
+        },
+        {
+          "name": "openai_compatible:invalid_json_9",
+          "status": "passed"
+        },
+        {
+          "name": "openai_compatible:invalid_json_10",
+          "status": "passed"
+        },
+        {
+          "name": "openai_compatible:invalid_json_11",
+          "status": "passed"
+        },
+        {
+          "name": "openai_compatible:invalid_json_12",
+          "status": "passed"
+        },
+        {
+          "name": "openai_compatible:invalid_json_13",
+          "status": "passed"
+        },
+        {
+          "name": "openai_compatible:invalid_json_14",
+          "status": "passed"
+        },
+        {
+          "name": "openai_compatible:partial_failure",
+          "status": "passed"
+        },
+        {
+          "name": "openai_compatible:all_source_categories",
+          "status": "passed"
+        },
+        {
+          "name": "openai_compatible:source_as_json_data",
+          "status": "passed"
+        },
+        {
+          "name": "openai_compatible:cli_success",
+          "status": "passed"
+        },
+        {
+          "name": "openai_compatible:cli_empty_targets",
+          "status": "passed"
+        },
+        {
+          "name": "openai_compatible:cli_failure_preserves_output",
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "commit": "2c65c3fc74963e6ae03d842802bf833206f92f08",
+      "status": "complete",
+      "passed": 64,
+      "total": 64,
+      "providers": [
+        "google",
+        "openai_compatible"
+      ],
+      "cases": [
+        {
+          "name": "google:unique_targets_and_payload",
+          "status": "passed"
+        },
+        {
+          "name": "google:empty_targets",
+          "status": "passed"
+        },
+        {
+          "name": "google:invalid_targets_0",
+          "status": "passed"
+        },
+        {
+          "name": "google:invalid_targets_1",
+          "status": "passed"
+        },
+        {
+          "name": "google:invalid_targets_2",
+          "status": "passed"
+        },
+        {
+          "name": "google:invalid_targets_3",
+          "status": "passed"
+        },
+        {
+          "name": "google:invalid_targets_4",
+          "status": "passed"
+        },
+        {
+          "name": "google:invalid_targets_5",
+          "status": "passed"
+        },
+        {
+          "name": "google:invalid_targets_6",
+          "status": "passed"
+        },
+        {
+          "name": "google:invalid_targets_7",
+          "status": "passed"
+        },
+        {
+          "name": "google:blank_source",
+          "status": "passed"
+        },
+        {
+          "name": "google:invalid_json_0",
+          "status": "passed"
+        },
+        {
+          "name": "google:invalid_json_1",
+          "status": "passed"
+        },
+        {
+          "name": "google:invalid_json_2",
+          "status": "passed"
+        },
+        {
+          "name": "google:invalid_json_3",
+          "status": "passed"
+        },
+        {
+          "name": "google:invalid_json_4",
+          "status": "passed"
+        },
+        {
+          "name": "google:invalid_json_5",
+          "status": "passed"
+        },
+        {
+          "name": "google:invalid_json_6",
+          "status": "passed"
+        },
+        {
+          "name": "google:invalid_json_7",
+          "status": "passed"
+        },
+        {
+          "name": "google:invalid_json_8",
+          "status": "passed"
+        },
+        {
+          "name": "google:invalid_json_9",
+          "status": "passed"
+        },
+        {
+          "name": "google:invalid_json_10",
+          "status": "passed"
+        },
+        {
+          "name": "google:invalid_json_11",
+          "status": "passed"
+        },
+        {
+          "name": "google:invalid_json_12",
+          "status": "passed"
+        },
+        {
+          "name": "google:invalid_json_13",
+          "status": "passed"
+        },
+        {
+          "name": "google:invalid_json_14",
+          "status": "passed"
+        },
+        {
+          "name": "google:partial_failure",
+          "status": "passed"
+        },
+        {
+          "name": "google:all_source_categories",
+          "status": "passed"
+        },
+        {
+          "name": "google:source_as_json_data",
+          "status": "passed"
+        },
+        {
+          "name": "google:cli_success",
+          "status": "passed"
+        },
+        {
+          "name": "google:cli_empty_targets",
+          "status": "passed"
+        },
+        {
+          "name": "google:cli_failure_preserves_output",
+          "status": "passed"
+        },
+        {
+          "name": "openai_compatible:unique_targets_and_payload",
+          "status": "passed"
+        },
+        {
+          "name": "openai_compatible:empty_targets",
+          "status": "passed"
+        },
+        {
+          "name": "openai_compatible:invalid_targets_0",
+          "status": "passed"
+        },
+        {
+          "name": "openai_compatible:invalid_targets_1",
+          "status": "passed"
+        },
+        {
+          "name": "openai_compatible:invalid_targets_2",
+          "status": "passed"
+        },
+        {
+          "name": "openai_compatible:invalid_targets_3",
+          "status": "passed"
+        },
+        {
+          "name": "openai_compatible:invalid_targets_4",
+          "status": "passed"
+        },
+        {
+          "name": "openai_compatible:invalid_targets_5",
+          "status": "passed"
+        },
+        {
+          "name": "openai_compatible:invalid_targets_6",
+          "status": "passed"
+        },
+        {
+          "name": "openai_compatible:invalid_targets_7",
+          "status": "passed"
+        },
+        {
+          "name": "openai_compatible:blank_source",
+          "status": "passed"
+        },
+        {
+          "name": "openai_compatible:invalid_json_0",
+          "status": "passed"
+        },
+        {
+          "name": "openai_compatible:invalid_json_1",
+          "status": "passed"
+        },
+        {
+          "name": "openai_compatible:invalid_json_2",
+          "status": "passed"
+        },
+        {
+          "name": "openai_compatible:invalid_json_3",
+          "status": "passed"
+        },
+        {
+          "name": "openai_compatible:invalid_json_4",
+          "status": "passed"
+        },
+        {
+          "name": "openai_compatible:invalid_json_5",
+          "status": "passed"
+        },
+        {
+          "name": "openai_compatible:invalid_json_6",
+          "status": "passed"
+        },
+        {
+          "name": "openai_compatible:invalid_json_7",
+          "status": "passed"
+        },
+        {
+          "name": "openai_compatible:invalid_json_8",
+          "status": "passed"
+        },
+        {
+          "name": "openai_compatible:invalid_json_9",
+          "status": "passed"
+        },
+        {
+          "name": "openai_compatible:invalid_json_10",
+          "status": "passed"
+        },
+        {
+          "name": "openai_compatible:invalid_json_11",
+          "status": "passed"
+        },
+        {
+          "name": "openai_compatible:invalid_json_12",
+          "status": "passed"
+        },
+        {
+          "name": "openai_compatible:invalid_json_13",
+          "status": "passed"
+        },
+        {
+          "name": "openai_compatible:invalid_json_14",
+          "status": "passed"
+        },
+        {
+          "name": "openai_compatible:partial_failure",
+          "status": "passed"
+        },
+        {
+          "name": "openai_compatible:all_source_categories",
+          "status": "passed"
+        },
+        {
+          "name": "openai_compatible:source_as_json_data",
+          "status": "passed"
+        },
+        {
+          "name": "openai_compatible:cli_success",
+          "status": "passed"
+        },
+        {
+          "name": "openai_compatible:cli_empty_targets",
+          "status": "passed"
+        },
+        {
+          "name": "openai_compatible:cli_failure_preserves_output",
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "commit": "9464aed0d25f45dd1369e5ed5aedd76ee4bade7c",
+      "status": "unavailable",
+      "reason": "Выбранный модуль отсутствует"
+    },
+    {
+      "commit": "3613e030db534ac6dcb502bd417f511ba3b79789",
+      "status": "unavailable",
+      "reason": "Выбранный модуль отсутствует"
+    },
+    {
+      "commit": "392ed0faf90ae2eaa9de93cc51dc99a7907e08bb",
+      "status": "unavailable",
+      "reason": "Выбранный модуль отсутствует"
+    },
+    {
+      "commit": "e7c6cbeaeab40a8edb93d057437f3e23f3bd2322",
+      "status": "unavailable",
+      "reason": "Выбранный модуль отсутствует"
+    }
+  ],
+  "status": "complete",
+  "offline_elapsed_seconds": 1.4223922080000193
+}

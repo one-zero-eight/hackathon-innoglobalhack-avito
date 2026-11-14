@@ -24,7 +24,8 @@ from main import (
 
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_RUN_CONFIG = ROOT / "run.config.json"
-CLASSIFICATION_POINTS = 60
+# docs/Критерии авито.pdf, стр. 1; шкала отличается от Markdown-редакции.
+CLASSIFICATION_POINTS = 5
 logger = logging.getLogger(__name__)
 
 
