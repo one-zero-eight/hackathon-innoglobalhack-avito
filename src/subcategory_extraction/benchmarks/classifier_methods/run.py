@@ -146,7 +146,7 @@ def main(directory: Path = HERE, scenario: str = "classifier_methods") -> int:
         }
         save_report(args.report, report)
     report["status"] = "complete" if all(
-        result["status"] == "completed" for result in report["results"].values()
+        result["status"] in {"completed", "complete"} for result in report["results"].values()
     ) else "failed"
     save_report(args.report, report)
     return 0 if report["status"] == "complete" else 1

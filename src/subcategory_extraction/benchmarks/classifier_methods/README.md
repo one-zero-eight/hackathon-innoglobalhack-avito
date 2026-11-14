@@ -1,33 +1,40 @@
 # Бенчмарк: F1 на исходном InnoGlobalHack
-Сервис: subcategory_extraction
 
-## Что проверяем
+Micro-F1 дополнительных категорий 102–106 на всех 208 строках
+`docs/innoglobalhack_avito/public-test-dataset.parquet`. Исходный mcId отсутствует в test и принимается равным 101.
+SHA-256 датасета: `65b5a45a98b577d853a928932bbbdf8bd9bdeb469ded3016faace4d11f3eabaa`.
 
-Micro-F1 дополнительных mcId на **всех 208 строках**
-`docs/innoglobalhack_avito/public-test-dataset.parquet`,
-SHA-256 `65b5a45a98b577d853a928932bbbdf8bd9bdeb469ded3016faace4d11f3eabaa`.
-В файле нет исходного mcId, явно принимаем 101. Дубликаты остаются
-в метрике; одинаковый вход при live может вычисляться один раз.
-Исходный train `docs/innoglobalhack_avito/public-train-annotated.jsonl`;
-для исторического локального обучения использованы 4821 отфильтрованных
-описаний. Старый test содержит пересечения с train и противоречивую разметку.
+## Результаты
+
+Одна строка на решение. Повторный прогон заменяет строку; остальные
+результаты сохраняют собственную дату и происхождение. Таблица соответствует
+[results.json](results.json); снимок исходных ответов
+[recorded-results.json](recorded-results.json) не перезаписывается.
+
+| Модуль | Версия / дата измерения | Промпт | N | micro-F1 | Происхождение |
+| --- | --- | --- | ---: | ---: | --- |
+| regex | правила annotate_dataset / 2026-11-14 | — | 208 | 0.751979 | локальные run() |
+| tfidf | веса 2ef7ed22c74a / 2026-11-14 | — | 208 | 0.778462 | локальные run() |
+| learned_keywords | веса d06457a8c082 / 2026-11-14 | — | 208 | 0.745358 | локальные run() |
+| semantic_encoder_f1 | веса 1c2a6f5 / 2026-11-14 | — | 208 | 0.769433 | локальные run() |
+| google_decision | версия в recorded-results.json / 2026-11-14 | guided | 208 | 0.839394 | сохранённые ответы, без новых вызовов |
+| jev | версия в recorded-results.json / 2026-11-14 | guided | 208 | 0.846154 | сохранённые ответы, без новых вызовов |
+| jev_tfidf | версия в recorded-results.json / 2026-11-14 | guided | 208 | 0.842262 | сохранённые ответы, без новых вызовов |
+| semantic_encoder | версия в recorded-results.json / 2026-11-14 | — | 208 | 0.786704 | сохранённые ответы, без новых вызовов |
 
 ## Запуск
 
-Офлайн без повторного обучения/API:
-
 ```bash
-uv run python src/subcategory_extraction/benchmarks/classifier_methods/run.py --replay
+OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 TFIDF_ARTIFACT_PATH=out/classifier-methods/tfidf.json uv run python src/subcategory_extraction/benchmarks/classifier_methods/run.py --methods regex tfidf learned_keywords --offline
 ```
 
-Проверяется соответствие сохранённых ответов текущему test, результаты
-пишутся в `results.json`; `recorded-results.json` не изменяется.
-Для нового сравнения выберите модули через `--methods tfidf`
-и при необходимости `--offline`. Данные закреплены за сценарием;
-параметры моделей и пути к весам задаются через `.env`.
-Отсутствие весов или API даёт неуспешный статус без F1.
+Для других реализаций замените список `--methods`. Для проверки исходного
+снимка ответов используйте `--replay`; это пересчёт старых предсказаний,
+а не измерение текущих весов или задержки модели. Флаг `--offline` запрещает
+API-модули. Отсутствие весов/API фиксируется как ошибка без F1.
+После запуска обновите соответствующие строки этой таблицы по JSON.
 
-## Последний локальный прогон
+## Условия и ограничения
 
 2026-11-14, опубликованные веса Leo `1c2a6f5`, синхронизация с main `3144889`.
 Настоящие CPU-вызовы `semantic_encoder_f1`, без переобучения и подбора порогов.

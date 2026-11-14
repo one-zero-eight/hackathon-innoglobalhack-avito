@@ -1,31 +1,40 @@
 # Бенчмарк: F1 на исправленном датасете
-Сервис: subcategory_extraction
 
-## Что проверяем
+Micro-F1 дополнительных категорий 102–106 на всех 119 строках
+`docs/improved_dataset/reviewed_test.parquet`. Исходный mcId отсутствует в test и принимается равным 101.
+SHA-256 датасета: `0af183508c1501425a1330675ceb8923dfe130fff3f86e418ebe3ec4baba34a2`.
 
-Micro-F1 дополнительных mcId на 119 строках
-`docs/improved_dataset/reviewed_test.parquet`,
-SHA-256 `0af183508c1501425a1330675ceb8923dfe130fff3f86e418ebe3ec4baba34a2`.
-Train `docs/improved_dataset/train.jsonl` (4851 строк),
-SHA-256 `d365141906cd7e2a1d66792aa2e37661d8bcdcd0a4bbaf3781649a9108238b76`.
-Исходный mcId test предполагается равным 101. Разметка предварительная,
-не независимый ручной эталон. Порог/промпт по test не выбираются.
+## Результаты
+
+Одна строка на решение. Повторный прогон заменяет строку; остальные
+результаты сохраняют собственную дату и происхождение. Таблица соответствует
+[results.json](results.json); снимок исходных ответов
+[recorded-results.json](recorded-results.json) не перезаписывается.
+
+| Модуль | Версия / дата измерения | Промпт | N | micro-F1 | Происхождение |
+| --- | --- | --- | ---: | ---: | --- |
+| regex | правила annotate_dataset / 2026-11-14 | — | 119 | 0.992874 | локальные run() |
+| tfidf | веса 2ef7ed22c74a / 2026-11-14 | — | 119 | 0.734807 | локальные run() |
+| learned_keywords | веса d06457a8c082 / 2026-11-14 | — | 119 | 0.800948 | локальные run() |
+| semantic_encoder_f1 | веса 1c2a6f5 / 2026-11-14 | — | 119 | 0.857143 | локальные run() |
+| google_decision | версия в recorded-results.json / 2026-11-14 | guided | 119 | 0.801061 | сохранённые ответы, без новых вызовов |
+| jev | версия в recorded-results.json / 2026-11-14 | guided | 119 | 0.812665 | сохранённые ответы, без новых вызовов |
+| jev_tfidf | версия в recorded-results.json / 2026-11-14 | guided | 119 | 0.854962 | сохранённые ответы, без новых вызовов |
+| semantic_encoder | версия в recorded-results.json / 2026-11-14 | — | 119 | 0.811530 | сохранённые ответы, без новых вызовов |
 
 ## Запуск
 
-Без новых API-вызовов и без весов:
-
 ```bash
-uv run python src/subcategory_extraction/benchmarks/improved_dataset/run.py --replay
+OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 TFIDF_ARTIFACT_PATH=out/classifier-methods/tfidf.json uv run python src/subcategory_extraction/benchmarks/improved_dataset/run.py --methods regex tfidf learned_keywords --offline
 ```
 
-Скрипт проверяет SHA датасета, полные метки и сохранённые ответы,
-пересчитывает TP/FP/FN и micro-F1 в `results.json`. Исходные ответы
-не перезаписываются (`recorded-results.json`). Для новых вызовов (параметры и пути к весам — через `.env`):
+Для других реализаций замените список `--methods`. Для проверки исходного
+снимка ответов используйте `--replay`; это пересчёт старых предсказаний,
+а не измерение текущих весов или задержки модели. Флаг `--offline` запрещает
+API-модули. Отсутствие весов/API фиксируется как ошибка без F1.
+После запуска обновите соответствующие строки этой таблицы по JSON.
 
-```bash
-uv run python src/subcategory_extraction/benchmarks/improved_dataset/run.py --methods tfidf --offline
-```
+## Условия и ограничения
 
 Последняя команда требует обученного артефакта TF-IDF и может закончиться
 ошибкой, если он отсутствует. Доступность других моделей/API проверяется
