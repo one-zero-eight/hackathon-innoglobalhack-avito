@@ -40,11 +40,15 @@
 ├── src/                         # весь исполняемый код
 │   ├── main.py                  # CLI-ядро + всё общее: контракт, микрокатегории,
 │   │                            #   BasePipeline, LLMClient
+│   ├── database.py              # единый слой PostgreSQL: схема, чтение таблиц,
+│   │                            #   наполнение из файлов (единый формат)
+│   ├── database_load.py         # CLI наполнения таблиц БД
+│   ├── run.py                   # оценка полного решения (micro-F1 по drafts)
 │   ├── subcategory_extraction/  # шаг 1: выделение подкатегорий услуг
 │   │   ├── jev/                 #   пример будущего варианта (когда реализован)
 │   │   │   ├── __init__.py
 │   │   │   ├── pipeline.py      #   SubcategoryExtractionPipeline
-│   │   │   └── prompts/         #   промпты этого варианта
+│   │   │   └── prompts/        #   промпты этого варианта
 │   │   ├── embeddings/          #   пример будущего варианта (когда реализован)
 │   │   │   ├── pipeline.py      #   реализация варианта
 │   │   │   └── artifacts/       #   обученные веса и файлы загрузки (в Git)
@@ -113,6 +117,63 @@
 
 ---
 
+## 2.1. База данных PostgreSQL (общие датасеты)
+
+Все датасеты проекта лежат в одной PostgreSQL-БД и читаются из неё
+бенчмарками, `run.py` и тренировочными скриптами. Файлы-источники в `docs/`
+остаются эталоном для наполнения; прямой загрузки из файлов в рантайме нет.
+
+### Таблицы и источники
+
+Все таблицы хранятся в **едином формате** (см. `src/database.py`):
+`row_id`, `description`, `title`, `mc_id` (исходная микрокатегория),
+`mc_ids` (дополнительные целевые категории `int[]`), `source` (платформа/
+датасет) и `extra` (прочие исходные поля строки).
+
+| Таблица | Источник | Строк |
+| --- | --- | ---: |
+| `case_train` | `docs/innoglobalhack_avito/public-train-annotated.jsonl` | 10 000 |
+| `case_test` | `docs/innoglobalhack_avito/public-test-dataset.parquet` | 208 |
+| `manual_train` | `docs/manual_review/` (журнал ручной разметки, сплит train) | 4 854 |
+| `manual_test` | `docs/manual_review/` (журнал ручной разметки, сплит test) | 139 |
+| `yandex_yoola` | `docs/provider_collections/` (Яндекс + Юла, все снимки) | 2 961 |
+
+`manual_train`/`manual_test` строятся из `inputs.jsonl` + `reviews/NNN.jsonl`
+(join по `group_id`, сплит — из `sources[].split`). Группы, встречающиеся
+и в train, и в test, попадают в обе таблицы (13 групп); при оценке
+`manual_test` пересечение с `manual_train` учитывается как лифт метрики.
+
+`yandex_yoola` объединяет raw-профили, разметки Decision 1 и
+`youla-859-annotated`; метки берутся из разметки, raw-строки без меток
+попадают с пустым `mc_ids`.
+
+### Наполнение и доступ
+
+```bash
+cp .env.example .env   # заполнить DB_* (и LLM-ключи)
+uv run python src/database_load.py                 # наполнить все таблицы
+uv run python src/database_load.py --tables case_test manual_test
+uv run python src/database_load.py --tables yandex_yoola
+```
+
+- Повторный запуск идемпотентен: таблицы очищаются и заполняются заново.
+- Чтение из БД — только через `read_records(table)` в `src/database.py`;
+  драйвер `psycopg`, креды — переменные `DB_HOST/DB_PORT/DB_NAME/DB_USER/
+  DB_PASSWORD/DB_SSLMODE` из `.env`.
+- `run.py`/бенчмарки принимают **имена таблиц** (`case_test`, `manual_test`,
+  ...) вместо путей к файлам: в `run.config.json` и в сценариях бенчмарков
+  `dataset`/`training_dataset` задаются таблицами.
+- Сценарии бенчмарков: `classifier_methods` → `case_test` + `case_train`;
+  `improved_dataset` → `manual_test` + `manual_train` (по решению команды
+  ручная смысловая разметка заменяет прежний `reviewed_test.parquet`).
+- Датасеты `docs/` не коммитятся в рантайме: чтение из БД, файлы — только
+  для наполнения таблиц через `database_load.py`.
+- Зафиксированные протоколы воспроизведения опубликованных весов
+  (`semantic_encoder_f1/train_plan.py`, `reproduce_weights.py`,
+  `dataset_annotation/rubert_review/*`) продолжают работать со своими
+  прежними split-манифестами и файлами — их перевод на БД изменил бы
+  спецификацию воспроизводимых весов и требует согласования с авторами.
+
 ## 3. main.py — ядро проекта
 
 ```bash
@@ -176,8 +237,8 @@ CLI завершается явной ошибкой.
 | Существующая папка | Что проверяем |
 | --- | --- |
 | `cpu_costs/` | Стоимость токенов, если есть: человек/агент считает и вписывает вручную в README. Скрипта расчёта нет. |
-| `improved_dataset/` | Micro-F1 на `docs/improved_dataset/reviewed_test.parquet` |
-| `classifier_methods/` | Micro-F1 на `docs/innoglobalhack_avito/public-test-dataset.parquet` |
+| `improved_dataset/` | Micro-F1 на таблице `manual_test` (ручная смысловая разметка test из PostgreSQL) |
+| `classifier_methods/` | Micro-F1 на таблице `case_test` (официальный InnoGlobalHack test из PostgreSQL) |
 | `response_time/` | Время настоящих вызовов `run()` |
 
 Для `dataset_annotation` оставляем только существующий
@@ -227,14 +288,18 @@ CLI завершается явной ошибкой.
   при переносе/упрощении отчётов достаточно проверки сохранённых ответов.
   Недоступные модели/данные отмечаем явно, результаты не подставляем.
 - Обучение и подбор параметров — только на InnoGlobalHack:
-  `public-train-annotated.jsonl` (10 000 строк, исходная категория 101)
-  или его исправленной версии `docs/improved_dataset/train.jsonl`.
+  `case_train` (таблица PostgreSQL из официального
+  `public-train-annotated.jsonl`, 10 000 строк, исходная категория 101)
+  или ручной смысловой разметке `manual_train` (журнал `docs/manual_review/`,
+  сплит train — преемник прежнего `docs/improved_dataset/train.jsonl`).
   Точные и близкие дубликаты держим в одной части разбиения.
-  Оба test-набора используем после фиксации модели, промпта и порогов;
-  до F1 проверяем соответствие категорий контракту и пересечения с train.
-  Исправленный test — диагностическая выборка с предварительной разметкой,
-  не независимый ручной эталон. Purple Hack и объединённый CSV — только
-  исторические результаты с другой целевой разметкой.
+  Оба test-набора (`case_test`, `manual_test`) используем после фиксации
+  модели, промпта и порогов; до F1 проверяем соответствие категорий
+  контракту и пересечения с train.
+  Исправленный test (`manual_test`) — ручная разметка с предварительной
+  верификацией, а не независимый внешний эталон: 13 групп разделения
+  встречаются и в train, и в test журнала. Purple Hack и объединённый CSV —
+  только исторические результаты с другой целевой разметкой.
 - Аудит и переразметка живут в `src/dataset_annotation/`, обучение —
   внутри модуля. Не размещаем их код в `benchmarks/`.
 - Тестового фреймворка нет: не добавляем `tests/`, `test_*.py` и `pytest`.
@@ -316,7 +381,11 @@ git status
 
 # setup (один раз):
 uv sync
-cp .env.example .env               # заполнить LLM_API_KEY
+cp .env.example .env               # заполнить LLM_API_KEY и DB_*
+
+# наполнение PostgreSQL-таблиц из docs/ (все или выборочно):
+uv run python src/database_load.py
+uv run python src/database_load.py --tables case_test manual_test
 
 uv run python src/main.py --input data/input.json --output out/output.json
 ```

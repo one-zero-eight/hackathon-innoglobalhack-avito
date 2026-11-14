@@ -14,8 +14,11 @@ from zoneinfo import ZoneInfo
 import numpy as np
 from dotenv import load_dotenv
 
+from database import read_records as database_read_records, table_sha256
+
 ROOT = Path(__file__).resolve().parent.parent
-TRAIN = ROOT / "docs/innoglobalhack_avito/public-train-annotated.jsonl"
+# Официальный train живёт в PostgreSQL, а не в файле.
+TRAIN_TABLE = "case_train"
 
 
 def metadata() -> dict[str, Any]:
@@ -87,8 +90,7 @@ def validation_sample(size: int, seed: int = 43, nonempty: bool = False) -> list
     from main import PipelineInput
 
     groups: dict[str, dict] = {}
-    for line in TRAIN.read_text(encoding="utf-8").splitlines():
-        row = json.loads(line)
+    for row in database_read_records(TRAIN_TABLE):
         inp = PipelineInput(description=row["description"], mcId=101)
         targets = {target["mcId"] for target in row["found_microcategories"]}
         key = " ".join(unicodedata.normalize("NFKC", inp.description).casefold().replace("ё", "е").split())
@@ -123,16 +125,20 @@ def replay_recorded_report(directory: Path, scenario: str, report_path: Path) ->
     recorded = json.loads(source.read_text(encoding="utf-8"))
     if scenario not in ("classifier_methods", "improved_dataset"):
         raise ValueError(f"Неизвестный F1-сценарий: {scenario}")
-    dataset = ROOT / (
-        "docs/innoglobalhack_avito/public-test-dataset.parquet"
-        if scenario == "classifier_methods" else
-        "docs/improved_dataset/reviewed_test.parquet"
-    )
-    dataset_hash = hashlib.sha256(dataset.read_bytes()).hexdigest()
+    # Датасеты живут в PostgreSQL: classifier_methods — case_test,
+    # improved_dataset — ручная разметка manual_test.
+    dataset_table = "case_test" if scenario == "classifier_methods" else "manual_test"
+    records = read_records(dataset_table)
+    source_hashes = {
+        record.get("_source_sha256") for record in records if record.get("_source_sha256")
+    }
+    if len(source_hashes) != 1:
+        raise ValueError(f"Таблица {dataset_table}: ожидается один source_sha256, получено {len(source_hashes)}")
+    source_hash = next(iter(source_hashes))
     expected_hash = recorded["protocol"]["dataset_sha256"]
-    if dataset_hash != expected_hash:
-        raise ValueError("Датасет изменился относительно сохранённого отчёта")
-    actual_rows = prepare_rows(read_records(dataset), 101)
+    if source_hash != expected_hash:
+        raise ValueError(f"Таблица {dataset_table}: исходный файл изменился относительно сохранённого отчёта")
+    actual_rows = prepare_rows(records, 101)
     expected_rows = Counter(
         (hashlib.sha256(row.inp.description.encode()).hexdigest(), tuple(sorted(row.expected)))
         for row in actual_rows
@@ -145,9 +151,12 @@ def replay_recorded_report(directory: Path, scenario: str, report_path: Path) ->
     report = {
         **metadata(), "status": "running", "scenario": scenario,
         "mode": "offline_recalculation_of_recorded_predictions",
+        "storage": "postgresql",
         "record_sha256": hashlib.sha256(source.read_bytes()).hexdigest(),
         "recorded_at": recorded.get("created_at_utc", recorded.get("measured_at_utc")),
-        "dataset_sha256": dataset_hash,
+        "dataset_table": dataset_table,
+        "dataset_sha256": source_hash,
+        "table_sha256": table_sha256(dataset_table),
         "fresh_model_calls": 0, "fresh_api_requests": 0,
         "model_response_time": None,
         "timing_scope": "no fresh inference; historical timing remains in recorded-results.json",

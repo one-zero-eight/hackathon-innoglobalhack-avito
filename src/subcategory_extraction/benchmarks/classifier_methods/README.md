@@ -1,8 +1,13 @@
 # Бенчмарк: F1 на исходном InnoGlobalHack
 
-Micro-F1 дополнительных категорий 102–106 на всех 208 строках
-`docs/innoglobalhack_avito/public-test-dataset.parquet`. Исходный mcId отсутствует в test и принимается равным 101.
-SHA-256 датасета: `65b5a45a98b577d853a928932bbbdf8bd9bdeb469ded3016faace4d11f3eabaa`.
+Micro-F1 дополнительных категорий 102–106 на всех 208 строках официального
+InnoGlobalHack test из таблицы PostgreSQL `case_test`
+(источник — `docs/innoglobalhack_avito/public-test-dataset.parquet`).
+Исходный mcId принимается равным 101.
+Содержимое таблицы идентично исходному parquet: SHA-256 строк таблицы —
+`cd6f432e3841e842d04bb07827b92f9b644c56b2b528cb36098433168890ae15` (из
+PostgreSQL), SHA-256 исходного файла —
+`65b5a45a98b577d853a928932bbbdf8bd9bdeb469ded3016faace4d11f3eabaa`.
 
 ## Результаты
 
@@ -10,6 +15,8 @@ SHA-256 датасета: `65b5a45a98b577d853a928932bbbdf8bd9bdeb469ded3016faace
 результаты сохраняют собственную дату и происхождение. Таблица соответствует
 [results.json](results.json); снимок исходных ответов
 [recorded-results.json](recorded-results.json) не перезаписывается.
+Значения измерены на данных, идентичных прежнему parquet, поэтому
+результаты остаются валидными после перевода источника в PostgreSQL.
 
 | Модуль | Версия / дата измерения | Промпт | N | micro-F1 | Происхождение |
 | --- | --- | --- | ---: | ---: | --- |
