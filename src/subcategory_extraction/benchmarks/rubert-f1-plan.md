@@ -153,20 +153,27 @@ batch8, до3 эпох, минимум2, patience1. Сохраняется лу�
 
 ## Воспроизведение
 
-Установить зависимости `uv sync`. Веса/кэши/артефакты `out/` не включаются в Git.
-Данные и SHA/provenance уже сохранены. Сначала воспроизвести прежние артефакты
-по [improved-dataset.md](improved-dataset.md) и разбиение/исходный split-baseline
-по [rubert-thresholds.md](rubert-thresholds.md). Затем из корня проекта:
+Установить Git LFS и выполнить `git lfs install`, `git lfs pull`, `uv sync`.
+Готовый runtime-артефакт студента опубликован в
+`out/rubert-f1-plan/selected`: encoder в Git LFS, голова, токенизатор,
+metadata и calibration — в Git. Учитель, optimizer/checkpoint-кандидаты
+и остальные артефакты `out/` не публикуются. Для обычного CPU-запуска
+переобучение не нужно. [SHA-256 и размеры всех runtime-файлов](results/rubert-f1-artifact.json).
+
+Для самостоятельного повторения всего эксперимента сначала воспроизвести
+прежние артефакты по [improved-dataset.md](improved-dataset.md) и
+разбиение/исходный split-baseline по [rubert-thresholds.md](rubert-thresholds.md).
+Используйте отдельные output/report, чтобы не перезаписывать опубликованные веса:
 
 ```bash
-HF_HUB_DISABLE_XET=1 TOKENIZERS_PARALLELISM=false PYTHONPATH=src uv run python -m subcategory_extraction.benchmarks.improve_rubert_f1 --stage train
-HF_HUB_DISABLE_XET=1 TOKENIZERS_PARALLELISM=false PYTHONPATH=src uv run python -m subcategory_extraction.benchmarks.improve_rubert_f1 --stage evaluate
+HF_HUB_DISABLE_XET=1 TOKENIZERS_PARALLELISM=false PYTHONPATH=src uv run python -m subcategory_extraction.benchmarks.improve_rubert_f1 --stage train --output out/rubert-f1-retrain
+HF_HUB_DISABLE_XET=1 TOKENIZERS_PARALLELISM=false PYTHONPATH=src uv run python -m subcategory_extraction.benchmarks.improve_rubert_f1 --stage evaluate --output out/rubert-f1-retrain --report out/rubert-f1-retrain/evaluation.json
 ```
 
 `--device auto` выбирает MPS для обучения, если доступен; `--device cpu`
 разрешает полностью CPU-обучение. Калибровка и production inference — толькоCPU.
-`out/rubert-f1-plan/protocol.json` фиксирует параметры до опытов,
-`frozen-selection.json` фиксирует выбор до общей оценки. Уже завершённые
+`out/rubert-f1-retrain/protocol.json` фиксирует параметры до опытов,
+`frozen-selection.json` в том же output фиксирует выбор до общей оценки. Уже завершённые
 кандидаты переиспользуются лишь с идентичной спецификацией/хешами; чужие или
 частичные артефакты не подменяются. Общая оценка не перезаписывается повторно.
 

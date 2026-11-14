@@ -1,0 +1,77 @@
+{
+  "version": 1,
+  "model_id": "cointegrated/rubert-tiny2",
+  "model_revision": "e8ed3b0c8bbf4fb6984c3de043bf7d2f4e5969ae",
+  "classes": [
+    101,
+    102,
+    103,
+    104,
+    105,
+    106
+  ],
+  "architecture": {
+    "pooling": "mean",
+    "max_tokens": 512,
+    "max_windows": 3,
+    "strategy": "legacy"
+  },
+  "trained_classes": [
+    102,
+    103,
+    104,
+    105,
+    106
+  ],
+  "unsupported_classes": [
+    101
+  ],
+  "positive_counts": {
+    "101": 0,
+    "102": 2466,
+    "103": 2024,
+    "104": 1994,
+    "105": 1853,
+    "106": 1880
+  },
+  "source_category": 101,
+  "train_rows": 3196,
+  "validation_rows": 1043,
+  "train_sha256": "64180fbf60f435442fee2ab6da4c9ced96de11001b86e13a55b7ea7a0dbb4741",
+  "validation_sha256": "3770651be7a3deb975c79e62c5f3a64516deaa0be22314b450720317e95cadf1",
+  "source_hash_format": "sha256 of ordered canonical JSON description+sorted targets, newline separated",
+  "training_device": "mps",
+  "inference_device": "cpu",
+  "created_at": "2026-11-14T12:25:54.765843+00:00",
+  "torch_version": "2.15.0",
+  "transformers_version": "4.57.6",
+  "training": {
+    "seed": 42,
+    "learning_rate": 5e-05,
+    "batch_size": 16,
+    "max_epochs": 6,
+    "min_epochs": 2,
+    "patience": 2,
+    "optimizer": "AdamW",
+    "weight_decay": 0.01,
+    "gradient_clip_norm": 1.0,
+    "scheduler": "linear_warmup_linear_decay",
+    "warmup_ratio": 0.1,
+    "warmup_steps": 120,
+    "planned_steps": 1200,
+    "sample_weighting": "mean(weight * per_document_mean_class_loss)",
+    "sample_weights_sha256": "0414fda530f6fc0b1537bd552496334af6b9dc8806441f610a3bca82c5b01ea8",
+    "distillation": true,
+    "teacher_logits_sha256": "48eadea6495c9c5af2cf9f9768cc45daa51c049c2fca3eef1095d8a813e6c651",
+    "distillation_alpha": 0.5,
+    "temperature": 2.0,
+    "selection_metric": "validation micro-F1 at 0.5, excluding source category 101",
+    "tie_break": "earliest epoch",
+    "train_sha256": "64180fbf60f435442fee2ab6da4c9ced96de11001b86e13a55b7ea7a0dbb4741",
+    "validation_sha256": "3770651be7a3deb975c79e62c5f3a64516deaa0be22314b450720317e95cadf1",
+    "selected_epoch": 6,
+    "completed_steps": 1200
+  },
+  "selected_epoch": 6,
+  "best_validation_micro_f1": 0.854890864995958
+}
