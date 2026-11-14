@@ -166,14 +166,14 @@ export function accentColor(palette: BrandPalette): string {
 
 /**
  * Тема в стиле avito.ru: синий акцент, тёмный текст, светло-серый фон,
- * сдержанные радиусы (4–8 px) и шрифт Inter с системным fallback.
+ * мягкие радиусы (8 px) и шрифт Inter с системным fallback.
  * Все фирменные цвета объявлены здесь палитрами — компоненты обращаются
  * к ним через CSS-переменные Mantine, hex в компонентах не появляется.
  */
 export const theme = createTheme({
   primaryColor: 'avito',
   primaryShade: 5,
-  defaultRadius: 'sm',
+  defaultRadius: 'md',
   fontFamily: fontStack,
   fontFamilyMonospace:
     "'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace",

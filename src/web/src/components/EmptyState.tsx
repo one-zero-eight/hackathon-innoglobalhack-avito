@@ -9,12 +9,12 @@ export function EmptyState() {
       withBorder
       shadow="xs"
       padding="xl"
-      radius="sm"
+      radius="md"
       bg="white"
       style={{ position: 'relative', overflow: 'hidden' }}
     >
       <Stack align="center" gap="xs" mih={80}>
-        <ThemeIcon variant="light" color="avito" size="xl" radius="sm" aria-hidden>
+        <ThemeIcon variant="light" color="avito" size="xl" radius="md" aria-hidden>
           <SearchXIcon size={26} />
         </ThemeIcon>
         <Text fw={600} ta="center">
