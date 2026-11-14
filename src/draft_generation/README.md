@@ -1,6 +1,7 @@
 # draft_generation
 
-Шаг 3 пайплайна: под каждую валидную целевую микрокатегорию создаётся черновик
+Шаг 2 пайплайна: идентификаторы из выделения услуг передаются напрямую в генерацию.
+Под каждую целевую микрокатегорию создаётся черновик
 объявления (`title` + `text`), написанный только по фактам исходного объявления.
 
 - Интерфейс: `DraftGenerationPipeline.run(PipelineInput, target_mc_ids) -> list[dict]`
@@ -9,7 +10,7 @@
   промпты — в `<module>/prompts/`.
 - Выбор: ключ `draft_generation` в корневом `config.json`
 - `null` — модуль не выбран.
-- Бенчмарки: `benchmarks/` (каждый бенчмарк — отдельный `.md`)
+- Бенчмарки: `benchmarks/<name>/` (`run.py` + `README.md`)
 
 ## sample_llm
 
@@ -38,5 +39,10 @@ JSON-схема `title`/`text` передаётся в API из той же мо
 Офлайн-проверка без расходов на API:
 
 ```bash
-PYTHONPATH=src uv run python -m draft_generation.benchmarks.replay_sample_llm
+uv run python src/draft_generation/benchmarks/sample_llm/run.py
 ```
+
+Реальная генерация и время ответа: [benchmarks/response_time/README.md](benchmarks/response_time/README.md).
+Полная оценка: [benchmarks/full_pipeline_evaluation/README.md](benchmarks/full_pipeline_evaluation/README.md).
+Стоимость записывается вручную в таблицах; для подтверждённой бесплатной
+квоты и локальных прогонов — «бесплатно».
