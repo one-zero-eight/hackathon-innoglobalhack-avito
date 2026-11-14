@@ -6,6 +6,7 @@ import json
 import logging
 import os
 import re
+import unicodedata
 from pathlib import Path
 
 import numpy as np
@@ -15,16 +16,40 @@ from sklearn.feature_selection import chi2
 from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import GroupShuffleSplit
 
-from main import MICROCATEGORIES, PipelineConfig, load_pipeline
+from main import MICROCATEGORIES, PipelineConfig, PipelineInput, load_pipeline
 from subcategory_extraction.benchmarks.metrics import score
-from subcategory_extraction.benchmarks.tfidf_quality.run import DATASET, load_rows, normalize
 from subcategory_extraction.learned_keywords.pipeline import DEFAULT_ARTIFACT
 
 ROOT = Path(__file__).resolve().parents[3]
+DATASET = ROOT / "docs/innoglobalhack_avito/public-train-annotated.jsonl"
 TRAIN = ROOT / "out/youla-300-decisions.jsonl"
 REPORT = ROOT / "out/youla-learned-keywords-metrics.json"
 SOURCE = 101
 KEYWORDS_PER_CATEGORY = 40
+
+
+def normalize(text: str) -> str:
+    """Объединить точные дубликаты по нормализованному описанию."""
+    return " ".join(unicodedata.normalize("NFKC", text).casefold().replace("ё", "е").split())
+
+
+def load_rows(path: Path) -> list[dict]:
+    """Прочитать официальную разметку, проверив конфликтующие дубликаты."""
+    groups: dict[str, dict] = {}
+    for line in path.read_text(encoding="utf-8").splitlines():
+        row = json.loads(line)
+        inp = PipelineInput(description=row["description"], mcId=101)
+        targets = {target["mcId"] for target in row["found_microcategories"]}
+        if targets - MICROCATEGORIES.keys() or inp.mc_id in targets:
+            raise ValueError("Некорректные целевые категории")
+        key = normalize(inp.description)
+        if key in groups and groups[key]["targets"] != targets:
+            raise ValueError("Конфликт разметки одинаковых описаний")
+        groups.setdefault(key, {
+            "inp": inp, "targets": targets,
+            "group_id": hashlib.sha256(key.encode()).hexdigest(),
+        })
+    return list(groups.values())
 
 
 def group(text: str) -> str:
