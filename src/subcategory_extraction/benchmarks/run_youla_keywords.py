@@ -17,7 +17,7 @@ from sklearn.model_selection import GroupShuffleSplit
 
 from main import MICROCATEGORIES, PipelineConfig, load_pipeline
 from subcategory_extraction.benchmarks.metrics import score
-from subcategory_extraction.benchmarks.train_tfidf import DATASET, load_rows, normalize
+from subcategory_extraction.benchmarks.tfidf_quality.run import DATASET, load_rows, normalize
 from subcategory_extraction.learned_keywords.pipeline import DEFAULT_ARTIFACT
 
 ROOT = Path(__file__).resolve().parents[3]
@@ -204,7 +204,7 @@ def main() -> None:
             args.artifact.write_text(json.dumps(artifact, ensure_ascii=False), encoding="utf-8")
             os.environ["LEARNED_KEYWORDS_ARTIFACT"] = str(args.artifact)
             pipeline = load_pipeline("subcategory_extraction", PipelineConfig(
-                subcategory_extraction="learned_keywords", category_validation=None, draft_generation=None,
+                subcategory_extraction="learned_keywords", draft_generation=None,
             ))
             if [set(pipeline.run(inp)) for inp in inputs[:n_test]] != predictions:
                 raise ValueError("Предсказания модуля не совпадают с обученной моделью")
