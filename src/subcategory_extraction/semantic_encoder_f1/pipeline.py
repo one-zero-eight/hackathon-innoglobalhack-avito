@@ -17,7 +17,7 @@ from subcategory_extraction.semantic_encoder_f1.model import (
     tokenize_document,
 )
 
-DEFAULT_ARTIFACT = Path(__file__).resolve().parents[3] / "out/rubert-f1-plan/selected"
+DEFAULT_ARTIFACT = Path(__file__).resolve().parent / "artifacts"
 
 
 class SubcategoryExtractionPipeline(BasePipeline):

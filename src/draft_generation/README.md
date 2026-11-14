@@ -10,7 +10,7 @@
   промпты — в `<module>/prompts/`.
 - Выбор: ключ `draft_generation` в корневом `config.json`
 - `null` — модуль не выбран.
-- Бенчмарки: `benchmarks/` (каждый бенчмарк — отдельный `.md`)
+- Бенчмарки: `benchmarks/<name>/` с `run.py`, `README.md` и результатами.
 
 ## sample_llm
 
@@ -39,5 +39,5 @@ JSON-схема `title`/`text` передаётся в API из той же мо
 Офлайн-проверка без расходов на API:
 
 ```bash
-PYTHONPATH=src uv run python -m draft_generation.benchmarks.replay_sample_llm
+uv run python src/draft_generation/benchmarks/sample_llm/run.py
 ```

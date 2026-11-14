@@ -16,9 +16,27 @@
 | `backlog/` | локальный бэклог (в `.gitignore`) |
 
 В каждом разделе — несколько вариантов: `<module>/pipeline.py` и, при
-необходимости, `<module>/prompts/`. Общие `benchmarks/` (`.md` по файлу на
-бенчмарк) остаются в корне раздела. Экспериментальные решения тоже оформляем
+необходимости, `<module>/prompts/`. Общие `benchmarks/<name>/` с `run.py`,
+`README.md` и результатами остаются в корне раздела. Экспериментальные решения тоже оформляем
 как модули, без отдельной папки `experiments/`.
+
+Обученные модели храним внутри своего решения:
+
+```text
+src/<service>/<module>/
+├── __init__.py
+├── pipeline.py
+├── prompts/       # при необходимости
+└── artifacts/     # обученные веса, токенизатор, метаданные и калибровка
+```
+
+`artifacts/` включаем в Git и загружаем на GitHub вместе с решением;
+для файлов сверх лимита обычного GitHub Git используем Git LFS.
+Итоговые веса обучения и путь загрузки модуля по умолчанию должны указывать
+сюда; способ загрузки и воспроизведения весов описываем в README модуля.
+`semantic_encoder_f1` по умолчанию загружает модель из своей папки `artifacts/`.
+Временные checkpoint и отчёты полного обучения остаются в `out/`;
+выбранная итоговая модель копируется в модуль.
 
 ## Выбор реализации
 
@@ -46,108 +64,31 @@
 модуль в результатах. Скрипты переноса и обучения описаны в
 [subcategory_extraction/README.md](src/subcategory_extraction/README.md);
 исторические результаты с внешним SplitShift сохранены в
-`src/subcategory_extraction/benchmarks/historical/`.
+истории Git; невоспроизводимые старые скрипты доступны в Git.
 
-### Актуальная оценка на исправленном датасете
+## Бенчмарки выделения категорий
 
-RuBERT-tiny2 и TF-IDF заново обучены на `improved_dataset` из коммита
-`e3d0e0e`; Google guided, Jev guided, TF-IDF, Jev + TF-IDF и RuBERT
-сравниваются на одних 119 диагностических test-описаниях.
-[Результаты, ограничения разметки и команды](src/subcategory_extraction/benchmarks/improved-dataset.md).
-Прежние метрики на исходных 208 строках ниже и в старых отчётах —
-исторические, с новой оценкой напрямую не сопоставимы.
-
-### Подбор порогов RuBERT на CPU
-
-`semantic_encoder_calibrated` использует тот же RuBERT-tiny2 с порогами,
-выбранными только на внутренней validation. Для этого отдельные веса
-обучаются на train-компонентах; близкие тексты не переходят между
-train/validation/control. Диагностический public test в подбор не входит.
-Прежние веса и default `config.json` не меняются.
-[Протокол, результаты и запуск](src/subcategory_extraction/benchmarks/rubert-thresholds.md).
-В этом опыте подобранные пороги не улучшили micro-F1 на control;
-экспериментальный вариант не включён по умолчанию.
-
-### Полный план улучшения RuBERT-tiny2
-
-`semantic_encoder_f1` добавляет выбор checkpoint/LR и warmup, проверенные
-трудные train-примеры, label-wise attention окон, дистилляцию локального
-RuBERT-base и group-crossfit калибровку порогов. Итоговый классификатор —
-один компактный RuBERT-tiny2 на CPU, без учителя и внешнего API при inference.
-Варианты сравниваются на одних119 диагностических описаниях; это локальная
-оценка предварительных меток, не прогноз скрытого лидерборда.
-[Все результаты, ограничения и воспроизведение](src/subcategory_extraction/benchmarks/rubert-f1-plan.md).
-На тех же119 описаниях выбранный по validation студент получил micro-F1
-**0.857143** против0.811530 у прежнего RuBERT. В этой ветке он выбран в
-`config.json`. Готовые веса, токенизатор и пороги опубликованы в
-`out/rubert-f1-plan/selected`; encoder хранится в Git LFS. Переобучение для
-запуска не требуется. После установки Git LFS выполните:
+Ровно четыре проверки: [ручная стоимость токенов](src/subcategory_extraction/benchmarks/cpu_costs/README.md),
+[F1 improved_dataset](src/subcategory_extraction/benchmarks/improved_dataset/README.md),
+[F1 InnoGlobalHack](src/subcategory_extraction/benchmarks/classifier_methods/README.md)
+и [время работы](src/subcategory_extraction/benchmarks/response_time/README.md).
+Новые бенчмарки и папки не создаём.
 
 ```bash
-git lfs install
-git lfs pull
-uv sync
+uv run python src/subcategory_extraction/benchmarks/improved_dataset/run.py --replay
+uv run python src/subcategory_extraction/benchmarks/classifier_methods/run.py --replay
 ```
 
-Результат на скрытом test неизвестен; устойчивость улучшения по разным seed
-не подтверждена.
+Эти команды проверяют сохранённые ответы без API и обучения. Для оценки
+текущих весов передайте `--methods <модуль>`. Исторический F1 выбранного
+`semantic_encoder_f1` на 119 диагностических строках — 0.857143;
+это предварительная разметка, не независимый ручной эталон.
+Опубликованные веса Leo включены в модуль через Git LFS (`git lfs pull`).
+Загрузка и повторное обучение описаны в
+[инструкции модуля](src/subcategory_extraction/semantic_encoder_f1/README.md).
 
-### Jev + локальный TF-IDF без validation
-
-`jev` использует нативный System One API BestAPI и существующий guided-промпт.
-`jev_tfidf` усредняет вероятности Jev и обученных локальных голов с весами
-0.5/0.5 и порогом 0.5. Для категории без обученной локальной головы остаётся
-решение Jev. Это заранее фиксированные параметры, не подбор по public test.
-
-В `.env` нужны `BESTAPI_API_KEY` для классификатора и `LLM_API_KEY` для
-существующего генератора Gemini. При наличии `GOOGLE_API_KEY` допустима запись
-`LLM_API_KEY=${GOOGLE_API_KEY}`. Ключи не коммитим.
-
-```bash
-PYTHONPATH=src uv run python -m subcategory_extraction.benchmarks.train_jev_hybrid
-PYTHONPATH=src uv run python -m subcategory_extraction.benchmarks.compare_jev_hybrid
-uv run python src/main.py --input data/input.json --output out/jev-hybrid-live.json
-```
-
-Новый trainer использует официальный train без validation/holdout и без поиска
-порогов. Из обучения исключаются компоненты точных и близких к public test
-описаний, только по текстам. Оценочные строки и метки не удаляются.
-Артефакт — `out/tfidf.json`, фактический train — `out/hybrid-training.jsonl`.
-Общий бенчмарк сравнивает три классификатора на одинаковых 208 строках
-через конкурсную `calculate_metrics`; генерация и остальные баллы в эту
-классификационную оценку не входят. Фактические ответы Jev кэшируются в
-`out/jev-cache`, чтобы гибрид использовал те же ответы, что и baseline.
-
-
-Результаты, инвентарь промптов и ограничения:
-[бенчмарк Jev/TF-IDF](src/subcategory_extraction/benchmarks/jev-tfidf.md).
-
-## Пять новых методов и общий отчёт
-
-Реализованы RAG с размеченными train-примерами, извлечение цитат перед Jev,
-сильный арбитр спорных решений, реально дообучаемый семантический encoder
-и отдельный промпт границ микрокатегорий. Все выбираются через обычный
-`config.json`; код моделей и промпты находятся в `src/subcategory_extraction/`.
-
-**Полное API-сравнение не завершено:** предоставленный BestAPI-ключ отклонён
-с HTTP 401. В отчёте четыре метода имеют явный статус ошибки без выдуманного F1.
-Encoder обучен на MPS и измерен; базовые варианты посчитаны на тех же 208 строках.
-Порог 0.5 и остальные настройки фиксированы до запуска, validation не создана.
-
-[Описание каждого метода, таблица результатов и воспроизведение](src/subcategory_extraction/benchmarks/classifier-methods.md).
-[Исходные предсказания и статусы JSON](src/subcategory_extraction/benchmarks/results/classifier-methods.json).
-
-```bash
-uv sync
-PYTHONPATH=src uv run python -m subcategory_extraction.benchmarks.train_jev_hybrid
-PYTHONPATH=src uv run python -m subcategory_extraction.benchmarks.train_semantic_encoder --dataset out/hybrid-training.jsonl --device auto
-PYTHONPATH=src uv run python -m subcategory_extraction.benchmarks.compare_methods --methods google_decision tfidf semantic_encoder
-```
-
-Последняя команда не требует BestAPI после обучения локальных моделей:
-Google здесь — проверяемый replay реальных ранее полученных ответов на этом
-наборе. Для нового API-инференса нужен рабочий ключ; полные кэши и веса
-в Git не добавляются.
+Для [dataset_annotation](src/dataset_annotation/rubert_review/README.md) —
+только время применения сохранённых решений и шесть примеров с mcId.
 
 ## Пайплайн
 
@@ -214,8 +155,8 @@ uv run python src/run.py --config run.config.json
 1. Ветка на каждую фичу: `<username>/feature/<slug>`. В `main` — только через PR.
 2. Бэклог локальный: `backlog/{TODO,PROCESS,REVIEW,DONE}`,
    задача перемещается по папкам по мере работы.
-3. Новый бенчмарк — новый `.md` в `src/<service>/benchmarks/`. Перед коммитом
-   прогнать на всех версиях кода и обновить таблицу результатов в `.md`.
+3. Новые бенчмарки и папки для них не создаём. Используем существующие
+   сценарии и обновляем их таблицы результатов; набор закреплён в AGENTS.md.
 4. Правки в чужих сервисах — через свою ветку и с согласия автора.
 5. Контракт входа/выхода не меняем без согласования со всей командой.
 
@@ -229,7 +170,7 @@ uv run python src/run.py --config run.config.json
 
 Все API-клиенты теперь учитывают usage, повторы и локальный/provider cache.
 Обычный CLI дополнительно сохраняет `<output>.costs.json`, включая ошибки;
-`run.py` и общий бенчмарк также сохраняют расходы. Тарифы задаются через
+`run.py` сохраняет расходы; в бенчмарках стоимость токенов вносится вручную. Тарифы задаются через
 `LLM_PRICING_FILE` по точному endpoint/model; неизвестная цена — `null`, не ноль.
 
-[CPU-замер, стоимость, ограничения и формат тарифов](src/subcategory_extraction/benchmarks/cpu-costs.md).
+[Ручной учёт стоимости токенов](src/subcategory_extraction/benchmarks/cpu_costs/README.md).
