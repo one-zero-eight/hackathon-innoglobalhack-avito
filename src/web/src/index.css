@@ -58,8 +58,16 @@ body {
   background-size: 200% 100%;
 }
 
-/* Смена панелей без размонтирования: состояние формы и таблицы сохраняется. */
+/* Панели перекрываются, а контейнер плавно следует за высотой активной. */
+.input-panels-viewport {
+  position: relative;
+  overflow: hidden;
+  transition: height var(--transition-duration-expand) ease-out;
+}
+
 .input-panel {
+  position: absolute;
+  inset: 0 0 auto;
   opacity: 1;
   translate: 0 0;
   transition:
@@ -186,6 +194,7 @@ body {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .input-panels-viewport,
   .input-panel,
   .avito-card,
   .draft-text-collapsible {

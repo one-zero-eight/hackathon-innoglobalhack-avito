@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react'
 import {
   Alert,
   Box,
@@ -117,8 +117,11 @@ export function HomePage() {
   const [lastRequest, setLastRequest] = useState<DraftsRequest | null>(null)
   const [adSelection, setAdSelection] = useState<{ ad: ImportedAd; id: number } | null>(null)
   const [inputMode, setInputMode] = useState<InputMode>('manual')
+  const [inputPanelHeight, setInputPanelHeight] = useState<number | null>(null)
 
   const categoriesRequestId = useRef(0)
+  const manualPanelRef = useRef<HTMLDivElement>(null)
+  const tablePanelRef = useRef<HTMLDivElement>(null)
 
   // Загрузка списка микрокатегорий; повтор вызова отменяет предыдущий ответ.
   // Состояния меняются только в промисах, без синхронных setState в эффекте.
@@ -154,6 +157,20 @@ export function HomePage() {
   useEffect(() => {
     loadCategories()
   }, [loadCategories])
+
+  useLayoutEffect(() => {
+    const panel = inputMode === 'manual' ? manualPanelRef.current : tablePanelRef.current
+    if (panel === null) {
+      return
+    }
+
+    const updateHeight = () => setInputPanelHeight(panel.scrollHeight)
+    updateHeight()
+
+    const observer = new ResizeObserver(updateHeight)
+    observer.observe(panel)
+    return () => observer.disconnect()
+  }, [inputMode, categoriesLoading, categoriesError])
 
   const handleGenerate = useCallback(async (request: DraftsRequest) => {
     setLastRequest(request)
@@ -207,57 +224,70 @@ export function HomePage() {
                 mx="auto"
               />
 
-              <Box className="input-panel" hidden={inputMode !== 'manual'}>
-                <Stack gap="md">
-                  {categoriesError !== null && (
-                    <Alert
-                      color="red"
-                      title="Не удалось загрузить микрокатегории"
-                      radius="md"
-                      icon={<AlertIcon />}
-                    >
-                      <Stack gap="sm">
-                        <Text size="sm">{categoriesError}</Text>
-                        <Button
-                          variant="light"
-                          color="red"
-                          size="sm"
-                          leftSection={<RefreshIcon size={16} />}
-                          onClick={retryCategories}
-                          w="fit-content"
-                        >
-                          Повторить
-                        </Button>
-                      </Stack>
-                    </Alert>
-                  )}
+              <Box
+                className="input-panels-viewport"
+                style={{ height: inputPanelHeight ?? 'auto' }}
+              >
+                <Box
+                  ref={manualPanelRef}
+                  className="input-panel"
+                  hidden={inputMode !== 'manual'}
+                >
+                  <Stack gap="md">
+                    {categoriesError !== null && (
+                      <Alert
+                        color="red"
+                        title="Не удалось загрузить микрокатегории"
+                        radius="md"
+                        icon={<AlertIcon />}
+                      >
+                        <Stack gap="sm">
+                          <Text size="sm">{categoriesError}</Text>
+                          <Button
+                            variant="light"
+                            color="red"
+                            size="sm"
+                            leftSection={<RefreshIcon size={16} />}
+                            onClick={retryCategories}
+                            w="fit-content"
+                          >
+                            Повторить
+                          </Button>
+                        </Stack>
+                      </Alert>
+                    )}
 
-                  {categoriesLoading ? (
-                    <Center py="lg">
-                      <Stack align="center" gap={6}>
-                        <Box className="avito-pulse">
-                          <AvitoLogo height={34} markOnly alt="" />
-                        </Box>
-                        <Text c="dimmed" size="sm">
-                          Загружаем микрокатегории…
-                        </Text>
-                      </Stack>
-                    </Center>
-                  ) : (
-                    <DraftsForm
-                      key={adSelection?.id ?? 'empty'}
-                      microcategories={microcategories}
-                      loading={status === 'loading'}
-                      disabled={categoriesError !== null}
-                      selectedAd={adSelection?.ad ?? null}
-                      onSubmit={handleGenerate}
-                    />
-                  )}
-                </Stack>
-              </Box>
+                    {categoriesLoading ? (
+                      <Center py="lg">
+                        <Stack align="center" gap={6}>
+                          <Box className="avito-pulse">
+                            <AvitoLogo height={34} markOnly alt="" />
+                          </Box>
+                          <Text c="dimmed" size="sm">
+                            Загружаем микрокатегории…
+                          </Text>
+                        </Stack>
+                      </Center>
+                    ) : (
+                      <DraftsForm
+                        key={adSelection?.id ?? 'empty'}
+                        microcategories={microcategories}
+                        loading={status === 'loading'}
+                        disabled={categoriesError !== null}
+                        selectedAd={adSelection?.ad ?? null}
+                        onSubmit={handleGenerate}
+                      />
+                    )}
+                  </Stack>
+                </Box>
 
-              <Box className="input-panel" hidden={inputMode !== 'table'}>
-                <AdsDropzone microcategories={microcategories} onSelect={handleSelectAd} />
+                <Box
+                  ref={tablePanelRef}
+                  className="input-panel"
+                  hidden={inputMode !== 'table'}
+                >
+                  <AdsDropzone microcategories={microcategories} onSelect={handleSelectAd} />
+                </Box>
               </Box>
             </Stack>
           </Card>
