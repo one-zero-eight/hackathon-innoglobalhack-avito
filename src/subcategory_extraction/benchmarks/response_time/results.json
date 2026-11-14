@@ -568,6 +568,22 @@
         },
         "training_dataset_sha256": "b7118d68086624fbeab43839f22a635d4e325e4ee339f22d4aa0ad3c2e986615"
       }
+    },
+    "tfidf": {
+      "status": "complete",
+      "model": "tfidf",
+      "response_time": {
+        "calls": 10,
+        "mean_seconds": 0.001142,
+        "median_seconds": 0.000819,
+        "p95_seconds": 0.00292
+      },
+      "measurement_metadata": {
+        "date": "2026-11-14",
+        "commit": "e814b58",
+        "source": "README.md at 45ff38d:src/subcategory_extraction/benchmarks/response_time/README.md",
+        "scope": "Transferred existing rounded summary; no new model calls or recovered per-call samples."
+      }
     }
   },
   "status": "complete",

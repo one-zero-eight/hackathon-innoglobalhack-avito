@@ -15,7 +15,10 @@ from run import audit_overlap, calculate_metrics, prepare_rows, read_records
 ROOT = Path(__file__).resolve().parents[4]
 HERE = Path(__file__).resolve().parent
 METHODS = tuple(sorted(path.parent.name for path in HERE.parent.parent.glob("*/pipeline.py")))
-LOCAL_METHODS = {"tfidf", "semantic_encoder", "semantic_encoder_calibrated", "semantic_encoder_f1"}
+LOCAL_METHODS = {
+    "regex", "tfidf", "learned_keywords", "semantic_encoder",
+    "semantic_encoder_calibrated", "semantic_encoder_f1",
+}
 DATASETS = {
     "classifier_methods": ("docs/innoglobalhack_avito/public-test-dataset.parquet",
                            "docs/innoglobalhack_avito/public-train-annotated.jsonl"),
@@ -77,7 +80,7 @@ def main(directory: Path = HERE, scenario: str = "classifier_methods") -> int:
             logger.exception("%s: прогон не завершён, F1 не рассчитан", method)
         save_report(args.report, report)
     report["status"] = "complete" if all(
-        result["status"] == "completed" for result in report["results"].values()
+        result["status"] in {"completed", "complete"} for result in report["results"].values()
     ) else "failed"
     save_report(args.report, report)
     return 0 if report["status"] == "complete" else 1
