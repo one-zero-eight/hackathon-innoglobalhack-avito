@@ -19,7 +19,7 @@ from main import MICROCATEGORIES
 
 ROOT = Path(__file__).resolve().parents[3]
 MODEL = "gemma-4-26b-a4b-it"
-SOURCE = ROOT / "src/subcategory_extraction/benchmarks/data/youla-1469-raw.jsonl"
+SOURCE = ROOT / "docs/provider_collections/youla-1469-raw.jsonl"
 OUTPUT = ROOT / "out/youla-gemma-4-26b"
 PROMPT = (
     "Разметь одно объявление. Выбери все категории услуг, которые исполнитель явно "
@@ -107,21 +107,25 @@ def main() -> None:
     """Продолжить разметку фиксированной выборки и выгрузить JSONL."""
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--limit", type=int, choices=range(1, 1001), default=1000, metavar="1–1000")
+    parser.add_argument("--source", type=Path, default=SOURCE)
+    parser.add_argument("--output", type=Path, default=OUTPUT)
+    parser.add_argument("--exclude-rows", type=Path, help="JSONL с номерами row для исключения")
     args = parser.parse_args()
     logging.basicConfig(level=logging.INFO, format="%(asctime)s %(message)s")
     load_dotenv(ROOT / ".env")
     key = os.getenv("GOOGLE_API_KEY") or os.getenv("GEMINI_API_KEY") or os.getenv("LLM_API_KEY")
     if not key:
         parser.error("Укажите GOOGLE_API_KEY, GEMINI_API_KEY или LLM_API_KEY")
-    source = SOURCE.read_bytes()
+    source = args.source.read_bytes()
     rows = [json.loads(line) for line in source.split(b"\n") if line.strip()]
-    blind_path = ROOT / "backlog/PROCESS/youla-blind-labels/labels.jsonl"
-    with blind_path.open() as stream:
-        excluded = {json.loads(line)["row"] for line in stream}
+    excluded: set[int] = set()
+    if args.exclude_rows is not None:
+        with args.exclude_rows.open(encoding="utf-8") as stream:
+            excluded = {json.loads(line)["row"] for line in stream}
     queue = [row for row, item in enumerate(rows, 1) if row not in excluded and item["description"].strip()]
     random.Random(43).shuffle(queue)
-    OUTPUT.mkdir(parents=True, exist_ok=True)
-    with (OUTPUT / ".lock").open("a") as lock, sqlite3.connect(OUTPUT / "cache.sqlite3") as db:
+    args.output.mkdir(parents=True, exist_ok=True)
+    with (args.output / ".lock").open("a") as lock, sqlite3.connect(args.output / "cache.sqlite3") as db:
         fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
         db.executescript("""
             CREATE TABLE IF NOT EXISTS metadata (manifest TEXT);
@@ -139,7 +143,7 @@ def main() -> None:
         if not previous:
             with db:
                 db.execute("INSERT INTO metadata VALUES (?)", (manifest,))
-        (OUTPUT / "manifest.json").write_text(manifest + "\n")
+        (args.output / "manifest.json").write_text(manifest + "\n")
         done = {row for row, in db.execute("SELECT row FROM labels")}
         try:
             for index, row in enumerate(queue[:args.limit], 1):
@@ -149,13 +153,13 @@ def main() -> None:
                     logging.info("Обработано %s/%s, сохранено меток: %s", index, args.limit,
                                  db.execute("SELECT count(*) FROM labels").fetchone()[0])
         finally:
-            export = OUTPUT / "labels.jsonl.tmp"
+            export = args.output / "labels.jsonl.tmp"
             with export.open("w") as stream:
                 for row, ids, attempt in db.execute("SELECT row, ids, attempt FROM labels ORDER BY row"):
                     stream.write(json.dumps(dict(row=row, source=rows[row - 1],
                                                  found_microcategories=json.loads(ids), attempt=attempt),
                                             ensure_ascii=False) + "\n")
-            export.replace(OUTPUT / "labels.jsonl")
+            export.replace(args.output / "labels.jsonl")
 
 
 if __name__ == "__main__":

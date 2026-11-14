@@ -9,7 +9,7 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 
 from main import BasePipeline, MICROCATEGORIES, PipelineInput
 
-DEFAULT_ARTIFACT = Path(__file__).resolve().parents[3] / "out/learned-keywords.json"
+DEFAULT_ARTIFACT = Path(__file__).resolve().parent / "artifacts/learned-keywords.json"
 
 
 class SubcategoryExtractionPipeline(BasePipeline):
@@ -18,7 +18,7 @@ class SubcategoryExtractionPipeline(BasePipeline):
     name = "learned_keywords"
 
     def __init__(self) -> None:
-        path = Path(os.getenv("LEARNED_KEYWORDS_ARTIFACT", str(DEFAULT_ARTIFACT)))
+        path = Path(os.getenv("LEARNED_KEYWORDS_ARTIFACT", str(DEFAULT_ARTIFACT))).expanduser()
         if not path.is_file():
             raise ValueError(f"Нет артефакта learned_keywords: {path}")
         artifact = json.loads(path.read_text(encoding="utf-8"))

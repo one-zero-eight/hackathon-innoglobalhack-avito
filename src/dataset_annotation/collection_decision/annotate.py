@@ -14,7 +14,7 @@ from urllib.error import HTTPError, URLError
 from dotenv import load_dotenv
 
 from subcategory_extraction.google_decision.client import DEFAULT_MODEL, TokenBudget
-from subcategory_extraction.google_decision.pipeline import SubcategoryExtractionPipeline
+from dataset_annotation.collection_decision.pipeline import CollectionAnnotationPipeline
 
 ROOT = Path(__file__).resolve().parents[3]
 INPUTS = (ROOT / "out/youla-1469.jsonl", ROOT / "out/yandex/profiles-1492.jsonl")
@@ -37,7 +37,7 @@ class BlockedContent(Exception):
     """Google отклонил описание по правилам обработки контента."""
 
 
-def score(pipeline: SubcategoryExtractionPipeline, description: str) -> dict[int, float]:
+def score(pipeline: CollectionAnnotationPipeline, description: str) -> dict[int, float]:
     """Повторить запрос при временной ошибке, сохраняя общий бюджет."""
     for attempt in range(5):
         try:
@@ -66,7 +66,7 @@ def score(pipeline: SubcategoryExtractionPipeline, description: str) -> dict[int
     raise AssertionError("Исчерпаны попытки")
 
 
-def annotate(path: Path, pipeline: SubcategoryExtractionPipeline, limit: int | None) -> None:
+def annotate(path: Path, pipeline: CollectionAnnotationPipeline, limit: int | None) -> None:
     """Добавить оценки в JSONL с проверкой уже сохранённого префикса."""
     output = path.with_name(f"{path.stem}-decision-1.jsonl")
     settings = configuration(pipeline)
@@ -113,7 +113,7 @@ def annotate(path: Path, pipeline: SubcategoryExtractionPipeline, limit: int | N
     logging.info("Результат: %s", output)
 
 
-def configuration(pipeline: SubcategoryExtractionPipeline) -> dict:
+def configuration(pipeline: CollectionAnnotationPipeline) -> dict:
     """Сохранить настройки вместе с каждой оценкой."""
     return {
         "model": pipeline.client.model_id,
@@ -126,19 +126,21 @@ def main() -> None:
     """Запустить одну общую очередь для двух коллекций."""
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--limit", type=int, help="Сколько новых записей обработать в каждой коллекции")
+    parser.add_argument("--inputs", nargs="+", type=Path, default=INPUTS)
     args = parser.parse_args()
     if args.limit is not None and args.limit < 1:
         parser.error("--limit должен быть положительным")
     logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s")
     load_dotenv(ROOT / ".env")
-    pipeline = SubcategoryExtractionPipeline()
+    pipeline = CollectionAnnotationPipeline()
     if not pipeline.client.api_key:
         parser.error("Укажите LLM_API_KEY или GOOGLE_API_KEY в .env")
     pipeline.client.model_id = DEFAULT_MODEL
     pipeline.client.budget = CollectionBudget()
+    (ROOT / "out").mkdir(parents=True, exist_ok=True)
     with (ROOT / "out/.decision-annotation.lock").open("a") as lock:
         fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
-        for path in INPUTS:
+        for path in args.inputs:
             annotate(path, pipeline, args.limit)
 
 
