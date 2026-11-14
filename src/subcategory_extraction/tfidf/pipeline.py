@@ -22,7 +22,7 @@ class SubcategoryExtractionPipeline(BasePipeline):
         if not path.is_file():
             raise ValueError(
                 f"Нет артефакта TF-IDF: {path}. "
-                "Запустите PYTHONPATH=src uv run python -m subcategory_extraction.benchmarks.train_tfidf"
+                "Запустите uv run python src/subcategory_extraction/benchmarks/tfidf_quality/run.py"
             )
         artifact = json.loads(path.read_text(encoding="utf-8"))
         self.categories = artifact["categories"]
