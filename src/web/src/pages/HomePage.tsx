@@ -6,6 +6,7 @@ import {
   Card,
   Center,
   Container,
+  SegmentedControl,
   SimpleGrid,
   Skeleton,
   Stack,
@@ -32,6 +33,12 @@ import { ResultsList } from '../components/ResultsList'
 
 /** Состояния, в которых может находиться страница после запроса. */
 type Status = 'idle' | 'loading' | 'error' | 'success' | 'empty'
+type InputMode = 'manual' | 'table'
+
+const INPUT_MODE_OPTIONS = [
+  { value: 'manual' as const, label: 'Ручной ввод' },
+  { value: 'table' as const, label: 'Загрузка таблицы' },
+]
 
 function messageOf(error: unknown): string {
   if (error instanceof ApiError) {
@@ -109,6 +116,7 @@ export function HomePage() {
   const [sourceMcId, setSourceMcId] = useState(0)
   const [lastRequest, setLastRequest] = useState<DraftsRequest | null>(null)
   const [adSelection, setAdSelection] = useState<{ ad: ImportedAd; id: number } | null>(null)
+  const [inputMode, setInputMode] = useState<InputMode>('manual')
 
   const categoriesRequestId = useRef(0)
 
@@ -170,6 +178,11 @@ export function HomePage() {
     }
   }, [lastRequest, handleGenerate])
 
+  const handleSelectAd = useCallback((ad: ImportedAd) => {
+    setAdSelection((current) => ({ ad, id: (current?.id ?? 0) + 1 }))
+    setInputMode('manual')
+  }, [])
+
   return (
     <Box style={{ display: 'flex', flexDirection: 'column', minBlockSize: '100vh' }}>
       <AppHeader />
@@ -178,79 +191,75 @@ export function HomePage() {
         <Stack gap="xl">
           <PageHeader />
 
-          <SimpleGrid
-            cols={{ base: 1, md: 2 }}
-            spacing="lg"
-            verticalSpacing="lg"
-            style={{ alignItems: 'start' }}
-          >
-            <Card withBorder shadow="xs" padding="lg" radius="md" bg="white">
-              <Stack gap="md">
-                <Title order={2} size="h3">
-                  Исходное объявление
-                </Title>
+          <Card withBorder shadow="xs" padding="lg" radius="md" bg="white">
+            <Stack gap="md">
+              <Title order={2} size="h3">
+                Исходное объявление
+              </Title>
 
-                {categoriesError !== null && (
-                  <Alert
-                    color="red"
-                    title="Не удалось загрузить микрокатегории"
-                    radius="md"
-                    icon={<AlertIcon />}
-                  >
-                    <Stack gap="sm">
-                      <Text size="sm">{categoriesError}</Text>
-                      <Button
-                        variant="light"
-                        color="red"
-                        size="sm"
-                        leftSection={<RefreshIcon size={16} />}
-                        onClick={retryCategories}
-                        w="fit-content"
-                      >
-                        Повторить
-                      </Button>
-                    </Stack>
-                  </Alert>
-                )}
+              <SegmentedControl
+                aria-label="Режим ввода объявления"
+                data={INPUT_MODE_OPTIONS}
+                value={inputMode}
+                onChange={(value) => setInputMode(value as InputMode)}
+                fullWidth
+                maw={480}
+              />
 
-                {categoriesLoading ? (
-                  <Center py="lg">
-                    <Stack align="center" gap={6}>
-                      <Box className="avito-pulse">
-                        <AvitoLogo height={34} markOnly alt="" />
-                      </Box>
-                      <Text c="dimmed" size="sm">
-                        Загружаем микрокатегории…
-                      </Text>
-                    </Stack>
-                  </Center>
-                ) : (
-                  <DraftsForm
-                    key={adSelection?.id ?? 'empty'}
-                    microcategories={microcategories}
-                    loading={status === 'loading'}
-                    disabled={categoriesError !== null}
-                    selectedAd={adSelection?.ad ?? null}
-                    onSubmit={handleGenerate}
-                  />
-                )}
-              </Stack>
-            </Card>
+              <Box hidden={inputMode !== 'manual'}>
+                <Stack gap="md">
+                  {categoriesError !== null && (
+                    <Alert
+                      color="red"
+                      title="Не удалось загрузить микрокатегории"
+                      radius="md"
+                      icon={<AlertIcon />}
+                    >
+                      <Stack gap="sm">
+                        <Text size="sm">{categoriesError}</Text>
+                        <Button
+                          variant="light"
+                          color="red"
+                          size="sm"
+                          leftSection={<RefreshIcon size={16} />}
+                          onClick={retryCategories}
+                          w="fit-content"
+                        >
+                          Повторить
+                        </Button>
+                      </Stack>
+                    </Alert>
+                  )}
 
-            <Card withBorder shadow="xs" padding="lg" radius="md" bg="white">
-              <Stack gap="md">
-                <Title order={2} size="h3">
-                  Таблица объявлений
-                </Title>
-                <AdsDropzone
-                  microcategories={microcategories}
-                  onSelect={(ad) =>
-                    setAdSelection((current) => ({ ad, id: (current?.id ?? 0) + 1 }))
-                  }
-                />
-              </Stack>
-            </Card>
-          </SimpleGrid>
+                  {categoriesLoading ? (
+                    <Center py="lg">
+                      <Stack align="center" gap={6}>
+                        <Box className="avito-pulse">
+                          <AvitoLogo height={34} markOnly alt="" />
+                        </Box>
+                        <Text c="dimmed" size="sm">
+                          Загружаем микрокатегории…
+                        </Text>
+                      </Stack>
+                    </Center>
+                  ) : (
+                    <DraftsForm
+                      key={adSelection?.id ?? 'empty'}
+                      microcategories={microcategories}
+                      loading={status === 'loading'}
+                      disabled={categoriesError !== null}
+                      selectedAd={adSelection?.ad ?? null}
+                      onSubmit={handleGenerate}
+                    />
+                  )}
+                </Stack>
+              </Box>
+
+              <Box hidden={inputMode !== 'table'}>
+                <AdsDropzone microcategories={microcategories} onSelect={handleSelectAd} />
+              </Box>
+            </Stack>
+          </Card>
 
           {/* Зона результатов: изменения озвучиваются скринридером. */}
           <Box component="section" aria-live="polite" aria-label="Результаты подбора черновиков">
