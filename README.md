@@ -83,7 +83,8 @@ uv run python src/subcategory_extraction/benchmarks/classifier_methods/run.py --
 текущих весов передайте `--methods <модуль>`. Исторический F1 выбранного
 `semantic_encoder_f1` на 119 диагностических строках — 0.857143;
 это предварительная разметка, не независимый ручной эталон.
-Веса для текущего запуска готовятся отдельно по
+Опубликованные веса Leo включены в модуль через Git LFS (`git lfs pull`).
+Загрузка и повторное обучение описаны в
 [инструкции модуля](src/subcategory_extraction/semantic_encoder_f1/README.md).
 
 Для [dataset_annotation](src/dataset_annotation/rubert_review/README.md) —

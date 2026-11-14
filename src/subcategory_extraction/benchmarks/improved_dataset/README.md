@@ -33,13 +33,25 @@ uv run python src/subcategory_extraction/benchmarks/improved_dataset/run.py --me
 
 ## Последний локальный прогон
 
-2026-11-14, `e814b58` + рабочие изменения (отпечаток в `results.json`).
-Настоящие вызовы текущего TF-IDF, существующие веса без переобучения:
-**N=119, micro-F1=0.758808**.
-Параметры взяты из `.env`; расходы API отсутствуют. Пересечения с train
-сохранены в `results.json` и не исключены из метрики.
-`results.json` содержит последний прогон; `--replay` заменяет его
-проверенным пересчётом исходных `recorded-results.json`.
+2026-11-14, опубликованные веса Leo `1c2a6f5`, синхронизация с main `3144889`.
+Настоящие CPU-вызовы `semantic_encoder_f1`, без переобучения и подбора порогов.
+Артефакт и калибровка проверены по SHA-256 из `../../semantic_encoder_f1/artifact-manifest.json`.
+Отпечаток исполняемого кода, версии библиотек и хеши файлов — в `results.json`.
+
+| Модуль / модель | Версия весов / дата | Промпт | N | micro-F1 |
+| --- | --- | --- | ---: | ---: |
+| semantic_encoder_f1 / distilled RuBERT-tiny2 | 1c2a6f5 / 2026-11-14 | — | 119 | 0.857143 |
+
+```bash
+OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 TOKENIZERS_PARALLELISM=false RUBERT_F1_ARTIFACT_PATH=src/subcategory_extraction/semantic_encoder_f1/artifacts RUBERT_F1_DEVICE=cpu uv run python src/subcategory_extraction/benchmarks/improved_dataset/run.py --methods semantic_encoder_f1 --offline
+```
+
+Точные нормализованные совпадения с train модели (`improved_dataset/train.jsonl`):
+**0/119**; строки из оценки не исключались. Это не поиск всех близких дубликатов.
+Веса и пороги зафиксированы до оценки. API-вызовов классификатора нет.
+Предыдущий локальный TF-IDF (`e814b58` + рабочие изменения): N=119, micro-F1=0.758808;
+полный отчёт доступен в истории Git, это другая модель.
+`--replay` заменяет `results.json` проверенным пересчётом исторических ответов.
 
 ## Сохранённые результаты
 
