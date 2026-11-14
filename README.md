@@ -232,9 +232,52 @@ nginx внутри контейнера `web` раздаёт статику и �
 | `POST /api/drafts` | контракт кейса: вход `{"description": "…", "mcId": 101}`, выход `{"drafts": [{"mcId": 104, "title": "…", "text": "…"}]}` |
 | `GET /api/microcategories` | справочник из БД: `[{"mcId": 101, "title": "Ремонт под ключ"}, …]` |
 | `GET /api/health` | статус API и БД (`ok`/`degraded`) и модель классификатора |
+| `GET /api/dataset/samples` | страница объявлений датасета: `?split=train|test&limit=N≤100&offset=K` |
+| `GET /api/dataset/random` | один случайный сэмпл: `?split=train|test` (404, если сплит пуст) |
+| `GET /api/dataset/stats` | число объявлений по сплитам: `{"train": 10000, "test": 208}` |
 
 Сбой шлюза LLM отвечает 502, недоступная база — 503; `detail` — русское
 сообщение, его показывает интерфейс.
+
+### Датасет кейса в БД
+
+Официальные данные InnoGlobalHack × Avito (`public-train-annotated.jsonl`
+— 10 000 объявлений с разметкой, `public-test-dataset.parquet` — 208
+объявлений с названиями категорий) загружаются в таблицу `case_ads`
+PostgreSQL и доступны через эндпоинты `/api/dataset/*`. Исходная категория
+всех объявлений — 101; для train хранится `foundMcIds` (массив mcId из
+`found_microcategories`), для test — `categories` (массив названий).
+Схема создаётся автоматически (`CREATE TABLE IF NOT EXISTS` в лоадере и
+в `deploy/db/init.sql`), загрузка идемпотентна: UNIQUE-ключ `row_key` и
+`ON CONFLICT DO NOTHING`, повторный запуск не дублирует строки
+(в test есть полные дубликаты текстов, поэтому ключ test-строк —
+`test:{номер}:{хэш текста}`, а ключ train-строк — `train:{item_id}`).
+
+Локально (БД из compose, код из репозитория):
+
+```bash
+docker compose up -d db
+PYTHONPATH=src uv run python -m api.dataset_loader      # или: uv run python src/api/dataset_loader.py
+# флаги: --data-dir (по умолчанию data/innoglobalhack_avito/innoglobalhack_avito)
+#         --database-url (по умолчанию DATABASE_URL из окружения/.env)
+```
+
+Внутри compose (каталог `./data` смонтирован в контейнер `api` на read-only):
+
+```bash
+docker compose up -d --build          # пересоздать api с монтированием data/
+docker compose exec api uv run --no-dev python src/api/dataset_loader.py
+```
+
+После загрузки — сэмпл из датасета можно прогнать через основной контракт
+`POST /api/drafts`:
+
+```bash
+curl -s "http://localhost:8000/api/dataset/random?split=train" \
+  | jq -c '{description, mcId: .sourceMcId}' \
+  | curl -s -X POST http://localhost:8000/api/drafts \
+      -H 'Content-Type: application/json' -d @-
+```
 
 ### Dev-запуск
 

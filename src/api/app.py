@@ -1,6 +1,7 @@
 """FastAPI-приложение веб-сервиса черновиков Avito.
 
-Роуты: POST /api/drafts, GET /api/microcategories, GET /api/health.
+Роуты: POST /api/drafts, GET /api/microcategories, GET /api/health и датасет
+кейса: GET /api/dataset/samples, /api/dataset/random, /api/dataset/stats.
 На старте читаются настройки и создаётся пул БД без подключения;
 отсутствие ключей LLM — не ошибка запуска, сбои видны только на запросах.
 """
@@ -9,18 +10,32 @@ import asyncio
 import logging
 from collections.abc import AsyncIterator
 from contextlib import asynccontextmanager
+from typing import Any
 
 import asyncpg
-from fastapi import FastAPI, Request
+from fastapi import FastAPI, HTTPException, Query, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 
 from api.clients.decisions import DecisionsClient
 from api.clients.openai_compat import OpenAIChatClient
 from api.config import Settings
-from api.db import close_pool, get_catalog, init_pool
+from api.db import (
+    close_pool,
+    fetch_dataset_samples,
+    fetch_dataset_stats,
+    fetch_random_dataset_sample,
+    get_catalog,
+    init_pool,
+)
 from api.errors import LLMGatewayError
-from api.schemas import PipelineInput, PipelineOutput
+from api.schemas import (
+    DatasetSample,
+    DatasetSplit,
+    DatasetStats,
+    PipelineInput,
+    PipelineOutput,
+)
 from api.service import DraftsService
 
 logger = logging.getLogger(__name__)
@@ -120,6 +135,39 @@ async def microcategories(request: Request) -> list[dict[str, object]]:
     """Справочник микрокатегорий из БД: [{"mcId": 101, "title": "..."}]."""
     catalog = await get_catalog(request.app.state.pool)
     return [{"mcId": mc_id, "title": catalog[mc_id]} for mc_id in sorted(catalog)]
+
+
+@app.get("/api/dataset/samples", response_model=list[DatasetSample])
+async def dataset_samples(
+    request: Request,
+    split: DatasetSplit = "train",
+    limit: int = Query(default=10, ge=1, le=100),
+    offset: int = Query(default=0, ge=0),
+) -> list[DatasetSample]:
+    """Страница объявлений датасета из таблицы case_ads (id по возрастанию)."""
+    rows: list[dict[str, Any]] = await fetch_dataset_samples(
+        request.app.state.pool, split, limit, offset
+    )
+    return [DatasetSample.model_validate(row) for row in rows]
+
+
+@app.get("/api/dataset/random", response_model=DatasetSample)
+async def dataset_random(request: Request, split: DatasetSplit = "train") -> DatasetSample:
+    """Один случайный сэмпл сплита; пустой сплит — 404 с русским detail."""
+    row = await fetch_random_dataset_sample(request.app.state.pool, split)
+    if row is None:
+        raise HTTPException(
+            status_code=404,
+            detail=f"В сплите «{split}» нет объявлений — выполните загрузку датасета "
+            "(см. README, раздел «Датасет»)",
+        )
+    return DatasetSample.model_validate(row)
+
+
+@app.get("/api/dataset/stats", response_model=DatasetStats)
+async def dataset_stats(request: Request) -> DatasetStats:
+    """Число объявлений по сплитам: {"train": N, "test": M}."""
+    return DatasetStats.model_validate(await fetch_dataset_stats(request.app.state.pool))
 
 
 @app.get("/api/health")

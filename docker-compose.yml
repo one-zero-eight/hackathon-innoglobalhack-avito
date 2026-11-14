@@ -10,7 +10,7 @@ services:
       POSTGRES_PASSWORD: avito
       POSTGRES_DB: avito
     ports:
-      - "5432:5432"
+      - "127.0.0.1:5432:5432"
     volumes:
       # Инициализация схемы и справочника микрокатегорий при первом старте
       - ./deploy/db/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
@@ -35,6 +35,9 @@ services:
         condition: service_healthy
     ports:
       - "8000:8000"
+    volumes:
+      # Датасет кейса для эндпоинтов /api/dataset/* и лоадера (см. README).
+      - ./data:/app/data:ro
 
   web:
     build:

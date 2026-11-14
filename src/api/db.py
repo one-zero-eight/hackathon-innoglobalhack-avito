@@ -1,12 +1,14 @@
-"""Доступ к PostgreSQL: пул asyncpg и TTL-кэш справочника микрокатегорий.
+"""Доступ к PostgreSQL: пул asyncpg, кэш справочника и запросы к датасету кейса.
 
 Приложение не должно падать на старте при недоступной базе:
 пул создаётся с ``min_size=0``, первое подключение откладывается на запрос.
 """
 
 import asyncio
+import json
 import logging
 import time
+from typing import Any
 
 import asyncpg
 
@@ -50,3 +52,47 @@ async def get_catalog(pool: asyncpg.Pool, ttl_s: int = 60) -> dict[int, str]:
         _catalog_cached_at = now
         logger.debug("Кэш микрокатегорий обновлён: %d шт.", len(_catalog_cache))
         return dict(_catalog_cache)
+
+
+# --- Датасет кейса (таблица case_ads, см. api.dataset_loader) ---
+
+DATASET_COLUMNS = (
+    "id, split, item_id, title, description, source_mc_id, found_mc_ids, categories"
+)
+
+
+def _decode_dataset_row(row: asyncpg.Record) -> dict[str, Any]:
+    """asyncpg отдаёт JSONB текстом: раскодируем found_mc_ids и categories в списки."""
+    data: dict[str, Any] = dict(row)
+    for column in ("found_mc_ids", "categories"):
+        if data.get(column) is not None:
+            data[column] = json.loads(data[column])
+    return data
+
+
+async def fetch_dataset_samples(
+    pool: asyncpg.Pool, split: str, limit: int, offset: int
+) -> list[dict[str, Any]]:
+    """Страница объявлений сплита: по возрастанию id, не более ``limit`` со сдвигом ``offset``."""
+    sql = f"SELECT {DATASET_COLUMNS} FROM case_ads WHERE split = $1 ORDER BY id LIMIT $2 OFFSET $3"
+    async with pool.acquire() as conn:
+        rows = await conn.fetch(sql, split, limit, offset)
+    return [_decode_dataset_row(row) for row in rows]
+
+
+async def fetch_random_dataset_sample(pool: asyncpg.Pool, split: str) -> dict[str, Any] | None:
+    """Один случайный сэмпл сплита; на датасете кейса ORDER BY random() допустим."""
+    sql = f"SELECT {DATASET_COLUMNS} FROM case_ads WHERE split = $1 ORDER BY random() LIMIT 1"
+    async with pool.acquire() as conn:
+        row = await conn.fetchrow(sql, split)
+    return _decode_dataset_row(row) if row is not None else None
+
+
+async def fetch_dataset_stats(pool: asyncpg.Pool) -> dict[str, int]:
+    """Число объявлений по сплитам: {'train': N, 'test': M} (пустой сплит — 0)."""
+    async with pool.acquire() as conn:
+        rows = await conn.fetch("SELECT split, count(*) AS n FROM case_ads GROUP BY split")
+    counts = {"train": 0, "test": 0}
+    for row in rows:
+        counts[row["split"]] = row["n"]
+    return counts
