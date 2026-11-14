@@ -1,22 +1,40 @@
 # Архитектура проекта
 
 ```mermaid
-flowchart LR
-    INPUT["Объявление<br/>description + mcId"] --> EXTRACT
-    subgraph PIPELINE["main.py: оркестрация"]
-        EXTRACT["Выделение категорий<br/>Google Decision 1"] -->|целевые mcId| GENERATE["Генерация черновиков<br/>Gemma 4 / OpenAI-compatible"]
+flowchart TD
+    INPUT["Входной JSON<br/>description + mcId"] --> MAIN["main.py<br/>Проверка входа и запуск пайплайна"]
+    CONFIG["config.json + .env<br/>Модули, модели и параметры"] -.-> MAIN
+
+    subgraph EXTRACTION["Выделение категорий: google_decision"]
+        DECISION["Google Decisions API<br/>Gemini Decision 1"] --> TARGETS["Проверка вероятностей и порог<br/>Исключение исходной категории"]
     end
-    INPUT -.->|исходный текст| GENERATE
-    GENERATE --> OUTPUT["JSON: drafts<br/>mcId, title, text"]
+    MAIN --> DECISION
+
+    subgraph GENERATION["Генерация черновиков: llm"]
+        PROMPT["Исходные факты и целевая категория<br/>Один запрос на уникальный mcId"] --> PROVIDER{"Провайдер генерации"}
+        PROVIDER -->|google| GEMMA["Google API<br/>Gemma 4"]
+        PROVIDER -->|openai_compatible| CHAT["OpenAI-compatible API<br/>Настроенная модель"]
+        GEMMA --> VALIDATE["Проверка title и text<br/>Сборка черновиков с mcId из кода"]
+        CHAT --> VALIDATE
+    end
+    TARGETS -->|целевые mcId| PROMPT
+    MAIN -.->|исходный текст| PROMPT
+    VALIDATE --> OUTPUT["Выходной JSON<br/>drafts: mcId, title, text"]
 ```
 
+Сплошные стрелки показывают основной поток обработки, пунктир — конфигурацию
+и передачу исходного текста непосредственно генератору.
+
 `main.py` выбирает модули через `config.json`; модели, провайдер генерации
-и ключи задаются в локальном `.env`.
+и ключи задаются в локальном `.env`. Внутренние классы клиентов, транспорт,
+повторы запросов и устройство бенчмарков на схеме опущены.
 
 Выделение возвращает категории, отличные от исходной. Генератор использует
 этот список и факты исходного объявления, создавая один черновик на категорию.
 При отсутствии целей результат — `{"drafts": []}` без вызова API генерации.
-Ответ проверяется перед записью JSON.
+Ответ проверяется перед записью JSON. Ошибка одной категории прерывает
+обработку; частичный результат не записывается. Проверка схемы не заменяет
+фактическую проверку текста исполнителем.
 
 Реализации: [выделение](../src/subcategory_extraction/README.md) и
 [генерация](../src/draft_generation/README.md).
