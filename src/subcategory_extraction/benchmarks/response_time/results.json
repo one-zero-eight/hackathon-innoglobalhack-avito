@@ -1,7 +1,7 @@
 {
-  "date": "2026-11-15T01:27:45+03:00",
-  "commit": "6802b41bdcb9b27320bf4ee31621d761a5b6b13a",
-  "code_sha256": "4d3992446013ace7e9001307c5adc0af4b1f1243427ba01cbd853d77cfb60dde",
+  "date": "2026-11-14T23:38:17+03:00",
+  "commit": "8c6fe87d8c63b7072bbad7aef71670f74ca1c6bb",
+  "code_sha256": "df877ac35fef057a5e5142a02f2ca88a6abb25f9a63f03a281efd2ee9e35aca6",
   "working_tree": true,
   "sample_seed": 44,
   "sample_size": 10,
@@ -12,7 +12,7 @@
       "rows": [
         {
           "group_id": "1755d70b12029ca196b7b0db67ab296db96a38e58bfa37db4f9eddc1e435d87e",
-          "seconds": 0.004455933999906847,
+          "seconds": 0.0022659950009256136,
           "predicted": [
             102,
             103,
@@ -26,7 +26,7 @@
         },
         {
           "group_id": "df3453fa719bcc9c4120f73540192a23c48886d1d05117214da3af68fdc290c9",
-          "seconds": 0.00295574899996609,
+          "seconds": 0.001364784999168478,
           "predicted": [
             102,
             103,
@@ -40,7 +40,7 @@
         },
         {
           "group_id": "270d30c0fee5b8ec5ce8309bc25a5dec6f0a874bdf86a75c9e6c29d1a30c80b1",
-          "seconds": 0.004345047000015256,
+          "seconds": 0.0024006240000744583,
           "predicted": [
             102,
             103,
@@ -54,7 +54,7 @@
         },
         {
           "group_id": "716b71093f6ffcb8457d664a34eaeafd6b20130cfc8a637d2324960aea030387",
-          "seconds": 0.0040738599998348946,
+          "seconds": 0.0016956679992290447,
           "predicted": [
             102,
             103,
@@ -66,7 +66,7 @@
         },
         {
           "group_id": "8d8689783ae7b2d19ae5d3e5a199cea32bf1458a91a5936230bdc502c4051cdf",
-          "seconds": 0.0046251839999058575,
+          "seconds": 0.0015086610001162626,
           "predicted": [
             102,
             103,
@@ -80,7 +80,7 @@
         },
         {
           "group_id": "bdcf8534a4ad2c0f2d370814f3b22e61e250e397c60d1c1dc45b54364947a03d",
-          "seconds": 0.005683702999931484,
+          "seconds": 0.002686064999579685,
           "predicted": [
             102,
             103,
@@ -94,7 +94,7 @@
         },
         {
           "group_id": "5524cc0b4bc58d27f2d87abc371da359477b802a890b3d21bc34fc51e0214caa",
-          "seconds": 0.0048463449998052965,
+          "seconds": 0.0018324510001548333,
           "predicted": [
             102,
             103,
@@ -108,7 +108,7 @@
         },
         {
           "group_id": "01feb66f2e21c5fb187fedd281f87e93c750cae9f62dd731f95d32ec0e2c0807",
-          "seconds": 0.005306219999965833,
+          "seconds": 0.0025927659989974927,
           "predicted": [
             102,
             103,
@@ -122,7 +122,7 @@
         },
         {
           "group_id": "1f07801ecf1efcabe5f51f854601df2993b41894476fb12115c72242d382ab08",
-          "seconds": 0.005900104000147621,
+          "seconds": 0.002592672000901075,
           "predicted": [
             102,
             104,
@@ -134,7 +134,7 @@
         },
         {
           "group_id": "b06fa5d52b80f154594a544c282106fb90f32dccc057b670b9ad89a60e27d185",
-          "seconds": 0.004851446999964537,
+          "seconds": 0.0023178880001069047,
           "predicted": [
             102,
             106
@@ -152,18 +152,32 @@
       },
       "response_time": {
         "calls": 10,
-        "total_seconds": 0.04704359299944372,
-        "mean_seconds": 0.004704359299944371,
-        "median_seconds": 0.004735764499855577,
-        "p95_seconds": 0.0058027235500503595,
-        "min_seconds": 0.00295574899996609,
-        "max_seconds": 0.005900104000147621
+        "total_seconds": 0.021257574999253848,
+        "mean_seconds": 0.0021257574999253848,
+        "median_seconds": 0.002291941500516259,
+        "p95_seconds": 0.002644080449317698,
+        "min_seconds": 0.001364784999168478,
+        "max_seconds": 0.002686064999579685
+      },
+      "execution_environment": {
+        "python": "3.13.7",
+        "platform": "Linux-7.0.0-43-generic-x86_64-with-glibc2.43",
+        "cpu": "Intel Core i9-12900H",
+        "libraries": {
+          "pydantic": "2.13.0",
+          "numpy": "2.5.4",
+          "scikit-learn": "1.9.1",
+          "pyarrow": "26.0.0",
+          "python-dotenv": "1.2.4"
+        }
       },
       "measurement_metadata": {
-        "date": "2026-11-14T18:50:11+03:00",
-        "commit": "45ff38d1c5b65ae90654b53261aa377cc96f13a3",
-        "code_sha256": "08723f933f9ccbae72e5c7db5bc6a463d76b971b98df5232c8e8d72bcca9c603",
-        "timing_scope": null
+        "date": "2026-11-14T23:38:17+03:00",
+        "commit": "8c6fe87d8c63b7072bbad7aef71670f74ca1c6bb",
+        "code_sha256": "df877ac35fef057a5e5142a02f2ca88a6abb25f9a63f03a281efd2ee9e35aca6",
+        "mode": null,
+        "protocol": null,
+        "overlap": null
       }
     },
     "semantic_encoder_f1": {
@@ -559,6 +573,236 @@
         "timing_scope": null
       }
     },
+    "local_jev": {
+      "status": "complete",
+      "model": "jevos-v5",
+      "rows": [
+        {
+          "group_id": "1755d70b12029ca196b7b0db67ab296db96a38e58bfa37db4f9eddc1e435d87e",
+          "seconds": 0.7654679690003832,
+          "predicted": [
+            103
+          ],
+          "cache_hit": false,
+          "http_attempts": 1,
+          "usage": {
+            "input_tokens": 813,
+            "output_tokens": 0
+          }
+        },
+        {
+          "group_id": "df3453fa719bcc9c4120f73540192a23c48886d1d05117214da3af68fdc290c9",
+          "seconds": 1.3285790429999906,
+          "predicted": [
+            105
+          ],
+          "cache_hit": false,
+          "http_attempts": 1,
+          "usage": {
+            "input_tokens": 1229,
+            "output_tokens": 0
+          }
+        },
+        {
+          "group_id": "270d30c0fee5b8ec5ce8309bc25a5dec6f0a874bdf86a75c9e6c29d1a30c80b1",
+          "seconds": 2.921632055000373,
+          "predicted": [
+            105
+          ],
+          "cache_hit": false,
+          "http_attempts": 1,
+          "usage": {
+            "input_tokens": 2174,
+            "output_tokens": 0
+          }
+        },
+        {
+          "group_id": "716b71093f6ffcb8457d664a34eaeafd6b20130cfc8a637d2324960aea030387",
+          "seconds": 0.5390926839991153,
+          "predicted": [
+            102,
+            103,
+            105
+          ],
+          "cache_hit": false,
+          "http_attempts": 1,
+          "usage": {
+            "input_tokens": 622,
+            "output_tokens": 0
+          }
+        },
+        {
+          "group_id": "8d8689783ae7b2d19ae5d3e5a199cea32bf1458a91a5936230bdc502c4051cdf",
+          "seconds": 0.4559467979997862,
+          "predicted": [
+            105
+          ],
+          "cache_hit": false,
+          "http_attempts": 1,
+          "usage": {
+            "input_tokens": 525,
+            "output_tokens": 0
+          }
+        },
+        {
+          "group_id": "bdcf8534a4ad2c0f2d370814f3b22e61e250e397c60d1c1dc45b54364947a03d",
+          "seconds": 1.4863155339990044,
+          "predicted": [
+            104,
+            105,
+            106
+          ],
+          "cache_hit": false,
+          "http_attempts": 1,
+          "usage": {
+            "input_tokens": 1394,
+            "output_tokens": 0
+          }
+        },
+        {
+          "group_id": "5524cc0b4bc58d27f2d87abc371da359477b802a890b3d21bc34fc51e0214caa",
+          "seconds": 0.7715976130002673,
+          "predicted": [],
+          "cache_hit": false,
+          "http_attempts": 1,
+          "usage": {
+            "input_tokens": 814,
+            "output_tokens": 0
+          }
+        },
+        {
+          "group_id": "01feb66f2e21c5fb187fedd281f87e93c750cae9f62dd731f95d32ec0e2c0807",
+          "seconds": 1.3299451549992227,
+          "predicted": [
+            105
+          ],
+          "cache_hit": false,
+          "http_attempts": 1,
+          "usage": {
+            "input_tokens": 1217,
+            "output_tokens": 0
+          }
+        },
+        {
+          "group_id": "1f07801ecf1efcabe5f51f854601df2993b41894476fb12115c72242d382ab08",
+          "seconds": 1.475018261000514,
+          "predicted": [],
+          "cache_hit": false,
+          "http_attempts": 1,
+          "usage": {
+            "input_tokens": 1352,
+            "output_tokens": 0
+          }
+        },
+        {
+          "group_id": "b06fa5d52b80f154594a544c282106fb90f32dccc057b670b9ad89a60e27d185",
+          "seconds": 0.9242046199997276,
+          "predicted": [],
+          "cache_hit": false,
+          "http_attempts": 1,
+          "usage": {
+            "input_tokens": 929,
+            "output_tokens": 0
+          }
+        }
+      ],
+      "model_provenance": {
+        "source": "https://github.com/feder-cr/jev/releases/tag/jevos-v5",
+        "model": "jevos-v5",
+        "server": {
+          "status": "ready",
+          "model": "jevos-v5",
+          "model_files": {
+            "model.json": "8d1d4d40d23fc0d8fd4dcd8136b3d591c8de3c25a6df16e3668f65301cc42181",
+            "openvino_model.bin": "413b40a85163260e4cd9dfe278e5e068f343920bc9e08741d53659ca39fecb81",
+            "openvino_model.xml": "59b4dfdfa5f8ebfd8c400d8a8b464b34db2ea2038665e78a71361a6b532e1e79",
+            "tokenizer.gguf": "9e15e73e12c6fe6eb9af58d15f6dbc7a8563331947232d0b10158aa8e9832949"
+          },
+          "fingerprint": "d6c9958f24d8c5aa698625ae743cf93fadb22eba84ef7dde7580b7558e8bc94b",
+          "engine": {
+            "runtime": "openvino",
+            "version": "2026.4.0-22959-99c81491cc3-releases/2026/4",
+            "device": "cpu",
+            "model_dir": "src/subcategory_extraction/local_jev/artifacts",
+            "dynamic_quantization": 128,
+            "state_snapshots": {
+              "kept": 0,
+              "max": 0,
+              "tokens": 0,
+              "max_tokens": 0,
+              "hits": 0,
+              "misses": 681,
+              "reused_tokens": 0,
+              "bytes": 0
+            },
+            "batched_requests": 0
+          }
+        },
+        "endpoint": "http://127.0.0.1:8017/v1/systemone",
+        "prompt_path": "src/subcategory_extraction/local_jev/prompts/english.md",
+        "prompt_sha256": "f1aa77064a150b214c03c6e3c2a9e21aa0d08725fd2fa0fea90174858a3991b0",
+        "prompt_variant": "english",
+        "category_examples": {
+          "101": "comprehensive turnkey renovation of a flat, house, room or bathroom, including several stages and a finished result",
+          "102": "plastering walls with plaster mortar, leveling walls with plaster, or plastering window and door reveals",
+          "103": "laying ceramic tiles, porcelain tiles or mosaics, tiling walls or floors, grouting tile joints or cutting tiles",
+          "104": "plumbing: installing or repairing water pipes, drains, sinks, toilets, faucets, baths or water heating radiators",
+          "105": "electrical work: wiring, cables, power outlets, switches, lights, electrical panels or electric underfloor heating",
+          "106": "wallpaper hanging, painting walls or ceilings, filling or sanding walls for painting or wallpaper"
+        },
+        "threshold": 0.5,
+        "task_training": "none; upstream pretrained weights, fixed prompt and threshold",
+        "upstream_training_overlap": "unknown; upstream training data not available for audit",
+        "client_response_cache": false,
+        "client_retries": false,
+        "platform": "Linux-7.0.0-43-generic-x86_64-with-glibc2.43"
+      },
+      "timing_scope": {
+        "loading_included": false,
+        "first_call_included": true,
+        "cache_enabled": false,
+        "quota_wait_and_retries_included_if_any": true,
+        "server_loaded_before_timing": true,
+        "server_used_for_f1_before_timing": true,
+        "state_cache_enabled": false,
+        "background_warmup_enabled": false,
+        "server_threads": 4
+      },
+      "response_time": {
+        "calls": 10,
+        "total_seconds": 11.997799731998384,
+        "mean_seconds": 1.1997799731998384,
+        "median_seconds": 1.126391831499859,
+        "p95_seconds": 2.2757396205497553,
+        "min_seconds": 0.4559467979997862,
+        "max_seconds": 2.921632055000373
+      },
+      "measurement_metadata": {
+        "date": "2026-11-14T23:38:04+03:00",
+        "commit": "8c6fe87d8c63b7072bbad7aef71670f74ca1c6bb",
+        "code_sha256": "df877ac35fef057a5e5142a02f2ca88a6abb25f9a63f03a281efd2ee9e35aca6",
+        "timing_scope": null
+      },
+      "execution_environment": {
+        "python": "3.13.7",
+        "platform": "Linux-7.0.0-43-generic-x86_64-with-glibc2.43",
+        "cpu": "Intel Core i9-12900H",
+        "libraries": {
+          "pydantic": "2.13.0",
+          "numpy": "2.5.4",
+          "scikit-learn": "1.9.1",
+          "pyarrow": "26.0.0",
+          "python-dotenv": "1.2.4"
+        }
+      },
+      "server_launch": {
+        "threads": 4,
+        "warmup": 0,
+        "state_cache": 0,
+        "batch_tokens": 0,
+        "dynamic_quantization": 128
+      }
+    },
     "jev": {
       "status": "complete",
       "model": "typesafe/jev-1.13",
@@ -899,8 +1143,20 @@
       "failed_seconds": 0.00021230099810054526,
       "response_time": {
         "calls": 0
+      },
+      "measurement_metadata": {
+        "date": "2026-11-15T01:27:45+03:00",
+        "commit": "6802b41bdcb9b27320bf4ee31621d761a5b6b13a",
+        "code_sha256": "4d3992446013ace7e9001307c5adc0af4b1f1243427ba01cbd853d77cfb60dde",
+        "mode": null,
+        "protocol": null,
+        "overlap": null
       }
     }
   },
-  "status": "failed"
+  "status": "complete",
+  "merge_validation": {
+    "mode": "preserved_separate_latency_measurements",
+    "fresh_api_requests": 0
+  }
 }

@@ -27,6 +27,7 @@ from main import MICROCATEGORIES, PipelineInput
 from run import normalize_description
 from subcategory_extraction.benchmarks.metrics import score
 from subcategory_extraction.semantic_encoder_f1.threshold_search import pick_thresholds
+from database import DATABASE_TABLES, read_training_rows as database_read_training_rows
 from subcategory_extraction.semantic_encoder.train import load_training_rows, train
 from subcategory_extraction.semantic_encoder.pipeline import SubcategoryExtractionPipeline
 from subcategory_extraction.semantic_encoder_calibrated.pipeline import (
@@ -159,12 +160,23 @@ def metrics(expected: list[set[int]], predicted: list[set[int]]) -> dict:
     return result
 
 
-def run(dataset: Path, output: Path, report_path: Path, device: str) -> dict:
-    """Обучить один фиксированный encoder и выбрать пороги без доступа к control."""
+def run(dataset: str | Path, output: Path, report_path: Path, device: str) -> dict:
+    """Обучить один фиксированный encoder и выбрать пороги без доступа к control.
+
+    ``dataset`` может быть именем таблицы PostgreSQL (по умолчанию
+    ``manual_train`` — ручная смысловая разметка) или путём к файлу
+    (для воспроизведения прежних зафиксированных протоколов).
+    """
     if output.exists() or report_path.exists():
         raise ValueError("Для нового опыта нужны новые output/report: существующие результаты не перезаписываются")
     started = time.perf_counter()
-    rows, source_hash = load_training_rows(dataset)
+    if isinstance(dataset, str) and dataset in DATABASE_TABLES:
+        rows, source_hash = database_read_training_rows(dataset)
+        dataset_label = f"postgresql:{dataset}"
+    else:
+        path = Path(dataset)
+        rows, source_hash = load_training_rows(path)
+        dataset_label = str(path.resolve())
     splits, grouping = split_rows(rows)
     output.mkdir(parents=True)
     categories = [category for category in MICROCATEGORIES if category != SOURCE_CATEGORY]
@@ -223,7 +235,7 @@ def run(dataset: Path, output: Path, report_path: Path, device: str) -> dict:
     durations.sort()
     report = {
         "created_at_utc": datetime.now(timezone.utc).isoformat(),
-        "dataset": str(dataset.resolve()), "dataset_sha256": source_hash,
+        "dataset": dataset_label, "dataset_sha256": source_hash,
         "protocol": {
             "selection_split": "validation", "evaluation_split": "control",
             "public_test_used": False, "control_used_for_selection": False,
@@ -271,7 +283,8 @@ def run(dataset: Path, output: Path, report_path: Path, device: str) -> dict:
 def main() -> None:
     """Запустить один воспроизводимый опыт; повтор не изменяет прежние результаты."""
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--dataset", type=Path, default=ROOT / "docs/improved_dataset/train.jsonl")
+    parser.add_argument("--table", default="manual_train",
+                        help="таблица PostgreSQL с обучающей разметкой (по умолчанию manual_train)")
     parser.add_argument("--output", type=Path, default=ROOT / "out/rubert-thresholds")
     parser.add_argument("--report", type=Path, default=ROOT / "out/rubert-thresholds/results.json")
     parser.add_argument("--replay", action="store_true", help="Пересчитать сохранённые ответы без обучения")
@@ -280,7 +293,7 @@ def main() -> None:
     if args.replay:
         replay_recorded_report(Path(__file__).parent, "rubert_thresholds", args.report)
         return
-    run(args.dataset.resolve(), args.output.resolve(), args.report.resolve(), args.device)
+    run(args.table, args.output.resolve(), args.report.resolve(), args.device)
 
 
 if __name__ == "__main__":

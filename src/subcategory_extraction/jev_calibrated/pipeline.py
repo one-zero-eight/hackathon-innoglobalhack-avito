@@ -61,12 +61,18 @@ class SubcategoryExtractionPipeline(JevPipeline):
 
     def benchmark_metadata(self) -> dict:
         """Записать фактические модель, промпт и калибровку без секретов."""
+        source = self.calibration_data.get("training_dataset")
+        training_table = (
+            "case_train" if source == "docs/innoglobalhack_avito/public-train-annotated.jsonl"
+            else source
+        )
         return {
             "provider": self.client.provider, "endpoint": self.client.endpoint,
             "model": self.client.model_id, "prompt": self.prompt_variant,
             "prompt_sha256": self.prompt_sha256, "thresholds": self.thresholds,
             "calibration_sha256": self.calibration_sha256,
-            "training_dataset": self.calibration_data.get("training_dataset"),
+            "training_dataset": training_table,
+            "calibration_training_source": source,
             "fit_description_sha256": self.calibration_data.get("fit_description_sha256"),
             "control_confirmed": self.calibration_data.get("control_confirmed"),
             "cache_enabled": True,

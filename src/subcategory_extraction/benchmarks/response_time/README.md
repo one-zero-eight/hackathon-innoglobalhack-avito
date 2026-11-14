@@ -1,31 +1,39 @@
 # Бенчмарк: время работы классификатора
-Сервис: subcategory_extraction
 
-## Что проверяем
+Настоящие последовательные `run()` на 10 validation-группах официального
+train, seed=44. SHA-256 train:
+`b7118d68086624fbeab43839f22a635d4e325e4ee339f22d4aa0ad3c2e986615`.
+Загрузка модели и данных исключена, первый вызов включён; прогрева нет.
 
-Последовательные настоящие `run()` на фиксированной выборке из 10
-validation-групп официального train (`seed=44`).
-Датасет SHA-256 `b7118d68086624fbeab43839f22a635d4e325e4ee339f22d4aa0ad3c2e986615`.
-Загрузка модели и чтение данных не входят во время; первого вызова
-не исключаем. API-ожидание и повторы входят, если выбран внешний модуль.
+## Результаты
+
+| Модуль | Версия / дата | N | Среднее, с | Медиана, с | p95, с | Происхождение |
+| --- | --- | ---: | ---: | ---: | ---: | --- |
+| learned_keywords | Linux CPU / 2026-11-14 | 10 | 0.002126 | 0.002292 | 0.002644 | сохранённый замер на той же машине, что local_jev |
+| semantic_encoder_f1 | веса 1c2a6f5 / 2026-11-14 | 10 | 0.040450 | 0.036370 | 0.081191 | настоящие CPU run(), сохранённый замер |
+| tfidf | e814b58 / 2026-11-14 | 10 | 0.001142 | 0.000819 | 0.002920 | сохранённая округлённая сводка |
+| local_jev / jevos-v5 | OpenVINO INT8 / 2026-11-14 | 10 | 1.199780 | 1.126392 | 2.275740 | сохранённый замер готового сервера, english / 0.5 |
+| qwen_decision | preview / 2026-11-14 | 10 | 14.309403 | 2.499930 | 62.312641 | сохранённый сетевой API-замер |
+| jev / Selectel typesafe/jev-1.13 | 6802b41 / 2026-11-14 | 10 | 1.026307 | 0.954630 | 1.367622 | guided, свежие API-ответы исходного прогона |
+| jev_calibrated / Selectel typesafe/jev-1.13 | 0dbba19 / 2026-11-15 | 0/10 | — | — | — | failed: бюджетный guard остановил до API; времени модели нет |
 
 ## Запуск
 
 ```bash
-TFIDF_ARTIFACT_PATH=out/classifier-methods/tfidf.json uv run python src/subcategory_extraction/benchmarks/response_time/run.py --module tfidf
+TFIDF_ARTIFACT_PATH=out/classifier-methods/tfidf.json uv run python src/subcategory_extraction/benchmarks/response_time/run.py --module tfidf --size 10
 ```
 
-Выберите другой модуль флагом `--module`; для API нужен действующий ключ,
-для локального encoder — веса. Отчёт: `results.json`.
+Для другого решения замените `--module`. Отчёт — [results.json](results.json).
+Повторный запуск заменяет строку выбранного решения, сохраняя остальные;
+соответствующую строку README обновляем по JSON. Запуск с другим размером
+выборки требует отдельного `--report`, чтобы не смешивать протоколы.
 
-## Сравнение решений
+Apple Silicon arm64, CPU. У semantic_encoder_f1 один поток PyTorch,
+у learned_keywords один поток OpenMP/OpenBLAS. Кэш предсказаний,
+ожидание квоты и повторы отсутствуют; p95 у этих двух измерений — линейный
+percentile NumPy. Условия и даты записаны отдельно для каждого решения.
+Эти числа не являются SLA и не измеряют качество классификации.
 
-| Сценарий | Версия / дата | Модуль / модель | Промпт | Качество | N | Среднее / медиана / p95, с | Стоимость |
-| --- | --- | --- | --- | --- | --- | --- | --- |
-| Свежие CPU `run()` | 1c2a6f5 + main 3144889 / 2026-11-14 | semantic_encoder_f1 / distilled RuBERT-tiny2 | — | Здесь не оценивается | 10 | 0.040450 / 0.036370 / 0.081191 | бесплатно |
-| Предыдущие CPU `run()` | e814b58 + рабочие изменения / 2026-11-14 | tfidf | — | Здесь не оценивается | 10 | 0.001142 / 0.000819 / 0.002920 | бесплатно |
-| Исторический CPU `run()` на 119 диагностических входах | e814b58 / 2026-11-14 | semantic_encoder_f1 | — | Здесь не оценивается | 119 | 0.004776 / 0.003196 / 0.011021 | бесплатно |
-| Новый API-замер | та же версия | google_decision | guided | Не запускался | 0 | — | новых расходов нет |
 
 ## Выводы
 
@@ -52,9 +60,6 @@ Apple Silicon arm64, CPU, один поток PyTorch; версии и плат�
 2026-11-14, код `3768d76`, база main `e04c97d`; веса и конфигурация
 совпадают с двумя F1-сценариями.
 
-| Модуль / модель | N | Среднее, с | Медиана, с | p95, с | Стоимость API |
-| --- | ---: | ---: | ---: | ---: | --- |
-| learned_keywords / combined | 10 | 0.001730 | 0.001522 | 0.002868 | бесплатно |
 
 ```bash
 OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 uv run python src/subcategory_extraction/benchmarks/response_time/run.py --module learned_keywords --size 10
@@ -71,10 +76,6 @@ p95 — линейный percentile NumPy. Выборка: 10 validation-гру�
 База `45ff38d`, код `3946999259f93a4db45e354a06a12e6cbff64778b66253c27da547e540e90c0f`.
 Те же замороженные `boundaries` и train-пороги, что в двух F1-сценариях.
 
-| Модуль / модель | N | Среднее, с | Медиана, с | p95, с | Стоимость |
-| --- | ---: | ---: | ---: | ---: | --- |
-| qwen_decision / decision-model-preview | 10 | 14.309403 | 2.499930 | 62.312641 | неизвестно |
-| learned_keywords / свежий CPU run() | 10 | 0.004704 | 0.004736 | 0.005803 | бесплатно по API |
 
 ```bash
 QWEN_DECISION_CACHE=0 OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 uv run python src/subcategory_extraction/benchmarks/response_time/run.py --module qwen_decision --size 10 --append
@@ -94,39 +95,30 @@ QWEN_DECISION_CACHE=0 OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 uv run python src
 сохранены со своими датами; времена Apple Silicon выше не являются новым
 Linux-замером. У Qwen N=10, поэтому оценку нельзя трактовать как SLA.
 
-## Selectel Jev: 2026-11-14
+## Локальный feder-cr/jev: 2026-11-14
 
-База `8c6fe87d` + изменения; SHA-256 кода `2d9d3f604557db6688508e60449f09e3ef1383dac1cf3d0ee536a2c334927a83`.
-Модель `typesafe/jev-1.13`, Selectel Decisions, общий guided-промпт,
-порог 0.5. Новые `run()` на тех же 10 validation-группах, без подбора настроек.
+Те же jevos-v5 INT8, `english`, порог 0.5, что в двух F1-сценариях.
+Настоящие последовательные `run()` на штатных 10 validation-входах seed=44.
+F1 здесь не считается. Оба модуля измерены заново на одной машине, по очереди,
+после завершения F1-прогонов, без параллельных запросов к серверу.
 
-| Модуль / модель | N | Среднее, с | Медиана, с | p95, с | Стоимость |
-| --- | ---: | ---: | ---: | ---: | --- |
-| jev / Selectel typesafe/jev-1.13 | 10 | 1.026307 | 0.954630 | 1.367622 | 0.171522 RUB по usage.cost успешных ответов, не сверка счёта |
 
 ```bash
-JEV_CACHE_DIR=out/selectel-latency-cache uv run python src/subcategory_extraction/benchmarks/response_time/run.py --module jev --size 10 --append
+OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 uv run python src/subcategory_extraction/benchmarks/response_time/run.py --module local_jev --size 10 --append
+OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 uv run python src/subcategory_extraction/benchmarks/response_time/run.py --module learned_keywords --size 10 --append
 ```
 
-При фактическом прогоне этот каталог был пустым: 0 чтений кэша, 10 новых
-API-ответов; 30 916 input + 990 output tokens. Повтор команды с тем же каталогом
-может прочитать кэш — это уже не свежая задержка API. Загрузка и данные
-исключены, первый run() включён, сетевое ожидание включено; повторов клиент
-не выполняет. Одновременно выполнялся диагностический F1-прогон (4 потока),
-поэтому это не изолированный замер пропускной способности.
-Отчёт results.json сохраняет исходные метаданные других модулей.
+Linux x86_64, Intel Core i9-12900H. Jevos: четыре потока OpenVINO;
+learned_keywords: один поток OpenMP/OpenBLAS. Сервер запущен с
+`--threads 4 --warmup 0 --state-cache 0 --batch-tokens 0`, dynamic quantization=128.
+Версия runtime, веса и fingerprint — в `model_provenance` отчёта.
+Старт сервера/загрузка весов, создание экземпляра клиента и health исключены;
+первый измеряемый run() включён. Сервер до замера уже обрабатывал F1-прогоны,
+поэтому это замер готового сервера, а не холодного старта.
 
-## Jev calibrated: бюджетная остановка
-
-Выбранный на train вариант minimal@0.635 был загружен, но бюджетный guard
-остановил свежий замер до первого обращения к модели. Результат в results.json:
-failed, response_time.calls=0; новое latency не рассчитано. Сохранённые
-10-call результаты других модулей сохраняют исходные метаданные и не являются
-временем нового варианта. Предел пользователя 6 RUB не увеличивался ради времени.
-
-```bash
-uv run python src/subcategory_extraction/benchmarks/response_time/run.py --module jev_calibrated --size 10 --append
-```
-
-Эта команда требует отдельного оставшегося бюджета для новых API-вызовов;
-результат бюджетного guard не выдаётся за время ответа модели.
+Кэш ответов клиента и state-cache сервера отключены, попаданий нет.
+Время включает localhost HTTP, токенизацию, вычисления и разбор результата.
+Квоты, ожидания внешнего API и повторы отсутствуют: 10 HTTP-попыток на 10 входов.
+p95 — линейный percentile NumPy. Средний local_jev примерно в 564 раза медленнее
+этого локального baseline. N=10 не даёт SLA. Исторические времена Apple Silicon
+и внешнего Qwen выше не являются замерами на этом оборудовании.

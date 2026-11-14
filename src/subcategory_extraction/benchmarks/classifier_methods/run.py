@@ -13,6 +13,7 @@ from typing import Iterator
 sys.path.insert(0, str(Path(__file__).resolve().parents[3]))
 
 from benchmark_support import metadata, replay_recorded_report, save_report, setup
+from database import table_sha256
 from main import BasePipeline, MICROCATEGORIES, PipelineConfig, load_pipeline
 from run import EvaluationRow, audit_overlap, calculate_metrics, prepare_rows, read_records
 
@@ -21,9 +22,9 @@ HERE = Path(__file__).resolve().parent
 METHODS = tuple(sorted(path.parent.name for path in HERE.parent.parent.glob("*/pipeline.py")))
 LOCAL_METHODS = {"tfidf", "learned_keywords", "semantic_encoder", "semantic_encoder_calibrated", "semantic_encoder_f1"}
 DATASETS = {
-    "classifier_methods": ("docs/innoglobalhack_avito/public-test-dataset.parquet",
-                           "docs/innoglobalhack_avito/public-train-annotated.jsonl"),
-    "improved_dataset": ("docs/improved_dataset/reviewed_test.parquet", "docs/improved_dataset/train.jsonl"),
+    # Имена таблиц PostgreSQL (единый формат в src/database.py).
+    "classifier_methods": ("case_test", "case_train"),
+    "improved_dataset": ("manual_test", "manual_train"),
 }
 logger = logging.getLogger(__name__)
 
@@ -75,15 +76,19 @@ def main(directory: Path = HERE, scenario: str = "classifier_methods") -> int:
     if not args.methods:
         replay_recorded_report(directory, scenario, args.report)
         return 0
-    dataset, training = (ROOT / name for name in DATASETS[scenario])
-    if args.report.resolve() in {dataset.resolve(), training.resolve(), (directory / "recorded-results.json").resolve()}:
-        parser.error("Отчёт не должен перезаписывать данные или сохранённые ответы")
+    dataset, training = DATASETS[scenario]
+    if not dataset or not training:
+        parser.error("Не заданы таблицы датасета и обучения для сценария")
+    if args.report.resolve() == (directory / "recorded-results.json").resolve():
+        parser.error("Отчёт не должен перезаписывать сохранённые ответы")
     setup()
     rows = prepare_rows(read_records(dataset), 101)
     report = {
         **metadata(), "status": "running", "scenario": scenario, "mode": "pipeline_run",
-        "protocol": {"dataset_sha256": hashlib.sha256(dataset.read_bytes()).hexdigest(),
-                     "training_sha256": hashlib.sha256(training.read_bytes()).hexdigest(),
+        "storage": "postgresql",
+        "protocol": {"dataset_table": dataset, "training_table": training,
+                     "dataset_sha256": table_sha256(dataset),
+                     "training_sha256": table_sha256(training),
                      "rows": len(rows), "source_mc_id_assumption": 101},
         "overlap": audit_overlap(rows, training),
         "rows": [{"description_sha256": hashlib.sha256(row.inp.description.encode()).hexdigest(),
@@ -113,7 +118,7 @@ def main(directory: Path = HERE, scenario: str = "classifier_methods") -> int:
                 result["model_provenance"] = describe()
                 actual_train = result["model_provenance"].get("training_dataset")
                 if actual_train:
-                    result["model_training_overlap"] = audit_overlap(rows, ROOT / actual_train)
+                    result["model_training_overlap"] = audit_overlap(rows, actual_train)
             for index, (row, (output, inference)) in enumerate(zip(
                 rows, predictions(pipeline, method, rows, args.workers), strict=True,
             ), start=1):
@@ -146,7 +151,7 @@ def main(directory: Path = HERE, scenario: str = "classifier_methods") -> int:
         }
         save_report(args.report, report)
     report["status"] = "complete" if all(
-        result["status"] == "completed" for result in report["results"].values()
+        result["status"] in {"completed", "complete"} for result in report["results"].values()
     ) else "failed"
     save_report(args.report, report)
     return 0 if report["status"] == "complete" else 1

@@ -1,0 +1,17 @@
+{
+  "source_sha256": {
+    "docs/innoglobalhack_avito/public-train-annotated.jsonl": "b7118d68086624fbeab43839f22a635d4e325e4ee339f22d4aa0ad3c2e986615",
+    "docs/innoglobalhack_avito/public-test-dataset.parquet": "65b5a45a98b577d853a928932bbbdf8bd9bdeb469ded3016faace4d11f3eabaa"
+  },
+  "source_rows": {
+    "train": 10000,
+    "test": 208
+  },
+  "unique_groups": 4980,
+  "deduplication": "NFKC, casefold, ё→е, collapsed whitespace; global train/test groups; original descriptions preserved",
+  "near_duplicates_removed": false,
+  "batch_size": 100,
+  "inputs_sha256": "40d45b3710519c2dd9aee7887fc13ed32b2b9085df46c03ba760686e28bc91b9",
+  "source_labels_shown_to_reviewers": false,
+  "method": "agent reads each full description; no regex/model proposals or inherited labels"
+}

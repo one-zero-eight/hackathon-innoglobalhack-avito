@@ -1,4 +1,9 @@
-"""Оценка полного решения: micro-F1 по mcId из итоговых черновиков."""
+"""Оценка полного решения: micro-F1 по mcId из итоговых черновиков.
+
+Источники датасетов — таблицы PostgreSQL (единый формат из src/database.py):
+``dataset`` и ``training_dataset`` в run.config.json задаются именами таблиц
+(case_test/case_train и т.п.), а не путями к файлам.
+"""
 
 import argparse
 import json
@@ -8,12 +13,17 @@ import unicodedata
 from pathlib import Path
 from typing import Any
 
-import pyarrow.parquet as pq
 from dotenv import load_dotenv
 from pydantic import BaseModel, ConfigDict, Field
 from sklearn.metrics import f1_score
 from sklearn.preprocessing import MultiLabelBinarizer
 
+from database import (
+    DATABASE_TABLES,
+    DatabaseError,
+    read_records as database_read_records,
+    table_sha256,
+)
 from main import (
     LLMCostLedger,
     MICROCATEGORIES,
@@ -31,7 +41,8 @@ logger = logging.getLogger(__name__)
 
 
 class RunConfig(BaseModel):
-    """Параметры оценки; относительные пути считаются от файла конфигурации."""
+    """Параметры оценки; пути к файлам считаются от файла конфигурации,
+    а ``dataset``/``training_dataset`` — имена таблиц PostgreSQL."""
 
     model_config = ConfigDict(extra="forbid", strict=True)
 
@@ -42,6 +53,16 @@ class RunConfig(BaseModel):
     source_mc_id: McId
     limit: int | None = Field(default=None, gt=0)
     log_every: int = Field(default=10, gt=0)
+
+    @property
+    def dataset_table(self) -> str:
+        """Имя таблицы БД, заданное в dataset (без нормализации пути)."""
+        return str(self.dataset).strip()
+
+    @property
+    def training_table(self) -> str | None:
+        """Имя таблицы БД для обучения, если задано training_dataset."""
+        return str(self.training_dataset).strip() if self.training_dataset else None
 
 
 class EvaluationRow(BaseModel):
@@ -57,17 +78,17 @@ def resolve_path(base: Path, value: str) -> Path:
     return (base / path).resolve()
 
 
-def read_records(path: Path) -> list[dict[str, Any]]:
-    """Прочитать официальный Parquet или JSONL без изменения порядка строк."""
-    if path.suffix == ".parquet":
-        return pq.read_table(path).to_pylist()
-    if path.suffix == ".jsonl":
-        return [
-            json.loads(line)
-            for line in path.read_text(encoding="utf-8").splitlines()
-            if line.strip()
-        ]
-    raise ValueError(f"Ожидается .parquet или .jsonl: {path}")
+def read_records(table: str, limit: int | None = None) -> list[dict[str, Any]]:
+    """Прочитать строки датасета из таблицы PostgreSQL в едином формате.
+
+    Возвращает dict со строкой, совместимый с ``prepare_rows``: ключи
+    ``description``, ``mcId`` и ``found_microcategories`` (список
+    ``{"mcId": int, "label": str}``).
+    """
+    try:
+        return database_read_records(table, limit=limit)
+    except DatabaseError as exc:
+        raise ValueError(f"Не удалось прочитать таблицу {table}: {exc}") from exc
 
 
 def prepare_rows(records: list[dict[str, Any]], source_mc_id: int) -> list[EvaluationRow]:
@@ -80,7 +101,7 @@ def prepare_rows(records: list[dict[str, Any]], source_mc_id: int) -> list[Evalu
                 "description": record["description"],
                 "mcId": record.get("mcId", source_mc_id),
             })
-            if "categories" in record:
+            if "categories" in record and "found_microcategories" not in record:
                 labels = record["categories"]
                 if not isinstance(labels, list) or any(
                     not isinstance(label, str) for label in labels
@@ -107,13 +128,15 @@ def normalize_description(text: str) -> str:
     return " ".join(unicodedata.normalize("NFKC", text).casefold().replace("ё", "е").split())
 
 
-def audit_overlap(rows: list[EvaluationRow], training_path: Path | None) -> dict[str, Any]:
+def audit_overlap(rows: list[EvaluationRow], training_table: str | None) -> dict[str, Any]:
     """Проверить точное нормализованное пересечение, не удаляя строки оценки."""
-    if training_path is None:
+    if training_table is None:
         return {"checked": False}
+    if training_table not in DATABASE_TABLES:
+        raise ValueError(f"Неизвестная таблица обучения: {training_table}")
     descriptions = {
         normalize_description(record["description"])
-        for record in read_records(training_path)
+        for record in read_records(training_table)
     }
     indices = [
         index
@@ -129,7 +152,7 @@ def audit_overlap(rows: list[EvaluationRow], training_path: Path | None) -> dict
     return {
         "checked": True,
         "method": "normalized_exact_description",
-        "training_dataset": str(training_path),
+        "training_dataset": training_table,
         "overlapping_rows": len(indices),
         "row_numbers": indices,
     }
@@ -173,22 +196,24 @@ def evaluate(config_path: Path) -> dict[str, Any]:
                 f"Для раздела {service} не выбран модуль в {pipeline_path}; "
                 "оценка полного решения требует оба шага, без заглушек"
             )
-    dataset = resolve_path(base, config.dataset)
+    dataset = config.dataset_table
+    if dataset not in DATABASE_TABLES:
+        raise ValueError(f"Неизвестная таблица датасета: {dataset}")
     records = read_records(dataset)
     if config.limit is not None:
         records = records[:config.limit]
     rows = prepare_rows(records, config.source_mc_id)
-    training_path = (
-        resolve_path(base, config.training_dataset) if config.training_dataset else None
-    )
+    training_table = config.training_table
+    if training_table is not None and training_table not in DATABASE_TABLES:
+        raise ValueError(f"Неизвестная таблица обучения: {training_table}")
     report_path = resolve_path(base, config.report)
-    if report_path in {dataset, pipeline_path, config_path, training_path}:
+    if report_path in {pipeline_path, config_path}:
         raise ValueError("Путь отчёта не должен совпадать с входными файлами")
     cost_path = Path(str(report_path) + ".costs.json")
-    if cost_path in {dataset, pipeline_path, config_path, training_path}:
+    if cost_path in {pipeline_path, config_path}:
         raise ValueError("Отчёт стоимости не должен совпадать с входными файлами")
     costs = LLMCostLedger()
-    overlap = audit_overlap(rows, training_path)
+    overlap = audit_overlap(rows, training_table)
     predictions: list[set[int]] = []
     results = []
     started = time.perf_counter()
@@ -215,7 +240,9 @@ def evaluate(config_path: Path) -> dict[str, Any]:
     elapsed = time.perf_counter() - started
     metrics = calculate_metrics([row.expected for row in rows], predictions)
     report = {
-        "dataset": str(dataset),
+        "dataset": dataset,
+        "dataset_sha256": table_sha256(dataset),
+        "training_dataset": training_table,
         "run_config": config.model_dump(),
         "pipeline_config": pipeline_config.model_dump(),
         "rows": len(rows),

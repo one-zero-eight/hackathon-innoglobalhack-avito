@@ -1,0 +1,1 @@
+Does the provider actually offer any of the following services in this Russian advertisement: {examples}? Count explicitly offered stages of a larger renovation even if not available separately. Do not infer services just from a general full-renovation offer. Do not count negated services, customer requests, work by others, or materials without an offer to install them.

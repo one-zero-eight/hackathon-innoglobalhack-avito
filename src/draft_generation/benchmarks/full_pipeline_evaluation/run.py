@@ -10,11 +10,12 @@ import logging
 from time import perf_counter
 
 from benchmark_support import metadata, save_report, setup, timing
+from database import table_sha256
 
 
 def check() -> None:
-    """Повторить контрольные метрики, чтение Parquet и аудит пересечений."""
-    from run import ROOT, audit_overlap, calculate_metrics, prepare_rows, read_records
+    """Повторить контрольные метрики, чтение case_test и аудит пересечений."""
+    from run import audit_overlap, calculate_metrics, prepare_rows, read_records
     assert calculate_metrics([{102, 105}], [{102, 104}]) == {
         "micro_f1": 0.5, "classification_points": 30.0, "tp": 1, "fp": 1, "fn": 1,
     }
@@ -22,13 +23,12 @@ def check() -> None:
     assert calculate_metrics([{102}], [{101, 102}])["fp"] == 1
     assert calculate_metrics([{102}], [{102}])["micro_f1"] == 1
     assert calculate_metrics([{102}, set()], [{102}, {104, 105}])["micro_f1"] == 0.5
-    data = ROOT / "docs/innoglobalhack_avito"
-    rows = prepare_rows(read_records(data / "public-test-dataset.parquet"), 101)
+    rows = prepare_rows(read_records("case_test"), 101)
     assert len(rows) == 208
     assert set.union(*(row.expected for row in rows)) == {102, 103, 104, 105, 106}
-    overlap = audit_overlap(rows, data / "public-train-annotated.jsonl")
+    overlap = audit_overlap(rows, "case_train")
     assert overlap["overlapping_rows"] == 24
-    logging.info("Формула и крайние случаи: OK; Parquet: %d строк; пересечения: %d",
+    logging.info("Формула и крайние случаи: OK; case_test: %d строк; пересечения: %d",
                  len(rows), overlap["overlapping_rows"])
 
 
@@ -51,13 +51,14 @@ def run_live(config_path: Path, report_path: Path, resume: bool) -> int:
     selected = load_config(pipeline_path)
     if any(value is None for value in selected.model_dump().values()):
         raise ValueError("Для полного прогона выберите оба модуля")
-    dataset = resolve_path(base, config.dataset)
+    dataset = config.dataset_table
     records = read_records(dataset)
     if config.limit is not None:
         records = records[:config.limit]
     rows = prepare_rows(records, config.source_mc_id)
-    training = resolve_path(base, config.training_dataset) if config.training_dataset else None
-    fingerprint = hashlib.sha256(config_path.read_bytes() + pipeline_path.read_bytes() + dataset.read_bytes())
+    training = config.training_table
+    fingerprint = hashlib.sha256(config_path.read_bytes() + pipeline_path.read_bytes())
+    fingerprint.update(table_sha256(dataset).encode())
     # Кэш не должен пережить изменение кода, модели, промпта или артефакта.
     fingerprint.update(metadata()["code_sha256"].encode())
     public_settings = {key: value for key, value in os.environ.items()

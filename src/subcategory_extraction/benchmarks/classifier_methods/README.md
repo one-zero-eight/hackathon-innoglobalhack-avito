@@ -1,42 +1,60 @@
 # Бенчмарк: F1 на исходном InnoGlobalHack
-Сервис: subcategory_extraction
 
-## Что проверяем
+Micro-F1 дополнительных категорий 102–106 на всех 208 строках официального
+InnoGlobalHack test из таблицы PostgreSQL `case_test`
+(источник — `docs/innoglobalhack_avito/public-test-dataset.parquet`).
+Исходный mcId принимается равным 101.
+Содержимое таблицы идентично исходному parquet: SHA-256 строк таблицы —
+`cd6f432e3841e842d04bb07827b92f9b644c56b2b528cb36098433168890ae15` (из
+PostgreSQL), SHA-256 исходного файла —
+`65b5a45a98b577d853a928932bbbdf8bd9bdeb469ded3016faace4d11f3eabaa`.
 
-Micro-F1 дополнительных mcId на **всех 208 строках**
-`docs/innoglobalhack_avito/public-test-dataset.parquet`,
-SHA-256 `65b5a45a98b577d853a928932bbbdf8bd9bdeb469ded3016faace4d11f3eabaa`.
-В файле нет исходного mcId, явно принимаем 101. Дубликаты остаются
-в метрике; одинаковый вход при live может вычисляться один раз.
-Исходный train `docs/innoglobalhack_avito/public-train-annotated.jsonl`;
-для исторического локального обучения использованы 4821 отфильтрованных
-описаний. Старый test содержит пересечения с train и противоречивую разметку.
+## Результаты
+
+Одна строка на решение. Повторный прогон заменяет строку; остальные
+результаты сохраняют собственную дату и происхождение. Таблица соответствует
+[results.json](results.json); снимок исходных ответов
+[recorded-results.json](recorded-results.json) не перезаписывается.
+Значения измерены на данных, идентичных прежнему parquet, поэтому
+результаты остаются валидными после перевода источника в PostgreSQL.
+
+| Модуль | Версия / дата измерения | Промпт | N | micro-F1 | Происхождение |
+| --- | --- | --- | ---: | ---: | --- |
+| regex | правила annotate_dataset / 2026-11-14 | — | 208 | 0.751979 | локальные run() |
+| tfidf | веса 2ef7ed22c74a / 2026-11-14 | — | 208 | 0.778462 | локальные run() |
+| learned_keywords | веса d06457a8c082 / 2026-11-14 | — | 208 | 0.745358 | локальные run() |
+| semantic_encoder_f1 | веса 1c2a6f5 / 2026-11-14 | — | 208 | 0.769433 | локальные run() |
+| google_decision | версия в recorded-results.json / 2026-11-14 | guided | 208 | 0.839394 | сохранённые ответы, без новых вызовов |
+| jev / BestAPI | версия в recorded-results.json / 2026-11-14 | guided | 208 | 0.846154 | сохранённые ответы, без новых вызовов |
+| jev / Selectel typesafe/jev-1.13 | 6802b41 / 2026-11-14 | guided / 0.5 | 208 | 0.842415 | записанные Selectel-ответы, входы и метки совпали |
+| jev_calibrated / Selectel typesafe/jev-1.13 | 0dbba19 / 2026-11-15 | minimal / train-порог 0.635 | 208 | 0.844376 | выбран по train; проверенные сохранённые ответы |
+| jev_calibrated / minimal, fixed 0.5 | 0dbba19 / 2026-11-15 | minimal / 0.5 | 208 | 0.834081 | офлайн-абляция тех же вероятностей, не новый вызов |
+| jev / guided, train-пороги | 0dbba19 / 2026-11-15 | guided / 0.58 и 0.675 | 208 | 0.846847 | офлайн-абляция; не победитель train/control |
+| jev_tfidf | версия в recorded-results.json / 2026-11-14 | guided | 208 | 0.842262 | сохранённые ответы, без новых вызовов |
+| semantic_encoder | версия в recorded-results.json / 2026-11-14 | — | 208 | 0.786704 | сохранённые ответы, без новых вызовов |
+| local_jev / jevos-v5 | v5 / 2026-11-14 | english / 0.5 | 208 | 0.399050 | сохранённые CPU-предсказания; входы и метки совпали с case_test |
+| local_jev / jevos-v5 | v5 / 2026-11-14 | guided_ru / 0.5 | 208 | 0.000000 | сохранённые CPU-предсказания; входы и метки совпали с case_test |
+| qwen_decision | preview / 2026-11-14 | boundaries / train-калибровка | 208 | 0.629674 | сохранённые ответы; новый API-прогон не выполнялся |
 
 ## Запуск
 
-Офлайн без повторного обучения/API:
-
 ```bash
-uv run python src/subcategory_extraction/benchmarks/classifier_methods/run.py --replay
+OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 TFIDF_ARTIFACT_PATH=out/classifier-methods/tfidf.json uv run python src/subcategory_extraction/benchmarks/classifier_methods/run.py --methods regex tfidf learned_keywords --offline
 ```
 
-Проверяется соответствие сохранённых ответов текущему test, результаты
-пишутся в `results.json`; `recorded-results.json` не изменяется.
-Для нового сравнения выберите модули через `--methods tfidf`
-и при необходимости `--offline`. Данные закреплены за сценарием;
-параметры моделей и пути к весам задаются через `.env`.
-Отсутствие весов или API даёт неуспешный статус без F1.
+Для других реализаций замените список `--methods`. Для проверки исходного
+снимка ответов используйте `--replay`; это пересчёт старых предсказаний,
+а не измерение текущих весов или задержки модели. Флаг `--offline` запрещает
+API-модули. Отсутствие весов/API фиксируется как ошибка без F1.
+После запуска обновите соответствующие строки этой таблицы по JSON.
 
-## Последний локальный прогон
+## Условия и ограничения
 
 2026-11-14, опубликованные веса Leo `1c2a6f5`, синхронизация с main `3144889`.
 Настоящие CPU-вызовы `semantic_encoder_f1`, без переобучения и подбора порогов.
 Артефакт и калибровка проверены по SHA-256 из `../../semantic_encoder_f1/artifact-manifest.json`.
 Отпечаток исполняемого кода, версии библиотек и хеши файлов — в `results.json`.
 
-| Модуль / модель | Версия весов / дата | Промпт | N | micro-F1 |
-| --- | --- | --- | ---: | ---: |
-| semantic_encoder_f1 / distilled RuBERT-tiny2 | 1c2a6f5 / 2026-11-14 | — | 208 | 0.769433 |
 
 ```bash
 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 TOKENIZERS_PARALLELISM=false RUBERT_F1_ARTIFACT_PATH=src/subcategory_extraction/semantic_encoder_f1/artifacts RUBERT_F1_DEVICE=cpu uv run python src/subcategory_extraction/benchmarks/classifier_methods/run.py --methods semantic_encoder_f1 --offline
@@ -56,13 +74,6 @@ OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 TOKENIZERS_PARALLELISM=false RUBERT_F1_ARTIF
 не качество текущих весов. Использованный guided-промпт:
 `../../google_decision/prompts/google_decision_guided.md`.
 
-| Модуль | Промпт | N | micro-F1 |
-| --- | --- | ---: | ---: |
-| google_decision | guided | 208 | 0.839394 |
-| jev | guided | 208 | 0.846154 |
-| tfidf | — | 208 | 0.778462 |
-| jev_tfidf | guided | 208 | 0.842262 |
-| semantic_encoder | — | 208 | 0.786704 |
 
 ## Выводы
 
@@ -76,9 +87,6 @@ OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 TOKENIZERS_PARALLELISM=false RUBERT_F1_ARTIF
 на `docs/improved_dataset/train.jsonl` (4851 строка), combined-признаки,
 40 фраз на категорию, C=4 и порог 0.5 зафиксированы до test.
 
-| Модуль / модель | Версия / дата | Промпт | N | micro-F1 |
-| --- | --- | --- | ---: | ---: |
-| learned_keywords / TF-IDF + бинарные фразы | 3768d76 / 2026-11-14 | — | 208 | 0.745358 |
 
 ```bash
 OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 uv run python src/subcategory_extraction/benchmarks/classifier_methods/run.py --methods learned_keywords
@@ -101,12 +109,6 @@ OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 uv run python src/subcategory_extractio
 отпечаток кода `3946999259f93a4db45e354a06a12e6cbff64778b66253c27da547e540e90c0f`.
 Модель: `decision-model-preview`, Qwen Token Plan System One.
 
-| Модуль / модель | Версия / дата | Промпт | N | micro-F1 |
-| --- | --- | --- | ---: | ---: |
-| qwen_decision / фиксированный порог 0.5, те же ответы | preview / 2026-11-14 | boundaries | 208 | 0.637209 |
-| qwen_decision / train-калибровка | preview / 2026-11-14 | boundaries | 208 | 0.629674 |
-| learned_keywords / опубликованные веса, свежий run() | 45ff38d / 2026-11-14 | — | 208 | 0.745358 |
-| jev / проверенный пересчёт исторических ответов | исходная запись / 2026-11-14 | guided | 208 | 0.846154 |
 
 ```bash
 OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 LEARNED_KEYWORDS_ARTIFACT=src/subcategory_extraction/learned_keywords/artifacts/learned-keywords.json uv run python src/subcategory_extraction/benchmarks/classifier_methods/run.py --methods learned_keywords qwen_decision --workers 4 --append
@@ -138,121 +140,33 @@ OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 LEARNED_KEYWORDS_ARTIFACT=src/subcatego
 `--append` сохраняет результаты других модулей с их датами и отпечатками;
 `recorded-results.json` не изменён.
 
-## Текущий Selectel Jev: 2026-11-14T20:57:26+03:00
+## Локальный jevos-v5
 
-База `8c6fe87d` + изменения; SHA-256 кода
-`2d9d3f604557db6688508e60449f09e3ef1383dac1cf3d0ee536a2c334927a83`.
-Модель `typesafe/jev-1.13`, endpoint `https://api.selectel.ru/aig/v1/decisions`.
-Общий guided-промпт (SHA-256 f05534059aa8ab3e29a281d39d65bfc3e5cbc887330787aba267abd8891728b7)
-и порог 0.5 зафиксированы до оценки, подбора по test не было.
+Английский вариант выбран на 12 примерах прежнего официального train;
+порог 0.5 не подбирался по test. Сохранённые 208 входов и эталонных меток
+побайтово совпали со снимком case_test текущего отчёта, поэтому обе строки
+Jevos совместимы с этим сценарием. Новые вызовы модели при merge не выполнялись.
+Манифест весов, вероятности и исходная дата измерения сохранены в results.json.
+Первый запуск теперь загружает модель и runtime в игнорируемый out/local-jev/;
+команды и ограничения — в ../../local_jev/README.md.
 
-| Модуль / модель | Версия / дата | Промпт | N | micro-F1 |
-| --- | --- | --- | ---: | ---: |
-| jev / Selectel typesafe/jev-1.13 | 8c6fe87d + изменения / 2026-11-14 | google_decision_guided.md | 208 | 0.842415 |
+## Интеграция Selectel и калибровки
 
-TP / FP / FN: 286 / 98 / 9.
-Пересечения с train: 24/208; строки не исключены.
-Исходный test содержит точные совпадения с train; это ограничивает интерпретацию F1.
+Протокол case_test совпал с входами/метками обоих merge-родителей. В JSON
+исторический BestAPI выделен отдельным ключом, а актуальный jev обозначает
+Selectel. Даты, модели и measurement_metadata сохраняют исходные измерения;
+при merge новых вызовов моделей не было. Проверка БД выполнялась по
+read-only снимкам импортера с совпадающим table_sha256; live-соединение недоступно.
+Поля dataset_sha256/training_sha256 нормализованы к содержимому таблиц;
+исходные файловые хеши сохранены отдельно как *_source_sha256.
 
-```bash
-uv run python src/subcategory_extraction/benchmarks/classifier_methods/run.py --methods jev --workers 1 --append
-```
+Калибровка обучена только на48 группах case_train,24 control-группы отдельные.
+Два промпта ×девять схем порогов; параметры выбраны до test. Control вырос
+0.926829→0.939759, но это одна дополнительная услуга на малой выборке.
+При merge эти значения не пересчитывались как новый train/API-прогон.
+Подробности и единственная таблица train-вариантов — в
+[jev_calibrated](../../jev_calibrated/README.md) и [отчёте](jev-training-results.json).
 
-Последовательное завершение: 22 новых API-ответов, 186 чтений проверенного
-Selectel-кэша от этого же переключения провайдера. Endpoint, payload и model
-входят в ключ кэша; старые ответы BestAPI не подставлялись.
-36 ранее незакрытых строк содержали 22 уникальных входа; последовательный запуск исключил дубли платных запросов.
-
-Полный test сначала был отклонён автоматической проверкой одобрений;
-после явного разрешения пользователя использован бюджет до 5 RUB.
-Завершение обоих F1-сценариев потребовало ровно 22 новых запросов и
-0.361691 RUB по provider-reported usage.cost, без автоматического пересчёта тарифов.
-Фактические usage и признаки кэша сохранены в results.json. Остальные модули
-сохраняют исходные measurement_metadata; recorded-results.json не менялся.
-Классификация оценивается отдельно от генерации текстов.
-
-## Jev: выбор промпта и порогов по train, 2026-11-15T00:32:42+03:00
-
-База `6802b41b` + изменения. Отчёт — [jev-training-results.json](jev-training-results.json).
-48 fitting-групп и 24 отдельные control-группы официального train, seed20261115.
-Из 10000 строк выделены 4854 точных описания и 2813 допустимых близких групп;
-13 компонентов, содержащих test-описания, исключены. Test-метки не используются.
-Сравниваются два промпта × девять схем порогов; групповой crossfit считает
-pooled micro-F1, а не среднее F1 отдельных категорий. Оба test уже ранее
-просматривались и служат регрессионными сравнениями после заморозки.
-
-| Промпт | Схема порогов | Fitting crossfit micro-F1, N=48 | Control micro-F1, N=24 |
-| --- | --- | ---: | ---: |
-| guided | fixed | 0.918455 | 0.926829 |
-| guided | global_shrink_025 | 0.918455 | —: не использовался для выбора |
-| guided | global_shrink_050 | 0.917749 | —: не использовался для выбора |
-| guided | global_shrink_075 | 0.908297 | —: не использовался для выбора |
-| guided | global_shrink_100 | 0.898678 | —: не использовался для выбора |
-| guided | per_category_shrink_025 | 0.918455 | —: не использовался для выбора |
-| guided | per_category_shrink_050 | 0.922414 | 0.926829 |
-| guided | per_category_shrink_075 | 0.917031 | —: не использовался для выбора |
-| guided | per_category_shrink_100 | 0.907489 | —: не использовался для выбора |
-| baseline | fixed | 0.902954 | 0.939759 |
-| baseline | global_shrink_025 | 0.918455 | —: не использовался для выбора |
-| baseline | global_shrink_050 | 0.922414 | —: не использовался для выбора |
-| baseline | global_shrink_075 | 0.926407 | 0.939759 |
-| baseline | global_shrink_100 | 0.921739 | —: не использовался для выбора |
-| baseline | per_category_shrink_025 | 0.918455 | —: не использовался для выбора |
-| baseline | per_category_shrink_050 | 0.922414 | —: не использовался для выбора |
-| baseline | per_category_shrink_075 | 0.926407 | —: не использовался для выбора |
-| baseline | per_category_shrink_100 | 0.901786 | —: не использовался для выбора |
-
-Победитель зафиксирован по fitting до control: минимальный baseline-промпт,
-global_shrink_075, порог 0.635 для 102–106; для необученной 101 оставлен 0.5.
-Control: guided@0.5 TP38 FP4 FN2; победитель TP39 FP4 FN1.
-Это +0.012930 micro-F1, одна дополнительная найденная услуга на малом control.
-В этом control калиброванный и фиксированный пороги minimal-промпта дали
-одинаковый ответ; контрольный прирост связан с промптом, а не доказывает
-отдельный эффект калибровки. Широкая обобщаемость по 24 группам не установлена.
-
-Калибровка: `../../jev_calibrated/artifacts/calibration.json`.
-Loader проверяет provider/model/endpoint и хеш промпта; обучение воспроизводимо:
-
-```bash
-uv run python src/subcategory_extraction/jev_calibrated/train.py --fit-size 48 --control-size 24
-```
-
-144 успешных API-ответа были собраны в этом эксперименте с повторами при сетевых
-ошибках; последний воспроизводящий проход читал все 144 из их кэша и не был
-новым API-прогоном. Провайдер Selectel, закреплённая модель typesafe/jev-1.13.
-Цена и бюджет записаны вручную в cpu_costs. Новых benchmark-папок нет.
-
-## Итог Jev-оптимизации: 2026-11-15T01:27:39+03:00
-
-База `6802b41b` + изменения; SHA-256 кода `4d3992446013ace7e9001307c5adc0af4b1f1243427ba01cbd853d77cfb60dde`.
-Два промпта и 18 сочетаний с порогами сравнивались только на train-группах.
-Модель Selectel typesafe/jev-1.13. Параметры заморожены до этих test-прогонов.
-
-| Вариант | Происхождение | N | micro-F1 |
-| --- | --- | ---: | ---: |
-| guided, порог 0.5 (прежний jev) | прежний Selectel-прогон, не новая модель | 208 | 0.842415 |
-| guided, train-пороги 0.58/0.675 | офлайн-применение к сохранённым вероятностям | 208 | 0.846847 |
-| minimal, порог 0.5 | пересчёт тех же новых minimal-вероятностей, не новый API | 208 | 0.834081 |
-| minimal, train-порог 0.635 | заранее выбранный победитель fitting и подтверждённый control | 208 | 0.844376 |
-
-Выбранный вариант: TP274 FP80 FN21.
-На официальном test прирост выбранного варианта относительно базы всего
-+0.001961; на диагностическом падение−0.041686. Это не универсальное улучшение.
-Поэтому выбранный на train артефакт сохранён как эксперимент, а config.json
-оставляет прежний jev. Guided-пороги из этой таблицы не выбраны в качестве
-нового рабочего решения: control не подтвердил для них прирост, и выбирать
-модель по этому test нельзя. Большая validation-выборка остаётся следующим шагом.
-
-Отчёт results.json содержит полный набор предсказаний и вероятностей,
-метаданные исходного jev и frozen_guided_calibration_replay. Все варианты
-порогов зафиксированы по fitting; test-таблица не использовалась для их подбора.
-Оба test уже раньше просматривались и являются регрессионными сравнениями,
-а не новым никогда не виденным holdout. Исправленный test размечен предварительно.
-
-Для minimal-промпта понадобилось 139 новых успешных API-ответов на уникальные
-описания, собранных с возобновлением. Последний проход 208 строк использовал
-206 чтений кэша и 2 новых ответа; это не означает, что весь прогон стоил 2 запроса.
-Изначальная остановка на 204/208 не получила F1; итоговая метрика появилась
-только после полной обработки 208. Для двух последних запросов token overhead
-уточнён по 137 совпадающим guided/minimal парам: разница 1340 input tokens,
-с дополнительным запасом 128. Бюджетный предел не увеличивался сверх одобренных 6 RUB.
+Прежний диагностический reviewed_test имел119 строк и другой эталон.
+Его результаты не перенесены в manual_test. Полный прежний отчёт доступен:
+`git show 0dbba19:src/subcategory_extraction/benchmarks/improved_dataset/results.json`.

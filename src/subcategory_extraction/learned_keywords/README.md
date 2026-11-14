@@ -39,8 +39,7 @@ OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 uv run python src/subcategory_extractio
 OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 uv run python src/subcategory_extraction/benchmarks/response_time/run.py --module learned_keywords --size 10
 ```
 
-Все вызовы локальные. Флаг `--offline` существующего F1-runner имеет закрытый
-список старых модулей и пока отклоняет learned_keywords; команды выше API
-не вызывают. Официальный test содержит пересечения с train, исправленный
+Все вызовы локальные. F1-runner также поддерживает `--offline` для этого
+модуля. Официальный test содержит пересечения с train, исправленный
 является диагностическим с предварительной разметкой. Исторические веса,
 обученные на Юле, и прежние метрики нельзя сравнивать как один прогон.

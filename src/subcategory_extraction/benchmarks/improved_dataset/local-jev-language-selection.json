@@ -1,0 +1,415 @@
+{
+  "date": "2026-11-14T23:25:22+03:00",
+  "commit": "8c6fe87d8c63b7072bbad7aef71670f74ca1c6bb",
+  "code_sha256": "87f244eab098dad078349822132635fa95e0021667cb0b41dc3cd87b8e73a499",
+  "working_tree": true,
+  "selection_data": "official train validation_sample(size=12, seed=44, nonempty=True)",
+  "threshold": 0.5,
+  "english_template": "Does the provider actually offer any of the following services in this Russian advertisement: {examples}? Count explicitly offered stages of a larger renovation even if not available separately. Do not infer services just from a general full-renovation offer. Do not count negated services, customer requests, work by others, or materials without an offer to install them.",
+  "english_rules": {
+    "102": "plastering walls with plaster mortar, leveling walls with plaster, or plastering window and door reveals",
+    "103": "laying ceramic tiles, porcelain tiles or mosaics, tiling walls or floors, grouting tile joints or cutting tiles",
+    "104": "plumbing: installing or repairing water pipes, drains, sinks, toilets, faucets, baths or water heating radiators",
+    "105": "electrical work: wiring, cables, power outlets, switches, lights, electrical panels or electric underfloor heating",
+    "106": "wallpaper hanging, painting walls or ceilings, filling or sanding walls for painting or wallpaper"
+  },
+  "server": {
+    "status": "ready",
+    "model": "jevos-v5",
+    "model_files": {
+      "model.json": "8d1d4d40d23fc0d8fd4dcd8136b3d591c8de3c25a6df16e3668f65301cc42181",
+      "openvino_model.bin": "413b40a85163260e4cd9dfe278e5e068f343920bc9e08741d53659ca39fecb81",
+      "openvino_model.xml": "59b4dfdfa5f8ebfd8c400d8a8b464b34db2ea2038665e78a71361a6b532e1e79",
+      "tokenizer.gguf": "9e15e73e12c6fe6eb9af58d15f6dbc7a8563331947232d0b10158aa8e9832949"
+    },
+    "fingerprint": "d6c9958f24d8c5aa698625ae743cf93fadb22eba84ef7dde7580b7558e8bc94b",
+    "engine": {
+      "runtime": "openvino",
+      "version": "2026.4.0-22959-99c81491cc3-releases/2026/4",
+      "device": "cpu",
+      "model_dir": "src/subcategory_extraction/local_jev/artifacts",
+      "dynamic_quantization": 128,
+      "state_snapshots": {
+        "kept": 0,
+        "max": 0,
+        "tokens": 0,
+        "max_tokens": 0,
+        "hits": 0,
+        "misses": 327,
+        "reused_tokens": 0,
+        "bytes": 0
+      },
+      "batched_requests": 0
+    }
+  },
+  "rows": [
+    {
+      "group_id": "b9e262253dea1cf06e83dd184d0e6df2672b6ef0ee59455c7f3d419a79358e9b",
+      "description_sha256": "9210acb7fb24bb67f095cbb8e1a36f08d1ebeb35613b71a43e5768f5b696f552",
+      "expected": [
+        102,
+        106
+      ],
+      "guided_ru": [],
+      "english": [
+        106
+      ],
+      "guided_ru_probabilities": {
+        "102": 0.10950397350135178,
+        "103": 0.09114077717344489,
+        "104": 0.13393853472677378,
+        "105": 0.13819907736397377,
+        "106": 0.07325409739181325
+      },
+      "english_probabilities": {
+        "102": 0.4987027227186029,
+        "103": 0.21728674989684807,
+        "104": 0.05828302287827376,
+        "105": 0.05388750834526292,
+        "106": 0.7951959604189504
+      }
+    },
+    {
+      "group_id": "aee45adc7c125302b3b14330e392d8aaf93d29a0abbe595b98abe7b3e26e8070",
+      "description_sha256": "1cb78e6d630d1cf8a5da910a38d032a97e455337e091b24fe5222f7e725a14c2",
+      "expected": [
+        102,
+        103,
+        104,
+        105,
+        106
+      ],
+      "guided_ru": [],
+      "english": [
+        105
+      ],
+      "guided_ru_probabilities": {
+        "102": 0.11542599276149972,
+        "103": 0.106829671076795,
+        "104": 0.0991834434137103,
+        "105": 0.07925081587657341,
+        "106": 0.11805764602236926
+      },
+      "english_probabilities": {
+        "102": 0.1755567416095156,
+        "103": 0.18516922533131364,
+        "104": 0.18762704722648696,
+        "105": 0.9195514282242526,
+        "106": 0.16378833156326594
+      }
+    },
+    {
+      "group_id": "a9367676cf7529ed5ed708229f0d3a0a62dc4551457a83736834fe28ce94d3a3",
+      "description_sha256": "3a9886f88ec3add9b96b5cd674b47b70cd57257035ffaaf7cc667cd902ff24e0",
+      "expected": [
+        102,
+        103,
+        104,
+        105,
+        106
+      ],
+      "guided_ru": [],
+      "english": [
+        103
+      ],
+      "guided_ru_probabilities": {
+        "102": 0.08223569683421494,
+        "103": 0.06297211522361579,
+        "104": 0.20834783640486193,
+        "105": 0.25086882877865607,
+        "106": 0.10687731726898692
+      },
+      "english_probabilities": {
+        "102": 0.3669342202902177,
+        "103": 0.6779609139289385,
+        "104": 0.08168626811711945,
+        "105": 0.3547017579652555,
+        "106": 0.07744560401607233
+      }
+    },
+    {
+      "group_id": "7126c3e43d5c653471d5a681a0cced9057f52833c816f1741a79068a5bf9e076",
+      "description_sha256": "6f118006b0c7c726ea3c1567cfead1145d99f64fe46f18b3c6f3359ad7c55e72",
+      "expected": [
+        102,
+        103,
+        106
+      ],
+      "guided_ru": [],
+      "english": [
+        103,
+        106
+      ],
+      "guided_ru_probabilities": {
+        "102": 0.1352098187946082,
+        "103": 0.06478436821596917,
+        "104": 0.18227878095407415,
+        "105": 0.2117655912320831,
+        "106": 0.07693094765873304
+      },
+      "english_probabilities": {
+        "102": 0.3962479223650225,
+        "103": 0.8383348624812261,
+        "104": 0.09508392556238326,
+        "105": 0.10357231390861202,
+        "106": 0.7818062537783929
+      }
+    },
+    {
+      "group_id": "4b3e4c94f4a11577143c049b2354b4af9b6c2dee51abc6db1e03adf5a22920de",
+      "description_sha256": "e90f083750d184504eb026bfa12e1280843b1a60d8eaf3415bd1883d55bec5af",
+      "expected": [
+        102,
+        103,
+        104,
+        105,
+        106
+      ],
+      "guided_ru": [],
+      "english": [
+        105
+      ],
+      "guided_ru_probabilities": {
+        "102": 0.1084371601870988,
+        "103": 0.08681818501192343,
+        "104": 0.08711606957191469,
+        "105": 0.09221671430538292,
+        "106": 0.0849532192796531
+      },
+      "english_probabilities": {
+        "102": 0.290296860332335,
+        "103": 0.2622627549734677,
+        "104": 0.25968737289760524,
+        "105": 0.8192808765770747,
+        "106": 0.42853472859181124
+      }
+    },
+    {
+      "group_id": "3966fb2a80454d797a7d85ec2fc51608b41ceb1b17156da917cabc1fd57940ee",
+      "description_sha256": "547995dd01b28d4297668408931ebbe2ec9230bfc1f6b00690e575cefbf89f12",
+      "expected": [
+        102
+      ],
+      "guided_ru": [],
+      "english": [],
+      "guided_ru_probabilities": {
+        "102": 0.19904033311849234,
+        "103": 0.24427450581470966,
+        "104": 0.23427386216013743,
+        "105": 0.22307808318677336,
+        "106": 0.20099504378449498
+      },
+      "english_probabilities": {
+        "102": 0.12678052764605385,
+        "103": 0.09043286539776862,
+        "104": 0.0767586515629616,
+        "105": 0.09484532607796668,
+        "106": 0.08207630140904738
+      }
+    },
+    {
+      "group_id": "8237122985842673f3b45987f1fe84de2454baf24f4836506895a00d12cf54db",
+      "description_sha256": "708fdfba238cd1220840ec63663eb2326c5b23d251e1ff68fefdc4e09b3eca56",
+      "expected": [
+        102,
+        103,
+        104,
+        105,
+        106
+      ],
+      "guided_ru": [],
+      "english": [
+        105
+      ],
+      "guided_ru_probabilities": {
+        "102": 0.1508838448125748,
+        "103": 0.11289431650504153,
+        "104": 0.12476816989431327,
+        "105": 0.12478286771289405,
+        "106": 0.18951173464374724
+      },
+      "english_probabilities": {
+        "102": 0.15303375157945592,
+        "103": 0.13807811367215725,
+        "104": 0.42379157672885875,
+        "105": 0.9509845522648037,
+        "106": 0.21006855336039468
+      }
+    },
+    {
+      "group_id": "ca9c6abde9f006ab46a73a5701c59b4c473680cdd2d5887bafe2984b3f6b3b46",
+      "description_sha256": "243bb9555e1afb786aef63878706c846398b18846f67a0285a68dc30a7508f16",
+      "expected": [
+        103
+      ],
+      "guided_ru": [],
+      "english": [
+        103
+      ],
+      "guided_ru_probabilities": {
+        "102": 0.35485526820661734,
+        "103": 0.2923049173532316,
+        "104": 0.24876313160540225,
+        "105": 0.2170803877371124,
+        "106": 0.3359045377693947
+      },
+      "english_probabilities": {
+        "102": 0.4011969480779395,
+        "103": 0.905227924603323,
+        "104": 0.11644342252360113,
+        "105": 0.0882920347483228,
+        "106": 0.4747521401371803
+      }
+    },
+    {
+      "group_id": "c1e7e9f2b69ac9ab1940d8449706dc2787fed745dd44eba628a5d6217b816bf8",
+      "description_sha256": "31d62b1b52348ccd0282ca6aae524c250e0eb1985415dc2feba7b5af05f0d544",
+      "expected": [
+        103,
+        104,
+        105
+      ],
+      "guided_ru": [],
+      "english": [
+        104,
+        105
+      ],
+      "guided_ru_probabilities": {
+        "102": 0.21121830303142583,
+        "103": 0.1316772111070722,
+        "104": 0.09346563402328202,
+        "105": 0.09760429838539841,
+        "106": 0.2634263910505681
+      },
+      "english_probabilities": {
+        "102": 0.3223151900305406,
+        "103": 0.3015427358999096,
+        "104": 0.9126339893567958,
+        "105": 0.9632128646105517,
+        "106": 0.05166835837231434
+      }
+    },
+    {
+      "group_id": "d1c6217cf15ab633d19bdaafe1a8f832d30834e5c148db7deb47e6129a5b1be1",
+      "description_sha256": "d3cbb44627161eca3cf390102789a18b046a46f40d46a6402b4ed30afa7fa80b",
+      "expected": [
+        103
+      ],
+      "guided_ru": [],
+      "english": [
+        103,
+        104
+      ],
+      "guided_ru_probabilities": {
+        "102": 0.4899690201057544,
+        "103": 0.18331504702758297,
+        "104": 0.41012046721724366,
+        "105": 0.46679582208142134,
+        "106": 0.24189421690523363
+      },
+      "english_probabilities": {
+        "102": 0.11358636094090549,
+        "103": 0.9563398398995057,
+        "104": 0.7622143148125264,
+        "105": 0.07966532269834325,
+        "106": 0.0912780677854818
+      }
+    },
+    {
+      "group_id": "8aa325fe449b895723d399a89f41203f0ae70bda3ad862b269f2bf69cce4b7b4",
+      "description_sha256": "75ebbf4f3059f26d535d1b8a47fc9827b9084af4cfedf50d54bbb6d9f6f7e48e",
+      "expected": [
+        102,
+        103,
+        104,
+        106
+      ],
+      "guided_ru": [],
+      "english": [],
+      "guided_ru_probabilities": {
+        "102": 0.06939295935332125,
+        "103": 0.046849301025262226,
+        "104": 0.10506385895860146,
+        "105": 0.15937600105545813,
+        "106": 0.0489299787355563
+      },
+      "english_probabilities": {
+        "102": 0.3640547743413961,
+        "103": 0.16431254971046563,
+        "104": 0.09330265744326278,
+        "105": 0.10146582751932676,
+        "106": 0.49852969176189266
+      }
+    },
+    {
+      "group_id": "07492de87c4bf9b4661f8025c6a2c759175bb2bbd68fb75d09f106ef8e7808ba",
+      "description_sha256": "fac8dc3392c8a5fb5d823c7670ccb6ba1c127ad132a6dc711165a2da2660aa4e",
+      "expected": [
+        102,
+        103,
+        104,
+        105,
+        106
+      ],
+      "guided_ru": [],
+      "english": [
+        105
+      ],
+      "guided_ru_probabilities": {
+        "102": 0.11036345110959914,
+        "103": 0.07971043419101728,
+        "104": 0.0909297401843252,
+        "105": 0.07192617498311106,
+        "106": 0.10886462219734837
+      },
+      "english_probabilities": {
+        "102": 0.22025327324595334,
+        "103": 0.4995421768514278,
+        "104": 0.35343318343510827,
+        "105": 0.9255540370831334,
+        "106": 0.22920904745648596
+      }
+    }
+  ],
+  "guided_ru": {
+    "micro_f1": 0.0,
+    "classification_points": 0.0,
+    "tp": 0,
+    "fp": 0,
+    "fn": 40
+  },
+  "english": {
+    "micro_f1": 0.4528301886792453,
+    "classification_points": 27.169811320754718,
+    "tp": 12,
+    "fp": 1,
+    "fn": 28
+  },
+  "selection": "english selected by train-only F1 at fixed threshold 0.5; no threshold search; initial Russian test results preserved separately",
+  "known_limit": "12 nonempty train samples; diagnostic language check, not an unbiased performance estimate",
+  "runtime_smoke": {
+    "source": "https://github.com/feder-cr/jev#quickstart",
+    "request": {
+      "state": "My invoice shows a charge I do not recognize.",
+      "questions": {
+        "billing": {
+          "type": "noul",
+          "instructions": "Is this a billing problem?"
+        }
+      }
+    },
+    "response": {
+      "model": "jevos-v5",
+      "answers": {
+        "billing": {
+          "type": "noul",
+          "noul": 0.9722593331282239
+        }
+      },
+      "usage": {
+        "input_tokens": 28,
+        "output_tokens": 0
+      }
+    }
+  }
+}

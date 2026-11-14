@@ -14,6 +14,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
 import numpy as np
 
 from benchmark_support import ROOT, metadata, save_report, setup
+from database import table_sha256
 from main import MICROCATEGORIES
 from run import EvaluationRow, normalize_description, prepare_rows, read_records
 from subcategory_extraction.jev_calibrated.pipeline import (
@@ -23,12 +24,9 @@ from subcategory_extraction.semantic_encoder_f1.robust_thresholds import (
     binary_metrics, select_robust_thresholds, validation_groups,
 )
 
-TRAIN = ROOT / "docs/innoglobalhack_avito/public-train-annotated.jsonl"
+TRAIN_TABLE = "case_train"
 REPORT = ROOT / "src/subcategory_extraction/benchmarks/classifier_methods/jev-training-results.json"
-TESTS = (
-    ROOT / "docs/innoglobalhack_avito/public-test-dataset.parquet",
-    ROOT / "docs/improved_dataset/reviewed_test.parquet",
-)
+TEST_TABLES = ("case_test", "manual_test")
 SEED = 20261115
 SOURCE_MC_ID = 101
 CATEGORIES = [cid for cid in MICROCATEGORIES if cid != SOURCE_MC_ID]
@@ -37,7 +35,7 @@ logger = logging.getLogger(__name__)
 
 def split_groups(fit_size: int, control_size: int) -> tuple[list[EvaluationRow], list[EvaluationRow], dict]:
     """Разделить точные и близкие дубликаты, исключив группы с текстами test."""
-    original = read_records(TRAIN)
+    original = read_records(TRAIN_TABLE)
     unique: dict[str, dict] = {}
     for record in original:
         key = normalize_description(record["description"])
@@ -51,7 +49,7 @@ def split_groups(fit_size: int, control_size: int) -> tuple[list[EvaluationRow],
     groups = validation_groups(records)
     # Метки test не используются: нужны только тексты для исключения пересечений.
     protected = {normalize_description(row["description"])
-                 for path in TESTS for row in read_records(path)}
+                 for table in TEST_TABLES for row in read_records(table)}
     excluded = {int(group) for row, group in zip(rows, groups, strict=True)
                 if normalize_description(row.inp.description) in protected}
     representatives: dict[int, int] = {}
@@ -107,7 +105,7 @@ def main() -> int:
     args = parser.parse_args()
     if args.fit_size < 30 or args.control_size < 20:
         parser.error("Нужны fit >= 30 и control >= 20")
-    if args.report.resolve() in {TRAIN.resolve(), DEFAULT_CALIBRATION.resolve(), *TESTS}:
+    if args.report.resolve() == DEFAULT_CALIBRATION.resolve():
         parser.error("Отчёт не должен перезаписывать данные или калибровку")
     if args.report.name == "recorded-results.json":
         parser.error("Нельзя перезаписать исторические ответы")
@@ -117,8 +115,8 @@ def main() -> int:
     control_labels = np.array([[cid in row.expected for cid in CATEGORIES] for row in control], dtype=bool)
     report = {
         **metadata(), "status": "running", "mode": "train_only_prompt_threshold_selection",
-        "training_dataset": str(TRAIN.relative_to(ROOT)),
-        "training_sha256": hashlib.sha256(TRAIN.read_bytes()).hexdigest(),
+        "training_dataset": TRAIN_TABLE, "training_storage": "postgresql",
+        "training_sha256": table_sha256(TRAIN_TABLE),
         "grouping": grouping, "fit_rows": len(fit), "control_rows": len(control),
         "fit_positive_counts": dict(zip(CATEGORIES, fit_labels.sum(axis=0).tolist(), strict=True)),
         "test_labels_used_for_selection": False, "control_used_for_selection": False,
