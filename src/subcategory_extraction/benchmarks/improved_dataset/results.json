@@ -1,7 +1,7 @@
 {
-  "date": "2026-11-14T17:28:48+03:00",
-  "commit": "1c2a6f5c079df450f03561039321273d5f0e379b",
-  "code_sha256": "da785acab587d8e8fbe60c6553f2f9669c8a41278ee18c639c6500301287d686",
+  "date": "2026-11-14T17:44:56+03:00",
+  "commit": "3768d7620d45714391e655db34803d1243248533",
+  "code_sha256": "051dacd86e2f13ad7fb699c517df13b36f056c305949b7cc544a4860c24ce696",
   "working_tree": true,
   "status": "complete",
   "scenario": "improved_dataset",
@@ -10,8 +10,7 @@
     "dataset_sha256": "0af183508c1501425a1330675ceb8923dfe130fff3f86e418ebe3ec4baba34a2",
     "training_sha256": "d365141906cd7e2a1d66792aa2e37661d8bcdcd0a4bbaf3781649a9108238b76",
     "rows": 119,
-    "source_mc_id_assumption": 101,
-    "overlap_scope": "scenario reference train; published model trained on improved_dataset"
+    "source_mc_id_assumption": 101
   },
   "overlap": {
     "checked": true,
@@ -902,6 +901,693 @@
     }
   ],
   "results": {
+    "learned_keywords": {
+      "status": "completed",
+      "predicted": [
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        [],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        [
+          102
+        ],
+        [
+          104,
+          105
+        ],
+        [
+          102
+        ],
+        [
+          105,
+          106
+        ],
+        [
+          102,
+          104,
+          105
+        ],
+        [],
+        [
+          102,
+          103,
+          104,
+          105
+        ],
+        [
+          102
+        ],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        [
+          102
+        ],
+        [
+          102,
+          105
+        ],
+        [
+          102,
+          104,
+          105
+        ],
+        [
+          102,
+          103,
+          106
+        ],
+        [],
+        [
+          102
+        ],
+        [],
+        [],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        [
+          102
+        ],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        [
+          102,
+          104,
+          105
+        ],
+        [
+          102,
+          106
+        ],
+        [],
+        [
+          102,
+          103,
+          104,
+          106
+        ],
+        [
+          103
+        ],
+        [
+          102,
+          104,
+          105
+        ],
+        [
+          102
+        ],
+        [
+          102
+        ],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        [
+          102
+        ],
+        [
+          102,
+          103,
+          104
+        ],
+        [
+          102
+        ],
+        [
+          102
+        ],
+        [
+          102,
+          104,
+          105
+        ],
+        [
+          102,
+          103,
+          106
+        ],
+        [
+          102
+        ],
+        [
+          102
+        ],
+        [],
+        [
+          102
+        ],
+        [],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        [
+          102
+        ],
+        [
+          102
+        ],
+        [
+          104,
+          105
+        ],
+        [],
+        [],
+        [
+          102
+        ],
+        [],
+        [
+          102,
+          104,
+          105
+        ],
+        [
+          102
+        ],
+        [
+          102
+        ],
+        [
+          102,
+          104,
+          105
+        ],
+        [
+          102,
+          104,
+          105
+        ],
+        [],
+        [
+          102
+        ],
+        [
+          102,
+          103,
+          106
+        ],
+        [
+          102
+        ],
+        [
+          102
+        ],
+        [],
+        [
+          102,
+          104,
+          105
+        ],
+        [],
+        [],
+        [
+          102
+        ],
+        [],
+        [
+          102
+        ],
+        [
+          102,
+          103,
+          106
+        ],
+        [
+          105
+        ],
+        [],
+        [
+          102
+        ],
+        [
+          105
+        ],
+        [
+          102
+        ],
+        [
+          102
+        ],
+        [
+          102
+        ],
+        [
+          102,
+          104,
+          105
+        ],
+        [
+          102,
+          103
+        ],
+        [
+          102
+        ],
+        [
+          102
+        ],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        [
+          102
+        ],
+        [
+          102,
+          103
+        ],
+        [
+          102
+        ],
+        [
+          102,
+          106
+        ],
+        [
+          104,
+          105
+        ],
+        [
+          102
+        ],
+        [],
+        [
+          102,
+          104,
+          105
+        ],
+        [
+          102
+        ],
+        [],
+        [
+          102
+        ],
+        [
+          102
+        ],
+        [
+          102,
+          103,
+          106
+        ],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        [
+          102,
+          106
+        ],
+        [
+          102
+        ],
+        [
+          102
+        ],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        [
+          102
+        ],
+        [],
+        [],
+        [
+          102
+        ],
+        [
+          102,
+          103
+        ],
+        [],
+        [
+          102
+        ],
+        [
+          102,
+          103,
+          106
+        ],
+        [],
+        [
+          102
+        ],
+        [
+          104,
+          105
+        ],
+        [],
+        [
+          102
+        ],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        [
+          102
+        ]
+      ],
+      "metrics": {
+        "micro_f1": 0.8009478672985783,
+        "classification_points": 48.056872037914694,
+        "tp": 169,
+        "fp": 44,
+        "fn": 40
+      },
+      "model_provenance": {
+        "train": "docs/improved_dataset/train.jsonl",
+        "train_sha256": "d365141906cd7e2a1d66792aa2e37661d8bcdcd0a4bbaf3781649a9108238b76",
+        "rows": 4851,
+        "source_mc_id": 101,
+        "trained_categories": [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        "code_sha256": {
+          "pipeline.py": "21b98119dfc548e2582bba5b2a2903867da42b57aace58da3fe6bf14a32df65f",
+          "train.py": "e5c09f0580ebbdf2f9defbdf33ad1f07fca6f08b5be0db200638b9346ed9b925"
+        },
+        "model": "combined",
+        "keywords_per_category": 40,
+        "C": 4,
+        "max_iter": 500,
+        "threshold": 0.5,
+        "selection": "fixed before test; no validation or test tuning; all groups remain in train",
+        "python": "3.13.15",
+        "sklearn": "1.9.1",
+        "numpy": "2.5.4",
+        "artifact_sha256": "d06457a8c082171a096da05d18812528247c8c90e3c06157dc93e5ea6b65f3fa",
+        "keywords": {
+          "102": [
+            "стен",
+            "отделка",
+            "отделки",
+            "пола",
+            "отделочные",
+            "выравнивание",
+            "шпаклёвка",
+            "отделка квартир",
+            "штукатурка",
+            "отделочные работы",
+            "внутренняя",
+            "внутренняя отделка",
+            "выравнивание стен",
+            "отделку",
+            "обоев",
+            "потолков",
+            "ремонт комнаты",
+            "покраска",
+            "поклейка",
+            "поклейка обоев",
+            "помещения",
+            "укладка",
+            "комнат",
+            "ламината",
+            "стен потолков",
+            "покрытий",
+            "квартир ремонт",
+            "монтаж",
+            "покраска стен",
+            "отделке",
+            "мастер по",
+            "дверей",
+            "стяжка пола",
+            "по ремонту",
+            "капитальный",
+            "пенсионерам",
+            "квартир отделка",
+            "демонтаж",
+            "укладка ламината",
+            "ремонт квартир"
+          ],
+          "103": [
+            "плитки",
+            "укладка плитки",
+            "поклейка обоев",
+            "поклейка",
+            "обоев",
+            "штукатурка",
+            "керамогранита",
+            "ванной",
+            "укладка",
+            "ламината",
+            "ремонт ванной",
+            "плитки керамогранита",
+            "санузла",
+            "укладка ламината",
+            "покраска стен",
+            "ванной комнаты",
+            "сантехнические",
+            "установка",
+            "сантехнические работы",
+            "стяжка",
+            "потолков",
+            "кварцвинила",
+            "кухни",
+            "гипсокартона",
+            "капитальный",
+            "ремонт санузла",
+            "выравнивание",
+            "дверей",
+            "чистовая",
+            "покраска",
+            "чистовая отделка",
+            "косметический",
+            "сантехники",
+            "санузлов",
+            "стен потолков",
+            "капитальный ремонт",
+            "линолеума",
+            "стяжка пола",
+            "ремонт кухни",
+            "черновая"
+          ],
+          "104": [
+            "плитки",
+            "ремонт ванной",
+            "укладка плитки",
+            "сантехнические",
+            "сантехники",
+            "сантехнические работы",
+            "ванной",
+            "стяжка",
+            "санузла",
+            "установка",
+            "дверей",
+            "ванной комнаты",
+            "керамогранита",
+            "сантехника",
+            "стяжка пола",
+            "чистовая",
+            "чистовая отделка",
+            "капитальный",
+            "черновая",
+            "разводка",
+            "плитки керамогранита",
+            "кухни",
+            "ремонт санузла",
+            "штукатурка",
+            "канализации",
+            "капитальный ремонт",
+            "санузлов",
+            "ремонт кухни",
+            "косметический",
+            "черновая чистовая",
+            "гипсокартона",
+            "электрика",
+            "черновая отделка",
+            "потолков",
+            "новостройке",
+            "обоев",
+            "жилья",
+            "кухни ремонт",
+            "поклейка обоев",
+            "электрики"
+          ],
+          "105": [
+            "дверей",
+            "стяжка",
+            "сантехнические",
+            "сантехнические работы",
+            "установка",
+            "стяжка пола",
+            "плитки",
+            "укладка плитки",
+            "черновая",
+            "сантехника",
+            "электрика",
+            "штукатурка",
+            "сантехники",
+            "чистовая отделка",
+            "чистовая",
+            "разводка",
+            "плитки керамогранита",
+            "розеток",
+            "капитальный",
+            "электрики",
+            "ремонт ванной",
+            "керамогранита",
+            "санузла",
+            "межкомнатных дверей",
+            "черновая чистовая",
+            "потолков",
+            "черновая отделка",
+            "межкомнатных",
+            "косметический",
+            "гипсокартона",
+            "установка межкомнатных",
+            "обоев",
+            "капитальный ремонт",
+            "поклейка обоев",
+            "вторичного",
+            "выключателей",
+            "ремонт вторичного",
+            "вторичного жилья",
+            "поклейка",
+            "ванной"
+          ],
+          "106": [
+            "покраска",
+            "обоев",
+            "шпаклёвка",
+            "поклейка",
+            "поклейка обоев",
+            "штукатурка",
+            "ламината",
+            "покраска стен",
+            "отделка квартир",
+            "мастер по",
+            "стен",
+            "укладка ламината",
+            "ремонт комнаты",
+            "покрытий",
+            "квартир ремонт",
+            "дверей",
+            "выравнивание стен",
+            "квартир отделка",
+            "пола",
+            "отделочные работы",
+            "ищут",
+            "укладка",
+            "гипсокартона",
+            "кварцвинила",
+            "выравнивание",
+            "пенсионерам",
+            "напольных",
+            "комнат",
+            "потолков",
+            "перегородок",
+            "отделочные",
+            "шпаклёвка стен",
+            "помещения",
+            "по ремонту",
+            "малярные",
+            "линолеума",
+            "напольных покрытий",
+            "стен потолков",
+            "мастер",
+            "малярные работы"
+          ]
+        },
+        "module": "learned_keywords",
+        "model_commit": "3768d7620d45714391e655db34803d1243248533",
+        "platform": "macOS-27.0.1-arm64-arm-64bit-Mach-O",
+        "scipy": "1.18.1",
+        "threads": {
+          "OMP_NUM_THREADS": 1,
+          "OPENBLAS_NUM_THREADS": 1
+        },
+        "artifact": "src/subcategory_extraction/learned_keywords/artifacts/learned-keywords.json"
+      }
+    },
     "semantic_encoder_f1": {
       "status": "completed",
       "predicted": [
@@ -1331,72 +2017,109 @@
         "tp": 183,
         "fp": 35,
         "fn": 26
+      },
+      "measurement_metadata": {
+        "date": "2026-11-14T17:28:48+03:00",
+        "commit": "1c2a6f5c079df450f03561039321273d5f0e379b",
+        "code_sha256": "da785acab587d8e8fbe60c6553f2f9669c8a41278ee18c639c6500301287d686",
+        "working_tree": true,
+        "status": "complete",
+        "scenario": "improved_dataset",
+        "mode": "pipeline_run",
+        "protocol": {
+          "dataset_sha256": "0af183508c1501425a1330675ceb8923dfe130fff3f86e418ebe3ec4baba34a2",
+          "training_sha256": "d365141906cd7e2a1d66792aa2e37661d8bcdcd0a4bbaf3781649a9108238b76",
+          "rows": 119,
+          "source_mc_id_assumption": 101,
+          "overlap_scope": "scenario reference train; published model trained on improved_dataset"
+        },
+        "overlap": {
+          "checked": true,
+          "method": "normalized_exact_description",
+          "training_dataset": "/Users/arsenijsekin/Documents/Codex/2026-11-13/https-github-com-one-zero-eight/hackathon-innoglobalhack-avito/docs/improved_dataset/train.jsonl",
+          "overlapping_rows": 0,
+          "row_numbers": []
+        },
+        "model_provenance": {
+          "source_commit": "1c2a6f5c079df450f03561039321273d5f0e379b",
+          "synced_main_commit": "3144889",
+          "artifact": "src/subcategory_extraction/semantic_encoder_f1/artifacts",
+          "artifact_files": {
+            "metadata.json": {
+              "bytes": 2214,
+              "sha256": "d523ce9fd906ede91463053c94d664c5ae04b40b1588ce2802e5be0eb2d330f9"
+            },
+            "calibration.json": {
+              "bytes": 12237,
+              "sha256": "08810b988729fc370d1c03677c38430a27da8a9501d9d6edc5d9532bd0e1dee4"
+            },
+            "head.safetensors": {
+              "bytes": 7672,
+              "sha256": "81f56fffeaf4a5460e36b362b3e7d3e804a1579a9f8b7ae6adeb357d3da4772b"
+            },
+            "encoder/config.json": {
+              "bytes": 630,
+              "sha256": "5d75152afedf12d8b30edf67fc9fdd0eedf9578a70679373db46ba94256335a0"
+            },
+            "encoder/model.safetensors": {
+              "bytes": 116781184,
+              "sha256": "9fc639dd6813e8481b7d21577924df1973636e38e5992bba20f06700b2d0ada1"
+            },
+            "tokenizer/tokenizer_config.json": {
+              "bytes": 1458,
+              "sha256": "71b22b163773e6d2a3bc53236a6dca9245f2e0422b09e2d9597dbf02825c7135"
+            },
+            "tokenizer/special_tokens_map.json": {
+              "bytes": 695,
+              "sha256": "5d5b662e421ea9fac075174bb0688ee0d9431699900b90662acd44b2a350503a"
+            },
+            "tokenizer/tokenizer.json": {
+              "bytes": 2413438,
+              "sha256": "b6a9f282c732603652189b1fc2f32a2e2578b43927c5cf44a2e3585631419bb0"
+            },
+            "tokenizer/vocab.txt": {
+              "bytes": 1080667,
+              "sha256": "f056a69b097422652053bf87565c35543e5d81540ca4b7dddd28de4157a969e0"
+            }
+          },
+          "device": "cpu",
+          "torch_version": "2.15.0",
+          "transformers_version": "4.57.6",
+          "torch_num_threads": 1,
+          "platform": "macOS-27.0.1-arm64-arm-64bit-Mach-O",
+          "machine": "arm64",
+          "environment": {
+            "OMP_NUM_THREADS": "1",
+            "MKL_NUM_THREADS": "1",
+            "TOKENIZERS_PARALLELISM": "false",
+            "RUBERT_F1_DEVICE": "cpu"
+          },
+          "selection": "published weights and thresholds unchanged; no training or test tuning",
+          "training_source_dataset": "docs/improved_dataset/train.jsonl",
+          "training_source_sha256": "d365141906cd7e2a1d66792aa2e37661d8bcdcd0a4bbaf3781649a9108238b76"
+        },
+        "model_training_overlap": {
+          "checked": true,
+          "method": "normalized_exact_description",
+          "training_dataset": "docs/improved_dataset/train.jsonl",
+          "overlapping_rows": 0,
+          "row_numbers": []
+        }
       }
     }
   },
-  "model_provenance": {
-    "source_commit": "1c2a6f5c079df450f03561039321273d5f0e379b",
-    "synced_main_commit": "3144889",
-    "artifact": "src/subcategory_extraction/semantic_encoder_f1/artifacts",
-    "artifact_files": {
-      "metadata.json": {
-        "bytes": 2214,
-        "sha256": "d523ce9fd906ede91463053c94d664c5ae04b40b1588ce2802e5be0eb2d330f9"
-      },
-      "calibration.json": {
-        "bytes": 12237,
-        "sha256": "08810b988729fc370d1c03677c38430a27da8a9501d9d6edc5d9532bd0e1dee4"
-      },
-      "head.safetensors": {
-        "bytes": 7672,
-        "sha256": "81f56fffeaf4a5460e36b362b3e7d3e804a1579a9f8b7ae6adeb357d3da4772b"
-      },
-      "encoder/config.json": {
-        "bytes": 630,
-        "sha256": "5d75152afedf12d8b30edf67fc9fdd0eedf9578a70679373db46ba94256335a0"
-      },
-      "encoder/model.safetensors": {
-        "bytes": 116781184,
-        "sha256": "9fc639dd6813e8481b7d21577924df1973636e38e5992bba20f06700b2d0ada1"
-      },
-      "tokenizer/tokenizer_config.json": {
-        "bytes": 1458,
-        "sha256": "71b22b163773e6d2a3bc53236a6dca9245f2e0422b09e2d9597dbf02825c7135"
-      },
-      "tokenizer/special_tokens_map.json": {
-        "bytes": 695,
-        "sha256": "5d5b662e421ea9fac075174bb0688ee0d9431699900b90662acd44b2a350503a"
-      },
-      "tokenizer/tokenizer.json": {
-        "bytes": 2413438,
-        "sha256": "b6a9f282c732603652189b1fc2f32a2e2578b43927c5cf44a2e3585631419bb0"
-      },
-      "tokenizer/vocab.txt": {
-        "bytes": 1080667,
-        "sha256": "f056a69b097422652053bf87565c35543e5d81540ca4b7dddd28de4157a969e0"
-      }
-    },
-    "device": "cpu",
-    "torch_version": "2.15.0",
-    "transformers_version": "4.57.6",
-    "torch_num_threads": 1,
-    "platform": "macOS-27.0.1-arm64-arm-64bit-Mach-O",
-    "machine": "arm64",
-    "environment": {
-      "OMP_NUM_THREADS": "1",
-      "MKL_NUM_THREADS": "1",
-      "TOKENIZERS_PARALLELISM": "false",
-      "RUBERT_F1_DEVICE": "cpu"
-    },
-    "selection": "published weights and thresholds unchanged; no training or test tuning",
-    "training_source_dataset": "docs/improved_dataset/train.jsonl",
-    "training_source_sha256": "d365141906cd7e2a1d66792aa2e37661d8bcdcd0a4bbaf3781649a9108238b76"
-  },
   "model_training_overlap": {
-    "checked": true,
-    "method": "normalized_exact_description",
-    "training_dataset": "docs/improved_dataset/train.jsonl",
-    "overlapping_rows": 0,
-    "row_numbers": []
+    "actual_training_overlap": {
+      "checked": true,
+      "method": "normalized_exact_description",
+      "training_dataset": "/Users/arsenijsekin/Documents/Codex/2026-11-13/https-github-com-one-zero-eight/hackathon-innoglobalhack-avito/docs/improved_dataset/train.jsonl",
+      "overlapping_rows": 0,
+      "row_numbers": []
+    },
+    "near_overlap": {
+      "method": "word_set_jaccard >= 0.9; heuristic, not exhaustive semantic search",
+      "overlapping_rows": 0,
+      "row_numbers": []
+    }
   }
 }

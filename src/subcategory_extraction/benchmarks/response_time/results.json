@@ -1,11 +1,377 @@
 {
-  "date": "2026-11-14T17:29:05+03:00",
-  "commit": "1c2a6f5c079df450f03561039321273d5f0e379b",
-  "code_sha256": "da785acab587d8e8fbe60c6553f2f9669c8a41278ee18c639c6500301287d686",
+  "date": "2026-11-14T17:45:19+03:00",
+  "commit": "3768d7620d45714391e655db34803d1243248533",
+  "code_sha256": "051dacd86e2f13ad7fb699c517df13b36f056c305949b7cc544a4860c24ce696",
   "working_tree": true,
   "sample_seed": 44,
   "sample_size": 10,
   "results": {
+    "learned_keywords": {
+      "status": "complete",
+      "model": "learned_keywords",
+      "rows": [
+        {
+          "group_id": "1755d70b12029ca196b7b0db67ab296db96a38e58bfa37db4f9eddc1e435d87e",
+          "seconds": 0.003558875061571598,
+          "predicted": [
+            102,
+            103,
+            104,
+            105,
+            106
+          ]
+        },
+        {
+          "group_id": "df3453fa719bcc9c4120f73540192a23c48886d1d05117214da3af68fdc290c9",
+          "seconds": 0.002023667097091675,
+          "predicted": [
+            102,
+            103,
+            104,
+            105,
+            106
+          ]
+        },
+        {
+          "group_id": "270d30c0fee5b8ec5ce8309bc25a5dec6f0a874bdf86a75c9e6c29d1a30c80b1",
+          "seconds": 0.0019034580327570438,
+          "predicted": [
+            102,
+            103,
+            104,
+            105,
+            106
+          ]
+        },
+        {
+          "group_id": "716b71093f6ffcb8457d664a34eaeafd6b20130cfc8a637d2324960aea030387",
+          "seconds": 0.00132116605527699,
+          "predicted": [
+            102,
+            103,
+            106
+          ]
+        },
+        {
+          "group_id": "8d8689783ae7b2d19ae5d3e5a199cea32bf1458a91a5936230bdc502c4051cdf",
+          "seconds": 0.0011360419448465109,
+          "predicted": [
+            102,
+            103,
+            104,
+            105,
+            106
+          ]
+        },
+        {
+          "group_id": "bdcf8534a4ad2c0f2d370814f3b22e61e250e397c60d1c1dc45b54364947a03d",
+          "seconds": 0.0017475001513957977,
+          "predicted": [
+            102,
+            103,
+            104,
+            105,
+            106
+          ]
+        },
+        {
+          "group_id": "5524cc0b4bc58d27f2d87abc371da359477b802a890b3d21bc34fc51e0214caa",
+          "seconds": 0.0012545830104500055,
+          "predicted": [
+            102,
+            103,
+            104,
+            105,
+            106
+          ]
+        },
+        {
+          "group_id": "01feb66f2e21c5fb187fedd281f87e93c750cae9f62dd731f95d32ec0e2c0807",
+          "seconds": 0.0013702919241040945,
+          "predicted": [
+            102,
+            103,
+            104,
+            105,
+            106
+          ]
+        },
+        {
+          "group_id": "1f07801ecf1efcabe5f51f854601df2993b41894476fb12115c72242d382ab08",
+          "seconds": 0.0016746658366173506,
+          "predicted": [
+            102,
+            104,
+            105
+          ]
+        },
+        {
+          "group_id": "b06fa5d52b80f154594a544c282106fb90f32dccc057b670b9ad89a60e27d185",
+          "seconds": 0.0013051668647676706,
+          "predicted": [
+            102,
+            106
+          ]
+        }
+      ],
+      "response_time": {
+        "calls": 10,
+        "total_seconds": 0.017295415978878736,
+        "mean_seconds": 0.0017295415978878736,
+        "median_seconds": 0.0015224788803607225,
+        "p95_seconds": 0.002868031477555631,
+        "min_seconds": 0.0011360419448465109,
+        "max_seconds": 0.003558875061571598
+      },
+      "model_provenance": {
+        "train": "docs/improved_dataset/train.jsonl",
+        "train_sha256": "d365141906cd7e2a1d66792aa2e37661d8bcdcd0a4bbaf3781649a9108238b76",
+        "rows": 4851,
+        "source_mc_id": 101,
+        "trained_categories": [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        "code_sha256": {
+          "pipeline.py": "21b98119dfc548e2582bba5b2a2903867da42b57aace58da3fe6bf14a32df65f",
+          "train.py": "e5c09f0580ebbdf2f9defbdf33ad1f07fca6f08b5be0db200638b9346ed9b925"
+        },
+        "model": "combined",
+        "keywords_per_category": 40,
+        "C": 4,
+        "max_iter": 500,
+        "threshold": 0.5,
+        "selection": "fixed before test; no validation or test tuning; all groups remain in train",
+        "python": "3.13.15",
+        "sklearn": "1.9.1",
+        "numpy": "2.5.4",
+        "artifact_sha256": "d06457a8c082171a096da05d18812528247c8c90e3c06157dc93e5ea6b65f3fa",
+        "keywords": {
+          "102": [
+            "стен",
+            "отделка",
+            "отделки",
+            "пола",
+            "отделочные",
+            "выравнивание",
+            "шпаклёвка",
+            "отделка квартир",
+            "штукатурка",
+            "отделочные работы",
+            "внутренняя",
+            "внутренняя отделка",
+            "выравнивание стен",
+            "отделку",
+            "обоев",
+            "потолков",
+            "ремонт комнаты",
+            "покраска",
+            "поклейка",
+            "поклейка обоев",
+            "помещения",
+            "укладка",
+            "комнат",
+            "ламината",
+            "стен потолков",
+            "покрытий",
+            "квартир ремонт",
+            "монтаж",
+            "покраска стен",
+            "отделке",
+            "мастер по",
+            "дверей",
+            "стяжка пола",
+            "по ремонту",
+            "капитальный",
+            "пенсионерам",
+            "квартир отделка",
+            "демонтаж",
+            "укладка ламината",
+            "ремонт квартир"
+          ],
+          "103": [
+            "плитки",
+            "укладка плитки",
+            "поклейка обоев",
+            "поклейка",
+            "обоев",
+            "штукатурка",
+            "керамогранита",
+            "ванной",
+            "укладка",
+            "ламината",
+            "ремонт ванной",
+            "плитки керамогранита",
+            "санузла",
+            "укладка ламината",
+            "покраска стен",
+            "ванной комнаты",
+            "сантехнические",
+            "установка",
+            "сантехнические работы",
+            "стяжка",
+            "потолков",
+            "кварцвинила",
+            "кухни",
+            "гипсокартона",
+            "капитальный",
+            "ремонт санузла",
+            "выравнивание",
+            "дверей",
+            "чистовая",
+            "покраска",
+            "чистовая отделка",
+            "косметический",
+            "сантехники",
+            "санузлов",
+            "стен потолков",
+            "капитальный ремонт",
+            "линолеума",
+            "стяжка пола",
+            "ремонт кухни",
+            "черновая"
+          ],
+          "104": [
+            "плитки",
+            "ремонт ванной",
+            "укладка плитки",
+            "сантехнические",
+            "сантехники",
+            "сантехнические работы",
+            "ванной",
+            "стяжка",
+            "санузла",
+            "установка",
+            "дверей",
+            "ванной комнаты",
+            "керамогранита",
+            "сантехника",
+            "стяжка пола",
+            "чистовая",
+            "чистовая отделка",
+            "капитальный",
+            "черновая",
+            "разводка",
+            "плитки керамогранита",
+            "кухни",
+            "ремонт санузла",
+            "штукатурка",
+            "канализации",
+            "капитальный ремонт",
+            "санузлов",
+            "ремонт кухни",
+            "косметический",
+            "черновая чистовая",
+            "гипсокартона",
+            "электрика",
+            "черновая отделка",
+            "потолков",
+            "новостройке",
+            "обоев",
+            "жилья",
+            "кухни ремонт",
+            "поклейка обоев",
+            "электрики"
+          ],
+          "105": [
+            "дверей",
+            "стяжка",
+            "сантехнические",
+            "сантехнические работы",
+            "установка",
+            "стяжка пола",
+            "плитки",
+            "укладка плитки",
+            "черновая",
+            "сантехника",
+            "электрика",
+            "штукатурка",
+            "сантехники",
+            "чистовая отделка",
+            "чистовая",
+            "разводка",
+            "плитки керамогранита",
+            "розеток",
+            "капитальный",
+            "электрики",
+            "ремонт ванной",
+            "керамогранита",
+            "санузла",
+            "межкомнатных дверей",
+            "черновая чистовая",
+            "потолков",
+            "черновая отделка",
+            "межкомнатных",
+            "косметический",
+            "гипсокартона",
+            "установка межкомнатных",
+            "обоев",
+            "капитальный ремонт",
+            "поклейка обоев",
+            "вторичного",
+            "выключателей",
+            "ремонт вторичного",
+            "вторичного жилья",
+            "поклейка",
+            "ванной"
+          ],
+          "106": [
+            "покраска",
+            "обоев",
+            "шпаклёвка",
+            "поклейка",
+            "поклейка обоев",
+            "штукатурка",
+            "ламината",
+            "покраска стен",
+            "отделка квартир",
+            "мастер по",
+            "стен",
+            "укладка ламината",
+            "ремонт комнаты",
+            "покрытий",
+            "квартир ремонт",
+            "дверей",
+            "выравнивание стен",
+            "квартир отделка",
+            "пола",
+            "отделочные работы",
+            "ищут",
+            "укладка",
+            "гипсокартона",
+            "кварцвинила",
+            "выравнивание",
+            "пенсионерам",
+            "напольных",
+            "комнат",
+            "потолков",
+            "перегородок",
+            "отделочные",
+            "шпаклёвка стен",
+            "помещения",
+            "по ремонту",
+            "малярные",
+            "линолеума",
+            "напольных покрытий",
+            "стен потолков",
+            "мастер",
+            "малярные работы"
+          ]
+        },
+        "module": "learned_keywords",
+        "model_commit": "3768d7620d45714391e655db34803d1243248533",
+        "platform": "macOS-27.0.1-arm64-arm-64bit-Mach-O",
+        "scipy": "1.18.1",
+        "threads": {
+          "OMP_NUM_THREADS": 1,
+          "OPENBLAS_NUM_THREADS": 1
+        },
+        "artifact": "src/subcategory_extraction/learned_keywords/artifacts/learned-keywords.json"
+      }
+    },
     "semantic_encoder_f1": {
       "status": "complete",
       "model": "semantic_encoder_f1",
@@ -123,77 +489,97 @@
         "p95_seconds": 0.08119061439065262,
         "min_seconds": 0.0031017090659588575,
         "max_seconds": 0.08641633298248053
+      },
+      "measurement_metadata": {
+        "date": "2026-11-14T17:29:05+03:00",
+        "commit": "1c2a6f5c079df450f03561039321273d5f0e379b",
+        "code_sha256": "da785acab587d8e8fbe60c6553f2f9669c8a41278ee18c639c6500301287d686",
+        "working_tree": true,
+        "sample_seed": 44,
+        "sample_size": 10,
+        "status": "complete",
+        "model_provenance": {
+          "source_commit": "1c2a6f5c079df450f03561039321273d5f0e379b",
+          "synced_main_commit": "3144889",
+          "artifact": "src/subcategory_extraction/semantic_encoder_f1/artifacts",
+          "artifact_files": {
+            "metadata.json": {
+              "bytes": 2214,
+              "sha256": "d523ce9fd906ede91463053c94d664c5ae04b40b1588ce2802e5be0eb2d330f9"
+            },
+            "calibration.json": {
+              "bytes": 12237,
+              "sha256": "08810b988729fc370d1c03677c38430a27da8a9501d9d6edc5d9532bd0e1dee4"
+            },
+            "head.safetensors": {
+              "bytes": 7672,
+              "sha256": "81f56fffeaf4a5460e36b362b3e7d3e804a1579a9f8b7ae6adeb357d3da4772b"
+            },
+            "encoder/config.json": {
+              "bytes": 630,
+              "sha256": "5d75152afedf12d8b30edf67fc9fdd0eedf9578a70679373db46ba94256335a0"
+            },
+            "encoder/model.safetensors": {
+              "bytes": 116781184,
+              "sha256": "9fc639dd6813e8481b7d21577924df1973636e38e5992bba20f06700b2d0ada1"
+            },
+            "tokenizer/tokenizer_config.json": {
+              "bytes": 1458,
+              "sha256": "71b22b163773e6d2a3bc53236a6dca9245f2e0422b09e2d9597dbf02825c7135"
+            },
+            "tokenizer/special_tokens_map.json": {
+              "bytes": 695,
+              "sha256": "5d5b662e421ea9fac075174bb0688ee0d9431699900b90662acd44b2a350503a"
+            },
+            "tokenizer/tokenizer.json": {
+              "bytes": 2413438,
+              "sha256": "b6a9f282c732603652189b1fc2f32a2e2578b43927c5cf44a2e3585631419bb0"
+            },
+            "tokenizer/vocab.txt": {
+              "bytes": 1080667,
+              "sha256": "f056a69b097422652053bf87565c35543e5d81540ca4b7dddd28de4157a969e0"
+            }
+          },
+          "device": "cpu",
+          "torch_version": "2.15.0",
+          "transformers_version": "4.57.6",
+          "torch_num_threads": 1,
+          "platform": "macOS-27.0.1-arm64-arm-64bit-Mach-O",
+          "machine": "arm64",
+          "environment": {
+            "OMP_NUM_THREADS": "1",
+            "MKL_NUM_THREADS": "1",
+            "TOKENIZERS_PARALLELISM": "false",
+            "RUBERT_F1_DEVICE": "cpu"
+          },
+          "selection": "published weights and thresholds unchanged; no training or test tuning",
+          "training_source_dataset": "docs/improved_dataset/train.jsonl",
+          "training_source_sha256": "d365141906cd7e2a1d66792aa2e37661d8bcdcd0a4bbaf3781649a9108238b76"
+        },
+        "timing_scope": {
+          "model_loading": false,
+          "data_loading": false,
+          "warmup": false,
+          "first_call_included": true,
+          "cache": "no prediction cache",
+          "quota_waits": false,
+          "retries": false,
+          "p95_method": "numpy.percentile linear interpolation"
+        },
+        "training_dataset_sha256": "b7118d68086624fbeab43839f22a635d4e325e4ee339f22d4aa0ad3c2e986615"
       }
     }
   },
   "status": "complete",
-  "model_provenance": {
-    "source_commit": "1c2a6f5c079df450f03561039321273d5f0e379b",
-    "synced_main_commit": "3144889",
-    "artifact": "src/subcategory_extraction/semantic_encoder_f1/artifacts",
-    "artifact_files": {
-      "metadata.json": {
-        "bytes": 2214,
-        "sha256": "d523ce9fd906ede91463053c94d664c5ae04b40b1588ce2802e5be0eb2d330f9"
-      },
-      "calibration.json": {
-        "bytes": 12237,
-        "sha256": "08810b988729fc370d1c03677c38430a27da8a9501d9d6edc5d9532bd0e1dee4"
-      },
-      "head.safetensors": {
-        "bytes": 7672,
-        "sha256": "81f56fffeaf4a5460e36b362b3e7d3e804a1579a9f8b7ae6adeb357d3da4772b"
-      },
-      "encoder/config.json": {
-        "bytes": 630,
-        "sha256": "5d75152afedf12d8b30edf67fc9fdd0eedf9578a70679373db46ba94256335a0"
-      },
-      "encoder/model.safetensors": {
-        "bytes": 116781184,
-        "sha256": "9fc639dd6813e8481b7d21577924df1973636e38e5992bba20f06700b2d0ada1"
-      },
-      "tokenizer/tokenizer_config.json": {
-        "bytes": 1458,
-        "sha256": "71b22b163773e6d2a3bc53236a6dca9245f2e0422b09e2d9597dbf02825c7135"
-      },
-      "tokenizer/special_tokens_map.json": {
-        "bytes": 695,
-        "sha256": "5d5b662e421ea9fac075174bb0688ee0d9431699900b90662acd44b2a350503a"
-      },
-      "tokenizer/tokenizer.json": {
-        "bytes": 2413438,
-        "sha256": "b6a9f282c732603652189b1fc2f32a2e2578b43927c5cf44a2e3585631419bb0"
-      },
-      "tokenizer/vocab.txt": {
-        "bytes": 1080667,
-        "sha256": "f056a69b097422652053bf87565c35543e5d81540ca4b7dddd28de4157a969e0"
-      }
-    },
-    "device": "cpu",
-    "torch_version": "2.15.0",
-    "transformers_version": "4.57.6",
-    "torch_num_threads": 1,
-    "platform": "macOS-27.0.1-arm64-arm-64bit-Mach-O",
-    "machine": "arm64",
-    "environment": {
-      "OMP_NUM_THREADS": "1",
-      "MKL_NUM_THREADS": "1",
-      "TOKENIZERS_PARALLELISM": "false",
-      "RUBERT_F1_DEVICE": "cpu"
-    },
-    "selection": "published weights and thresholds unchanged; no training or test tuning",
-    "training_source_dataset": "docs/improved_dataset/train.jsonl",
-    "training_source_sha256": "d365141906cd7e2a1d66792aa2e37661d8bcdcd0a4bbaf3781649a9108238b76"
-  },
   "timing_scope": {
-    "model_loading": false,
-    "data_loading": false,
-    "warmup": false,
+    "model_loading_included": false,
+    "dataset_loading_included": false,
     "first_call_included": true,
-    "cache": "no prediction cache",
+    "warmup": false,
+    "prediction_cache": false,
     "quota_waits": false,
     "retries": false,
-    "p95_method": "numpy.percentile linear interpolation"
-  },
-  "training_dataset_sha256": "b7118d68086624fbeab43839f22a635d4e325e4ee339f22d4aa0ad3c2e986615"
+    "percentile": "numpy linear",
+    "sample": "10 original-train validation groups, seed=44; latency only, not held-out quality"
+  }
 }
