@@ -52,7 +52,8 @@ src/<service>/<module>/
 Доступны `subcategory_extraction/google_decision`, `tfidf`, `jev`, `jev_tfidf`,
 `jev_retrieval`, `evidence_jev`, `jev_arbiter`, `semantic_encoder`,
 `semantic_encoder_calibrated`, `semantic_encoder_f1`, `jev_boundaries`,
-[qwen_decision](src/subcategory_extraction/qwen_decision/README.md).
+[qwen_decision](src/subcategory_extraction/qwen_decision/README.md),
+[jev_calibrated](src/subcategory_extraction/jev_calibrated/README.md).
 Доступен генератор `draft_generation/sample_llm`. `null` означает, что модуль
 не выбран. CLI выдаёт явную ошибку.
 
@@ -61,6 +62,11 @@ src/<service>/<module>/
 `JEV_ENDPOINT=https://api.selectel.ru/aig/v1/decisions`.
 Задайте отдельный `SELECTEL_API_KEY` в `.env`; детали — в
 [README Jev](src/subcategory_extraction/jev/README.md).
+Доступен экспериментальный [jev_calibrated](src/subcategory_extraction/jev_calibrated/README.md):
+минимальный промпт и порог 0.635 выбраны по train-группам; control micro-F1
+0.926829 → 0.939759. На официальном test: 0.842415 → 0.844376,
+на диагностическом: 0.816754 → 0.775068. Из-за этого компромисса по умолчанию
+сохранён прежний `jev`; эксперимент включается явно через config.json.
 Новый Selectel-прогон: micro-F1 0.842415 на исходных 208 строках и
 0.816754 на 119 диагностических; среднее время run() на 10 входах — 1.026307 с.
 Данные и ограничения — в бенчмарках ниже.

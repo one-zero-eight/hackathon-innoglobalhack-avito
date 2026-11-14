@@ -1,7 +1,7 @@
 {
-  "date": "2026-11-14T20:57:50+03:00",
-  "commit": "8c6fe87d8c63b7072bbad7aef71670f74ca1c6bb",
-  "code_sha256": "2d9d3f604557db6688508e60449f09e3ef1383dac1cf3d0ee536a2c334927a83",
+  "date": "2026-11-15T01:27:43+03:00",
+  "commit": "6802b41bdcb9b27320bf4ee31621d761a5b6b13a",
+  "code_sha256": "4d3992446013ace7e9001307c5adc0af4b1f1243427ba01cbd853d77cfb60dde",
   "working_tree": true,
   "status": "complete",
   "scenario": "improved_dataset",
@@ -7734,6 +7734,3332 @@
           "training_dataset": "/home/zolotarev/PycharmProjects/hackathon-innoglobalhack-avito/docs/improved_dataset/train.jsonl",
           "overlapping_rows": 0,
           "row_numbers": []
+        }
+      }
+    },
+    "jev_calibrated": {
+      "status": "completed",
+      "predicted": [
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        [],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        [
+          104,
+          105,
+          106
+        ],
+        [
+          102
+        ],
+        [
+          104,
+          105
+        ],
+        [],
+        [
+          105,
+          106
+        ],
+        [
+          102,
+          104,
+          105
+        ],
+        [],
+        [
+          103,
+          104,
+          105
+        ],
+        [],
+        [
+          102,
+          104,
+          105,
+          106
+        ],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        [],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        [
+          103,
+          106
+        ],
+        [],
+        [],
+        [],
+        [],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        [],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        [
+          103,
+          104,
+          105
+        ],
+        [
+          102,
+          106
+        ],
+        [],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        [
+          103
+        ],
+        [
+          104,
+          105
+        ],
+        [
+          102
+        ],
+        [],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        [],
+        [],
+        [],
+        [],
+        [
+          104,
+          105
+        ],
+        [
+          102,
+          106
+        ],
+        [
+          103
+        ],
+        [],
+        [],
+        [],
+        [
+          102
+        ],
+        [
+          104,
+          105,
+          106
+        ],
+        [],
+        [],
+        [
+          104,
+          105
+        ],
+        [],
+        [],
+        [],
+        [],
+        [
+          103,
+          104,
+          105
+        ],
+        [],
+        [],
+        [
+          102,
+          104,
+          105
+        ],
+        [
+          104,
+          105
+        ],
+        [],
+        [
+          102,
+          103,
+          105,
+          106
+        ],
+        [
+          102,
+          106
+        ],
+        [],
+        [],
+        [],
+        [
+          102,
+          103,
+          104,
+          105
+        ],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [
+          102,
+          103,
+          106
+        ],
+        [],
+        [],
+        [],
+        [
+          105
+        ],
+        [],
+        [],
+        [],
+        [
+          104,
+          105
+        ],
+        [
+          103
+        ],
+        [],
+        [],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        [],
+        [
+          103
+        ],
+        [],
+        [
+          102
+        ],
+        [
+          104,
+          105
+        ],
+        [],
+        [],
+        [
+          102,
+          104,
+          105
+        ],
+        [],
+        [
+          102
+        ],
+        [],
+        [],
+        [
+          103,
+          106
+        ],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        [
+          106
+        ],
+        [],
+        [],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        [
+          102,
+          104,
+          105
+        ],
+        [],
+        [],
+        [],
+        [
+          103
+        ],
+        [
+          103
+        ],
+        [],
+        [],
+        [
+          103,
+          106
+        ],
+        [],
+        [],
+        [
+          104,
+          105
+        ],
+        [],
+        [],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        []
+      ],
+      "inference": [
+        {
+          "cache_hit": true,
+          "http_attempts": null,
+          "usage": {
+            "input_tokens": 1552,
+            "output_tokens": 99,
+            "total_tokens": 1651,
+            "cost": 0.008610496,
+            "cost_details": {
+              "input_cost": 0.008610496,
+              "output_cost": 0
+            }
+          },
+          "probabilities": {
+            "102": 0.94,
+            "103": 0.98,
+            "104": 0.88,
+            "105": 0.99,
+            "106": 0.99
+          }
+        },
+        {
+          "cache_hit": true,
+          "http_attempts": null,
+          "usage": {
+            "input_tokens": 1455,
+            "output_tokens": 99,
+            "total_tokens": 1554,
+            "cost": 0.00807234,
+            "cost_details": {
+              "input_cost": 0.00807234,
+              "output_cost": 0
+            }
+          },
+          "probabilities": {
+            "102": 0.07,
+            "103": 0.03,
+            "104": 0.03,
+            "105": 0.03,
+            "106": 0.03
+          }
+        },
+        {
+          "cache_hit": true,
+          "http_attempts": null,
+          "usage": {
+            "input_tokens": 1771,
+            "output_tokens": 99,
+            "total_tokens": 1870,
+            "cost": 0.009825508,
+            "cost_details": {
+              "input_cost": 0.009825508,
+              "output_cost": 0
+            }
+          },
+          "probabilities": {
+            "102": 0.97,
+            "103": 0.97,
+            "104": 0.98,
+            "105": 0.98,
+            "106": 0.95
+          }
+        },
+        {
+          "cache_hit": true,
+          "http_attempts": null,
+          "usage": {
+            "input_tokens": 1046,
+            "output_tokens": 99,
+            "total_tokens": 1145,
+            "cost": 0.005803208,
+            "cost_details": {
+              "input_cost": 0.005803208,
+              "output_cost": 0
+            }
+          },
+          "probabilities": {
+            "102": 0.17,
+            "103": 0.05,
+            "104": 0.99,
+            "105": 0.99,
+            "106": 0.98
+          }
+        },
+        {
+          "cache_hit": true,
+          "http_attempts": null,
+          "usage": {
+            "input_tokens": 574,
+            "output_tokens": 99,
+            "total_tokens": 673,
+            "cost": 0.003184552,
+            "cost_details": {
+              "input_cost": 0.003184552,
+              "output_cost": 0
+            }
+          },
+          "probabilities": {
+            "102": 0.67,
+            "103": 0.04,
+            "104": 0.03,
+            "105": 0.03,
+            "106": 0.14
+          }
+        },
+        {
+          "cache_hit": true,
+          "http_attempts": null,
+          "usage": {
+            "input_tokens": 2578,
+            "output_tokens": 99,
+            "total_tokens": 2677,
+            "cost": 0.014302744,
+            "cost_details": {
+              "input_cost": 0.014302744,
+              "output_cost": 0
+            }
+          },
+          "probabilities": {
+            "102": 0.04,
+            "103": 0.02,
+            "104": 0.91,
+            "105": 0.98,
+            "106": 0.03
+          }
+        },
+        {
+          "cache_hit": true,
+          "http_attempts": null,
+          "usage": {
+            "input_tokens": 1908,
+            "output_tokens": 99,
+            "total_tokens": 2007,
+            "cost": 0.010585584,
+            "cost_details": {
+              "input_cost": 0.010585584,
+              "output_cost": 0
+            }
+          },
+          "probabilities": {
+            "102": 0.24,
+            "103": 0.14,
+            "104": 0.19,
+            "105": 0.16,
+            "106": 0.41
+          }
+        },
+        {
+          "cache_hit": true,
+          "http_attempts": null,
+          "usage": {
+            "input_tokens": 592,
+            "output_tokens": 99,
+            "total_tokens": 691,
+            "cost": 0.003284416,
+            "cost_details": {
+              "input_cost": 0.003284416,
+              "output_cost": 0
+            }
+          },
+          "probabilities": {
+            "102": 0.07,
+            "103": 0.04,
+            "104": 0.03,
+            "105": 0.97,
+            "106": 0.88
+          }
+        },
+        {
+          "cache_hit": true,
+          "http_attempts": null,
+          "usage": {
+            "input_tokens": 2050,
+            "output_tokens": 99,
+            "total_tokens": 2149,
+            "cost": 0.0113734,
+            "cost_details": {
+              "input_cost": 0.0113734,
+              "output_cost": 0
+            }
+          },
+          "probabilities": {
+            "102": 0.99,
+            "103": 0.06,
+            "104": 0.98,
+            "105": 0.99,
+            "106": 0.09
+          }
+        },
+        {
+          "cache_hit": true,
+          "http_attempts": null,
+          "usage": {
+            "input_tokens": 584,
+            "output_tokens": 99,
+            "total_tokens": 683,
+            "cost": 0.003240032,
+            "cost_details": {
+              "input_cost": 0.003240032,
+              "output_cost": 0
+            }
+          },
+          "probabilities": {
+            "102": 0.06,
+            "103": 0.07,
+            "104": 0.07,
+            "105": 0.08,
+            "106": 0.09
+          }
+        },
+        {
+          "cache_hit": true,
+          "http_attempts": null,
+          "usage": {
+            "input_tokens": 1910,
+            "output_tokens": 99,
+            "total_tokens": 2009,
+            "cost": 0.01059668,
+            "cost_details": {
+              "input_cost": 0.01059668,
+              "output_cost": 0
+            }
+          },
+          "probabilities": {
+            "102": 0.26,
+            "103": 0.99,
+            "104": 0.98,
+            "105": 0.98,
+            "106": 0.33
+          }
+        },
+        {
+          "cache_hit": true,
+          "http_attempts": null,
+          "usage": {
+            "input_tokens": 937,
+            "output_tokens": 99,
+            "total_tokens": 1036,
+            "cost": 0.005198476,
+            "cost_details": {
+              "input_cost": 0.005198476,
+              "output_cost": 0
+            }
+          },
+          "probabilities": {
+            "102": 0.14,
+            "103": 0.07,
+            "104": 0.1,
+            "105": 0.09,
+            "106": 0.12
+          }
+        },
+        {
+          "cache_hit": true,
+          "http_attempts": null,
+          "usage": {
+            "input_tokens": 1159,
+            "output_tokens": 99,
+            "total_tokens": 1258,
+            "cost": 0.006430132,
+            "cost_details": {
+              "input_cost": 0.006430132,
+              "output_cost": 0
+            }
+          },
+          "probabilities": {
+            "102": 0.99,
+            "103": 0.07,
+            "104": 0.98,
+            "105": 0.98,
+            "106": 0.99
+          }
+        },
+        {
+          "cache_hit": true,
+          "http_attempts": null,
+          "usage": {
+            "input_tokens": 1171,
+            "output_tokens": 99,
+            "total_tokens": 1270,
+            "cost": 0.006496708,
+            "cost_details": {
+              "input_cost": 0.006496708,
+              "output_cost": 0
+            }
+          },
+          "probabilities": {
+            "102": 0.98,
+            "103": 0.81,
+            "104": 0.98,
+            "105": 0.99,
+            "106": 0.99
+          }
+        },
+        {
+          "cache_hit": true,
+          "http_attempts": null,
+          "usage": {
+            "input_tokens": 946,
+            "output_tokens": 99,
+            "total_tokens": 1045,
+            "cost": 0.005248408,
+            "cost_details": {
+              "input_cost": 0.005248408,
+              "output_cost": 0
+            }
+          },
+          "probabilities": {
+            "102": 0.14,
+            "103": 0.1,
+            "104": 0.04,
+            "105": 0.04,
+            "106": 0.15
+          }
+        },
+        {
+          "cache_hit": true,
+          "http_attempts": null,
+          "usage": {
+            "input_tokens": 1687,
+            "output_tokens": 99,
+            "total_tokens": 1786,
+            "cost": 0.009359476,
+            "cost_details": {
+              "input_cost": 0.009359476,
+              "output_cost": 0
+            }
+          },
+          "probabilities": {
+            "102": 0.98,
+            "103": 0.97,
+            "104": 0.98,
+            "105": 0.98,
+            "106": 0.97
+          }
+        },
+        {
+          "cache_hit": true,
+          "http_attempts": null,
+          "usage": {
+            "input_tokens": 1478,
+            "output_tokens": 99,
+            "total_tokens": 1577,
+            "cost": 0.008199944,
+            "cost_details": {
+              "input_cost": 0.008199944,
+              "output_cost": 0
+            }
+          },
+          "probabilities": {
+            "102": 0.89,
+            "103": 0.82,
+            "104": 0.93,
+            "105": 0.88,
+            "106": 0.88
+          }
+        },
+        {
+          "cache_hit": true,
+          "http_attempts": null,
+          "usage": {
+            "input_tokens": 3304,
+            "output_tokens": 99,
+            "total_tokens": 3403,
+            "cost": 0.018330592,
+            "cost_details": {
+              "input_cost": 0.018330592,
+              "output_cost": 0
+            }
+          },
+          "probabilities": {
+            "102": 0.41,
+            "103": 0.96,
+            "104": 0.03,
+            "105": 0.03,
+            "106": 0.99
+          }
+        },
+        {
+          "cache_hit": true,
+          "http_attempts": null,
+          "usage": {
+            "input_tokens": 1596,
+            "output_tokens": 99,
+            "total_tokens": 1695,
+            "cost": 0.008854608,
+            "cost_details": {
+              "input_cost": 0.008854608,
+              "output_cost": 0
+            }
+          },
+          "probabilities": {
+            "102": 0.19,
+            "103": 0.1,
+            "104": 0.14,
+            "105": 0.11,
+            "106": 0.25
+          }
+        },
+        {
+          "cache_hit": true,
+          "http_attempts": null,
+          "usage": {
+            "input_tokens": 925,
+            "output_tokens": 99,
+            "total_tokens": 1024,
+            "cost": 0.0051319,
+            "cost_details": {
+              "input_cost": 0.0051319,
+              "output_cost": 0
+            }
+          },
+          "probabilities": {
+            "102": 0.16,
+            "103": 0.07,
+            "104": 0.1,
+            "105": 0.09,
+            "106": 0.15
+          }
+        },
+        {
+          "cache_hit": true,
+          "http_attempts": null,
+          "usage": {
+            "input_tokens": 2617,
+            "output_tokens": 99,
+            "total_tokens": 2716,
+            "cost": 0.014519116,
+            "cost_details": {
+              "input_cost": 0.014519116,
+              "output_cost": 0
+            }
+          },
+          "probabilities": {
+            "102": 0.05,
+            "103": 0.03,
+            "104": 0.03,
+            "105": 0.03,
+            "106": 0.04
+          }
+        },
+        {
+          "cache_hit": true,
+          "http_attempts": null,
+          "usage": {
+            "input_tokens": 2087,
+            "output_tokens": 99,
+            "total_tokens": 2186,
+            "cost": 0.011578676,
+            "cost_details": {
+              "input_cost": 0.011578676,
+              "output_cost": 0
+            }
+          },
+          "probabilities": {
+            "102": 0.18,
+            "103": 0.17,
+            "104": 0.09,
+            "105": 0.62,
+            "106": 0.25
+          }
+        },
+        {
+          "cache_hit": true,
+          "http_attempts": null,
+          "usage": {
+            "input_tokens": 3597,
+            "output_tokens": 99,
+            "total_tokens": 3696,
+            "cost": 0.019956156,
+            "cost_details": {
+              "input_cost": 0.019956156,
+              "output_cost": 0
+            }
+          },
+          "probabilities": {
+            "102": 0.96,
+            "103": 0.98,
+            "104": 0.98,
+            "105": 0.96,
+            "106": 0.97
+          }
+        },
+        {
+          "cache_hit": true,
+          "http_attempts": null,
+          "usage": {
+            "input_tokens": 966,
+            "output_tokens": 99,
+            "total_tokens": 1065,
+            "cost": 0.005359368,
+            "cost_details": {
+              "input_cost": 0.005359368,
+              "output_cost": 0
+            }
+          },
+          "probabilities": {
+            "102": 0.04,
+            "103": 0.07,
+            "104": 0.04,
+            "105": 0.04,
+            "106": 0.04
+          }
+        },
+        {
+          "cache_hit": true,
+          "http_attempts": null,
+          "usage": {
+            "input_tokens": 2337,
+            "output_tokens": 99,
+            "total_tokens": 2436,
+            "cost": 0.012965676,
+            "cost_details": {
+              "input_cost": 0.012965676,
+              "output_cost": 0
+            }
+          },
+          "probabilities": {
+            "102": 0.98,
+            "103": 0.98,
+            "104": 0.98,
+            "105": 0.98,
+            "106": 0.99
+          }
+        },
+        {
+          "cache_hit": true,
+          "http_attempts": null,
+          "usage": {
+            "input_tokens": 1818,
+            "output_tokens": 99,
+            "total_tokens": 1917,
+            "cost": 0.010086264,
+            "cost_details": {
+              "input_cost": 0.010086264,
+              "output_cost": 0
+            }
+          },
+          "probabilities": {
+            "102": 0.45,
+            "103": 0.98,
+            "104": 0.98,
+            "105": 0.97,
+            "106": 0.19
+          }
+        },
+        {
+          "cache_hit": true,
+          "http_attempts": null,
+          "usage": {
+            "input_tokens": 1353,
+            "output_tokens": 99,
+            "total_tokens": 1452,
+            "cost": 0.007506444,
+            "cost_details": {
+              "input_cost": 0.007506444,
+              "output_cost": 0
+            }
+          },
+          "probabilities": {
+            "102": 0.98,
+            "103": 0.04,
+            "104": 0.02,
+            "105": 0.03,
+            "106": 0.71
+          }
+        },
+        {
+          "cache_hit": true,
+          "http_attempts": null,
+          "usage": {
+            "input_tokens": 1424,
+            "output_tokens": 99,
+            "total_tokens": 1523,
+            "cost": 0.007900352,
+            "cost_details": {
+              "input_cost": 0.007900352,
+              "output_cost": 0
+            }
+          },
+          "probabilities": {
+            "102": 0.07,
+            "103": 0.03,
+            "104": 0.02,
+            "105": 0.02,
+            "106": 0.03
+          }
+        },
+        {
+          "cache_hit": true,
+          "http_attempts": null,
+          "usage": {
+            "input_tokens": 2247,
+            "output_tokens": 99,
+            "total_tokens": 2346,
+            "cost": 0.012466356,
+            "cost_details": {
+              "input_cost": 0.012466356,
+              "output_cost": 0
+            }
+          },
+          "probabilities": {
+            "102": 0.98,
+            "103": 0.99,
+            "104": 0.94,
+            "105": 0.97,
+            "106": 0.99
+          }
+        },
+        {
+          "cache_hit": true,
+          "http_attempts": null,
+          "usage": {
+            "input_tokens": 1521,
+            "output_tokens": 99,
+            "total_tokens": 1620,
+            "cost": 0.008438508,
+            "cost_details": {
+              "input_cost": 0.008438508,
+              "output_cost": 0
+            }
+          },
+          "probabilities": {
+            "102": 0.25,
+            "103": 0.78,
+            "104": 0.25,
+            "105": 0.11,
+            "106": 0.27
+          }
+        },
+        {
+          "cache_hit": true,
+          "http_attempts": null,
+          "usage": {
+            "input_tokens": 2762,
+            "output_tokens": 99,
+            "total_tokens": 2861,
+            "cost": 0.015323576,
+            "cost_details": {
+              "input_cost": 0.015323576,
+              "output_cost": 0
+            }
+          },
+          "probabilities": {
+            "102": 0.6,
+            "103": 0.06,
+            "104": 0.96,
+            "105": 0.95,
+            "106": 0.38
+          }
+        },
+        {
+          "cache_hit": true,
+          "http_attempts": null,
+          "usage": {
+            "input_tokens": 1125,
+            "output_tokens": 99,
+            "total_tokens": 1224,
+            "cost": 0.0062415,
+            "cost_details": {
+              "input_cost": 0.0062415,
+              "output_cost": 0
+            }
+          },
+          "probabilities": {
+            "102": 0.99,
+            "103": 0.03,
+            "104": 0.02,
+            "105": 0.03,
+            "106": 0.48
+          }
+        },
+        {
+          "cache_hit": true,
+          "http_attempts": null,
+          "usage": {
+            "input_tokens": 948,
+            "output_tokens": 99,
+            "total_tokens": 1047,
+            "cost": 0.005259504,
+            "cost_details": {
+              "input_cost": 0.005259504,
+              "output_cost": 0
+            }
+          },
+          "probabilities": {
+            "102": 0.02,
+            "103": 0.02,
+            "104": 0.02,
+            "105": 0.02,
+            "106": 0.02
+          }
+        },
+        {
+          "cache_hit": true,
+          "http_attempts": null,
+          "usage": {
+            "input_tokens": 2353,
+            "output_tokens": 99,
+            "total_tokens": 2452,
+            "cost": 0.013054444,
+            "cost_details": {
+              "input_cost": 0.013054444,
+              "output_cost": 0
+            }
+          },
+          "probabilities": {
+            "102": 0.98,
+            "103": 0.98,
+            "104": 0.98,
+            "105": 0.98,
+            "106": 0.98
+          }
+        },
+        {
+          "cache_hit": true,
+          "http_attempts": null,
+          "usage": {
+            "input_tokens": 568,
+            "output_tokens": 99,
+            "total_tokens": 667,
+            "cost": 0.003151264,
+            "cost_details": {
+              "input_cost": 0.003151264,
+              "output_cost": 0
+            }
+          },
+          "probabilities": {
+            "102": 0.28,
+            "103": 0.15,
+            "104": 0.07,
+            "105": 0.08,
+            "106": 0.36
+          }
+        },
+        {
+          "cache_hit": true,
+          "http_attempts": null,
+          "usage": {
+            "input_tokens": 614,
+            "output_tokens": 99,
+            "total_tokens": 713,
+            "cost": 0.003406472,
+            "cost_details": {
+              "input_cost": 0.003406472,
+              "output_cost": 0
+            }
+          },
+          "probabilities": {
+            "102": 0.12,
+            "103": 0.08,
+            "104": 0.57,
+            "105": 0.04,
+            "106": 0.18
+          }
+        },
+        {
+          "cache_hit": true,
+          "http_attempts": null,
+          "usage": {
+            "input_tokens": 963,
+            "output_tokens": 99,
+            "total_tokens": 1062,
+            "cost": 0.005342724,
+            "cost_details": {
+              "input_cost": 0.005342724,
+              "output_cost": 0
+            }
+          },
+          "probabilities": {
+            "102": 0.07,
+            "103": 0.03,
+            "104": 0.02,
+            "105": 0.03,
+            "106": 0.03
+          }
+        },
+        {
+          "cache_hit": true,
+          "http_attempts": null,
+          "usage": {
+            "input_tokens": 919,
+            "output_tokens": 99,
+            "total_tokens": 1018,
+            "cost": 0.005098612,
+            "cost_details": {
+              "input_cost": 0.005098612,
+              "output_cost": 0
+            }
+          },
+          "probabilities": {
+            "102": 0.13,
+            "103": 0.08,
+            "104": 0.08,
+            "105": 0.07,
+            "106": 0.12
+          }
+        },
+        {
+          "cache_hit": true,
+          "http_attempts": null,
+          "usage": {
+            "input_tokens": 1701,
+            "output_tokens": 99,
+            "total_tokens": 1800,
+            "cost": 0.009437148,
+            "cost_details": {
+              "input_cost": 0.009437148,
+              "output_cost": 0
+            }
+          },
+          "probabilities": {
+            "102": 0.35,
+            "103": 0.16,
+            "104": 0.99,
+            "105": 0.97,
+            "106": 0.55
+          }
+        },
+        {
+          "cache_hit": true,
+          "http_attempts": null,
+          "usage": {
+            "input_tokens": 1129,
+            "output_tokens": 99,
+            "total_tokens": 1228,
+            "cost": 0.006263692,
+            "cost_details": {
+              "input_cost": 0.006263692,
+              "output_cost": 0
+            }
+          },
+          "probabilities": {
+            "102": 0.99,
+            "103": 0.03,
+            "104": 0.03,
+            "105": 0.03,
+            "106": 0.99
+          }
+        },
+        {
+          "cache_hit": true,
+          "http_attempts": null,
+          "usage": {
+            "input_tokens": 952,
+            "output_tokens": 99,
+            "total_tokens": 1051,
+            "cost": 0.005281696,
+            "cost_details": {
+              "input_cost": 0.005281696,
+              "output_cost": 0
+            }
+          },
+          "probabilities": {
+            "102": 0.04,
+            "103": 0.98,
+            "104": 0.02,
+            "105": 0.02,
+            "106": 0.03
+          }
+        },
+        {
+          "cache_hit": true,
+          "http_attempts": null,
+          "usage": {
+            "input_tokens": 994,
+            "output_tokens": 99,
+            "total_tokens": 1093,
+            "cost": 0.005514712,
+            "cost_details": {
+              "input_cost": 0.005514712,
+              "output_cost": 0
+            }
+          },
+          "probabilities": {
+            "102": 0.28,
+            "103": 0.09,
+            "104": 0.03,
+            "105": 0.05,
+            "106": 0.55
+          }
+        },
+        {
+          "cache_hit": true,
+          "http_attempts": null,
+          "usage": {
+            "input_tokens": 538,
+            "output_tokens": 99,
+            "total_tokens": 637,
+            "cost": 0.002984824,
+            "cost_details": {
+              "input_cost": 0.002984824,
+              "output_cost": 0
+            }
+          },
+          "probabilities": {
+            "102": 0.15,
+            "103": 0.15,
+            "104": 0.1,
+            "105": 0.13,
+            "106": 0.22
+          }
+        },
+        {
+          "cache_hit": true,
+          "http_attempts": null,
+          "usage": {
+            "input_tokens": 2442,
+            "output_tokens": 99,
+            "total_tokens": 2541,
+            "cost": 0.013548216,
+            "cost_details": {
+              "input_cost": 0.013548216,
+              "output_cost": 0
+            }
+          },
+          "probabilities": {
+            "102": 0.04,
+            "103": 0.02,
+            "104": 0.02,
+            "105": 0.03,
+            "106": 0.2
+          }
+        },
+        {
+          "cache_hit": true,
+          "http_attempts": null,
+          "usage": {
+            "input_tokens": 948,
+            "output_tokens": 99,
+            "total_tokens": 1047,
+            "cost": 0.005259504,
+            "cost_details": {
+              "input_cost": 0.005259504,
+              "output_cost": 0
+            }
+          },
+          "probabilities": {
+            "102": 0.78,
+            "103": 0.02,
+            "104": 0.02,
+            "105": 0.02,
+            "106": 0.41
+          }
+        },
+        {
+          "cache_hit": true,
+          "http_attempts": null,
+          "usage": {
+            "input_tokens": 2615,
+            "output_tokens": 99,
+            "total_tokens": 2714,
+            "cost": 0.01450802,
+            "cost_details": {
+              "input_cost": 0.01450802,
+              "output_cost": 0
+            }
+          },
+          "probabilities": {
+            "102": 0.63,
+            "103": 0.6,
+            "104": 0.82,
+            "105": 0.95,
+            "106": 0.95
+          }
+        },
+        {
+          "cache_hit": true,
+          "http_attempts": null,
+          "usage": {
+            "input_tokens": 740,
+            "output_tokens": 99,
+            "total_tokens": 839,
+            "cost": 0.00410552,
+            "cost_details": {
+              "input_cost": 0.00410552,
+              "output_cost": 0
+            }
+          },
+          "probabilities": {
+            "102": 0.46,
+            "103": 0.15,
+            "104": 0.18,
+            "105": 0.19,
+            "106": 0.38
+          }
+        },
+        {
+          "cache_hit": true,
+          "http_attempts": null,
+          "usage": {
+            "input_tokens": 2200,
+            "output_tokens": 99,
+            "total_tokens": 2299,
+            "cost": 0.0122056,
+            "cost_details": {
+              "input_cost": 0.0122056,
+              "output_cost": 0
+            }
+          },
+          "probabilities": {
+            "102": 0.15,
+            "103": 0.09,
+            "104": 0.13,
+            "105": 0.09,
+            "106": 0.25
+          }
+        },
+        {
+          "cache_hit": true,
+          "http_attempts": null,
+          "usage": {
+            "input_tokens": 819,
+            "output_tokens": 99,
+            "total_tokens": 918,
+            "cost": 0.004543812,
+            "cost_details": {
+              "input_cost": 0.004543812,
+              "output_cost": 0
+            }
+          },
+          "probabilities": {
+            "102": 0.19,
+            "103": 0.12,
+            "104": 0.93,
+            "105": 0.9,
+            "106": 0.25
+          }
+        },
+        {
+          "cache_hit": true,
+          "http_attempts": null,
+          "usage": {
+            "input_tokens": 542,
+            "output_tokens": 99,
+            "total_tokens": 641,
+            "cost": 0.003007016,
+            "cost_details": {
+              "input_cost": 0.003007016,
+              "output_cost": 0
+            }
+          },
+          "probabilities": {
+            "102": 0.19,
+            "103": 0.16,
+            "104": 0.12,
+            "105": 0.14,
+            "106": 0.26
+          }
+        },
+        {
+          "cache_hit": true,
+          "http_attempts": null,
+          "usage": {
+            "input_tokens": 545,
+            "output_tokens": 99,
+            "total_tokens": 644,
+            "cost": 0.00302366,
+            "cost_details": {
+              "input_cost": 0.00302366,
+              "output_cost": 0
+            }
+          },
+          "probabilities": {
+            "102": 0.1,
+            "103": 0.12,
+            "104": 0.08,
+            "105": 0.11,
+            "106": 0.15
+          }
+        },
+        {
+          "cache_hit": true,
+          "http_attempts": null,
+          "usage": {
+            "input_tokens": 1774,
+            "output_tokens": 99,
+            "total_tokens": 1873,
+            "cost": 0.009842152,
+            "cost_details": {
+              "input_cost": 0.009842152,
+              "output_cost": 0
+            }
+          },
+          "probabilities": {
+            "102": 0.22,
+            "103": 0.12,
+            "104": 0.2,
+            "105": 0.15,
+            "106": 0.45
+          }
+        },
+        {
+          "cache_hit": true,
+          "http_attempts": null,
+          "usage": {
+            "input_tokens": 544,
+            "output_tokens": 99,
+            "total_tokens": 643,
+            "cost": 0.003018112,
+            "cost_details": {
+              "input_cost": 0.003018112,
+              "output_cost": 0
+            }
+          },
+          "probabilities": {
+            "102": 0.13,
+            "103": 0.12,
+            "104": 0.09,
+            "105": 0.12,
+            "106": 0.18
+          }
+        },
+        {
+          "cache_hit": true,
+          "http_attempts": null,
+          "usage": {
+            "input_tokens": 1794,
+            "output_tokens": 99,
+            "total_tokens": 1893,
+            "cost": 0.009953112,
+            "cost_details": {
+              "input_cost": 0.009953112,
+              "output_cost": 0
+            }
+          },
+          "probabilities": {
+            "102": 0.53,
+            "103": 0.95,
+            "104": 0.98,
+            "105": 0.97,
+            "106": 0.19
+          }
+        },
+        {
+          "cache_hit": true,
+          "http_attempts": null,
+          "usage": {
+            "input_tokens": 635,
+            "output_tokens": 99,
+            "total_tokens": 734,
+            "cost": 0.00352298,
+            "cost_details": {
+              "input_cost": 0.00352298,
+              "output_cost": 0
+            }
+          },
+          "probabilities": {
+            "102": 0.5,
+            "103": 0.2,
+            "104": 0.24,
+            "105": 0.19,
+            "106": 0.57
+          }
+        },
+        {
+          "cache_hit": true,
+          "http_attempts": null,
+          "usage": {
+            "input_tokens": 1705,
+            "output_tokens": 99,
+            "total_tokens": 1804,
+            "cost": 0.00945934,
+            "cost_details": {
+              "input_cost": 0.00945934,
+              "output_cost": 0
+            }
+          },
+          "probabilities": {
+            "102": 0.15,
+            "103": 0.08,
+            "104": 0.11,
+            "105": 0.08,
+            "106": 0.23
+          }
+        },
+        {
+          "cache_hit": true,
+          "http_attempts": null,
+          "usage": {
+            "input_tokens": 2767,
+            "output_tokens": 99,
+            "total_tokens": 2866,
+            "cost": 0.015351316,
+            "cost_details": {
+              "input_cost": 0.015351316,
+              "output_cost": 0
+            }
+          },
+          "probabilities": {
+            "102": 0.64,
+            "103": 0.13,
+            "104": 0.98,
+            "105": 0.97,
+            "106": 0.49
+          }
+        },
+        {
+          "cache_hit": true,
+          "http_attempts": null,
+          "usage": {
+            "input_tokens": 2708,
+            "output_tokens": 99,
+            "total_tokens": 2807,
+            "cost": 0.015023984,
+            "cost_details": {
+              "input_cost": 0.015023984,
+              "output_cost": 0
+            }
+          },
+          "probabilities": {
+            "102": 0.28,
+            "103": 0.06,
+            "104": 0.91,
+            "105": 0.98,
+            "106": 0.1
+          }
+        },
+        {
+          "cache_hit": true,
+          "http_attempts": null,
+          "usage": {
+            "input_tokens": 2265,
+            "output_tokens": 99,
+            "total_tokens": 2364,
+            "cost": 0.01256622,
+            "cost_details": {
+              "input_cost": 0.01256622,
+              "output_cost": 0
+            }
+          },
+          "probabilities": {
+            "102": 0.05,
+            "103": 0.03,
+            "104": 0.03,
+            "105": 0.03,
+            "106": 0.07
+          }
+        },
+        {
+          "cache_hit": true,
+          "http_attempts": null,
+          "usage": {
+            "input_tokens": 1607,
+            "output_tokens": 99,
+            "total_tokens": 1706,
+            "cost": 0.008915636,
+            "cost_details": {
+              "input_cost": 0.008915636,
+              "output_cost": 0
+            }
+          },
+          "probabilities": {
+            "102": 0.69,
+            "103": 0.79,
+            "104": 0.21,
+            "105": 0.68,
+            "106": 0.78
+          }
+        },
+        {
+          "cache_hit": true,
+          "http_attempts": null,
+          "usage": {
+            "input_tokens": 1185,
+            "output_tokens": 99,
+            "total_tokens": 1284,
+            "cost": 0.00657438,
+            "cost_details": {
+              "input_cost": 0.00657438,
+              "output_cost": 0
+            }
+          },
+          "probabilities": {
+            "102": 0.99,
+            "103": 0.03,
+            "104": 0.02,
+            "105": 0.03,
+            "106": 0.99
+          }
+        },
+        {
+          "cache_hit": true,
+          "http_attempts": null,
+          "usage": {
+            "input_tokens": 549,
+            "output_tokens": 99,
+            "total_tokens": 648,
+            "cost": 0.003045852,
+            "cost_details": {
+              "input_cost": 0.003045852,
+              "output_cost": 0
+            }
+          },
+          "probabilities": {
+            "102": 0.35,
+            "103": 0.22,
+            "104": 0.1,
+            "105": 0.16,
+            "106": 0.56
+          }
+        },
+        {
+          "cache_hit": true,
+          "http_attempts": null,
+          "usage": {
+            "input_tokens": 942,
+            "output_tokens": 99,
+            "total_tokens": 1041,
+            "cost": 0.005226216,
+            "cost_details": {
+              "input_cost": 0.005226216,
+              "output_cost": 0
+            }
+          },
+          "probabilities": {
+            "102": 0.05,
+            "103": 0.03,
+            "104": 0.02,
+            "105": 0.02,
+            "106": 0.07
+          }
+        },
+        {
+          "cache_hit": true,
+          "http_attempts": null,
+          "usage": {
+            "input_tokens": 577,
+            "output_tokens": 99,
+            "total_tokens": 676,
+            "cost": 0.003201196,
+            "cost_details": {
+              "input_cost": 0.003201196,
+              "output_cost": 0
+            }
+          },
+          "probabilities": {
+            "102": 0.16,
+            "103": 0.08,
+            "104": 0.07,
+            "105": 0.07,
+            "106": 0.14
+          }
+        },
+        {
+          "cache_hit": true,
+          "http_attempts": null,
+          "usage": {
+            "input_tokens": 1740,
+            "output_tokens": 99,
+            "total_tokens": 1839,
+            "cost": 0.00965352,
+            "cost_details": {
+              "input_cost": 0.00965352,
+              "output_cost": 0
+            }
+          },
+          "probabilities": {
+            "102": 0.89,
+            "103": 0.83,
+            "104": 0.98,
+            "105": 0.98,
+            "106": 0.56
+          }
+        },
+        {
+          "cache_hit": true,
+          "http_attempts": null,
+          "usage": {
+            "input_tokens": 2144,
+            "output_tokens": 99,
+            "total_tokens": 2243,
+            "cost": 0.011894912,
+            "cost_details": {
+              "input_cost": 0.011894912,
+              "output_cost": 0
+            }
+          },
+          "probabilities": {
+            "102": 0.26,
+            "103": 0.14,
+            "104": 0.22,
+            "105": 0.19,
+            "106": 0.4
+          }
+        },
+        {
+          "cache_hit": true,
+          "http_attempts": null,
+          "usage": {
+            "input_tokens": 561,
+            "output_tokens": 99,
+            "total_tokens": 660,
+            "cost": 0.003112428,
+            "cost_details": {
+              "input_cost": 0.003112428,
+              "output_cost": 0
+            }
+          },
+          "probabilities": {
+            "102": 0.09,
+            "103": 0.08,
+            "104": 0.08,
+            "105": 0.08,
+            "106": 0.1
+          }
+        },
+        {
+          "cache_hit": true,
+          "http_attempts": null,
+          "usage": {
+            "input_tokens": 946,
+            "output_tokens": 99,
+            "total_tokens": 1045,
+            "cost": 0.005248408,
+            "cost_details": {
+              "input_cost": 0.005248408,
+              "output_cost": 0
+            }
+          },
+          "probabilities": {
+            "102": 0.19,
+            "103": 0.08,
+            "104": 0.04,
+            "105": 0.05,
+            "106": 0.21
+          }
+        },
+        {
+          "cache_hit": true,
+          "http_attempts": null,
+          "usage": {
+            "input_tokens": 925,
+            "output_tokens": 99,
+            "total_tokens": 1024,
+            "cost": 0.0051319,
+            "cost_details": {
+              "input_cost": 0.0051319,
+              "output_cost": 0
+            }
+          },
+          "probabilities": {
+            "102": 0.31,
+            "103": 0.17,
+            "104": 0.08,
+            "105": 0.07,
+            "106": 0.33
+          }
+        },
+        {
+          "cache_hit": true,
+          "http_attempts": null,
+          "usage": {
+            "input_tokens": 958,
+            "output_tokens": 99,
+            "total_tokens": 1057,
+            "cost": 0.005314984,
+            "cost_details": {
+              "input_cost": 0.005314984,
+              "output_cost": 0
+            }
+          },
+          "probabilities": {
+            "102": 0.07,
+            "103": 0.03,
+            "104": 0.03,
+            "105": 0.04,
+            "106": 0.08
+          }
+        },
+        {
+          "cache_hit": true,
+          "http_attempts": null,
+          "usage": {
+            "input_tokens": 2970,
+            "output_tokens": 99,
+            "total_tokens": 3069,
+            "cost": 0.01647756,
+            "cost_details": {
+              "input_cost": 0.01647756,
+              "output_cost": 0
+            }
+          },
+          "probabilities": {
+            "102": 0.99,
+            "103": 0.99,
+            "104": 0.02,
+            "105": 0.02,
+            "106": 0.99
+          }
+        },
+        {
+          "cache_hit": true,
+          "http_attempts": null,
+          "usage": {
+            "input_tokens": 1722,
+            "output_tokens": 99,
+            "total_tokens": 1821,
+            "cost": 0.009553656,
+            "cost_details": {
+              "input_cost": 0.009553656,
+              "output_cost": 0
+            }
+          },
+          "probabilities": {
+            "102": 0.17,
+            "103": 0.12,
+            "104": 0.22,
+            "105": 0.39,
+            "106": 0.27
+          }
+        },
+        {
+          "cache_hit": true,
+          "http_attempts": null,
+          "usage": {
+            "input_tokens": 1182,
+            "output_tokens": 99,
+            "total_tokens": 1281,
+            "cost": 0.006557736,
+            "cost_details": {
+              "input_cost": 0.006557736,
+              "output_cost": 0
+            }
+          },
+          "probabilities": {
+            "102": 0.07,
+            "103": 0.02,
+            "104": 0.02,
+            "105": 0.02,
+            "106": 0.45
+          }
+        },
+        {
+          "cache_hit": true,
+          "http_attempts": null,
+          "usage": {
+            "input_tokens": 939,
+            "output_tokens": 99,
+            "total_tokens": 1038,
+            "cost": 0.005209572,
+            "cost_details": {
+              "input_cost": 0.005209572,
+              "output_cost": 0
+            }
+          },
+          "probabilities": {
+            "102": 0.04,
+            "103": 0.03,
+            "104": 0.02,
+            "105": 0.02,
+            "106": 0.03
+          }
+        },
+        {
+          "cache_hit": true,
+          "http_attempts": null,
+          "usage": {
+            "input_tokens": 648,
+            "output_tokens": 99,
+            "total_tokens": 747,
+            "cost": 0.003595104,
+            "cost_details": {
+              "input_cost": 0.003595104,
+              "output_cost": 0
+            }
+          },
+          "probabilities": {
+            "102": 0.16,
+            "103": 0.11,
+            "104": 0.06,
+            "105": 0.98,
+            "106": 0.25
+          }
+        },
+        {
+          "cache_hit": true,
+          "http_attempts": null,
+          "usage": {
+            "input_tokens": 940,
+            "output_tokens": 99,
+            "total_tokens": 1039,
+            "cost": 0.00521512,
+            "cost_details": {
+              "input_cost": 0.00521512,
+              "output_cost": 0
+            }
+          },
+          "probabilities": {
+            "102": 0.14,
+            "103": 0.06,
+            "104": 0.03,
+            "105": 0.05,
+            "106": 0.15
+          }
+        },
+        {
+          "cache_hit": true,
+          "http_attempts": null,
+          "usage": {
+            "input_tokens": 1830,
+            "output_tokens": 99,
+            "total_tokens": 1929,
+            "cost": 0.01015284,
+            "cost_details": {
+              "input_cost": 0.01015284,
+              "output_cost": 0
+            }
+          },
+          "probabilities": {
+            "102": 0.23,
+            "103": 0.12,
+            "104": 0.17,
+            "105": 0.13,
+            "106": 0.42
+          }
+        },
+        {
+          "cache_hit": true,
+          "http_attempts": null,
+          "usage": {
+            "input_tokens": 919,
+            "output_tokens": 99,
+            "total_tokens": 1018,
+            "cost": 0.005098612,
+            "cost_details": {
+              "input_cost": 0.005098612,
+              "output_cost": 0
+            }
+          },
+          "probabilities": {
+            "102": 0.17,
+            "103": 0.06,
+            "104": 0.04,
+            "105": 0.06,
+            "106": 0.2
+          }
+        },
+        {
+          "cache_hit": true,
+          "http_attempts": null,
+          "usage": {
+            "input_tokens": 2318,
+            "output_tokens": 99,
+            "total_tokens": 2417,
+            "cost": 0.012860264,
+            "cost_details": {
+              "input_cost": 0.012860264,
+              "output_cost": 0
+            }
+          },
+          "probabilities": {
+            "102": 0.38,
+            "103": 0.1,
+            "104": 0.89,
+            "105": 0.97,
+            "106": 0.12
+          }
+        },
+        {
+          "cache_hit": true,
+          "http_attempts": null,
+          "usage": {
+            "input_tokens": 939,
+            "output_tokens": 99,
+            "total_tokens": 1038,
+            "cost": 0.005209572,
+            "cost_details": {
+              "input_cost": 0.005209572,
+              "output_cost": 0
+            }
+          },
+          "probabilities": {
+            "102": 0.04,
+            "103": 0.98,
+            "104": 0.04,
+            "105": 0.02,
+            "106": 0.04
+          }
+        },
+        {
+          "cache_hit": true,
+          "http_attempts": null,
+          "usage": {
+            "input_tokens": 915,
+            "output_tokens": 99,
+            "total_tokens": 1014,
+            "cost": 0.00507642,
+            "cost_details": {
+              "input_cost": 0.00507642,
+              "output_cost": 0
+            }
+          },
+          "probabilities": {
+            "102": 0.12,
+            "103": 0.08,
+            "104": 0.09,
+            "105": 0.07,
+            "106": 0.12
+          }
+        },
+        {
+          "cache_hit": true,
+          "http_attempts": null,
+          "usage": {
+            "input_tokens": 931,
+            "output_tokens": 99,
+            "total_tokens": 1030,
+            "cost": 0.005165188,
+            "cost_details": {
+              "input_cost": 0.005165188,
+              "output_cost": 0
+            }
+          },
+          "probabilities": {
+            "102": 0.15,
+            "103": 0.08,
+            "104": 0.03,
+            "105": 0.05,
+            "106": 0.16
+          }
+        },
+        {
+          "cache_hit": true,
+          "http_attempts": null,
+          "usage": {
+            "input_tokens": 1729,
+            "output_tokens": 99,
+            "total_tokens": 1828,
+            "cost": 0.009592492,
+            "cost_details": {
+              "input_cost": 0.009592492,
+              "output_cost": 0
+            }
+          },
+          "probabilities": {
+            "102": 0.72,
+            "103": 0.86,
+            "104": 0.98,
+            "105": 0.99,
+            "106": 0.97
+          }
+        },
+        {
+          "cache_hit": true,
+          "http_attempts": null,
+          "usage": {
+            "input_tokens": 919,
+            "output_tokens": 99,
+            "total_tokens": 1018,
+            "cost": 0.005098612,
+            "cost_details": {
+              "input_cost": 0.005098612,
+              "output_cost": 0
+            }
+          },
+          "probabilities": {
+            "102": 0.13,
+            "103": 0.08,
+            "104": 0.08,
+            "105": 0.06,
+            "106": 0.11
+          }
+        },
+        {
+          "cache_hit": true,
+          "http_attempts": null,
+          "usage": {
+            "input_tokens": 950,
+            "output_tokens": 99,
+            "total_tokens": 1049,
+            "cost": 0.0052706,
+            "cost_details": {
+              "input_cost": 0.0052706,
+              "output_cost": 0
+            }
+          },
+          "probabilities": {
+            "102": 0.03,
+            "103": 0.98,
+            "104": 0.02,
+            "105": 0.02,
+            "106": 0.03
+          }
+        },
+        {
+          "cache_hit": true,
+          "http_attempts": null,
+          "usage": {
+            "input_tokens": 958,
+            "output_tokens": 99,
+            "total_tokens": 1057,
+            "cost": 0.005314984,
+            "cost_details": {
+              "input_cost": 0.005314984,
+              "output_cost": 0
+            }
+          },
+          "probabilities": {
+            "102": 0.06,
+            "103": 0.03,
+            "104": 0.03,
+            "105": 0.03,
+            "106": 0.07
+          }
+        },
+        {
+          "cache_hit": true,
+          "http_attempts": null,
+          "usage": {
+            "input_tokens": 587,
+            "output_tokens": 99,
+            "total_tokens": 686,
+            "cost": 0.003256676,
+            "cost_details": {
+              "input_cost": 0.003256676,
+              "output_cost": 0
+            }
+          },
+          "probabilities": {
+            "102": 0.97,
+            "103": 0.06,
+            "104": 0.04,
+            "105": 0.05,
+            "106": 0.48
+          }
+        },
+        {
+          "cache_hit": true,
+          "http_attempts": null,
+          "usage": {
+            "input_tokens": 829,
+            "output_tokens": 99,
+            "total_tokens": 928,
+            "cost": 0.004599292,
+            "cost_details": {
+              "input_cost": 0.004599292,
+              "output_cost": 0
+            }
+          },
+          "probabilities": {
+            "102": 0.48,
+            "103": 0.29,
+            "104": 0.98,
+            "105": 0.97,
+            "106": 0.43
+          }
+        },
+        {
+          "cache_hit": true,
+          "http_attempts": null,
+          "usage": {
+            "input_tokens": 965,
+            "output_tokens": 99,
+            "total_tokens": 1064,
+            "cost": 0.00535382,
+            "cost_details": {
+              "input_cost": 0.00535382,
+              "output_cost": 0
+            }
+          },
+          "probabilities": {
+            "102": 0.05,
+            "103": 0.03,
+            "104": 0.02,
+            "105": 0.03,
+            "106": 0.03
+          }
+        },
+        {
+          "cache_hit": true,
+          "http_attempts": null,
+          "usage": {
+            "input_tokens": 571,
+            "output_tokens": 99,
+            "total_tokens": 670,
+            "cost": 0.003167908,
+            "cost_details": {
+              "input_cost": 0.003167908,
+              "output_cost": 0
+            }
+          },
+          "probabilities": {
+            "102": 0.27,
+            "103": 0.21,
+            "104": 0.15,
+            "105": 0.17,
+            "106": 0.32
+          }
+        },
+        {
+          "cache_hit": true,
+          "http_attempts": null,
+          "usage": {
+            "input_tokens": 1968,
+            "output_tokens": 99,
+            "total_tokens": 2067,
+            "cost": 0.010918464,
+            "cost_details": {
+              "input_cost": 0.010918464,
+              "output_cost": 0
+            }
+          },
+          "probabilities": {
+            "102": 0.98,
+            "103": 0.05,
+            "104": 0.98,
+            "105": 0.99,
+            "106": 0.07
+          }
+        },
+        {
+          "cache_hit": true,
+          "http_attempts": null,
+          "usage": {
+            "input_tokens": 946,
+            "output_tokens": 99,
+            "total_tokens": 1045,
+            "cost": 0.005248408,
+            "cost_details": {
+              "input_cost": 0.005248408,
+              "output_cost": 0
+            }
+          },
+          "probabilities": {
+            "102": 0.05,
+            "103": 0.03,
+            "104": 0.02,
+            "105": 0.03,
+            "106": 0.06
+          }
+        },
+        {
+          "cache_hit": true,
+          "http_attempts": null,
+          "usage": {
+            "input_tokens": 602,
+            "output_tokens": 99,
+            "total_tokens": 701,
+            "cost": 0.003339896,
+            "cost_details": {
+              "input_cost": 0.003339896,
+              "output_cost": 0
+            }
+          },
+          "probabilities": {
+            "102": 0.97,
+            "103": 0.07,
+            "104": 0.03,
+            "105": 0.03,
+            "106": 0.41
+          }
+        },
+        {
+          "cache_hit": true,
+          "http_attempts": null,
+          "usage": {
+            "input_tokens": 2667,
+            "output_tokens": 99,
+            "total_tokens": 2766,
+            "cost": 0.014796516,
+            "cost_details": {
+              "input_cost": 0.014796516,
+              "output_cost": 0
+            }
+          },
+          "probabilities": {
+            "102": 0.05,
+            "103": 0.03,
+            "104": 0.14,
+            "105": 0.19,
+            "106": 0.03
+          }
+        },
+        {
+          "cache_hit": true,
+          "http_attempts": null,
+          "usage": {
+            "input_tokens": 984,
+            "output_tokens": 99,
+            "total_tokens": 1083,
+            "cost": 0.005459232,
+            "cost_details": {
+              "input_cost": 0.005459232,
+              "output_cost": 0
+            }
+          },
+          "probabilities": {
+            "102": 0.38,
+            "103": 0.12,
+            "104": 0.04,
+            "105": 0.05,
+            "106": 0.6
+          }
+        },
+        {
+          "cache_hit": true,
+          "http_attempts": null,
+          "usage": {
+            "input_tokens": 3338,
+            "output_tokens": 99,
+            "total_tokens": 3437,
+            "cost": 0.018519224,
+            "cost_details": {
+              "input_cost": 0.018519224,
+              "output_cost": 0
+            }
+          },
+          "probabilities": {
+            "102": 0.57,
+            "103": 0.96,
+            "104": 0.03,
+            "105": 0.03,
+            "106": 0.99
+          }
+        },
+        {
+          "cache_hit": true,
+          "http_attempts": null,
+          "usage": {
+            "input_tokens": 2716,
+            "output_tokens": 99,
+            "total_tokens": 2815,
+            "cost": 0.015068368,
+            "cost_details": {
+              "input_cost": 0.015068368,
+              "output_cost": 0
+            }
+          },
+          "probabilities": {
+            "102": 0.99,
+            "103": 0.88,
+            "104": 0.99,
+            "105": 0.99,
+            "106": 0.98
+          }
+        },
+        {
+          "cache_hit": true,
+          "http_attempts": null,
+          "usage": {
+            "input_tokens": 921,
+            "output_tokens": 99,
+            "total_tokens": 1020,
+            "cost": 0.005109708,
+            "cost_details": {
+              "input_cost": 0.005109708,
+              "output_cost": 0
+            }
+          },
+          "probabilities": {
+            "102": 0.09,
+            "103": 0.05,
+            "104": 0.02,
+            "105": 0.03,
+            "106": 0.99
+          }
+        },
+        {
+          "cache_hit": true,
+          "http_attempts": null,
+          "usage": {
+            "input_tokens": 954,
+            "output_tokens": 99,
+            "total_tokens": 1053,
+            "cost": 0.005292792,
+            "cost_details": {
+              "input_cost": 0.005292792,
+              "output_cost": 0
+            }
+          },
+          "probabilities": {
+            "102": 0.06,
+            "103": 0.03,
+            "104": 0.04,
+            "105": 0.04,
+            "106": 0.07
+          }
+        },
+        {
+          "cache_hit": true,
+          "http_attempts": null,
+          "usage": {
+            "input_tokens": 946,
+            "output_tokens": 99,
+            "total_tokens": 1045,
+            "cost": 0.005248408,
+            "cost_details": {
+              "input_cost": 0.005248408,
+              "output_cost": 0
+            }
+          },
+          "probabilities": {
+            "102": 0.12,
+            "103": 0.04,
+            "104": 0.04,
+            "105": 0.04,
+            "106": 0.09
+          }
+        },
+        {
+          "cache_hit": true,
+          "http_attempts": null,
+          "usage": {
+            "input_tokens": 3506,
+            "output_tokens": 99,
+            "total_tokens": 3605,
+            "cost": 0.019451288,
+            "cost_details": {
+              "input_cost": 0.019451288,
+              "output_cost": 0
+            }
+          },
+          "probabilities": {
+            "102": 0.98,
+            "103": 0.98,
+            "104": 0.98,
+            "105": 0.99,
+            "106": 0.99
+          }
+        },
+        {
+          "cache_hit": true,
+          "http_attempts": null,
+          "usage": {
+            "input_tokens": 3358,
+            "output_tokens": 99,
+            "total_tokens": 3457,
+            "cost": 0.018630184,
+            "cost_details": {
+              "input_cost": 0.018630184,
+              "output_cost": 0
+            }
+          },
+          "probabilities": {
+            "102": 0.98,
+            "103": 0.99,
+            "104": 0.98,
+            "105": 0.96,
+            "106": 0.99
+          }
+        },
+        {
+          "cache_hit": true,
+          "http_attempts": null,
+          "usage": {
+            "input_tokens": 3111,
+            "output_tokens": 99,
+            "total_tokens": 3210,
+            "cost": 0.017259828,
+            "cost_details": {
+              "input_cost": 0.017259828,
+              "output_cost": 0
+            }
+          },
+          "probabilities": {
+            "102": 0.98,
+            "103": 0.91,
+            "104": 0.98,
+            "105": 0.98,
+            "106": 0.94
+          }
+        },
+        {
+          "cache_hit": true,
+          "http_attempts": null,
+          "usage": {
+            "input_tokens": 2578,
+            "output_tokens": 99,
+            "total_tokens": 2677,
+            "cost": 0.014302744,
+            "cost_details": {
+              "input_cost": 0.014302744,
+              "output_cost": 0
+            }
+          },
+          "probabilities": {
+            "102": 0.98,
+            "103": 0.13,
+            "104": 0.99,
+            "105": 0.99,
+            "106": 0.11
+          }
+        },
+        {
+          "cache_hit": true,
+          "http_attempts": null,
+          "usage": {
+            "input_tokens": 2202,
+            "output_tokens": 99,
+            "total_tokens": 2301,
+            "cost": 0.012216696,
+            "cost_details": {
+              "input_cost": 0.012216696,
+              "output_cost": 0
+            }
+          },
+          "probabilities": {
+            "102": 0.15,
+            "103": 0.09,
+            "104": 0.12,
+            "105": 0.09,
+            "106": 0.29
+          }
+        },
+        {
+          "cache_hit": true,
+          "http_attempts": null,
+          "usage": {
+            "input_tokens": 543,
+            "output_tokens": 99,
+            "total_tokens": 642,
+            "cost": 0.003012564,
+            "cost_details": {
+              "input_cost": 0.003012564,
+              "output_cost": 0
+            }
+          },
+          "probabilities": {
+            "102": 0.1,
+            "103": 0.09,
+            "104": 0.07,
+            "105": 0.11,
+            "106": 0.1
+          }
+        },
+        {
+          "cache_hit": true,
+          "http_attempts": null,
+          "usage": {
+            "input_tokens": 854,
+            "output_tokens": 99,
+            "total_tokens": 953,
+            "cost": 0.004737992,
+            "cost_details": {
+              "input_cost": 0.004737992,
+              "output_cost": 0
+            }
+          },
+          "probabilities": {
+            "102": 0.22,
+            "103": 0.1,
+            "104": 0.11,
+            "105": 0.09,
+            "106": 0.34
+          }
+        },
+        {
+          "cache_hit": true,
+          "http_attempts": null,
+          "usage": {
+            "input_tokens": 956,
+            "output_tokens": 99,
+            "total_tokens": 1055,
+            "cost": 0.005303888,
+            "cost_details": {
+              "input_cost": 0.005303888,
+              "output_cost": 0
+            }
+          },
+          "probabilities": {
+            "102": 0.07,
+            "103": 0.96,
+            "104": 0.04,
+            "105": 0.02,
+            "106": 0.04
+          }
+        },
+        {
+          "cache_hit": true,
+          "http_attempts": null,
+          "usage": {
+            "input_tokens": 944,
+            "output_tokens": 99,
+            "total_tokens": 1043,
+            "cost": 0.005237312,
+            "cost_details": {
+              "input_cost": 0.005237312,
+              "output_cost": 0
+            }
+          },
+          "probabilities": {
+            "102": 0.04,
+            "103": 0.98,
+            "104": 0.03,
+            "105": 0.02,
+            "106": 0.04
+          }
+        },
+        {
+          "cache_hit": true,
+          "http_attempts": null,
+          "usage": {
+            "input_tokens": 837,
+            "output_tokens": 99,
+            "total_tokens": 936,
+            "cost": 0.004643676,
+            "cost_details": {
+              "input_cost": 0.004643676,
+              "output_cost": 0
+            }
+          },
+          "probabilities": {
+            "102": 0.24,
+            "103": 0.13,
+            "104": 0.2,
+            "105": 0.13,
+            "106": 0.34
+          }
+        },
+        {
+          "cache_hit": true,
+          "http_attempts": null,
+          "usage": {
+            "input_tokens": 918,
+            "output_tokens": 99,
+            "total_tokens": 1017,
+            "cost": 0.005093064,
+            "cost_details": {
+              "input_cost": 0.005093064,
+              "output_cost": 0
+            }
+          },
+          "probabilities": {
+            "102": 0.22,
+            "103": 0.07,
+            "104": 0.04,
+            "105": 0.07,
+            "106": 0.25
+          }
+        },
+        {
+          "cache_hit": true,
+          "http_attempts": null,
+          "usage": {
+            "input_tokens": 3292,
+            "output_tokens": 99,
+            "total_tokens": 3391,
+            "cost": 0.018264016,
+            "cost_details": {
+              "input_cost": 0.018264016,
+              "output_cost": 0
+            }
+          },
+          "probabilities": {
+            "102": 0.43,
+            "103": 0.97,
+            "104": 0.03,
+            "105": 0.03,
+            "106": 0.98
+          }
+        },
+        {
+          "cache_hit": true,
+          "http_attempts": null,
+          "usage": {
+            "input_tokens": 548,
+            "output_tokens": 99,
+            "total_tokens": 647,
+            "cost": 0.003040304,
+            "cost_details": {
+              "input_cost": 0.003040304,
+              "output_cost": 0
+            }
+          },
+          "probabilities": {
+            "102": 0.22,
+            "103": 0.13,
+            "104": 0.18,
+            "105": 0.16,
+            "106": 0.31
+          }
+        },
+        {
+          "cache_hit": true,
+          "http_attempts": null,
+          "usage": {
+            "input_tokens": 935,
+            "output_tokens": 99,
+            "total_tokens": 1034,
+            "cost": 0.00518738,
+            "cost_details": {
+              "input_cost": 0.00518738,
+              "output_cost": 0
+            }
+          },
+          "probabilities": {
+            "102": 0.09,
+            "103": 0.04,
+            "104": 0.04,
+            "105": 0.04,
+            "106": 0.07
+          }
+        },
+        {
+          "cache_hit": true,
+          "http_attempts": null,
+          "usage": {
+            "input_tokens": 950,
+            "output_tokens": 99,
+            "total_tokens": 1049,
+            "cost": 0.0052706,
+            "cost_details": {
+              "input_cost": 0.0052706,
+              "output_cost": 0
+            }
+          },
+          "probabilities": {
+            "102": 0.41,
+            "103": 0.14,
+            "104": 0.99,
+            "105": 0.99,
+            "106": 0.38
+          }
+        },
+        {
+          "cache_hit": true,
+          "http_attempts": null,
+          "usage": {
+            "input_tokens": 549,
+            "output_tokens": 99,
+            "total_tokens": 648,
+            "cost": 0.003045852,
+            "cost_details": {
+              "input_cost": 0.003045852,
+              "output_cost": 0
+            }
+          },
+          "probabilities": {
+            "102": 0.24,
+            "103": 0.17,
+            "104": 0.16,
+            "105": 0.17,
+            "106": 0.23
+          }
+        },
+        {
+          "cache_hit": true,
+          "http_attempts": null,
+          "usage": {
+            "input_tokens": 1567,
+            "output_tokens": 99,
+            "total_tokens": 1666,
+            "cost": 0.008693716,
+            "cost_details": {
+              "input_cost": 0.008693716,
+              "output_cost": 0
+            }
+          },
+          "probabilities": {
+            "102": 0.27,
+            "103": 0.15,
+            "104": 0.23,
+            "105": 0.18,
+            "106": 0.41
+          }
+        },
+        {
+          "cache_hit": true,
+          "http_attempts": null,
+          "usage": {
+            "input_tokens": 2375,
+            "output_tokens": 99,
+            "total_tokens": 2474,
+            "cost": 0.0131765,
+            "cost_details": {
+              "input_cost": 0.0131765,
+              "output_cost": 0
+            }
+          },
+          "probabilities": {
+            "102": 0.98,
+            "103": 0.98,
+            "104": 0.98,
+            "105": 0.98,
+            "106": 0.98
+          }
+        },
+        {
+          "cache_hit": true,
+          "http_attempts": null,
+          "usage": {
+            "input_tokens": 924,
+            "output_tokens": 99,
+            "total_tokens": 1023,
+            "cost": 0.005126352,
+            "cost_details": {
+              "input_cost": 0.005126352,
+              "output_cost": 0
+            }
+          },
+          "probabilities": {
+            "102": 0.03,
+            "103": 0.04,
+            "104": 0.02,
+            "105": 0.02,
+            "106": 0.02
+          }
+        }
+      ],
+      "workers": 1,
+      "model_provenance": {
+        "provider": "selectel",
+        "endpoint": "https://api.selectel.ru/aig/v1/decisions",
+        "model": "typesafe/jev-1.13",
+        "prompt": "baseline",
+        "prompt_sha256": "0ca8e0a727cb333e1036a70fae258c207dce8e51494b652ac2c8f0aa5fc81715",
+        "thresholds": {
+          "101": 0.5,
+          "102": 0.635,
+          "103": 0.635,
+          "104": 0.635,
+          "105": 0.635,
+          "106": 0.635
+        },
+        "calibration_sha256": "feb46e14d986f3a1f178b4ab3215272a18a7875c2d40be5d4616adeab1fd3e25",
+        "training_dataset": "docs/innoglobalhack_avito/public-train-annotated.jsonl",
+        "fit_description_sha256": [
+          "7fb0229efe153e2d259d8e68410e987f27c9a6f6ea9efb0ca9f9132456494ec1",
+          "a351bb39fee12ca7136721c8e8919b7481a08e8bc0b418948003c24f9adc3d50",
+          "c629af290bd1a76849c9a5b1e0848bb90ebcfcf8f7bccbe064d2cb25a3d4132b",
+          "8ec370896dd3451d475a7555e7b080cc802ee3826107a325db5786b1d3ebae0b",
+          "0794955da45bd976003c36d71cc4dafeac88ecd47c4258c54bbeee68eafdc7a6",
+          "15af2f49ac8c6442c4f37b88375277623e47757b9987c1400c895c10c31029c9",
+          "148f6b214c27957d79e3d0a187f48d623c9feb7d97357488f5fbe261d3659d6e",
+          "2ba365a6d3f52c0a55a492a71219114577e2b297a7eeb7b47ba8d918f53f63fc",
+          "06382fde718389a76f56742bb0a77af362f86b492eaf34f1382843646069491e",
+          "90fd10c4284406ffc17c88058ffde000d3171588d03e044cd66e86d75c093223",
+          "1e2655b9ebc6d739440108336d9b1bd6e289b7ce30c7abf7ec0ea8d3790be9fa",
+          "53e08cfbf8d4eb534267517a3250e9124ec6434fd70416bdf6cf8d63eaf78d2a",
+          "f820e2083c495094d2c324bf20df9f10d91ac09e90e4b50e0061ac20390f8999",
+          "3e28d83e03df57ea72c2f86027a1987c032070b6de00ffe8805770ce83165c8a",
+          "0b2d48e500510934de4f6e15e3d3513ba37faf7397385adc5737d127c769c56b",
+          "317aa53b51cb0e8f4a63a731636e79906aa74ff5b463ecd575e24db8feb88593",
+          "0b32d036e24a174491bd6d8c229164d1f447467e028d59b0a118fb45d8a12868",
+          "fdb6c4cce2b35a628dac04fd1f63e0cd49e0be308d6a83c3dfc0ccdf83472aba",
+          "30d9ff583b7e99ded04f8a2c5e45e43f0e8babfab76d03ca1c9c3894905f166d",
+          "7dc73f5f28c2b5a9464aa83ad4a439f241c9df7d106e2dac106cd338355573f5",
+          "b8cf3388b9dfc54c5e68000dd8bd64bfeb2d2ce3267391a9b64d2a20d3d4ce88",
+          "6b924828ee8723c7b6df58316aba0f703a6318c6ca1d3aad9bb0b33171a77b40",
+          "0a0c689351039009d891b113057023b13b47619d5fccdf1f50968f6471ffc429",
+          "66e048efbfa1a69e499e1dbb40585aa4f48c51ec5bd6903db719753fc3f150dd",
+          "2ad0614a00d35c82bbf547f2a8e19409cf8667ddf001ae3af09e491ca4b2f250",
+          "3d6a025c238b3c1ab19c279b6cc1a9783da0c98d3227073b0e6b02b7f6551250",
+          "3a8e2164c8f976f778a0b653d5461e45fa7087f468f4d094a9eaffb9bde799b4",
+          "86bcc6b3110049fd69343883b373d05235628216b012c60b97233a3c33916ec8",
+          "a9044add93efc149ad20fac411c10b98aa6d5a43652f8f71ec2bf95f82cac5c8",
+          "4c461fce02353a61fab90a8a719f5036ef911581881aa4fd4cb4ece8d08f8090",
+          "64bfde99193f578f154755082e5e4cca6ee28dbd6683fba3ab9063a8812abf6a",
+          "d313e2866b7f4f725f48f5725df87ac91db0e8d1944530a87cf034f655f3fd2d",
+          "905048ab2cfc4880eb1ecdae32d7d5c52d484b802d53ec59203e47a10cf99483",
+          "d8d747f6d89cfcdace2780a870fa8b58396b3aa7ed28efde3a8e28639c2f502d",
+          "173cffc204e413eb97754949dc69a0082666223bb411d53198709dd9b41d1592",
+          "016c40f0ac7165de940fe0f21418f58b4af296e5a37684c0d87cda83f1b06cac",
+          "f332ab831d38ec46bf7b93e89156c9f221935271317df0070c4370f48d1c119a",
+          "2d91e59074d53da0d7aea768e9e15902333c9770e2975b610402f6e202ce7b0e",
+          "157e672fb4a146e9100e94e54dac418be5e8df8f7b75ac46933ce9e087e8d828",
+          "6d0ca127418220ab93765f98ac77bf858dcfc129c3f0a9ba772c71c0712cc340",
+          "1a3ce026d3f162bc1c5486cc84df6dc58d4ffda48084f4551feb50498c63854b",
+          "cf55a7045f2f2e9ddd97bec8f37dd9d7138ab975bc878177068fa73e649d6e04",
+          "241bf7cfc644dadb04bec62fd4a34c24f2d73bd42a4696f8b2347bb166bcde14",
+          "09ea52b9786d6fd4f48c8dd788d71766c54b41efdff3accd40eebe7ef68f6f3a",
+          "cfaacef8207e8aa5c64e3d5a5bb61b6f58d7c5c434aef7b1c20b1b9884681bd8",
+          "9ab3327cb84a08199bea30a57852a3cf51c8656d4e8cae1ab260c5a15093c6b6",
+          "2a9baa704b02b487329e40fc637fdf1235932798926bf5d8a7efe7ab765d0b71",
+          "1acaafdf3dd48ed859f88dd5582fa0934f88cc5489cc3c1321bac47839032a3f"
+        ],
+        "control_confirmed": true,
+        "cache_enabled": true
+      },
+      "model_training_overlap": {
+        "checked": true,
+        "method": "normalized_exact_description",
+        "training_dataset": "/home/zolotarev/PycharmProjects/hackathon-innoglobalhack-avito/docs/innoglobalhack_avito/public-train-annotated.jsonl",
+        "overlapping_rows": 0,
+        "row_numbers": []
+      },
+      "metrics": {
+        "micro_f1": 0.7750677506775068,
+        "classification_points": 46.5040650406504,
+        "tp": 143,
+        "fp": 17,
+        "fn": 66
+      },
+      "fixed_threshold_metrics": {
+        "mode": "same_recorded_probabilities_with_fixed_0.5_not_a_new_model_run",
+        "metrics": {
+          "micro_f1": 0.7885117493472585,
+          "classification_points": 47.310704960835515,
+          "tp": 151,
+          "fp": 23,
+          "fn": 58
+        }
+      },
+      "measurement_metadata": {
+        "date": "2026-11-15T01:27:43+03:00",
+        "commit": "6802b41bdcb9b27320bf4ee31621d761a5b6b13a",
+        "code_sha256": "4d3992446013ace7e9001307c5adc0af4b1f1243427ba01cbd853d77cfb60dde",
+        "mode": "pipeline_run",
+        "protocol": {
+          "dataset_sha256": "0af183508c1501425a1330675ceb8923dfe130fff3f86e418ebe3ec4baba34a2",
+          "training_sha256": "d365141906cd7e2a1d66792aa2e37661d8bcdcd0a4bbaf3781649a9108238b76",
+          "rows": 119,
+          "source_mc_id_assumption": 101
+        },
+        "overlap": {
+          "checked": true,
+          "method": "normalized_exact_description",
+          "training_dataset": "/home/zolotarev/PycharmProjects/hackathon-innoglobalhack-avito/docs/improved_dataset/train.jsonl",
+          "overlapping_rows": 0,
+          "row_numbers": []
+        }
+      },
+      "frozen_guided_calibration_replay": {
+        "mode": "offline_application_of_train_frozen_guided_thresholds_to_existing_jev_probabilities",
+        "training_report": "jev-training-results.json",
+        "thresholds": {
+          "101": 0.5,
+          "102": 0.5800000000000001,
+          "103": 0.5800000000000001,
+          "104": 0.5800000000000001,
+          "105": 0.5800000000000001,
+          "106": 0.675
+        },
+        "source_model_provenance": {
+          "provider": "selectel",
+          "endpoint": "https://api.selectel.ru/aig/v1/decisions",
+          "model": "typesafe/jev-1.13",
+          "threshold": 0.5,
+          "prompt_sha256": "f05534059aa8ab3e29a281d39d65bfc3e5cbc887330787aba267abd8891728b7",
+          "cache_enabled": true
+        },
+        "selected_by_fitting": false,
+        "fresh_api_requests": 0,
+        "predicted": [
+          [
+            102,
+            103,
+            104,
+            105,
+            106
+          ],
+          [],
+          [
+            102,
+            103,
+            104,
+            105,
+            106
+          ],
+          [
+            104,
+            105,
+            106
+          ],
+          [],
+          [
+            104,
+            105
+          ],
+          [],
+          [
+            105,
+            106
+          ],
+          [
+            102,
+            104,
+            105
+          ],
+          [],
+          [
+            103,
+            104,
+            105
+          ],
+          [],
+          [
+            102,
+            104,
+            105,
+            106
+          ],
+          [
+            102,
+            103,
+            104,
+            105,
+            106
+          ],
+          [],
+          [
+            102,
+            103,
+            104,
+            105,
+            106
+          ],
+          [
+            102,
+            103,
+            104,
+            105,
+            106
+          ],
+          [
+            103,
+            106
+          ],
+          [],
+          [],
+          [],
+          [
+            105
+          ],
+          [
+            102,
+            103,
+            104,
+            105,
+            106
+          ],
+          [],
+          [
+            102,
+            103,
+            104,
+            105,
+            106
+          ],
+          [
+            102,
+            103,
+            104,
+            105
+          ],
+          [
+            102,
+            106
+          ],
+          [],
+          [
+            102,
+            103,
+            104,
+            105,
+            106
+          ],
+          [
+            103
+          ],
+          [
+            102,
+            104,
+            105
+          ],
+          [
+            102,
+            106
+          ],
+          [],
+          [
+            102,
+            103,
+            104,
+            105,
+            106
+          ],
+          [],
+          [
+            104
+          ],
+          [],
+          [],
+          [
+            104,
+            105,
+            106
+          ],
+          [
+            102,
+            106
+          ],
+          [
+            103
+          ],
+          [],
+          [],
+          [],
+          [],
+          [
+            103,
+            104,
+            105,
+            106
+          ],
+          [],
+          [],
+          [
+            104,
+            105
+          ],
+          [],
+          [],
+          [],
+          [],
+          [
+            102,
+            103,
+            104,
+            105
+          ],
+          [],
+          [],
+          [
+            102,
+            104,
+            105
+          ],
+          [
+            104,
+            105
+          ],
+          [],
+          [
+            103,
+            105
+          ],
+          [
+            102,
+            106
+          ],
+          [],
+          [],
+          [],
+          [
+            102,
+            103,
+            104,
+            105
+          ],
+          [],
+          [],
+          [],
+          [],
+          [],
+          [
+            102,
+            103,
+            106
+          ],
+          [
+            105
+          ],
+          [],
+          [],
+          [
+            105
+          ],
+          [],
+          [],
+          [],
+          [
+            104,
+            105
+          ],
+          [
+            103
+          ],
+          [],
+          [],
+          [
+            102,
+            103,
+            104,
+            105,
+            106
+          ],
+          [],
+          [
+            103
+          ],
+          [],
+          [
+            102
+          ],
+          [
+            104,
+            105
+          ],
+          [],
+          [],
+          [
+            102,
+            104,
+            105
+          ],
+          [],
+          [
+            102
+          ],
+          [],
+          [],
+          [
+            103,
+            106
+          ],
+          [
+            102,
+            103,
+            104,
+            105,
+            106
+          ],
+          [
+            106
+          ],
+          [],
+          [],
+          [
+            102,
+            103,
+            104,
+            105,
+            106
+          ],
+          [
+            102,
+            103,
+            104,
+            105,
+            106
+          ],
+          [
+            102,
+            103,
+            104,
+            105,
+            106
+          ],
+          [
+            102,
+            104,
+            105,
+            106
+          ],
+          [],
+          [],
+          [],
+          [
+            103
+          ],
+          [
+            103
+          ],
+          [],
+          [],
+          [
+            103,
+            106
+          ],
+          [],
+          [],
+          [
+            104,
+            105
+          ],
+          [],
+          [],
+          [
+            102,
+            103,
+            104,
+            105,
+            106
+          ],
+          []
+        ],
+        "metrics": {
+          "micro_f1": 0.8,
+          "tp": 150,
+          "fp": 16,
+          "fn": 59
         }
       }
     }
