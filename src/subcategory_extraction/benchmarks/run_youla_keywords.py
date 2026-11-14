@@ -39,6 +39,7 @@ def main() -> None:
     parser.add_argument("--size", type=int)
     parser.add_argument("--report", type=Path, default=REPORT)
     parser.add_argument("--artifact", type=Path, default=DEFAULT_ARTIFACT)
+    parser.add_argument("--ensemble", action="store_true", help="Подобрать смеси по validation")
     args = parser.parse_args()
     with args.train.open(encoding="utf-8") as stream:
         train = [json.loads(line) for line in stream]
@@ -65,6 +66,7 @@ def main() -> None:
     held_binary = held.sign()
     terms = vectorizer.get_feature_names_out()
     results, keywords = {}, {}
+    logits_by_mode = {}
     selected = {}
     for cid in categories:
         if cid == SOURCE:
@@ -195,6 +197,8 @@ def main() -> None:
         predictions = [{cid for cid, value in zip(categories, row, strict=True) if value >= 0}
                        for row in logits[:n_test]]
         results[mode] = evaluate(logits)
+        if args.ensemble:
+            logits_by_mode[mode] = logits
         if mode == "combined":
             artifact = {
                 "version": 1, "categories": categories, "vocabulary": vectorizer.vocabulary_,
@@ -226,8 +230,30 @@ def main() -> None:
             clf = LogisticRegression(C=4, max_iter=500).fit(hstack(train_blocks, format="csr"), labels)
             logits[:, index] = clf.decision_function(hstack(held_blocks, format="csr"))
         results[mode] = evaluate(logits)
+        if args.ensemble:
+            logits_by_mode[mode] = logits
         logging.info("%s: %.4f (tuned %.4f)", mode, results[mode]["micro_f1"],
                      results[mode]["tuned_holdout"]["micro_f1"])
+    if args.ensemble:
+        candidates = {}
+        # Каждая смесь и пороги выбираются только на validation; holdout не участвует в отборе.
+        for left, right in (("keywords", "combined"), ("keywords", "keywords_local"),
+                            ("keywords", "whole"), ("combined", "keywords_local_whole")):
+            for weight in (0.25, 0.5, 0.75):
+                name = f"{left}+{right}@{weight}"
+                mixed = weight * logits_by_mode[left] + (1 - weight) * logits_by_mode[right]
+                candidates[name] = tune_categories(mixed)
+        best = max(candidates, key=lambda name: candidates[name]["validation"]["micro_f1"])
+        results["ensembles"] = {"selected": best, "candidates": candidates,
+                                "selection_metric": "validation micro_f1"}
+        contenders = {name: value["per_category_cutoffs"] for name, value in results.items()
+                      if name != "ensembles"}
+        contenders.update(candidates)
+        winner = max(contenders, key=lambda name: contenders[name]["validation"]["micro_f1"])
+        results["validation_winner"] = {"method": winner, **contenders[winner]}
+        logging.info("validation winner %s: validation %.4f, holdout %.4f", winner,
+                     contenders[winner]["validation"]["micro_f1"],
+                     contenders[winner]["holdout"]["micro_f1"])
     args.report.write_text(json.dumps({
         "train_sha256": hashlib.sha256(json.dumps(train, sort_keys=True).encode()).hexdigest(),
         "train_rows": len(train), "holdout_rows": len(indices),
