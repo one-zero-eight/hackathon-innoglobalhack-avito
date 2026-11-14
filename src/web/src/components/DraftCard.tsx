@@ -103,6 +103,7 @@ function highlightKeywords(text: string, keywordSources: string[]): ReactNode[] 
 function DraftText({ text, keywordSources }: DraftTextProps) {
   const [expanded, setExpanded] = useState(false)
   const [overflowing, setOverflowing] = useState(false)
+  const [heights, setHeights] = useState({ collapsed: 0, expanded: 0 })
   const textRef = useRef<HTMLParagraphElement>(null)
   const textId = useId()
 
@@ -110,35 +111,42 @@ function DraftText({ text, keywordSources }: DraftTextProps) {
 
   useLayoutEffect(() => {
     const element = textRef.current
-    if (element === null || expanded) {
+    if (element === null) {
       return
     }
 
     const measure = () => {
-      setOverflowing(element.scrollHeight > element.clientHeight + 1)
+      const lineHeight = Number.parseFloat(getComputedStyle(element).lineHeight)
+      const expandedHeight = element.scrollHeight
+      const collapsedHeight = Math.min(expandedHeight, lineHeight * COLLAPSED_LINE_COUNT)
+      setOverflowing(expandedHeight > collapsedHeight + 1)
+      setHeights({ collapsed: collapsedHeight, expanded: expandedHeight })
     }
     measure()
 
     const observer = new ResizeObserver(measure)
     observer.observe(element)
     return () => observer.disconnect()
-  }, [expanded, text])
+  }, [text])
+
+  const height = expanded ? heights.expanded : heights.collapsed
 
   return (
     <Stack gap={0}>
       <Box pos="relative">
-        <Text
-          id={textId}
-          ref={textRef}
-          size="sm"
-          c="dark.7"
-          lh={1.5}
-          lineClamp={expanded ? undefined : COLLAPSED_LINE_COUNT}
-          style={{ whiteSpace: 'pre-line' }}
-          className="break-words hyphens-auto"
-        >
-          {content}
-        </Text>
+        <Box className="draft-text-collapsible" style={{ height: height || 'auto' }}>
+          <Text
+            id={textId}
+            ref={textRef}
+            size="sm"
+            c="dark.7"
+            lh={1.5}
+            style={{ whiteSpace: 'pre-line' }}
+            className="break-words hyphens-auto"
+          >
+            {content}
+          </Text>
+        </Box>
         {!expanded && overflowing && (
           <Box
             aria-hidden

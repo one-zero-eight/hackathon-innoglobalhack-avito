@@ -204,9 +204,10 @@ export function HomePage() {
                 onChange={(value) => setInputMode(value as InputMode)}
                 fullWidth
                 maw={480}
+                mx="auto"
               />
 
-              <Box hidden={inputMode !== 'manual'}>
+              <Box className="input-panel" hidden={inputMode !== 'manual'}>
                 <Stack gap="md">
                   {categoriesError !== null && (
                     <Alert
@@ -255,7 +256,7 @@ export function HomePage() {
                 </Stack>
               </Box>
 
-              <Box hidden={inputMode !== 'table'}>
+              <Box className="input-panel" hidden={inputMode !== 'table'}>
                 <AdsDropzone microcategories={microcategories} onSelect={handleSelectAd} />
               </Box>
             </Stack>

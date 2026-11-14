@@ -36,8 +36,9 @@ body {
 }
 
 :root {
-  /* Плавные переходы в фирменном диапазоне 150–200 мс (по умолчанию 150). */
+  /* Плавные переходы в фирменном диапазоне 150–250 мс. */
   --transition-duration: 180ms;
+  --transition-duration-expand: 220ms;
 
   /* Радужная градиентная линия в стиле Avito (цвета из палитр темы). */
   --avito-rainbow: linear-gradient(
@@ -57,12 +58,67 @@ body {
   background-size: 200% 100%;
 }
 
+/* Смена панелей без размонтирования: состояние формы и таблицы сохраняется. */
+.input-panel {
+  opacity: 1;
+  translate: 0 0;
+  transition:
+    display var(--transition-duration) ease-out,
+    opacity var(--transition-duration) ease-out,
+    translate var(--transition-duration) ease-out;
+  transition-behavior: allow-discrete;
+}
+
+.input-panel[hidden] {
+  display: none;
+  opacity: 0;
+  translate: 0 6px;
+}
+
+@starting-style {
+  .input-panel {
+    opacity: 0;
+    translate: 0 6px;
+  }
+}
+
+/* Короткая обратная связь у кнопок и интерактивных поверхностей. */
+:where(
+  .mantine-Button-root,
+  .mantine-ActionIcon-root,
+  .mantine-SegmentedControl-label,
+  .mantine-Dropzone-root,
+  .mantine-Anchor-root
+) {
+  transition:
+    color var(--transition-duration) ease-out,
+    background-color var(--transition-duration) ease-out,
+    border-color var(--transition-duration) ease-out,
+    box-shadow var(--transition-duration) ease-out,
+    translate var(--transition-duration) ease-out;
+}
+
+:where(.mantine-Button-root, .mantine-ActionIcon-root):active {
+  translate: 0 1px;
+}
+
+@media (hover: hover) {
+  :where(
+    .mantine-Button-root[data-variant='filled'],
+    .mantine-Button-root[data-variant='light'],
+    .mantine-ActionIcon-root[data-variant='filled'],
+    .mantine-ActionIcon-root[data-variant='light']
+  ):hover {
+    box-shadow: var(--mantine-shadow-xs);
+  }
+}
+
 /* Карточка черновика: мягкий подъём при наведении + цветная топ-полоска. */
 .avito-card {
   transition:
-    box-shadow var(--transition-duration) ease,
-    border-color var(--transition-duration) ease,
-    translate var(--transition-duration) ease;
+    box-shadow var(--transition-duration) ease-out,
+    border-color var(--transition-duration) ease-out,
+    translate var(--transition-duration) ease-out;
 }
 
 @media (hover: hover) {
@@ -77,6 +133,22 @@ body {
   block-size: 4px;
   border-start-start-radius: var(--mantine-radius-sm);
   border-start-end-radius: var(--mantine-radius-sm);
+}
+
+.draft-text-collapsible {
+  overflow: hidden;
+  transition: height var(--transition-duration-expand) ease-out;
+}
+
+@keyframes avito-result-enter {
+  from {
+    opacity: 0;
+    translate: 0 6px;
+  }
+  to {
+    opacity: 1;
+    translate: 0 0;
+  }
 }
 
 /* Ватермарк-лого: очень светлый, не мешает чтению, не ловит клики. */
@@ -103,17 +175,43 @@ body {
   }
 }
 
-.avito-pulse {
-  animation: avito-pulse 1.4s ease-in-out infinite;
+@media (prefers-reduced-motion: no-preference) {
+  .avito-card {
+    animation: avito-result-enter 200ms ease-out;
+  }
+
+  .avito-pulse {
+    animation: avito-pulse 1.4s ease-in-out infinite;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .avito-pulse {
-    animation: none;
+  .input-panel,
+  .avito-card,
+  .draft-text-collapsible {
+    translate: none;
+    transition: none;
   }
 
-  .avito-card {
-    transition: none;
+  .avito-card:hover,
+  :where(.mantine-Button-root, .mantine-ActionIcon-root):active {
+    translate: none;
+  }
+
+  :where(
+    .mantine-Button-root,
+    .mantine-ActionIcon-root,
+    .mantine-SegmentedControl-label,
+    .mantine-Dropzone-root,
+    .mantine-Anchor-root
+  ) {
+    transition-property: color, background-color, border-color, box-shadow;
+  }
+
+  @starting-style {
+    .input-panel {
+      translate: none;
+    }
   }
 }
 
