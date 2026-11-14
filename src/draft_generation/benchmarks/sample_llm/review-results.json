@@ -1,0 +1,606 @@
+{
+  "metadata": {
+    "date": "2026-11-15T00:49:21+03:00",
+    "commit": "185621a7d0900ef1496949ac2fbfb292f8aead14",
+    "code_sha256": "f10c2c1e626285ea28bb0299994b9cc71dc7d5b5e64e56d5aaad1db8b8dffbf8",
+    "working_tree": true,
+    "automatic_not_manual_gold": true,
+    "request_identity_sha256": "92849ca6cb486ab03a2cc8be491a1a404283db3561781cb7ea95e44500aebaae",
+    "judge": {
+      "id": "jdgb-15ce428ab8eadad9",
+      "intent": "Релевантность, читаемость и самостоятельность черновиков",
+      "total": 159,
+      "done": 159,
+      "failed": 0,
+      "cost": 1.40043,
+      "running": false,
+      "model": "openai-codex/gpt-6-astra",
+      "elapsedS": 205.4
+    },
+    "notes": [
+      "Новые критерии оценивают только готовый текст и целевую категорию: исходник не показывается судье, чтобы не маскировать зависимость текста от контекста.",
+      "Шкала 0–4: вероятностная ожидаемая оценка модельного судьи, не ручная разметка и не общий итоговый балл.",
+      "Первые две метрики — micro-доли в процентах. Для них используются только общие входы с обеими определёнными оценками; пустые эталоны и ошибки цитат не заменяются нулями.",
+      "Состояния слепы к названию модели. Идентичные тексты одной категории используют один результат.",
+      "Первый пример каждой категории выбран в исходном порядке до новых оценок; все 50 входов доступны для ручного просмотра.",
+      "Семантический разбор одной Markdown-обёртки не исправляет исходный статус генератора.",
+      "Gemini: только 10 ответов, остальные HTTP429. Общее пересечение четырёх моделей не представляет все категории.",
+      "Исторические времена зависят от длины ответа, cold/cache и сети; это не новый контролируемый speed benchmark. Тарифы и электроэнергия не измерялись."
+    ]
+  },
+  "models": [
+    {
+      "id": "qwen35-4b",
+      "name": "Qwen3.5-4B"
+    },
+    {
+      "id": "qwen35-9b",
+      "name": "Qwen3.5-9B"
+    },
+    {
+      "id": "gemma3-12b",
+      "name": "Gemma 3 12B IT"
+    },
+    {
+      "id": "gemini",
+      "name": "Gemini 3.5 Flash-Lite"
+    }
+  ],
+  "criteria": [
+    {
+      "id": "relevance",
+      "name": "Релевантность категории",
+      "scale_max": 4,
+      "description": "Фокус объявления на целевой услуге без переноса соседних услуг."
+    },
+    {
+      "id": "readability",
+      "name": "Читаемость",
+      "scale_max": 4,
+      "description": "Грамотность, ясность и структура; длина сама по себе не поощряется."
+    },
+    {
+      "id": "standalone",
+      "name": "Самостоятельность",
+      "scale_max": 4,
+      "description": "Понятно как отдельное объявление без доступа к исходнику."
+    }
+  ],
+  "cohorts": {
+    "local": {
+      "name": "Три локальные модели",
+      "size": 50,
+      "model_ids": [
+        "qwen35-4b",
+        "qwen35-9b",
+        "gemma3-12b"
+      ],
+      "sample_ids": [
+        "01bcf906f2ac66f3bfd93105296576b18872b898ed424c21fa3f22225149b125",
+        "172d7c2709f03e6de7b40b3f3e6357aee9083a79f4e0a27dd4d34fed108c5a47",
+        "deb9a06a9d6ca6ddba94042cce0945e50bdf54be449221199bd942c9e2c74ee8",
+        "cbcf0a375dbf7c384e6f548cc2f97dfa9203ea9bb727568b3350d6b100c08de5",
+        "3951dc02a6d09db7ffb029d35bb8b7e84a1c245d9921a439781df57fe1f78319",
+        "862723134d402580613dd6e85224f42d42eb297b9e0a18105cba9931d5044f7f",
+        "03937b9cdce0b51cd046f7ac3c66edb990fc2c08caa8e488cbfc8276069cbf03",
+        "9da3562862f128989072fb698d43ef217282e2d4bf7352f9fd4f897b67bc5891",
+        "a77f81813905a616c555fda29b7b6d5c2ddf78050050cbb54662021ed07b2e1a",
+        "ee61b7816939a3f42d7bde568eef98125b3c198ae5e24874e3342c4909db94af",
+        "c691fab10726ffadcfc31565937990cc71e8c631ed82ea042f3188e001de5830",
+        "bbc09be1523d80d9984a8a41415e94c7bdcabed7c943cb75da247508301c8d60",
+        "9c530873a0b3d79f473fa269a189abac04b7f7e2eef77b134679db17d4c052a6",
+        "af946861eb90b6a637392c05d67960371420333e969bbf8d1456d8f4dab07356",
+        "fae71844f91ca6694f4887c784c5a1613d2780cdfee93982207042a5840a3010",
+        "d981a69c03bd8fed1ede40cb750739aa355eda84081928bfcc2384a299266034",
+        "169554d571075211f537ec6b62e40e19e236e5dea5c1861a54d02d8afa7b68a0",
+        "05a22dd29452e342c4c69220c8e5a4c1c997775cf66dbafaccf14e7940a07772",
+        "71b01e484ccf4a76883a2425c0beec1d5c9227f159b0df23b619e9de2500fb4b",
+        "226d39c4b6feefaa9fd7eefef09286dfdd86dab1a18ddd143662e3d910f25e51",
+        "219b1d4708e87d8e833b926b931251a550159a7443995ffe361fa9f5e92846c2",
+        "8a2800755ab7cfa0e65ed18e8263e04108ff0de4f741ec3486dab3eeedadf3ee",
+        "159127e8bd9da7cb4fc34f13920a1139625883bd858b89576d8a8a9eaa92b780",
+        "0f6d5075a0473c16425addac884acd2434e7172bd25f7529df741fd12bdbacec",
+        "4cef69777072916bd22884f04984f1aeb39cb0b5aba9eb2705749bbf50c4c20a",
+        "635e077c1703629ae06c36c1844240d48e7ce6b6b9d2b1daf7e54cb6578aad78",
+        "344347131223afe986786c84564fbadf3336279a5752370b192059917d5edf3a",
+        "1232a05186c260d724565b15d09d344de0df514d66f31c2cae386c9ab5f91045",
+        "8e960df5d5e2a61aaab995352cc7767088fca7e1c83611f7a7e7312507a9c9d2",
+        "d05ebd9ea33f45a6c5bcaa99858e121468996345bb879411dddf4e4d70c7007c",
+        "f0525f5db61acc07e157999fa5e15e98ba8aa73e1412477f6f265eaa01277bd3",
+        "c362adbf77450704e54303f48eae6e8d7980d1f5a6c96da3bb45d236292bf7f9",
+        "71d2cefe9b69c963f13a0d3a724e7d2bebff13b35be69fa13689184e566b8cfe",
+        "220e356ce5248d1f831c2ce1f55a00adf75ec60f9eb2010d8cffca3e793d40da",
+        "8f77cda1d0ebba7a6e78481069af15c532b13335b7e3cb25be5ef93be416cb95",
+        "18ba478525cb83df53756f06d48f5d7896f0eb02a938adb139e4abdde62fc048",
+        "a0065585cf08a05b988b0bb71f282c8ac4b62de4bfdd7346f6f26aa293b11c49",
+        "8153b4f7514d6714501b22f7539b6bf7b5f48f6ced82f1580fd7ff05630422aa",
+        "a361eab3e080dc4d77edae4559e809b7da192e7c915a130941e65de419293e90",
+        "4f96cb26ffe5ba8b7612dbabecedd07b84dd68a4d694247646f63ecf18144f2e",
+        "667d1d19fb18e120e2daaafde4e4c27ed41536f9a492356382a0c5310bd59d55",
+        "0744be6c4015bcf909db8f507169f137df3c3d80421a544d62f8c0f6b441632d",
+        "ae44fa56fc57245a13eefb0cd7458cd2b68a99018e7ea299b45cc42d6049648d",
+        "2fc0c3503dc0d35541aaecd3bce2b583a4737c47dad4db7118c44cc25a196172",
+        "5eafafccbc05f323cffee8e18d66fcfb82aac95b0dc1c1e050512115bfa85f80",
+        "06bc636de1d29a31fd4c503ce5838e989e0e18dca21be53a1bc651cbfd5e4a1b",
+        "5378a5cc78684458579ac9ca6a5655678fe0a1f9dce84625fb434c0293c07510",
+        "dae521447c77916619dfdb4894e542cf0d8bcebce94053589f0e43768b7b1f9c",
+        "e20f5d14073a994a809e2388bfc34b2ac31697ac651f9f254180e047fe47a2cc",
+        "08e0d821b343dcb57d17e0ec2e1520cd7a5075646326d7ec24292e5e332d51b2"
+      ],
+      "target_counts": {
+        "102": 10,
+        "103": 10,
+        "104": 10,
+        "105": 10,
+        "106": 10
+      },
+      "scores": {
+        "qwen35-4b": {
+          "relevance": {
+            "mean": 1.36,
+            "n": 50
+          },
+          "readability": {
+            "mean": 3.36,
+            "n": 50
+          },
+          "standalone": {
+            "mean": 3.92,
+            "n": 50
+          }
+        },
+        "qwen35-9b": {
+          "relevance": {
+            "mean": 1.98,
+            "n": 50
+          },
+          "readability": {
+            "mean": 3.34,
+            "n": 50
+          },
+          "standalone": {
+            "mean": 3.96,
+            "n": 50
+          }
+        },
+        "gemma3-12b": {
+          "relevance": {
+            "mean": 2.34,
+            "n": 50
+          },
+          "readability": {
+            "mean": 3.68,
+            "n": 50
+          },
+          "standalone": {
+            "mean": 4.0,
+            "n": 50
+          }
+        }
+      }
+    },
+    "all": {
+      "name": "Все четыре модели",
+      "size": 10,
+      "model_ids": [
+        "qwen35-4b",
+        "qwen35-9b",
+        "gemma3-12b",
+        "gemini"
+      ],
+      "sample_ids": [
+        "01bcf906f2ac66f3bfd93105296576b18872b898ed424c21fa3f22225149b125",
+        "172d7c2709f03e6de7b40b3f3e6357aee9083a79f4e0a27dd4d34fed108c5a47",
+        "deb9a06a9d6ca6ddba94042cce0945e50bdf54be449221199bd942c9e2c74ee8",
+        "cbcf0a375dbf7c384e6f548cc2f97dfa9203ea9bb727568b3350d6b100c08de5",
+        "3951dc02a6d09db7ffb029d35bb8b7e84a1c245d9921a439781df57fe1f78319",
+        "a77f81813905a616c555fda29b7b6d5c2ddf78050050cbb54662021ed07b2e1a",
+        "ee61b7816939a3f42d7bde568eef98125b3c198ae5e24874e3342c4909db94af",
+        "fae71844f91ca6694f4887c784c5a1613d2780cdfee93982207042a5840a3010",
+        "05a22dd29452e342c4c69220c8e5a4c1c997775cf66dbafaccf14e7940a07772",
+        "8a2800755ab7cfa0e65ed18e8263e04108ff0de4f741ec3486dab3eeedadf3ee"
+      ],
+      "target_counts": {
+        "102": 7,
+        "103": 2,
+        "104": 1
+      },
+      "scores": {
+        "qwen35-4b": {
+          "relevance": {
+            "mean": 1.1,
+            "n": 10
+          },
+          "readability": {
+            "mean": 3.4,
+            "n": 10
+          },
+          "standalone": {
+            "mean": 4.0,
+            "n": 10
+          }
+        },
+        "qwen35-9b": {
+          "relevance": {
+            "mean": 1.4,
+            "n": 10
+          },
+          "readability": {
+            "mean": 3.9,
+            "n": 10
+          },
+          "standalone": {
+            "mean": 4.0,
+            "n": 10
+          }
+        },
+        "gemma3-12b": {
+          "relevance": {
+            "mean": 1.8,
+            "n": 10
+          },
+          "readability": {
+            "mean": 3.7,
+            "n": 10
+          },
+          "standalone": {
+            "mean": 4.0,
+            "n": 10
+          }
+        },
+        "gemini": {
+          "relevance": {
+            "mean": 1.9,
+            "n": 10
+          },
+          "readability": {
+            "mean": 3.8,
+            "n": 10
+          },
+          "standalone": {
+            "mean": 4.0,
+            "n": 10
+          }
+        }
+      }
+    }
+  },
+  "factual_criteria": [
+    {
+      "id": "factual_support",
+      "name": "Подтверждённость фактов",
+      "description": "Подтверждённые утверждения / все атомарные утверждения черновика."
+    },
+    {
+      "id": "useful_detail_retention",
+      "name": "Сохранение полезных деталей",
+      "description": "Сохранённые полезные факты цели / все факты замороженного эталона."
+    }
+  ],
+  "factual_cohorts": {
+    "local": {
+      "name": "Три локальные модели",
+      "size": 40,
+      "model_ids": [
+        "qwen35-4b",
+        "qwen35-9b",
+        "gemma3-12b"
+      ],
+      "sample_ids": [
+        "01bcf906f2ac66f3bfd93105296576b18872b898ed424c21fa3f22225149b125",
+        "172d7c2709f03e6de7b40b3f3e6357aee9083a79f4e0a27dd4d34fed108c5a47",
+        "deb9a06a9d6ca6ddba94042cce0945e50bdf54be449221199bd942c9e2c74ee8",
+        "862723134d402580613dd6e85224f42d42eb297b9e0a18105cba9931d5044f7f",
+        "03937b9cdce0b51cd046f7ac3c66edb990fc2c08caa8e488cbfc8276069cbf03",
+        "a77f81813905a616c555fda29b7b6d5c2ddf78050050cbb54662021ed07b2e1a",
+        "bbc09be1523d80d9984a8a41415e94c7bdcabed7c943cb75da247508301c8d60",
+        "9c530873a0b3d79f473fa269a189abac04b7f7e2eef77b134679db17d4c052a6",
+        "af946861eb90b6a637392c05d67960371420333e969bbf8d1456d8f4dab07356",
+        "fae71844f91ca6694f4887c784c5a1613d2780cdfee93982207042a5840a3010",
+        "d981a69c03bd8fed1ede40cb750739aa355eda84081928bfcc2384a299266034",
+        "05a22dd29452e342c4c69220c8e5a4c1c997775cf66dbafaccf14e7940a07772",
+        "71b01e484ccf4a76883a2425c0beec1d5c9227f159b0df23b619e9de2500fb4b",
+        "226d39c4b6feefaa9fd7eefef09286dfdd86dab1a18ddd143662e3d910f25e51",
+        "8a2800755ab7cfa0e65ed18e8263e04108ff0de4f741ec3486dab3eeedadf3ee",
+        "159127e8bd9da7cb4fc34f13920a1139625883bd858b89576d8a8a9eaa92b780",
+        "0f6d5075a0473c16425addac884acd2434e7172bd25f7529df741fd12bdbacec",
+        "4cef69777072916bd22884f04984f1aeb39cb0b5aba9eb2705749bbf50c4c20a",
+        "635e077c1703629ae06c36c1844240d48e7ce6b6b9d2b1daf7e54cb6578aad78",
+        "344347131223afe986786c84564fbadf3336279a5752370b192059917d5edf3a",
+        "1232a05186c260d724565b15d09d344de0df514d66f31c2cae386c9ab5f91045",
+        "8e960df5d5e2a61aaab995352cc7767088fca7e1c83611f7a7e7312507a9c9d2",
+        "c362adbf77450704e54303f48eae6e8d7980d1f5a6c96da3bb45d236292bf7f9",
+        "71d2cefe9b69c963f13a0d3a724e7d2bebff13b35be69fa13689184e566b8cfe",
+        "220e356ce5248d1f831c2ce1f55a00adf75ec60f9eb2010d8cffca3e793d40da",
+        "8f77cda1d0ebba7a6e78481069af15c532b13335b7e3cb25be5ef93be416cb95",
+        "18ba478525cb83df53756f06d48f5d7896f0eb02a938adb139e4abdde62fc048",
+        "a0065585cf08a05b988b0bb71f282c8ac4b62de4bfdd7346f6f26aa293b11c49",
+        "8153b4f7514d6714501b22f7539b6bf7b5f48f6ced82f1580fd7ff05630422aa",
+        "a361eab3e080dc4d77edae4559e809b7da192e7c915a130941e65de419293e90",
+        "4f96cb26ffe5ba8b7612dbabecedd07b84dd68a4d694247646f63ecf18144f2e",
+        "667d1d19fb18e120e2daaafde4e4c27ed41536f9a492356382a0c5310bd59d55",
+        "0744be6c4015bcf909db8f507169f137df3c3d80421a544d62f8c0f6b441632d",
+        "2fc0c3503dc0d35541aaecd3bce2b583a4737c47dad4db7118c44cc25a196172",
+        "5eafafccbc05f323cffee8e18d66fcfb82aac95b0dc1c1e050512115bfa85f80",
+        "06bc636de1d29a31fd4c503ce5838e989e0e18dca21be53a1bc651cbfd5e4a1b",
+        "5378a5cc78684458579ac9ca6a5655678fe0a1f9dce84625fb434c0293c07510",
+        "dae521447c77916619dfdb4894e542cf0d8bcebce94053589f0e43768b7b1f9c",
+        "e20f5d14073a994a809e2388bfc34b2ac31697ac651f9f254180e047fe47a2cc",
+        "08e0d821b343dcb57d17e0ec2e1520cd7a5075646326d7ec24292e5e332d51b2"
+      ],
+      "target_counts": {
+        "102": 6,
+        "103": 8,
+        "104": 8,
+        "105": 9,
+        "106": 9
+      },
+      "scores": {
+        "qwen35-4b": {
+          "statuses": {
+            "success": 40
+          },
+          "factual_support": {
+            "micro": 0.9619047619047619,
+            "numerator": 909,
+            "denominator": 945,
+            "macro": 0.9428158889029621,
+            "macro_defined_count": 40
+          },
+          "useful_detail_retention": {
+            "micro": 0.564625850340136,
+            "numerator": 166,
+            "denominator": 294,
+            "macro": 0.6705114914325441,
+            "macro_defined_count": 40
+          }
+        },
+        "qwen35-9b": {
+          "statuses": {
+            "success": 40
+          },
+          "factual_support": {
+            "micro": 0.9825986078886311,
+            "numerator": 847,
+            "denominator": 862,
+            "macro": 0.9770131187329414,
+            "macro_defined_count": 40
+          },
+          "useful_detail_retention": {
+            "micro": 0.5170068027210885,
+            "numerator": 152,
+            "denominator": 294,
+            "macro": 0.6757632791185423,
+            "macro_defined_count": 40
+          }
+        },
+        "gemma3-12b": {
+          "statuses": {
+            "success": 40
+          },
+          "factual_support": {
+            "micro": 0.9858490566037735,
+            "numerator": 209,
+            "denominator": 212,
+            "macro": 0.9917410714285714,
+            "macro_defined_count": 40
+          },
+          "useful_detail_retention": {
+            "micro": 0.23129251700680273,
+            "numerator": 68,
+            "denominator": 294,
+            "macro": 0.4394853976432924,
+            "macro_defined_count": 40
+          }
+        }
+      }
+    },
+    "all": {
+      "name": "Все четыре модели",
+      "size": 7,
+      "model_ids": [
+        "qwen35-4b",
+        "qwen35-9b",
+        "gemma3-12b",
+        "gemini"
+      ],
+      "sample_ids": [
+        "01bcf906f2ac66f3bfd93105296576b18872b898ed424c21fa3f22225149b125",
+        "172d7c2709f03e6de7b40b3f3e6357aee9083a79f4e0a27dd4d34fed108c5a47",
+        "deb9a06a9d6ca6ddba94042cce0945e50bdf54be449221199bd942c9e2c74ee8",
+        "a77f81813905a616c555fda29b7b6d5c2ddf78050050cbb54662021ed07b2e1a",
+        "fae71844f91ca6694f4887c784c5a1613d2780cdfee93982207042a5840a3010",
+        "05a22dd29452e342c4c69220c8e5a4c1c997775cf66dbafaccf14e7940a07772",
+        "8a2800755ab7cfa0e65ed18e8263e04108ff0de4f741ec3486dab3eeedadf3ee"
+      ],
+      "target_counts": {
+        "102": 4,
+        "103": 2,
+        "104": 1
+      },
+      "scores": {
+        "qwen35-4b": {
+          "statuses": {
+            "success": 7
+          },
+          "factual_support": {
+            "micro": 0.9637681159420289,
+            "numerator": 133,
+            "denominator": 138,
+            "macro": 0.961734693877551,
+            "macro_defined_count": 7
+          },
+          "useful_detail_retention": {
+            "micro": 0.6206896551724138,
+            "numerator": 18,
+            "denominator": 29,
+            "macro": 0.8492063492063492,
+            "macro_defined_count": 7
+          }
+        },
+        "qwen35-9b": {
+          "statuses": {
+            "success": 7
+          },
+          "factual_support": {
+            "micro": 0.979381443298969,
+            "numerator": 95,
+            "denominator": 97,
+            "macro": 0.9857142857142858,
+            "macro_defined_count": 7
+          },
+          "useful_detail_retention": {
+            "micro": 0.6551724137931034,
+            "numerator": 19,
+            "denominator": 29,
+            "macro": 0.7380952380952381,
+            "macro_defined_count": 7
+          }
+        },
+        "gemma3-12b": {
+          "statuses": {
+            "success": 7
+          },
+          "factual_support": {
+            "micro": 1.0,
+            "numerator": 24,
+            "denominator": 24,
+            "macro": 1.0,
+            "macro_defined_count": 7
+          },
+          "useful_detail_retention": {
+            "micro": 0.27586206896551724,
+            "numerator": 8,
+            "denominator": 29,
+            "macro": 0.6507936507936508,
+            "macro_defined_count": 7
+          }
+        },
+        "gemini": {
+          "statuses": {
+            "success": 7
+          },
+          "factual_support": {
+            "micro": 0.9772727272727273,
+            "numerator": 86,
+            "denominator": 88,
+            "macro": 0.9702380952380952,
+            "macro_defined_count": 7
+          },
+          "useful_detail_retention": {
+            "micro": 0.7586206896551724,
+            "numerator": 22,
+            "denominator": 29,
+            "macro": 0.880952380952381,
+            "macro_defined_count": 7
+          }
+        }
+      }
+    }
+  },
+  "technical": {
+    "qwen35-4b": {
+      "inputs": 50,
+      "responses": 50,
+      "attempts": 50,
+      "pipeline_valid": 50,
+      "format_valid_given_response": 1.0,
+      "latency_seconds": {
+        "n": 50,
+        "p50": 7.251718854000501,
+        "p95": 11.519085701752918
+      },
+      "length_chars": {
+        "n": 50,
+        "p95": 978.8,
+        "median": 531.5
+      },
+      "output_tokens": {
+        "n": 50,
+        "total": 8069
+      },
+      "transport_errors": {},
+      "note": "Сохранённый прогон, последняя попытка каждого входа с настоящим ответом. HTTP-ошибки исключены из времени. Скачивание весов и старт процесса сервера не входят; первый HTTP-запрос может включать загрузку модели и прогрев. Cold/cache не выравнивались. Новый speed benchmark не запускался. Длина — диагностический показатель, не качество."
+    },
+    "qwen35-9b": {
+      "inputs": 50,
+      "responses": 50,
+      "attempts": 50,
+      "pipeline_valid": 50,
+      "format_valid_given_response": 1.0,
+      "latency_seconds": {
+        "n": 50,
+        "p50": 9.085292936997575,
+        "p95": 22.310511464553546
+      },
+      "length_chars": {
+        "n": 50,
+        "p95": 1354.0499999999984,
+        "median": 423.0
+      },
+      "output_tokens": {
+        "n": 50,
+        "total": 7405
+      },
+      "transport_errors": {},
+      "note": "Сохранённый прогон, последняя попытка каждого входа с настоящим ответом. HTTP-ошибки исключены из времени. Скачивание весов и старт процесса сервера не входят; первый HTTP-запрос может включать загрузку модели и прогрев. Cold/cache не выравнивались. Новый speed benchmark не запускался. Длина — диагностический показатель, не качество."
+    },
+    "gemma3-12b": {
+      "inputs": 50,
+      "responses": 50,
+      "attempts": 51,
+      "pipeline_valid": 0,
+      "format_valid_given_response": 0.0,
+      "latency_seconds": {
+        "n": 50,
+        "p50": 4.841621312501957,
+        "p95": 7.337221721203241
+      },
+      "length_chars": {
+        "n": 50,
+        "p95": 328.2499999999998,
+        "median": 131.0
+      },
+      "output_tokens": {
+        "n": 50,
+        "total": 3329
+      },
+      "transport_errors": {},
+      "note": "Сохранённый прогон, последняя попытка каждого входа с настоящим ответом. HTTP-ошибки исключены из времени. Скачивание весов и старт процесса сервера не входят; первый HTTP-запрос может включать загрузку модели и прогрев. Cold/cache не выравнивались. Новый speed benchmark не запускался. Длина — диагностический показатель, не качество."
+    },
+    "gemini": {
+      "inputs": 50,
+      "responses": 10,
+      "attempts": 50,
+      "pipeline_valid": 10,
+      "format_valid_given_response": 1.0,
+      "latency_seconds": {
+        "n": 10,
+        "p50": 1.60621143750177,
+        "p95": 11.74594230815199
+      },
+      "length_chars": {
+        "n": 10,
+        "p95": 685.2999999999997,
+        "median": 316.5
+      },
+      "output_tokens": {
+        "n": 10,
+        "total": 1102
+      },
+      "transport_errors": {
+        "HTTPError:429": 40
+      },
+      "note": "Сохранённый прогон, последняя попытка каждого входа с настоящим ответом. HTTP-ошибки исключены из времени. Скачивание весов и старт процесса сервера не входят; первый HTTP-запрос может включать загрузку модели и прогрев. Cold/cache не выравнивались. Новый speed benchmark не запускался. Длина — диагностический показатель, не качество."
+    }
+  },
+  "manual_example_ids": [
+    "01bcf906f2ac66f3bfd93105296576b18872b898ed424c21fa3f22225149b125",
+    "c691fab10726ffadcfc31565937990cc71e8c631ed82ea042f3188e001de5830",
+    "219b1d4708e87d8e833b926b931251a550159a7443995ffe361fa9f5e92846c2",
+    "f0525f5db61acc07e157999fa5e15e98ba8aa73e1412477f6f265eaa01277bd3",
+    "667d1d19fb18e120e2daaafde4e4c27ed41536f9a492356382a0c5310bd59d55"
+  ],
+  "samples_sha256": "b23a95a791448750fdebcbf4f0b6912fe4b34a8bb8a611655d44c65e4c5213a9",
+  "full_report": "review-data.json"
+}

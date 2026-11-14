@@ -1,0 +1,89 @@
+{
+  "date": "2026-11-14",
+  "base_commit": "185621a7d0900ef1496949ac2fbfb292f8aead14",
+  "working_tree": true,
+  "generation_code_sha256": {
+    "qwen35-4b": "1ab21f4f619f94df2d898c19f8ff80a207eed4211098abb5e70a258ac7194914",
+    "qwen35-9b": "1ab21f4f619f94df2d898c19f8ff80a207eed4211098abb5e70a258ac7194914",
+    "gemma3-12b": "dfa5c533a23049ae1e285da1769cc4aca17326ce5e82454a1f82fc062400d6af",
+    "gemini": "884c623d890f8b22df63abd035051c66ed215f666e30f9fc8da6253c12d029f1"
+  },
+  "dataset": "docs/improved_dataset/train.jsonl",
+  "dataset_sha256": "d365141906cd7e2a1d66792aa2e37661d8bcdcd0a4bbaf3781649a9108238b76",
+  "samples_sha256": "b23a95a791448750fdebcbf4f0b6912fe4b34a8bb8a611655d44c65e4c5213a9",
+  "references_sha256": "56d99c0f95b2f06fe8104edf5b78b13185365a3037b9cef5adedb3f64490e172",
+  "generation_prompt_sha256": "59043d2b2778483296d013ddf9f31bed351499ec31604aa2a5d0e8071b423e0a",
+  "sample_size": 50,
+  "sampling": "Seed 43; normalized-description grouped validation; initially 10 pairs per target 102–106; official test unused",
+  "local_decoding": {"bits": 4, "temperature": 0.2, "seed": 43, "max_tokens": 2048, "enable_thinking": false, "constrained_decoding": false},
+  "models": {
+    "qwen35-4b": {"repository": "mlx-community/Qwen3.5-4B-4bit", "revision": "0e7ffd5c629ef7719d4cbc04069232580bfa9d9c", "generation_success": 50, "evaluation_success": 49, "failed_judge": 1},
+    "qwen35-9b": {"repository": "mlx-community/Qwen3.5-9B-4bit", "revision": "8b2b98c00a6b4d291155e4890773ca8f769aee53", "generation_success": 50, "evaluation_success": 49, "failed_judge": 1},
+    "gemma3-12b": {"repository": "mlx-community/gemma-3-text-12b-it-4bit", "revision": "83eda451975103fff6f11e97bf75cd0f1c61af2c", "inputs_with_response": 50, "generation_success": 0, "generation_validation_failures": 50, "semantic_text_available": 50, "semantic_evaluation_success": 48, "semantic_failed_judge": 2},
+    "gemini": {"model": "gemini-3.5-flash-lite", "generation_success": 10, "generation_http_429": 40, "evaluation_success": 10, "decoding": "provider defaults + responseJsonSchema"}
+  },
+  "paired_qwen": {
+    "size": 41,
+    "target_counts": {"102": 6, "103": 8, "104": 8, "105": 10, "106": 9},
+    "qwen35-4b": {
+      "factual_support": {"numerator": 929, "denominator": 966, "micro": 0.9616977225672878, "macro": 0.9430491831341326},
+      "useful_detail_retention": {"numerator": 166, "denominator": 299, "micro": 0.5551839464882943, "macro": 0.6541575526171162}
+    },
+    "qwen35-9b": {
+      "factual_support": {"numerator": 865, "denominator": 880, "micro": 0.9829545454545454, "macro": 0.9775737743736013},
+      "useful_detail_retention": {"numerator": 157, "denominator": 299, "micro": 0.5250836120401338, "macro": 0.683671491822968}
+    }
+  },
+  "paired_local_content": {
+    "evaluation_mode": "semantic_content_single_fence",
+    "size": 40,
+    "target_counts": {"102": 6, "103": 8, "104": 8, "105": 9, "106": 9},
+    "qwen35-4b": {
+      "factual_support": {"numerator": 909, "denominator": 945, "micro": 0.9619047619047619, "macro": 0.9428158889029621},
+      "useful_detail_retention": {"numerator": 166, "denominator": 294, "micro": 0.564625850340136, "macro": 0.6705114914325441}
+    },
+    "qwen35-9b": {
+      "factual_support": {"numerator": 847, "denominator": 862, "micro": 0.9825986078886311, "macro": 0.9770131187329414},
+      "useful_detail_retention": {"numerator": 152, "denominator": 294, "micro": 0.5170068027210885, "macro": 0.6757632791185423}
+    },
+    "gemma3-12b": {
+      "factual_support": {"numerator": 209, "denominator": 212, "micro": 0.9858490566037735, "macro": 0.9917410714285714},
+      "useful_detail_retention": {"numerator": 68, "denominator": 294, "micro": 0.23129251700680273, "macro": 0.4394853976432924}
+    }
+  },
+  "paired_all": {
+    "evaluation_mode": "semantic_content_single_fence",
+    "size": 7,
+    "target_counts": {"102": 4, "103": 2, "104": 1},
+    "qwen35-4b": {"supported": 133, "claims": 138, "covered": 18, "reference_facts": 29},
+    "qwen35-9b": {"supported": 95, "claims": 97, "covered": 19, "reference_facts": 29},
+    "gemma3-12b": {"supported": 24, "claims": 24, "covered": 8, "reference_facts": 29},
+    "gemini": {"supported": 86, "claims": 88, "covered": 22, "reference_facts": 29}
+  },
+  "excluded_from_paired_qwen": {
+    "empty_automatic_references": 8,
+    "invalid_judge_citation_sample": "219b1d4708e87d8e833b926b931251a550159a7443995ffe361fa9f5e92846c2",
+    "policy": "Undefined or invalid judgments remain null; all 50 generation records are retained"
+  },
+  "excluded_from_local_content": {
+    "empty_automatic_references": 8,
+    "invalid_judge_citation_samples": [
+      "219b1d4708e87d8e833b926b931251a550159a7443995ffe361fa9f5e92846c2",
+      "f0525f5db61acc07e157999fa5e15e98ba8aa73e1412477f6f265eaa01277bd3"
+    ]
+  },
+  "current_weight_cache": {"qwen35-4b": "retained", "qwen35-9b": "removed_with_user_approval", "gemma3-12b": "retained"},
+  "judge": {"channel": "omp.eval.completion", "model_alias": "default", "exact_model_id": null, "upstream_usage": null, "automatic_not_manual_gold": true, "provenance": "Real completion IDs and raw answers saved in out/draft-judge-cache; CLI validates replay, schemas and exact quotations"},
+  "runtime": {"cpu": "Apple M4 Pro", "memory_bytes": 51539607552, "python": "3.13.5", "mlx": "0.30.4", "mlx-metal": "0.30.4", "mlx-lm": "0.31.0", "transformers": "5.3.0"},
+  "raw_reports": "out/draft-model-comparison-v2",
+  "limitations": [
+    "No independent manual gold; exact quotations do not prove semantic correctness or complete fact extraction",
+    "Macro retention favors 9B while micro retention favors 4B; there is no unconditional winner on both metrics",
+    "Truthful irrelevant services and copying the source are not penalized by these two metrics",
+    "The four-model semantic intersection is only seven quota-selected inputs and omits targets 105 and 106",
+    "Exact model ID and upstream token usage of the evaluation channel are not exposed",
+    "Local decoding and Gemini constrained decoding differ",
+    "Gemma wraps all 50 JSON objects in Markdown; semantic-content mode unwraps a single schema-valid object without changing generation failure statuses",
+    "Production parsing and the shared generation prompt were not changed; semantic evaluation is not proof of pipeline compatibility"
+  ]
+}

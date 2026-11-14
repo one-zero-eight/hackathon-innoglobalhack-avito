@@ -52,7 +52,8 @@ src/<service>/<module>/
 Доступны `subcategory_extraction/google_decision`, `tfidf`, `jev`, `jev_tfidf`,
 `jev_retrieval`, `evidence_jev`, `jev_arbiter`, `semantic_encoder`,
 `semantic_encoder_calibrated`, `semantic_encoder_f1`, `jev_boundaries`.
-Доступен генератор `draft_generation/sample_llm`. `null` означает, что модуль
+Доступны генераторы `draft_generation/sample_llm` и `draft_generation/local_llm`
+(локальный Chat Completions сервер). `null` означает, что модуль
 не выбран. CLI выдаёт явную ошибку.
 Варианты (например, `jev`, `embeddings` или `llm`) добавляются в
 `src/<service>/<module>/`; затем в конфиге указывается имя папки вместо `null`.
@@ -117,6 +118,11 @@ uv run python src/main.py --input data/input.json --output out/output.json
 Для полного запуска выберите реализации обоих шагов и настройте `.env`
 (для генератора см. `src/draft_generation/README.md`).
 Общий `LLMClient` — абстрактный интерфейс для конкретных клиентов.
+
+Для генераторов отдельно сравниваем подтверждённость фактов и сохранение полезных
+деталей на фиксированных validation-парах, без ошибок классификатора:
+[сценарий сравнения](src/draft_generation/benchmarks/sample_llm/README.md#реальное-сравнение-фактов-черновиков).
+Автоматические факты и цитаты оценщика — не независимый ручной эталон.
 
 ## Оценка полного решения
 
