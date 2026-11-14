@@ -80,5 +80,5 @@ uv run python src/draft_generation/benchmarks/full_pipeline_evaluation/run.py --
 Описание и отчёты: [контракт](benchmarks/contract/README.md),
 [реальная генерация](benchmarks/response_time/README.md),
 [полный пайплайн](benchmarks/full_pipeline_evaluation/README.md).
-Прежний `sample_llm` временно сохранён до отдельного завершения очистки;
-он не выбран в рабочей конфигурации.
+Прототип `sample_llm` удалён. Его [исторические проверки](benchmarks/contract/sample-llm-history.md)
+сохранены отдельно, исходный код доступен в Git на `2c65c3f`.

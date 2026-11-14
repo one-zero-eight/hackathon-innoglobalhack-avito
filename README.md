@@ -1,29 +1,38 @@
 # Услуги из объявлений Авито → черновики
 
-По тексту объявления и его микрокатегории находим услуги из других
-микрокатегорий «Ремонт и отделка» (101–106) и генерируем черновики объявлений.
+По `description` и текущей `mcId` находим предлагаемые услуги из других
+микрокатегорий «Ремонт и отделка» и создаём по одному черновику на категорию.
 
-## Структура
+## Запуск
 
-| Путь | Что это |
-| --- | --- |
-| `src/main.py` | CLI + всё общее: контракт, микрокатегории, `BasePipeline`, `LLMClient` |
-| `config.json` | выбор реализации каждого шага |
-| `src/subcategory_extraction/` | шаг 1: выделение подкатегорий услуг |
-| `src/draft_generation/` | шаг 2: генерация черновиков |
-| `data/` | пример входа |
-| `docs/` | кейс, критерии, справочник, датасеты |
-| `backlog/` | локальный бэклог (в `.gitignore`) |
+```bash
+uv sync
+cp .env.example .env
+# Заполните LLM_API_KEY своим ключом Google в локальном .env.
+uv run python src/main.py --input data/input.json --output out/output.json
+```
 
-В каждом разделе — несколько вариантов: `<module>/pipeline.py` и, при
-необходимости, `<module>/prompts/`. Общие бенчмарки лежат в
-`benchmarks/<name>/`: `run.py` для запуска, `README.md` для описания
-и таблиц результатов. Экспериментальные решения тоже оформляем
-как модули, без отдельной папки `experiments/`.
+`config.json` и `.env` читаются относительно проекта, независимо от cwd.
+Пути `--input` и `--output` задаёт вызывающая сторона.
 
-## Выбор реализации
+Контракт входа:
 
-Корневой `config.json` задаёт имя папки модуля для каждого шага:
+```json
+{ "description": "Делаю ремонт квартир и устанавливаю раковины.", "mcId": 101 }
+```
+
+Контракт выхода:
+
+```json
+{ "drafts": [{ "mcId": 104, "title": "...", "text": "..." }] }
+```
+
+Разрешены только категории 101–106. Исходная категория исключается.
+При отсутствии дополнительных услуг возвращается `{"drafts": []}`.
+Ничего не публикуется автоматически. Черновики предназначены для проверки
+исполнителем; формат ответа и таблица категорий зафиксированы кейсом.
+
+## Реализации и настройки
 
 ```json
 {
@@ -32,152 +41,89 @@
 }
 ```
 
-Доступны `subcategory_extraction/google_decision`,
-`subcategory_extraction/tfidf`.
-Доступен генератор `draft_generation/llm`. `null` означает, что модуль
-не выбран. CLI выдаёт явную ошибку.
-Варианты (например, `jev`, `embeddings` или `llm`) добавляются в
-`src/<service>/<module>/`; затем в конфиге указывается имя папки вместо `null`.
-Каждый вариант содержит `__init__.py` и `pipeline.py` с классом и интерфейсом
-своего раздела (см. [AGENTS.md](AGENTS.md)). Переключение — только через конфиг,
-без изменения оркестрации. Несуществующий модуль вызывает ошибку.
+Значения config — имена модулей, не моделей. Оба ключа обязательны;
+`null`, неизвестный модуль и неверная конфигурация приводят к явной ошибке.
+Интерфейсы сервисов и `PipelineConfig` сохранены; выбор можно передать
+программно в `load_pipeline()` / `run_pipeline()`.
 
-`google_decision` переписан с общим API-клиентом и строгой проверкой typed
-answers. Настройки промпта и порога: `EXTRACTION_PROMPT=guided`,
-`EXTRACTION_THRESHOLD=0.5`; `GOOGLE_DECISION_PROMPT` и
-`GOOGLE_DECISION_THRESHOLD` больше не используются. См.
-[описание выделения](src/subcategory_extraction/README.md) и
-[офлайн-контракт](src/subcategory_extraction/benchmarks/contract/README.md).
-`llm` использует Google Gemma 4 31B по умолчанию и поддерживает
-`GENERATION_PROVIDER=openai_compatible` с явными моделью, ключом и полным URL.
-См. [генератор](src/draft_generation/README.md).
-TF-IDF и sample_llm временно сохранены до отдельного завершения очистки;
-исторические результаты их прежних прогонов не оценивают новый extractor.
+- [Выделение](src/subcategory_extraction/README.md): Google Decision 1,
+  один запрос с независимыми вопросами `noul` по остальным категориям.
+  `EXTRACTION_PROMPT=guided`, `EXTRACTION_THRESHOLD=0.5` — начальные настройки.
+- [Генерация](src/draft_generation/README.md): Google Gemma 4 31B по умолчанию,
+  один вызов на уникальную целевую категорию, строгие `title` и `text`.
+  Опционально `GENERATION_PROVIDER=openai_compatible` с явными моделью,
+  ключом и полным URL Chat Completions. Референсные объявления отложены.
+- [Общие API-клиенты](docs/api-clients.md): независимые настройки шагов,
+  таймауты и ограниченные повторы, явные ошибки на HTML/неверный JSON,
+  отсутствие автоматического переключения провайдеров.
 
-Для сравнения вариантов используем общие бенчмарки раздела: качество,
-время ответа и стоимость для конкретного сценария и выборки.
+Текст генерируется по фактам источника. `mcId` назначает код. Схема не
+подтверждает фактическую достоверность; дополнительного проверяющего LLM нет.
+API schema mode включается явно; по умолчанию формат задаёт промпт,
+локальная проверка обязательна. Ошибка не превращается в пустой или частичный
+ответ и не перезаписывает файл результатом неуспешной генерации.
 
-## Пайплайн
-
-```
-description + mcId
-   │
-   ▼
-subcategory_extraction    список mcId найденных услуг (101–106)
-   │
-   ▼
-draft_generation          черновик на каждую целевую категорию
-   │
-   ▼
-{"drafts": [{"mcId": 104, "title": "...", "text": "..."}]}
-```
-
-Запуск:
-
-```bash
-uv sync
-cp .env.example .env          # заполнить LLM_API_KEY
-
-uv run python src/main.py --input data/input.json --output out/output.json
-```
-
-Для полного запуска выберите реализации обоих шагов и настройте `.env`
-(для генератора см. `src/draft_generation/README.md`).
-Общий `LLMClient` — абстрактный интерфейс для конкретных клиентов.
-
-## Оценка полного решения
-
-```bash
-uv sync
-uv run python src/draft_generation/benchmarks/full_pipeline_evaluation/run.py --live --config run.config.json
-```
-
-`run.config.json` задаёт датасет (`.parquet` или официальный `.jsonl`),
-путь к конфигу модулей, исходную категорию (101 для официальных данных),
-необязательный лимит строк и частоту логирования.
-Все относительные пути считаются от файла конфигурации.
-`pipeline_config` ссылается на обычный `config.json`: необходимо выбрать
-оба рабочих модуля, включая генератор. При `null` оценка завершается
-ошибкой, без подмены полного решения классификатором. Параметры моделей
-и секреты выбранных модулей по-прежнему берутся из `.env`.
-
-Метрика — `sklearn.metrics.f1_score(average="micro", zero_division=0)`
-по множествам `mcId` из **итоговых drafts**, баллы за классификацию —
-`60 × micro-F1` (не итоговый балл за все критерии хакатона).
-Повторы не учитываются, ошибочный вывод исходной категории считается FP.
-Если все эталоны и ответы пусты, micro-F1 равен 0.
-Отчёт `src/draft_generation/benchmarks/full_pipeline_evaluation/live-results.json`
-содержит метрику, TP/FP/FN, конфигурацию, время, эталоны и полные ответы
-для каждой строки. Поле `report` конфига относится к прежнему `src/run.py`;
-бенчмарк сохраняет контрольную точку рядом со своим `run.py`. Ошибка обработки
-не превращается в пустой ответ: после ограниченных повторов прогон
-помечается неуспешным без итоговой метрики. `--resume` продолжает
-незавершённый прогон из сохранённых ответов, если код и входы не менялись.
-
-`training_dataset` включает проверку нормализованных точных совпадений
-описаний с train; пересечения отражаются в отчёте и предупреждении,
-но не удаляются из оценки. Это не поиск всех близких дубликатов
-и не гарантия отсутствия утечки. `null` отключает проверку.
-Официальный test следует использовать для итоговой оценки после
-фиксации модели и порогов, не для их подбора.
+Прежние `tfidf` и `sample_llm` удалены. Их результаты помечены историческими
+в соответствующих сценариях, а исходные реализации доступны на `2c65c3f`.
+Оригинальный Jev/Fugue отложен; экстрактор использует только Google.
 
 ## Бенчмарки
 
-Каждый бенчмарк хранится отдельно:
+Каждый сценарий: `src/<service>/benchmarks/<name>/run.py`, `README.md`,
+JSON-отчёт с датой, commit и отпечатком кода/промптов. Исторические и новые
+результаты, разные выборки, офлайн-проверки и live-вызовы разделены.
+Стоимость заполняется вручную; скрипты её не вычисляют.
 
-```text
-src/<раздел>/benchmarks/<название>/
-├── run.py
-└── README.md
-```
-
-В README — данные, команды запуска и актуальные результаты: качество,
-число вызовов, среднее/медиана/p95 времени ответа и стоимость.
-Если есть системные промпты, в сравнении показываем лучший по micro-F1
-на одной validation-выборке, а в отдельной таблице — каждый промпт.
-
-| Раздел | Бенчмарк | Сценарий |
-| --- | --- | --- |
-| Выделение | [Качество TF-IDF](src/subcategory_extraction/benchmarks/tfidf_quality/README.md) | Новое обучение; validation и отдельный holdout |
-| Выделение | [Сравнение промптов](src/subcategory_extraction/benchmarks/prompt_comparison/README.md) | TF-IDF и реальные baseline/guided Google на одних 32 входах |
-| Выделение | [Время ответа](src/subcategory_extraction/benchmarks/response_time/README.md) | Настоящие run() TF-IDF и Google на одних 10 входах |
-| Генерация | [Контракт sample_llm](src/draft_generation/benchmarks/sample_llm/README.md) | Офлайн-проверка схемы и транспорта |
-| Генерация | [Время ответа](src/draft_generation/benchmarks/response_time/README.md) | 10 настоящих вызовов, по одному черновику |
-| Полный пайплайн | [Оценка решения](src/draft_generation/benchmarks/full_pipeline_evaluation/README.md) | Реальные drafts на 208 строках и отдельная проверка оценщика |
-
-Стоимость в таблицах заполняется вручную человеком или агентом.
-Для локальных прогонов и подтверждённой бесплатной квоты — **«бесплатно»**.
-Скрипты измеряют время, но не вычисляют цену.
-
-Аудит, переразметка и сборка датасета не входят в эти бенчмарки.
-Нерабочие эксперименты со старым внешним кодом удалены из рабочей структуры;
-их прежние версии остаются в Git.
-
-Запуск из корня:
+| Проверка | Команда / описание |
+| --- | --- |
+| Общие клиенты, офлайн | [api_clients](src/draft_generation/benchmarks/api_clients/README.md) |
+| Выделение, офлайн | [contract](src/subcategory_extraction/benchmarks/contract/README.md) |
+| Генерация и CLI, офлайн | [contract](src/draft_generation/benchmarks/contract/README.md) |
+| Выделение, качество и промпты | [prompt_comparison](src/subcategory_extraction/benchmarks/prompt_comparison/README.md) |
+| Выделение, задержка | [response_time](src/subcategory_extraction/benchmarks/response_time/README.md) |
+| Генерация, задержка и тексты для ручной оценки | [response_time](src/draft_generation/benchmarks/response_time/README.md) |
+| Полный пайплайн и оценщик | [full_pipeline_evaluation](src/draft_generation/benchmarks/full_pipeline_evaluation/README.md) |
 
 ```bash
-uv run python src/subcategory_extraction/benchmarks/tfidf_quality/run.py
+# Без API: контракты и сравнение Git-версий.
+uv run python src/draft_generation/benchmarks/api_clients/run.py --all-revisions
+uv run python src/subcategory_extraction/benchmarks/contract/run.py --all-revisions
+uv run python src/draft_generation/benchmarks/contract/run.py --all-revisions
+uv run python src/draft_generation/benchmarks/full_pipeline_evaluation/run.py
+
+# Настоящие вызовы: нужен локально настроенный ключ.
 uv run python src/subcategory_extraction/benchmarks/prompt_comparison/run.py
 uv run python src/subcategory_extraction/benchmarks/response_time/run.py
-uv run python src/draft_generation/benchmarks/sample_llm/run.py
 uv run python src/draft_generation/benchmarks/response_time/run.py
-uv run python src/draft_generation/benchmarks/full_pipeline_evaluation/run.py
 uv run python src/draft_generation/benchmarks/full_pipeline_evaluation/run.py --live --config run.config.json
 ```
 
-Сравнение промптов, задержки Google/генерации и полный `--live` обращаются
-к реальному API. Для подтверждённого пользователем текущего ключа используется
-бесплатная квота. Измерения включают фактические ожидания и повторы запросов.
+Новый Google-пайплайн проверен офлайн. Live-прогоны в текущем окружении
+не завершены из-за отсутствия ключей; новой оценки F1/задержки/качества текста
+нет. `guided` не объявляется лучшим на основании исторических результатов.
 
-## Контрибьюшн
+Общие выборки формируются в `benchmark_support.py` по официальному train:
+нормализованные точные дубликаты объединяются; идентификаторы и хеш данных
+сохраняются. Близкие неидентичные шаблоны отдельно не группируются.
+Новая модель здесь не обучается; результаты сравнения промптов отражают
+согласие с автоматическими метками.
 
-1. Ветка на каждую фичу: `<username>/feature/<slug>`. В `main` — только через PR.
-2. Бэклог локальный: `backlog/{TODO,PROCESS,REVIEW,DONE}`,
-   задача перемещается по папкам по мере работы.
-3. Новый бенчмарк — папка `src/<service>/benchmarks/<name>/` с `run.py`
-   и `README.md`. Перед коммитом прогнать на всех версиях кода
-   и обновить таблицы прогонов.
-4. Правки в чужих сервисах — через свою ветку и с согласия автора.
-5. Контракт входа/выхода не меняем без согласования со всей командой.
+Итоговые 208 записей test используются после фиксации настроек. Оценщик
+сверяет названия категорий, проверяет нормализованное пересечение с train
+и считает sklearn micro-F1 по mcId из итоговых drafts; баллы — 60 × micro-F1.
+Найденные 24 пересечения отражаются в отчёте, строки не удаляются.
+`--resume` принимает только совпадающий отпечаток данных, кода и настроек,
+проверяет сохранённые предсказания и не вызывает модель для готовых строк.
+Неуспешный прогон не получает итогового F1. Новый отчёт полного пайплайна —
+`src/draft_generation/benchmarks/full_pipeline_evaluation/pipeline-results.json`.
 
-Подробнее — в [AGENTS.md](AGENTS.md).
+## Структура
+
+Весь исполняемый код — в `src/`. `main.py` содержит общий контракт, таблицу
+категорий, API-клиенты и оркестрацию; бизнес-логика — в двух сервисах.
+Промпты и ресурсы лежат внутри вариантов. Оценщик — `src/run.py`, общая
+поддержка бенчмарков — `src/benchmark_support.py`. Аудит и переразметка
+данных находятся отдельно в `src/dataset_annotation/` и в этот rebuild не входят.
+
+Конвенции разработки — в [AGENTS.md](AGENTS.md). Секреты, рабочие артефакты
+и локальный бэклог не коммитятся. Новые изменения идут через feature-ветку и PR.

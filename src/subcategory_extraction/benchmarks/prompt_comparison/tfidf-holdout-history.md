@@ -1,3 +1,9 @@
+# Исторические результаты TF-IDF
+
+Текущий вариант удалён. Ниже сохранены прежние результаты и инструкции;
+старые команды относятся к коду на коммите `2c65c3f`, а не к текущему checkout.
+Числа не являются оценкой нового Google Decision.
+
 # Качество TF-IDF
 
 Сервис: subcategory_extraction.
@@ -23,7 +29,7 @@ JSON-артефакт проверяется через настоящий `load
 uv run python src/subcategory_extraction/benchmarks/tfidf_quality/run.py
 ```
 
-Веса: `out/tfidf.json`; [полный отчёт](results.json) содержит группы всех частей.
+Веса: `out/tfidf.json`; [полный отчёт](tfidf-holdout-history.json) содержит группы всех частей.
 `--dataset`, `--artifact`, `--report` позволяют явно задать другие пути.
 
 ## Исторический прогон 2026-11-14T11:37:00+03:00
@@ -52,8 +58,8 @@ uv run python src/subcategory_extraction/benchmarks/tfidf_quality/run.py
 ## Повторный прогон прежнего TF-IDF после исправления общих метрик
 
 Дата: 2026-11-14T12:57:52+03:00; `9464aed` + изменения;
-код `6bc83e0f7411cb3bb06db366fdef80fcee9bb467f64092266919e20e148a620b`. [Новый отчёт](rebuild-results.json), прежний
-[отчёт](results.json) сохранён. Повторно запущен тот же legacy-бенчмарк;
+код `6bc83e0f7411cb3bb06db366fdef80fcee9bb467f64092266919e20e148a620b`. [Новый отчёт](tfidf-holdout-repeat-history.json), прежний
+[отчёт](tfidf-holdout-history.json) сохранён. Повторно запущен тот же legacy-бенчмарк;
 это не оценка нового Google Decision и не новое решение для рабочего конфига.
 Ограничение группировки только точных дубликатов остаётся.
 

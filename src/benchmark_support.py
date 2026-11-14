@@ -3,13 +3,13 @@
 import hashlib
 import json
 import subprocess
+import sys
 import tarfile
 from datetime import datetime
-from pathlib import Path
 from io import BytesIO
-from tempfile import TemporaryDirectory
-import sys
+from pathlib import Path
 from statistics import mean, median
+from tempfile import TemporaryDirectory
 from typing import Any
 from zoneinfo import ZoneInfo
 
@@ -59,18 +59,41 @@ def save_report(path: Path, report: dict[str, Any]) -> None:
 
 
 def validation_sample(size: int, seed: int = 43, nonempty: bool = False) -> list[dict]:
-    """Взять фиксированные группы из validation того же разбиения, что TF-IDF."""
+    """Взять фиксированные validation-группы, сохранив прежнюю выборку."""
     from random import Random
     from sklearn.model_selection import train_test_split
-    from subcategory_extraction.benchmarks.tfidf_quality.run import load_rows
 
-    rows = load_rows(TRAIN)
+    rows = load_training_groups(TRAIN)
     _, remaining = train_test_split(list(range(len(rows))), test_size=0.3, random_state=42)
     validation, _ = train_test_split(remaining, test_size=0.5, random_state=43)
     selected = [rows[index] for index in validation if not nonempty or rows[index]["targets"]]
     if not 1 <= size <= len(selected):
         raise ValueError(f"Размер выборки должен быть от 1 до {len(selected)}")
     return Random(seed).sample(selected, size)
+
+
+def load_training_groups(path: Path) -> list[dict[str, Any]]:
+    """Прочитать официальный train и объединить точные нормализованные дубликаты."""
+    from main import MICROCATEGORIES, PipelineInput
+    from run import normalize_description
+
+    groups: dict[str, dict[str, Any]] = {}
+    for line in path.read_text(encoding="utf-8").splitlines():
+        if not line.strip():
+            continue
+        row = json.loads(line)
+        inp = PipelineInput(description=row["description"], mcId=101)
+        targets = {target["mcId"] for target in row["found_microcategories"]}
+        if targets - MICROCATEGORIES.keys() or inp.mc_id in targets:
+            raise ValueError("Некорректные целевые категории в официальном train")
+        key = normalize_description(inp.description)
+        if key in groups and groups[key]["targets"] != targets:
+            raise ValueError("Конфликт разметки одинаковых описаний")
+        groups.setdefault(key, {
+            "inp": inp, "targets": targets,
+            "group_id": hashlib.sha256(key.encode()).hexdigest(),
+        })
+    return list(groups.values())
 
 
 def setup() -> None:

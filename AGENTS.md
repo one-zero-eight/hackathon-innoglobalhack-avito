@@ -131,8 +131,8 @@ python src/main.py --input data/input.json --output out/output.json
 Оба ключа обязательны; значение — имя папки модуля в соответствующем
 разделе, а не идентификатор LLM. `null` означает, что реализация пока не выбрана:
 CLI завершается явной ошибкой.
-Доступны `subcategory_extraction/google_decision`, `subcategory_extraction/tfidf`
-и `draft_generation/sample_llm`.
+Доступны `subcategory_extraction/google_decision` и `draft_generation/llm`.
+Генератор поддерживает Google Gemma и OpenAI-compatible API через `.env`.
 После выбора рабочего модуля заменяем `null` его именем.
 Неизвестные ключи, некорректные имена и
 отсутствующие модули — ошибка, без молчаливого переключения на другой вариант.

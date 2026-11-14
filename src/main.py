@@ -34,7 +34,7 @@ logger = logging.getLogger(__name__)
 
 
 # --- Микрокатегории кейса «Ремонт и отделка» ---
-# Таблица зафиксирована условиями кейса (docs/Innoglobalhack-Avito_2026.pdf):
+# Таблица зафиксирована в docs/innoglobalhack_avito/Innoglobalhack-Avito_2026.md:
 # новые микрокатегории не создаются, выходить за таблицу нельзя.
 
 MICROCATEGORIES: dict[int, str] = {
@@ -112,13 +112,13 @@ class BasePipeline(ABC):
     name: str = "base"
 
     @abstractmethod
-    def run(self, *args, **kwargs):
+    def run(self, *args: Any, **kwargs: Any) -> Any:
         """Выполнить шаг пайплайна и вернуть результат."""
 
 
 # --- Клиент LLM ---
 # Общий интерфейс клиента. Точный model id и ключ берём из окружения (.env):
-# LLM_MODEL_ID — идентификатор модели (по умолчанию "jev"),
+# LLM_MODEL_ID — идентификатор классификатора Google Decision,
 # LLM_API_KEY — ключ доступа (в репозиторий не коммитим).
 
 
@@ -126,11 +126,11 @@ class LLMClient(ABC):
     """Интерфейс клиента LLM для конкретных реализаций."""
 
     def __init__(self, model_id: str | None = None) -> None:
-        self.model_id = model_id or os.getenv("LLM_MODEL_ID", "jev")
+        self.model_id = model_id or os.getenv("LLM_MODEL_ID") or DEFAULT_DECISION_MODEL
         self.api_key = os.getenv("LLM_API_KEY")
 
     @abstractmethod
-    def complete(self, prompt: str, **kwargs) -> str:
+    def complete(self, prompt: str, **kwargs: Any) -> str:
         """Получить ответ модели на промпт."""
 
 
@@ -493,7 +493,7 @@ def build_parser() -> argparse.ArgumentParser:
 def main(argv: list[str] | None = None) -> int:
     """Прочитать входной файл, прогнать пайплайн, записать выходной файл."""
     logging.basicConfig(level=logging.INFO, format="%(levelname)s %(name)s: %(message)s")
-    load_dotenv()  # переменные из .env (LLM_MODEL_ID, LLM_API_KEY)
+    load_dotenv(DEFAULT_CONFIG_PATH.parent / ".env")
     args = build_parser().parse_args(argv)
 
     payload = json.loads(args.input.read_text(encoding="utf-8"))

@@ -1,3 +1,8 @@
+# Исторические проверки sample_llm
+
+Прототип удалён. Ниже сохранены результаты; прежние команды и пути
+относятся к коду на `2c65c3f`. Актуальный бенчмарк — contract/run.py.
+
 # Контракт генератора sample_llm
 
 Сервис: draft_generation.
@@ -14,7 +19,7 @@
 uv run python src/draft_generation/benchmarks/sample_llm/run.py
 ```
 
-[Отчёт](results.json) перезаписывается фактическим результатом запуска.
+[Отчёт](sample-llm-history.json) перезаписывается фактическим результатом запуска.
 
 ## Исторический результат до переписывания выделения
 
@@ -28,7 +33,7 @@ uv run python src/draft_generation/benchmarks/sample_llm/run.py
 
 | Промпт | Проверка | Результат | Время проверки, с | Стоимость |
 | --- | --- | --- | ---: | --- |
-| [draft.md](../../sample_llm/prompts/draft.md) | Передача входа и контракт | Пройдена | 0.029169 | бесплатно |
+| `draft.md` (текст в Git на `2c65c3f`) | Передача входа и контракт | Пройдена | 0.029169 | бесплатно |
 
 Это длительность офлайн-проверки, **не время ответа модели**.
 Настоящая генерация и её задержка — в [отдельном бенчмарке](../response_time/README.md).
@@ -39,7 +44,7 @@ uv run python src/draft_generation/benchmarks/sample_llm/run.py
 ## Интеграция с переписанным Google Decision
 
 Дата: 2026-11-14T13:02:23+03:00; `9464aed` + изменения;
-код `222eeee3b24513599abd707c2f11b7f2eca2e57d4d2ce85027c2c7a90e5c8e1c`. Текущий [results.json](results.json) содержит
+код `222eeee3b24513599abd707c2f11b7f2eca2e57d4d2ce85027c2c7a90e5c8e1c`. Текущий [results.json](sample-llm-history.json) содержит
 новую офлайн-проверку. Подмена классификатора теперь выполняется через общий
 `main.GoogleDecisionClient`, ответы включают `type=noul`; параметры порога
 задаются через `EXTRACTION_THRESHOLD`. Логика генератора не изменена.

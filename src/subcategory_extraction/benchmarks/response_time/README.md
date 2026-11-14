@@ -1,5 +1,26 @@
 # Время ответа выделения категорий
 
+## Актуальный срез после удаления прежних вариантов
+
+Дата: 2026-11-14T13:27:04+03:00; версия `2c65c3f` + очистка; SHA-256 `20eae115e95e6ff2162a08f927a787957d5f3411c5d1bb427bcbe0bcc107088e`.
+
+| Сценарий | Версия / дата | Модуль / модель | Лучший промпт | Качество | N | Среднее / медиана / p95, с | Стоимость |
+| --- | --- | --- | --- | --- | ---: | --- | --- |
+| live_latency_10 | 2c65c3f + очистка / 2026-11-14 | google_decision / gemini-decision-1 | guided, начальный | failed: нет API-ключа | 0 | — | бесплатно: API не вызван |
+
+| Сценарий | Модуль / модель | Промпт (файл / версия) | Версия / дата | Качество | N | Среднее / p95, с | Стоимость |
+| --- | --- | --- | --- | --- | ---: | --- | --- |
+| live_latency_10 | google_decision / gemini-decision-1 | guided, `801bb34dfc50` | 2c65c3f + очистка / 2026-11-14 | failed: нет ключа | 0 | — | бесплатно: API не вызван |
+
+Команда: `uv run python src/subcategory_extraction/benchmarks/response_time/run.py`. Отчёт: [extraction-results.json](extraction-results.json).
+
+Стоимость заполнена вручную: локально без настоящих обращений к провайдерам — бесплатно.
+
+Актуальный отчёт: [extraction-results.json](extraction-results.json).
+
+## Предыдущие прогоны и описание сценария
+
+
 Сервис: subcategory_extraction.
 
 ## Текущий сценарий и запуск
@@ -39,7 +60,7 @@ API-ключа, завершённых вызовов 0. Локальная дл
 
 Настоящий `run()` модулей `tfidf` и `google_decision` на одних 10 входах.
 Источник — validation-группы официального train из разбиения
-[TF-IDF](../tfidf_quality/README.md); seed выборки 44.
+[TF-IDF](../prompt_comparison/tfidf-holdout-history.md); seed выборки 44.
 Прогон выполнен после завершения [сравнения промптов](../prompt_comparison/README.md),
 без параллельных запросов к Google Decision от этого задания.
 Google использует рабочий guided и порог 0.5.

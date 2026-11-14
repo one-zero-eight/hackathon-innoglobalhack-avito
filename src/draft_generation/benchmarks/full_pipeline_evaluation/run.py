@@ -110,13 +110,10 @@ def run_live(config_path: Path, report_path: Path, resume: bool) -> int:
     # Кэш не должен пережить изменение кода, модели, промпта или артефакта.
     fingerprint.update(metadata()["code_sha256"].encode())
     public_settings = {key: value for key, value in os.environ.items()
-                       if key.startswith(("EXTRACTION_", "GENERATION_", "GOOGLE_DECISION_", "SAMPLE_LLM_", "TFIDF_"))
+                       if key.startswith(("EXTRACTION_", "GENERATION_"))
                        and not any(word in key for word in ("KEY", "TOKEN", "SECRET"))}
     public_settings["LLM_MODEL_ID"] = os.getenv("LLM_MODEL_ID", "")
     fingerprint.update(json.dumps(public_settings, sort_keys=True).encode())
-    artifact = Path(os.getenv("TFIDF_ARTIFACT_PATH", str(Path(__file__).resolve().parents[4] / "out/tfidf.json")))
-    if selected.subcategory_extraction == "tfidf":
-        fingerprint.update(artifact.read_bytes())
     signature = fingerprint.hexdigest()
     if resume:
         report = json.loads(report_path.read_text())

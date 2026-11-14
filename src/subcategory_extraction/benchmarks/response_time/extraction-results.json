@@ -1,0 +1,41 @@
+{
+  "date": "2026-11-14T13:27:04+03:00",
+  "commit": "2c65c3fc74963e6ae03d842802bf833206f92f08",
+  "code_sha256": "20eae115e95e6ff2162a08f927a787957d5f3411c5d1bb427bcbe0bcc107088e",
+  "working_tree": true,
+  "scenario": "live_extraction_latency",
+  "module": "google_decision",
+  "sample_seed": 44,
+  "sample_size": 10,
+  "status": "failed",
+  "rows": [],
+  "dataset_sha256": "b7118d68086624fbeab43839f22a635d4e325e4ee339f22d4aa0ad3c2e986615",
+  "sample_groups": [
+    "1755d70b12029ca196b7b0db67ab296db96a38e58bfa37db4f9eddc1e435d87e",
+    "df3453fa719bcc9c4120f73540192a23c48886d1d05117214da3af68fdc290c9",
+    "270d30c0fee5b8ec5ce8309bc25a5dec6f0a874bdf86a75c9e6c29d1a30c80b1",
+    "716b71093f6ffcb8457d664a34eaeafd6b20130cfc8a637d2324960aea030387",
+    "8d8689783ae7b2d19ae5d3e5a199cea32bf1458a91a5936230bdc502c4051cdf",
+    "bdcf8534a4ad2c0f2d370814f3b22e61e250e397c60d1c1dc45b54364947a03d",
+    "5524cc0b4bc58d27f2d87abc371da359477b802a890b3d21bc34fc51e0214caa",
+    "01feb66f2e21c5fb187fedd281f87e93c750cae9f62dd731f95d32ec0e2c0807",
+    "1f07801ecf1efcabe5f51f854601df2993b41894476fb12115c72242d382ab08",
+    "b06fa5d52b80f154594a544c282106fb90f32dccc057b670b9ad89a60e27d185"
+  ],
+  "model": "gemini-decision-1",
+  "threshold": 0.5,
+  "prompt_sha256": "801bb34dfc509607ec29a6879fd6118b491feb97fd0fa4f0d47aa37d4e512525",
+  "api_settings": {
+    "model_id": "gemini-decision-1",
+    "endpoint": "https://generativelanguage.googleapis.com/v1beta/decisions",
+    "timeout": 60.0,
+    "max_attempts": 3,
+    "retry_delay": 1.0,
+    "response_mode": "prompt"
+  },
+  "error": "ValueError: Не задан API-ключ; настоящие вызовы не выполнялись",
+  "response_time": {
+    "calls": 0
+  },
+  "timing_includes": "run(), API retries and quota waits; excludes instance construction and data loading"
+}
