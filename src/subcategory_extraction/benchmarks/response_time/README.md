@@ -93,3 +93,35 @@ QWEN_DECISION_CACHE=0 OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 uv run python src
 с одним потоком OpenMP/OpenBLAS и без кэша предсказаний. Старые замеры
 сохранены со своими датами; времена Apple Silicon выше не являются новым
 Linux-замером. У Qwen N=10, поэтому оценку нельзя трактовать как SLA.
+
+## Локальный feder-cr/jev: 2026-11-14
+
+Те же jevos-v5 INT8, `english`, порог 0.5, что в двух F1-сценариях.
+Настоящие последовательные `run()` на штатных 10 validation-входах seed=44.
+F1 здесь не считается. Оба модуля измерены заново на одной машине, по очереди,
+после завершения F1-прогонов, без параллельных запросов к серверу.
+
+| Модуль / модель | N | Среднее, с | Медиана, с | p95, с | API-стоимость |
+| --- | ---: | ---: | ---: | ---: | --- |
+| local_jev / jevos-v5 OpenVINO INT8 | 10 | 1.199780 | 1.126392 | 2.275740 | бесплатно |
+| learned_keywords / свежий CPU run() | 10 | 0.002126 | 0.002292 | 0.002644 | бесплатно |
+
+```bash
+OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 uv run python src/subcategory_extraction/benchmarks/response_time/run.py --module local_jev --size 10 --append
+OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 uv run python src/subcategory_extraction/benchmarks/response_time/run.py --module learned_keywords --size 10 --append
+```
+
+Linux x86_64, Intel Core i9-12900H. Jevos: четыре потока OpenVINO;
+learned_keywords: один поток OpenMP/OpenBLAS. Сервер запущен с
+`--threads 4 --warmup 0 --state-cache 0 --batch-tokens 0`, dynamic quantization=128.
+Версия runtime, веса и fingerprint — в `model_provenance` отчёта.
+Старт сервера/загрузка весов, создание экземпляра клиента и health исключены;
+первый измеряемый run() включён. Сервер до замера уже обрабатывал F1-прогоны,
+поэтому это замер готового сервера, а не холодного старта.
+
+Кэш ответов клиента и state-cache сервера отключены, попаданий нет.
+Время включает localhost HTTP, токенизацию, вычисления и разбор результата.
+Квоты, ожидания внешнего API и повторы отсутствуют: 10 HTTP-попыток на 10 входов.
+p95 — линейный percentile NumPy. Средний local_jev примерно в 564 раза медленнее
+этого локального baseline. N=10 не даёт SLA. Исторические времена Apple Silicon
+и внешнего Qwen выше не являются замерами на этом оборудовании.
