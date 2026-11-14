@@ -1,7 +1,7 @@
 {
-  "version": 1,
+  "version": 2,
   "review_date": "2026-11-14",
-  "status": "derived_reviewed_not_organizer_ground_truth",
+  "status": "provisional_annotation_not_independently_verified",
   "source_sha256": {
     "public-train-annotated.jsonl": "b7118d68086624fbeab43839f22a635d4e325e4ee339f22d4aa0ad3c2e986615",
     "public-test-dataset.parquet": "65b5a45a98b577d853a928932bbbdf8bd9bdeb469ded3016faace4d11f3eabaa"
@@ -14,7 +14,7 @@
     "test": null
   },
   "pyarrow_version": "26.0.1",
-  "builder_sha256": "1e67bcfeea068242b7fc1220c919c63f15cecb52707ed6ce8f7093bc8df052aa",
+  "builder_sha256": "ffdf9b134b1e775f3a0fff6d28f2433409ed19d7924881cea1f8be164696867c",
   "policy": {
     "minimum_alphabetic_characters": 3,
     "whole_object_only_pattern": "только\\s+под\\s+ключ|только\\s+дом\\s+целиком|исключительно\\s+по\\s+формату|не\\s+бер[её]м\\s+в\\s+работу\\s+отдельные|специализируемся\\s+исключительно\\s+на\\s+комплексном\\s+ремонте|(?:беру|бер[её]м)[^\\n.!?]{0,30}только\\s+комплексные\\s+объекты|работаем\\s+только\\s+по\\s+комплексному\\s+ремонту|(?:только|исключительно)[^\\n.!?]{0,60}(?:квартир\\w*|дом\\w*)\\s+целиком",
@@ -27,8 +27,8 @@
     "test_overlap_policy": "Исключить test-описания, совпадающие с исходным train после нормализации либо имеющие с ним сходство не ниже порога исходного аудита."
   },
   "correction_decisions": {
-    "train": 21,
-    "test": 7
+    "train": 1817,
+    "test": 65
   },
   "user_review_decisions": {
     "train": 24,
@@ -40,15 +40,15 @@
     "train": {
       "source_rows": 10000,
       "source_unique_normalized": 4854,
-      "output_rows": 4320,
+      "output_rows": 4851,
       "source_row_statuses": {
-        "deduplicated": 4872,
-        "included": 4320,
-        "quarantine": 808
+        "deduplicated": 5146,
+        "included": 4851,
+        "quarantine": 3
       },
-      "corrected_source_rows": 302,
-      "corrected_output_rows": 21,
-      "output_empty_targets": 1221,
+      "corrected_source_rows": 4442,
+      "corrected_output_rows": 1817,
+      "output_empty_targets": 778,
       "source_label_counts": {
         "102": 5484,
         "103": 5073,
@@ -57,26 +57,25 @@
         "106": 5481
       },
       "output_label_counts": {
-        "102": 2154,
-        "103": 2186,
-        "104": 2129,
-        "105": 2141,
-        "106": 2401
+        "102": 3769,
+        "103": 2670,
+        "104": 2580,
+        "105": 2409,
+        "106": 2896
       }
     },
     "test": {
       "source_rows": 208,
       "source_unique_normalized": 139,
-      "output_rows": 94,
+      "output_rows": 119,
       "source_row_statuses": {
-        "deduplicated": 36,
+        "deduplicated": 55,
         "excluded_overlap": 34,
-        "included": 94,
-        "quarantine": 44
+        "included": 119
       },
-      "corrected_source_rows": 11,
-      "corrected_output_rows": 7,
-      "output_empty_targets": 61,
+      "corrected_source_rows": 91,
+      "corrected_output_rows": 55,
+      "output_empty_targets": 44,
       "source_label_counts": {
         "102": 62,
         "103": 36,
@@ -85,21 +84,47 @@
         "106": 58
       },
       "output_label_counts": {
-        "102": 18,
-        "103": 16,
-        "104": 16,
-        "105": 20,
-        "106": 18
+        "102": 61,
+        "103": 36,
+        "104": 38,
+        "105": 40,
+        "106": 34
       }
     }
   },
   "output_sha256": {
-    "train.jsonl": "05dba06c68a8171a459dff751618e9134f0710a61b85231e08395eebf2909a31",
-    "reviewed_test.parquet": "a2bfa034a3b3e47f7baf30431f238b6a134d13443ece1427b5fba515480282db",
-    "quarantine.jsonl": "4a59c2e014e2084cf57aeaaa1793ec724dee93817eb6b90f086d09ab7acc7e4a",
-    "excluded_overlap.jsonl": "7e3c59d3f6d8f2861c28ca48bbadfd7e77b160a7895eeeaffbdd36af280b9ca8",
-    "corrections.jsonl": "c903792958f488a0e0c88bb80e45a69add8a1785af3e9c540bb60b3ff478a085",
-    "provenance.jsonl": "eff212c1880292876f65518e37e10b408454bbf8fbbe2b42fe89416d7904d09c",
-    "decisions.json": "4ac73f4d8137491361b92befed3061081f5e331f0f5d548c1045555dde9d704d"
+    "train.jsonl": "d365141906cd7e2a1d66792aa2e37661d8bcdcd0a4bbaf3781649a9108238b76",
+    "reviewed_test.parquet": "0af183508c1501425a1330675ceb8923dfe130fff3f86e418ebe3ec4baba34a2",
+    "quarantine.jsonl": "dfbf8b9f242babf5b8627f47e9d3803aa9186d97c9194d688fc23486ae633506",
+    "excluded_overlap.jsonl": "7f500fa236927818a1ee7746c006bf06904a6b709af41cc199277ac036be120d",
+    "corrections.jsonl": "2dd04725ef55e7e4cbf6a3f7875e8e65ee20cc1117ae1fe962fea000cf91a959",
+    "provenance.jsonl": "41b59121fd3fcba846e7faa2e8ea8457ee335a4badc91a46ba35ce5d05d2e224",
+    "decisions.json": "3a8f8496b7e4d6049668adc734e7794d0efa5f6e454eb10ab9c2e965951669b4",
+    "annotation_policy.json": "83f21426866f9a2ea2a92e1facf75e6562ce2e9a2bc4edfb9793c15aca7c5166",
+    "annotations.jsonl": "1f14a4b91f1f25bdcf9320af274d63d6544f1fef22a9f5567bcbd448538b740a",
+    "annotation_overrides.json": "dd7adf1284cb7d23e8b6559c71182951ab93170c8e85d6efccdce478a3f35535",
+    "pending_review.jsonl": "07dc2effbff029841f1611a87fb71f2c333c8308b0e2209cf493b6f23e937629",
+    "repair_changes.jsonl": "97007f94cc0141128850652f8cd30c9a63a4e9d4e744d9cfd16377094dca9962"
+  },
+  "full_annotation": {
+    "groups": 4993,
+    "individual_user_exceptions": 24,
+    "unresolved_semantic_groups": 1574,
+    "verification_status": "not_independently_verified",
+    "policy_sha256": "83f21426866f9a2ea2a92e1facf75e6562ce2e9a2bc4edfb9793c15aca7c5166",
+    "overrides_sha256": "dd7adf1284cb7d23e8b6559c71182951ab93170c8e85d6efccdce478a3f35535",
+    "finalizer_sha256": "e901bc9dbe6a272b95a49039e982f2775d4489a6078bfeecaca3f68466ce02db",
+    "annotations_file": "annotations.jsonl",
+    "proposals_file_sha256": "ce5d863210253c07e30dca842f40ec2f8447966e6d6b83305f9f8f2ba6cab7f5",
+    "method": "Автоматические правила + отдельные смысловые уточнения; не ручной эталон.",
+    "annotations_sha256": "1f14a4b91f1f25bdcf9320af274d63d6544f1fef22a9f5567bcbd448538b740a",
+    "repair": {
+      "groups_recomputed": 4993,
+      "changed_groups": 609,
+      "discarded_unverified_shard_overrides": 1111,
+      "annotator_sha256": "40af80ff4baa773055966cbdf34e259cb10dbe2e790d8fb348c218bb33ca4044",
+      "policy_sha256": "83f21426866f9a2ea2a92e1facf75e6562ce2e9a2bc4edfb9793c15aca7c5166",
+      "manual_full_read_claimed": false
+    }
   }
 }

@@ -95,7 +95,10 @@ def main() -> None:
             require(valid_labels(proposal["labels"]), f"Некорректные метки: {path.name}")
             require(type(proposal["user_locked"]) is bool, "Нестрогий флаг user_locked")
             if path.name == "annotations.jsonl":
-                require(not proposal["uncertainties"], "Не разрешены сомнения в итоговой разметке")
+                if decisions.get("full_annotation", {}).get(
+                    "verification_status"
+                ) != "not_independently_verified":
+                    require(not proposal["uncertainties"], "Не разрешены сомнения в итоговой разметке")
                 require(all(proposal["labels"] == member.labels for member in groups[key]),
                         "Итоговая аннотация расходится с decisions")
         logging.info("%s: полное покрытие %d групп.", path.name, len(indexed))

@@ -12,7 +12,6 @@ import argparse
 import json
 import logging
 import re
-import unicodedata
 from collections import Counter, defaultdict
 from dataclasses import dataclass
 from pathlib import Path
@@ -30,20 +29,24 @@ DEFAULT_OUTPUT = WORK / "annotation-proposals.jsonl"
 ALLOWED_IDS = tuple(range(102, 107))
 FULL_REPAIR_SET = [102, 103, 104, 105, 106]
 FULL_FINISHING_SET = [102, 103, 106]
-METHOD = "offline_rule_based_proposal_v1_not_manual_review"
+METHOD = "offline_rule_based_repair_v2_not_manual_review"
 LOCKED_METHOD = "user_locked_review_decision_preserved"
 
 # Границы слов и фраз подобраны по реальным описаниям. Это не обученная модель,
 # поэтому ниже сохраняются следы правил и неоднозначности.
 SEO_MARKERS = re.compile(
-    r"(?:"
+    r"\b(?:"
+    r"для\s+поиска|слов\w*\s+для\s+поиска|маячки\s+для\s+поиска|"
+    r"ключи\s+для\s+поиска|нас\s+можно\s+найти|"
+    r"(?:нас|меня|команду)\s+(?:также\s+)?находят\s+по\s+запросам|"
+    r"нас\s+ищут\s+по\s+запросам|также\s+ищут|"
     r"поисков\w*\s+(?:слов\w*|запрос\w*|систем\w*)|"
     r"ключев\w*\s+(?:слов\w*|запрос\w*)|"
     r"нас\s+находят|"
     r"нас\s+(?:также|тоже)\s+ищут|так\s+же\s+нас\s+ищут|"
     r"также\s+нас\s+ищут|ищут\s+нас|ищут\s+также|"
     r"ищите\s+(?:меня|нас)|ищите\s+нас|также\s+ищите|"
-    r"возможно\s*,?\s*(?:вы\s+|нас\s+)?ищ\w*|"
+    r"возможно\s*,?\s*(?:вы\s+|нас\s+)?(?:ищ|иска)\w*|"
     r"вы\s+могли\s+искать|по\s+каким\s+запросам|"
     r"запросы\s+для\s+поиска|популярные\s+запросы|"
     r"часто\s+ищут|теги\s+для\s+поиска|теги|tags|keywords"
@@ -113,7 +116,7 @@ NEGATION_SUFFIX = re.compile(
     re.I,
 )
 WARNING = re.compile(
-    r"(?:мошенник|обман\w*|обманул|кинул|кинули|скрылся|не\s+оплачено|"
+    r"(?:^\s*осторожно[^.\n]{0,40}мошен|не\s+оплачено|"
     r"стоп\s*[-–—]\s*не\s+оплачено|аванс\w*[^.\n]{0,40}скрыл|"
     r"ищу\s+людей[^.\n]{0,80}(?:наказать|аванс)|осторожно[^.\n]{0,40}мошен)",
     re.I,
@@ -145,13 +148,13 @@ GENERIC_ALL_WORKS = re.compile(
 )
 BATHROOM_TURNKEY = re.compile(
     r"(?:(?:ремонт|отделка|отделк)\w*\s+)?"
-    r"(?:ванн\w*(?:\s+комнат\w*)?|санузел\w*|санузл\w*|туалет\w*)"
+    r"(?:ванн\w*(?:\s+комнат\w*)?|сан\s*узел\w*|сан\s*узл\w*|туалет\w*)"
     r"\s+под\s+ключ",
     re.I,
 )
 BATHROOM_REPAIR = re.compile(
-    r"(?:ремонт|отделка|отделк)\w*\s+"
-    r"(?:ванн\w*(?:\s+комнат\w*)?|санузел\w*|санузл\w*|туалет\w*)",
+    r"(?:ремонт|отделк|обнов)\w*\s+"
+    r"(?:ванн\w*(?:\s+комнат\w*)?|сан\s*узел\w*|сан\s*узл\w*|туалет\w*)",
     re.I,
 )
 BATHROOM_ONLY = re.compile(
@@ -165,6 +168,27 @@ BATHROOM_ONLY = re.compile(
     re.I,
 )
 WHOLE_OBJECT = [
+    re.compile(
+        r"\bтолько\s+(?:комплексн\w*\s+(?:объект|ремонт)|"
+        r"полн\w*\s+(?:ремонт|проект))"
+        r"|без\s+частичн\w*\s+(?:работ|задач)"
+        r"|не\s+бер\w*[^.\n]{0,45}частичн"
+        r"|частичн\w*\s+ремонт\w*\s+не\s+занима\w*"
+        r"|работ\w*\s+с\s+объект\w*\s+целиком",
+        re.I,
+    ),
+    re.compile(
+        r"(?:не\s+(?:рассматрива\w*|принима\w*|бер\w*|выполня\w*|дела\w*))"
+        r"[^.\n]{0,45}(?:отдельн\w*\s+(?:этап|комнат|вид|работ)|"
+        r"частичн\w*\s+(?:ремонт|работ)|локальн\w*\s+задач)"
+        r"|(?:частичн\w*\s+ремонт|отдельн\w*\s+(?:работ|этап|вид\w*\s+работ))"
+        r"[^.\n]{0,20}не\s+(?:бер\w*|выполня\w*|дела\w*|рассматрива\w*)"
+        r"|(?:только|исключительно)\s+(?:по\s+формату\s+)?"
+        r"(?:ремонт\w*\s+)?(?:квартир\w*\s+)?под\s+ключ"
+        r"|бер[её]м\s+(?:в\s+работу\s+)?(?:квартир\w*|дом\w*|объект\w*)"
+        r"[^.\n]{0,25}целиком",
+        re.I,
+    ),
     re.compile(
         r"(?:работ\w*|бер[её]м|берем|выполня\w*|дела\w*)\s+"
         r"(?:только|исключительно)\s+"
@@ -208,18 +232,46 @@ WHOLE_OBJECT = [
 ]
 PARTIAL_OFFER = re.compile(
     r"(?:частичн\w*\s+(?:обновлен|ремонт|отделк|работ|переделк|восстановлен)\w*|"
-    r"завершен\w*\s+(?:начат\w*\s+)?ремонт\w*|"
-    r"додел\w*|додела\w*|"
-    r"(?<!не\s)(?:выполня\w*|дела\w*|оказыва\w*|бер[её]м)\s+"
+    r"завершен\w*\s+начат\w*\s+ремонт\w*|"
+    r"(?:выполня\w*|дела\w*|оказыва\w*|бер[её]м)\s+"
     r"(?:также\s+)?отдельн\w*\s+(?:работ|вид|этап)\w*|"
     r"(?:выполня\w*|дела\w*|оказыва\w*)\s+(?:также\s+)?"
     r"(?:конкретн\w*\s+)?(?:работ\w*|услуг\w*)\s+по\s+"
     r"(?:плитк|электр|сантех|маляр|штукатур|обо)\w*)",
     re.I,
 )
+NEGATION_SHORT = re.compile(r"(?:не|без|кроме)\s+", re.I)
+
+
+def _is_positive_offer(text: str, match_start: int) -> bool:
+    """Убедиться, что найденное упоминание частичных работ — положительное предложение, а не отказ.
+
+    Ищем отрицание «не/без/кроме» в небольшом контексте непосредственно перед совпадением.
+    """
+    window = text[max(0, match_start - 40):match_start]
+    return not bool(NEGATION_SHORT.search(window))
+
+
+def _partial_offer_matches(text: str) -> tuple[bool, str | None]:
+    """Найти положительное предложение частичных работ и вернуть цитату."""
+    for match in PARTIAL_OFFER.finditer(text):
+        suffix = text[match.end():match.end() + 55].split("\n")[0]
+        rejected = re.search(
+            r"\bне\s+(?:дела|бер|выполня|принима|рассматрива|занима)", suffix, re.I,
+        )
+        line = _line(text, match.start(), match.end())
+        affirmative = bool(re.search(
+            r"выполня|предлага|можно\s+заказ|бер[её]м|делаем|возмож|также|"
+            r"частичн\w*\s+обновлен|завершен\w*\s+начат",
+            line, re.I,
+        )) or line.strip().strip("—-•✅✔ ") == match.group(0)
+        if _is_positive_offer(text, match.start()) and not rejected and affirmative:
+            return True, _excerpt(text, match.start(), match.end())
+    return False, None
 TOKEN_RULES: tuple[tuple[str, int, str], ...] = (
     ("отделочн", 102, "strong"), ("отделк", 102, "strong"),
     ("штукатур", 102, "strong"), ("оштукатур", 102, "strong"),
+    ("выравн", 102, "strong"), ("выровн", 102, "strong"),
     ("плиточн", 103, "strong"), ("плитк", 103, "strong"),
     ("кафел", 103, "strong"), ("керамогранит", 103, "strong"),
     ("мозаик", 103, "strong"), ("облицовочн", 103, "weak"),
@@ -247,27 +299,16 @@ TOKEN_RULES: tuple[tuple[str, int, str], ...] = (
     ("красим", 106, "strong"), ("покрасим", 106, "strong"),
     ("красить", 106, "strong"),
 )
-EXACT_TOKENS = {
-    "узо": (105, "strong"),
-    "умный": None,  # обрабатывается фразой
-}
 PLURAL_SHIELD = {"щит", "щита", "щиты", "щитов", "щитами", "щитах"}
 AUTOMAT = {"автомат", "автомата", "автоматы", "автоматов", "автоматами", "автоматах"}
-FUZZY_BASES = {
-    102: ("штукатурка", "штукатурить", "штукатурные", "отделка", "отделочные"),
-    103: ("плитка", "плиточные", "кафель", "керамогранит", "мозаика"),
-    104: ("сантехника", "сантехнические", "трубы", "отопление", "канализация",
-          "водоснабжение", "водопровод", "унитаз", "смеситель", "раковина",
-          "инсталляция", "полотенцесушитель", "радиатор"),
-    105: ("электрика", "электромонтаж", "электропроводка", "розетка",
-          "выключатель", "освещение", "светильник", "люстра", "электрощит",
-          "проводка", "кабель", "слаботочные"),
-    106: ("шпаклевка", "шпатлевка", "обои", "покраска", "окраска",
-          "окрашивание", "малярные"),
-}
 FUZZY_EXCLUDE = {
     "плиткорез", "трубогиб", "электроинструмент", "электроприбор",
     "автоматический", "автоматическая", "автоматическое",
+}
+TYPO_ALIASES = {
+    "пллитка": 103, "керомогранит": 103, "мозайка": 103,
+    "штуктурка": 102, "оделка": 102, "эллектрика": 105,
+    "включатели": 105, "инсталяции": 104, "молярные": 106,
 }
 
 
@@ -296,7 +337,7 @@ class Occurrence:
 
 def _normalized(text: str) -> str:
     """Нормализовать mixed Cyrillic без изменения длины строки."""
-    mapped = search_text(text).lower().replace("ё", "е")
+    mapped = search_text(text).lower().replace("ё", "е").replace("ë", "е")
     if len(mapped) == len(text):
         return mapped
     # Крайне редкие многобуквенные lower-преобразования: сохраняем позиции.
@@ -330,35 +371,10 @@ def _alpha_count(text: str) -> int:
     return sum(char.isalpha() for char in text)
 
 
-def _edit_distance(left: str, right: str, limit: int = 2) -> int:
-    """Вычислить ограниченное расстояние Левенштейна для опечаток."""
-    if abs(len(left) - len(right)) > limit:
-        return limit + 1
-    previous = list(range(len(right) + 1))
-    for i, left_char in enumerate(left, 1):
-        current = [i]
-        for j, right_char in enumerate(right, 1):
-            current.append(min(
-                previous[j] + 1,
-                current[j - 1] + 1,
-                previous[j - 1] + (left_char != right_char),
-            ))
-        previous = current
-    return previous[-1]
-
-
 def _fuzzy_match(token: str) -> tuple[int, str] | None:
     """Сопоставить опечатку с канонической основой только при близком слове."""
-    if len(token) < 6 or token in FUZZY_EXCLUDE:
-        return None
-    limit = 1 if len(token) <= 9 else 2
-    for cid, bases in FUZZY_BASES.items():
-        for base in bases:
-            if token[0] != base[0] or abs(len(token) - len(base)) > limit:
-                continue
-            if _edit_distance(token, base, limit) <= limit:
-                return cid, base
-    return None
+    cid = TYPO_ALIASES.get(token)
+    return (cid, token) if cid is not None else None
 
 
 def _term_match(token: str) -> tuple[int, str, str, str] | None:
@@ -394,12 +410,13 @@ def _find_seo_spans(text: str) -> list[SeoSpan]:
         if start < end:
             spans.append(SeoSpan(start, end, text[start:end], marker, kind))
 
-    for match in SEO_MARKERS.finditer(text):
+    for match in SEO_MARKERS.finditer(_normalized(text)):
         tail = text[match.end():match.end() + 45]
         line_start = text.rfind("\n", 0, match.start()) + 1
         prefix = text[line_start:match.start()]
         at_line_start = len(prefix.strip(" \t•·-–—*✅✔️🔎🔍➡️")) <= 3
-        if not at_line_start and ":" not in tail and "：" not in tail:
+        if (not at_line_start and ":" not in match.group(0)
+                and "：" not in match.group(0) and ":" not in tail and "：" not in tail):
             continue
         start = line_start if at_line_start else match.start()
         add(start, len(text), match.group(0), "explicit_marker")
@@ -446,8 +463,10 @@ def _phrases(masked: str) -> list[Occurrence]:
     """Добавить категории, которые задаются устойчивыми словосочетаниями."""
     found: list[Occurrence] = []
     rules = (
-        (re.compile(r"умн\w*\s+дом\w*", re.I), 105, "strong"),
-        (re.compile(r"(?:тепл\w*\s+пол\w*|пол\w*\s+с\s+подогревом)", re.I),
+        (re.compile(r"\bзатирк\w*\s+(?:межплиточн\w*\s+)?шв\w*", re.I),
+         103, "strong"),
+        (re.compile(r"\b(?:т[её]пл(?:ый|ые|ого|ых|ым|ыми|ом)\s+пол\w*|"
+                    r"пол\w*\s+с\s+подогревом)", re.I),
          104, "weak"),
         (re.compile(
             r"(?:декоративн\w*\s+покрыти\w*|покрыти\w*\s+кожа|"
@@ -459,14 +478,15 @@ def _phrases(masked: str) -> list[Occurrence]:
     )
     for pattern, cid, strength in rules:
         for match in pattern.finditer(masked):
-            if cid == 104 and re.search(
-                r"электрическ\w*[^.\n]{0,25}$", masked[max(0, match.start() - 30):match.start()],
-                re.I,
-            ):
-                found.append(Occurrence(
-                    match.start(), match.end(), 105, match.group(0), "weak",
-                    "phrase_electric_warm_floor",
-                ))
+            if cid == 104:
+                context = masked[max(0, match.start() - 25):match.end() + 25].lower()
+                if not re.search(r"водян|водяно", context):
+                    found.append(Occurrence(
+                        match.start(), match.end(), 105, match.group(0), "weak",
+                        "phrase_electric_warm_floor",
+                    ))
+                if "электрическ" in context:
+                    continue
             found.append(Occurrence(
                 match.start(), match.end(), cid, match.group(0), strength, "phrase",
             ))
@@ -515,7 +535,7 @@ def _is_material_only(core: str) -> bool:
 
 def _negated(text: str, start: int, end: int) -> bool:
     """Проверить отказ/исключение непосредственно перед упоминанием."""
-    prefix = text[max(0, start - 80):start].lower()
+    prefix = re.split(r"[.!?;\n]", text[max(0, start - 80):start].lower())[-1]
     suffix = text[end:end + 60].lower()
     for match in NEGATION.finditer(prefix):
         between = prefix[match.end():]
@@ -553,6 +573,8 @@ def _target(text: str, start: int) -> bool:
 def _temporal(text: str, start: int) -> bool:
     """Игнорировать ссылки «после/до/во время» выполнения работ."""
     prefix = text[max(0, start - 45):start].lower()
+    if re.search(r"\bот\b[^.\n]{0,40}\bдо\b", text[max(0, start - 100):start], re.I):
+        return False
     return bool(TEMPORAL_BEFORE.search(prefix))
 
 
@@ -607,36 +629,15 @@ def _generic_all_repair(masked: str) -> tuple[bool, str]:
     return False, ""
 
 
-def _explicit_categories_after(masked: str, match_end: int, window: int = 200) -> set[int]:
-    """Найти явные категории услуг в тексте после обобщённой фразы.
-
-    Если после «все виды отделочных работ» идёт перечень конкретных услуг,
-    возвращаем только упомянутые категории. Пустое множество означает,
-    что фраза не сопровождается списком.
-    """
-    after = masked[match_end:match_end + window]
-    found: set[int] = set()
-    for stem, cid, _ in TOKEN_RULES:
-        if re.search(stem, after, re.I):
-            found.add(cid)
-    return found
-
-
-def _generic_all_finishing(masked: str) -> tuple[bool, str, set[int]]:
-    """Найти полный спектр отделочных работ.
-
-    Возвращает (found, excerpt, explicit_categories_after).
-    explicit_categories_after — это категории, явно названные в перечне после
-    обобщённой фразы. Если множество пустое, фраза не сопровождается списком.
-    """
+def _generic_all_finishing(masked: str) -> tuple[bool, str]:
+    """Найти полный спектр отделочных работ: 102, 103, 106 всегда вместе."""
     match = GENERIC_ALL_FINISHING.search(masked)
     if not match:
-        return False, "", set()
+        return False, ""
     prefix = masked[max(0, match.start() - 35):match.start()]
     if re.search(r"(?:не|без|кроме)\s+(?:\w+\s+){0,3}$", prefix, re.I):
-        return False, "", set()
-    explicit = _explicit_categories_after(masked, match.end())
-    return True, _excerpt(masked, match.start(), match.end()), explicit
+        return False, ""
+    return True, _excerpt(masked, match.start(), match.end())
 
 
 def _generic_all_works(masked: str) -> tuple[bool, str, bool]:
@@ -660,6 +661,9 @@ def _restriction(text: str) -> tuple[str | None, list[str]]:
     restrictions: list[str] = []
     for pattern in (BATHROOM_ONLY, *WHOLE_OBJECT):
         for match in pattern.finditer(text):
+            context = _line(text, match.start(), match.end())
+            if re.search(r"за\s+исключением\s+редк", context, re.I):
+                continue
             prefix = text[max(0, match.start() - 20):match.start()]
             if re.search(r"не\s+только\s*$", prefix, re.I):
                 continue
@@ -707,7 +711,7 @@ def propose(description: str) -> dict:
     if not isinstance(description, str):
         raise ValueError("description должен быть строкой")
     seo_spans = _find_seo_spans(description)
-    masked = _masked_text(description, seo_spans)
+    masked = _normalized(_masked_text(description, seo_spans))
     core = " ".join(masked.split())
     ignored_seo = [span.text.strip() for span in seo_spans if span.text.strip()]
 
@@ -723,13 +727,14 @@ def propose(description: str) -> dict:
     restrictions.extend(restriction_parts)
 
     # Конкретное частичное предложение отменяет общий «только под ключ».
-    if restriction and PARTIAL_OFFER.search(masked):
+    has_partial, partial_excerpt = _partial_offer_matches(masked)
+    if restriction and has_partial:
         restriction = None
         restrictions.clear()
         notes.append("partial_offer_overrides_only_key_restriction")
 
     all_repair, all_repair_text = _generic_all_repair(masked)
-    all_finishing, all_finishing_text, finishing_explicit = _generic_all_finishing(masked)
+    all_finishing, all_finishing_text = _generic_all_finishing(masked)
     all_works, all_works_text, all_works_repair = _generic_all_works(masked)
     bathroom, bathroom_text = _bathroom_turnkey(masked)
     warning = bool(WARNING.search(core))
@@ -741,36 +746,48 @@ def propose(description: str) -> dict:
         cid = occurrence.cid
         start, end = occurrence.start, occurrence.end
         excerpt = _excerpt(description, start, end)
-        if cid in (102, 103, 106) and _target(description, start):
+        if cid in (102, 103, 106) and _target(masked, start):
             ignored_notes[f"target_{cid}"] += 1
             continue
-        if _removal(description, start, end):
+        if _removal(masked, start, end):
             ignored_notes[f"removal_{cid}"] += 1
             continue
-        if _negated(description, start, end):
+        if _negated(masked, start, end):
             refused[cid] = excerpt
             continue
-        if _temporal(description, start):
+        if _temporal(masked, start):
             ignored_notes[f"temporal_{cid}"] += 1
             continue
-        if _tool_context(description, start, end):
+        if _tool_context(masked, start, end):
             ignored_notes[f"tool_{cid}"] += 1
             continue
-        if _material_context(description, start, end):
+        if _material_context(masked, start, end):
             ignored_notes[f"material_{cid}"] += 1
             continue
+        prefix = masked[max(0, start - 55):start]
+        if cid == 102 and re.search(r"\bбез\s+(?:\w+\s+){0,2}$", prefix):
+            ignored_notes["existing_unfinished_object"] += 1
+            continue
+        if cid == 104 and re.search(
+            r"(?:покраск|окраск|укрыв|защищ|укрыва)\w*[^.\n]{0,40}$", prefix,
+        ):
+            ignored_notes["painted_or_protected_plumbing"] += 1
+            continue
+        if cid == 103 and re.search(r"потолочн\w*\s+$", prefix):
+            ignored_notes["ceiling_tile_not_ceramic_tiling"] += 1
+            continue
         if cid == 102 and occurrence.token.startswith(("выравн", "выровн")):
-            nearby = description[max(0, start - 45):min(len(description), end + 45)]
+            nearby = masked[max(0, start - 45):min(len(masked), end + 45)]
             if not re.search(r"(?:стен|потолк|поверхност|основан|откос)", nearby, re.I):
                 ignored_notes["leveling_without_wall"] += 1
                 continue
         if cid == 104 and occurrence.token.startswith("душев"):
-            line = _line(description, start, end).lower()
+            line = _line(masked, start, end)
             if not re.search(r"(?:установ|монтаж|замен|подключ|сантехник)", line, re.I):
                 ignored_notes["shower_room_not_fixture"] += 1
                 continue
         if not occurrence.channel.startswith("phrase") and not _service_context(
-            description, start, end, core,
+            masked, start, end, core,
         ):
             ignored_notes[f"incidental_{cid}"] += 1
             continue
@@ -785,15 +802,10 @@ def propose(description: str) -> dict:
     generic_notes: list[str] = []
 
     if all_finishing:
-        if finishing_explicit:
-            finishing_set = sorted(finishing_explicit)
-            generic_notes.append("explicit_list_overrides_generic_finishing_rule")
-        else:
-            finishing_set = FULL_FINISHING_SET
-            generic_notes.append("all_finishing_works_gives_102_103_106")
-        labels = sorted(set(labels) | set(finishing_set))
-        for cid in finishing_set:
+        labels = sorted(set(labels) | set(FULL_FINISHING_SET))
+        for cid in FULL_FINISHING_SET:
             _add_evidence(evidence, cid, all_finishing_text)
+        generic_notes.append("all_finishing_works_gives_102_103_106")
 
     if all_repair:
         labels = sorted(set(labels) | set(FULL_REPAIR_SET))
@@ -807,17 +819,28 @@ def propose(description: str) -> dict:
             _add_evidence(evidence, cid, all_works_text)
         generic_notes.append("all_works_with_repair_context_gives_all_five")
 
-    # Санузел под ключ без списка — плитка и сантехника. Если список есть,
-    # он главнее; ограничение целым санузлом имеет приоритет над импликацией.
+    # Санузел даёт минимум 103/104; явный список может добавить другие услуги.
+    # Ограничение целым санузлом имеет приоритет над этой импликацией.
     if bathroom and not restriction:
-        bathroom_related = {103, 104} & set(labels)
-        if not bathroom_related:
-            labels = sorted(set(labels) | {103, 104})
+        added = False
+        if 103 not in labels:
+            labels = sorted(set(labels) | {103})
             _add_evidence(evidence, 103, bathroom_text)
+            added = True
+        if 104 not in labels:
+            labels = sorted(set(labels) | {104})
             _add_evidence(evidence, 104, bathroom_text)
+            added = True
+        if added:
             generic_notes.append("bathroom_turnkey_gives_103_104")
+        if re.search(r"\bпанел\w*[^.\n]{0,20}пвх|\bпвх[^.\n]{0,20}панел", masked):
+            labels = sorted(set(labels) | {102})
+            _add_evidence(evidence, 102, bathroom_text)
 
     if refused:
+        # Локальный отказ от мелкого ремонта не отменяет явно предложенную
+        # крупную услугу в другой строке того же объявления.
+        refused = {cid: value for cid, value in refused.items() if not accepted[cid]}
         labels = [cid for cid in labels if cid not in refused]
         for cid, excerpt in sorted(refused.items()):
             evidence[f"refusal_{cid}"] = [excerpt]
@@ -1112,19 +1135,10 @@ def _log_statistics(rows: list[dict], records: list, locked: dict, output: Path)
                      row["uncertainties"])
 
 
-def main() -> None:
-    """Прочитать источники, построить предложения и записать только JSONL."""
-    parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--output", type=Path, default=DEFAULT_OUTPUT)
-    args = parser.parse_args()
-
-    if not DECISIONS.exists() or not AUDIT.exists():
-        raise FileNotFoundError("Нужны decisions.json и work/dataset-audit.json")
+def build_proposals(decisions: dict, records: list, audit: dict) -> list[dict]:
+    """Пересчитать все группы одним общим способом для CLI и исправлений."""
     policy = json.loads(POLICY.read_text(encoding="utf-8"))
     policy_id = policy.get("id", "unknown")
-    decisions = json.loads(DECISIONS.read_text(encoding="utf-8"))
-    audit = json.loads(AUDIT.read_text(encoding="utf-8"))
-    records, _ = load_records(decisions, audit)
     locked = _locked_from_decisions(decisions, records)
     overlap = test_overlap_reasons(records, audit)
 
@@ -1144,8 +1158,21 @@ def main() -> None:
             ))
 
     _validate(rows, records, locked)
+    return rows
+
+
+def main() -> None:
+    """Прочитать источники, построить предложения и записать только JSONL."""
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--output", type=Path, default=DEFAULT_OUTPUT)
+    args = parser.parse_args()
+    decisions = json.loads(DECISIONS.read_bytes())
+    audit = json.loads(AUDIT.read_bytes())
+    records, _ = load_records(decisions, audit)
+    rows = build_proposals(decisions, records, audit)
     _write_jsonl(args.output, rows)
-    logging.info("Политика: %s", policy_id)
+    logging.info("Политика: %s", rows[0]["policy_id"])
+    locked = _locked_from_decisions(decisions, records)
     _log_statistics(rows, records, locked, args.output)
 
 
