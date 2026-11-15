@@ -1,6 +1,7 @@
 # Инфраструктура веб-сервиса черновиков Avito: PostgreSQL + FastAPI API + веб-клиент.
-# Запуск: docker compose up -d          (всё вместе)
+# Запуск: docker compose up -d          (всё вместе, включая лоадер db-load)
 #         docker compose up -d db       (только база данных)
+#         docker compose run --rm db-load (повторить загрузку case_ads вручную)
 services:
   db:
     image: postgres:18-alpine
@@ -20,6 +21,31 @@ services:
       interval: 5s
       timeout: 3s
       retries: 10
+
+  # Одноразовый лоадер датасета кейса: при каждом docker compose up исполняет
+  # CMD образа — src/api/dataset_loader.py (таблица case_ads для /api/dataset/*)
+  # — и завершается (restart: "no"). Загрузка идемпотентна: UNIQUE row_key +
+  # ON CONFLICT DO NOTHING, повторный up не создаёт дублей.
+  # Образ отдельный и лёгкий (deploy/db-load.Dockerfile): лоадеру не нужны
+  # torch/CUDA и web-стек, которые ставит полный uv sync для api.
+  db-load:
+    build:
+      context: .
+      dockerfile: deploy/db-load.Dockerfile
+    container_name: avito-db-load
+    restart: "no"
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      # Подключение src/api/dataset_loader.py (asyncpg) внутри сети compose.
+      # env_file не нужен: database_url берётся из DATABASE_URL, остальные
+      # поля Settings() имеют значения по умолчанию (см. src/api/config.py).
+      DATABASE_URL: postgresql://avito:avito@db:5432/avito
+    volumes:
+      # dataset_loader.py читает файлы кейса относительно корня проекта (/app):
+      # монтируем только нужный каталог, docs/ в образ не копируется.
+      - ./docs/innoglobalhack_avito:/app/docs/innoglobalhack_avito:ro
 
   api:
     build:
