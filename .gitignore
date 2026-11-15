@@ -585,3 +585,4 @@ data/example-*
 data/mcId_*
 data/private-test-dataset.csv
 .~*
+convert_razmetka_xlsx.py
