@@ -43,8 +43,18 @@ p95: линейный percentile NumPy. N=10 не задаёт SLA. Собств
 | order_format_joint::yandex_youla | 2026-11-15T14:17:27+03:00 | 10 | 0.004832 | 0.004690 | 0.009675 | новый локальный run(); без кэша ответов |
 | jev_semantic | 2026-11-15T20:33:28+03:00 | 10 | 1.140226 | 1.119354 | 1.433347 | fresh run(); loading excluded; response-cache hits0 |
 | jev_semantic_arbiter | 2026-11-15T20:33:41+03:00 | 10 | 5.320647 | 5.683063 | 5.893055 | fresh run(); loading excluded; response-cache hits0 |
+| jev_semantic_arbiter::kimi-k3.1-pro | 2026-11-15T21:48:37+03:00 | 10 | 12.138819 | 12.033032 | 17.568494 | Kimi complete; fresh run(); loading excluded; cache hits0; first attempt failed after6calls, preserved in JSON |
 
 ## Воспроизведение
+
+Kimi-конфигурация: `--configuration jev_semantic_arbiter::kimi-k3.1-pro --size 10`.
+Она фиксирует модель BestAPI и explicit-schema совместимость, оставляя native Jev
+и категорийные правила прежними. Новый замер сделан после завершения F1-задач,
+последовательно и с пустыми кэшами обоих API-клиентов. Первый timing-прогон
+завершился schema-invalid ответом на седьмом вызове после шести валидных;
+затем весь фиксированный N=10 повторён один раз с новыми пустыми кэшами.
+Первый сбой, его время и usage сохранены в previous_failed_timing_attempt;
+ошибки не подменяются пустыми категориями.
 
 ```bash
 OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 uv run python src/subcategory_extraction/benchmarks/response_time/run.py \
@@ -53,7 +63,7 @@ OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 uv run python src/sub
 uv run --with matplotlib python src/subcategory_extraction/benchmarks/response_time/report.py
 ```
 
-HTML строится офлайн из JSON пяти dataset-scope и response_time; БД/API не нужны.
+HTML строится офлайн из JSON шести dataset-scope и response_time; БД/API не нужны.
 Он содержит SVG, таблицы, настройки и аудит; умеет выгружать график SVG и сводный JSON.
 Исходные results.json / recorded-results.json сохранены для пересчёта, отдельные дубли PNG/SVG/CSV удалены.
 Для official/manual графиков соединяются только строки с одинаковыми run_id и comparison_configuration_sha256.

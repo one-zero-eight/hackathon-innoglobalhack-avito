@@ -1,7 +1,7 @@
 # Бенчмарки выделения микрокатегорий
 
 [Открыть единый автономный HTML-отчёт](response_time/benchmark-report.html):
-пять раздельных dataset-scope, графики время–F1, сортировка/фильтр таблиц, provenance и аудит.
+шесть раздельных dataset-scope, графики время–F1, сортировка/фильтр таблиц, provenance и аудит.
 Графики и сводный JSON можно скачать прямо из HTML. Внешние ресурсы не используются.
 
 | Сценарий | Что измеряет |
@@ -43,3 +43,9 @@ Private-test: [все шесть категорий без исходной mcId
 Private improvement study (211 development /51 grouped confirmation) и ограничения
 включены в ту же HTML-таблицу private. Arbiter full0.978947, confirmation0.972222;
 на официальном/manual tests есть регрессии, поэтому default config сохранён.
+
+Фиксированный вариант `jev_semantic_arbiter::kimi-k3.1-pro` сравнивает BestAPI Kimi
+с GPT на тех же private/official/manual данных и 10 свежих validation-вызовах.
+Категорийные правила и Jev prior не меняются; для Kimi схема также включена в system
+message. Предыдущие private-разбиения уже просмотрены: это повторное сравнение,
+не новая независимая confirmation. Все результаты находятся в существующих таблицах.

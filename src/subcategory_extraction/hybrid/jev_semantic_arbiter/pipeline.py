@@ -2,6 +2,7 @@
 
 import hashlib
 import json
+import os
 from pathlib import Path
 
 from pydantic import BaseModel, ConfigDict, model_validator
@@ -62,5 +63,6 @@ class SubcategoryExtractionPipeline(BasePipeline):
     def benchmark_metadata(self) -> dict:
         """Зафиксировать обе модели и смысл бинарного вывода без секретов."""
         return {"native": self.baseline.benchmark_metadata(), "arbiter_model": self.arbiter.model_id,
+                "schema_in_system_prompt": os.getenv("STRUCTURED_LLM_SCHEMA_IN_PROMPT", "0") == "1",
                 "arbiter_endpoint": self.arbiter.endpoint, "prompt_sha256": hashlib.sha256(self.prompt.encode()).hexdigest(),
                 "decision_type": "structured binary decisions; not calibrated probabilities", "full_context": True}

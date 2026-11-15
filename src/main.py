@@ -320,6 +320,10 @@ class StructuredLLMClient(LLMClient):
         )
         if not isinstance(system, str):
             raise ValueError("system_prompt должен быть строкой")
+        if os.getenv("STRUCTURED_LLM_SCHEMA_IN_PROMPT", "0") == "1":
+            system += "\nRequired output JSON Schema:\n" + json.dumps(
+                response_model.model_json_schema(), ensure_ascii=False, sort_keys=True,
+            )
         payload = {
             "model": self.model_id,
             "messages": [

@@ -19,7 +19,7 @@ from matplotlib.ticker import FuncFormatter
 HERE = Path(__file__).resolve().parent
 BENCHMARKS = HERE.parent
 RUN_ID = "2026-11-15-extraction-speed-f1"
-CURRENT_RUNS = {RUN_ID, "2026-11-15-semantic-f1"}
+CURRENT_RUNS = {RUN_ID, "2026-11-15-semantic-f1", "2026-11-15-kimi-k3.1"}
 COMPLETE = {"complete", "completed"}
 COLORS = {"lexical": "#2864b4", "semantic": "#7953aa", "decisions": "#c57818", "hybrid": "#168573"}
 SCOPES = (
@@ -46,6 +46,10 @@ def read(relative: str) -> dict[str, Any]:
 def model_note(name: str) -> str:
     """Отметить происхождение новых весов и известное использование test при разработке."""
     notes = []
+    if name == "jev_semantic_arbiter::kimi-k3.1-pro":
+        notes.append("Kimi K3.1 Pro via BestAPI; unchanged category rules and native Jev prior. "
+                     "JSON Schema repeated in the system message because this endpoint did not enforce response_format alone. "
+                     "Private partitions were already observed; this rerun is not a fresh confirmation.")
     if name.endswith("::yandex-youla-decision1") or name.endswith("::yandex_youla"):
         notes.append("Published provider-trained weights; provider sample is not an independent holdout.")
     if name.startswith("order_format_joint"):
@@ -87,6 +91,7 @@ def collect() -> list[dict[str, Any]]:
                    for stat in ("mean", "median", "p95")},
                 "status": result.get("status", "unknown"), "error": result.get("error", ""),
                 "latency_status": latency.get("status", "unpaired"), "latency_error": latency.get("error", ""),
+                "previous_failed_timing_attempt": latency.get("previous_failed_timing_attempt"),
                 "date": metadata.get("date", report.get("date")), "measurement_metadata": metadata,
                 "latency_measurement_metadata": latency.get("measurement_metadata", {}),
                 "configuration": result.get("configuration", result.get("comparison_configuration", {})),
@@ -215,7 +220,8 @@ def section(scope: dict[str, Any], first: bool) -> str:
                                            "configuration", "model_provenance", "model_metadata", "model_note", "timing_scope", "reuse",
                                            "without_exact_train_match", "source_101_subset", "common_subset_metrics",
                                            "per_class_metrics", "metrics_102_106", "model_categories", "trained_categories",
-                                           "development_metrics", "confirmation_metrics", "error", "latency_error")}
+                                           "development_metrics", "confirmation_metrics", "error", "latency_error",
+                                           "previous_failed_timing_attempt")}
         name = html.escape(row["method"])
         status = "current" if row["current"] else "preserved"
         error = html.escape(row["error"] or row["latency_error"])
@@ -257,7 +263,8 @@ def section(scope: dict[str, Any], first: bool) -> str:
                       f'Confirmation group-bootstrap 95% interval: {interval[0]:.3f}–{interval[1]:.3f}. '
                       'The small confirmation set is not a pristine external test: baseline full-set aggregates were already known. '
                       'No ad-specific IDs, text hashes or answer lookups are used by the model. '
-                      'The new arbiter slightly regresses on the official/manual tests; defaults are unchanged.</p>')
+                      'The original GPT arbiter slightly regresses on the official/manual tests; defaults are unchanged. '
+                      'The Kimi comparison reuses these already-observed partitions and is not a new confirmation.</p>')
     return (
         f'<section id="{scope["id"]}" class="scope" {"" if first else "hidden"}>'
         f'<h2>{scope["title"]}</h2><p class="notice">{html.escape(scope["note"])}</p>{study_note}'
@@ -293,6 +300,25 @@ def study_summary(scopes: list[dict[str, Any]]) -> str:
     )
     metrics = "".join(f'<div class="result-card"><span>{html.escape(label)}</span><strong>{value}</strong>'
                       f'<small>{html.escape(note)}</small></div>' for label, value, note in cards)
+    comparison = ""
+    kimi = next((row for row in private["rows"] if row["method"] == "jev_semantic_arbiter::kimi-k3.1-pro"), None)
+    if kimi and kimi["f1"] is not None:
+        public = {scope["id"]: next((row for row in scope["rows"] if row["method"] == kimi["method"]), None)
+                  for scope in scopes if scope["id"] in {"official", "manual"}}
+        latency = public.get("official") or {}
+        public_scores = "/".join(number((public.get(name) or {}).get("f1"), 4) for name in ("official", "manual"))
+        latency_seconds = latency.get("mean_ms") / 1000 if latency.get("mean_ms") is not None else None
+        timing_note = (f'fresh validation mean {number(latency_seconds, 2)} s/ad (N={latency.get("calls", 0)}). '
+                       if latency.get("latency_status") in COMPLETE else 'Fresh timing failed validation; no complete latency point is plotted. ')
+        comparison = (
+            f'<p class="notice"><b>Kimi K3.1 Pro comparison:</b> private micro-F1 <b>{kimi["f1"]:.4f}</b> '
+            f'({100 * (kimi["f1"] - winner["f1"]):+.2f} pp versus GPT); '
+            f'previous 51-row confirmation partition {number((kimi["confirmation_metrics"] or {}).get("micro_f1"), 4)}. '
+            f'Official/manual-test F1 {public_scores}; {timing_note}'
+            'The first timing attempt failed after six valid calls; failure evidence is retained in provenance. '
+            'The category rules and Jev prior are fixed; the output schema is also supplied in the system message for Kimi. '
+            'These partitions were already examined, so this is a repeat comparison, not a new holdout.</p>'
+        )
     return (
         '<aside class="result-summary" aria-label="Confirmed semantic classifier results">'
         '<div class="eyebrow">Confirmed private-set improvement</div>'
@@ -305,7 +331,7 @@ def study_summary(scopes: list[dict[str, Any]]) -> str:
         f'<p class="muted">Trade-offs: {timing["mean_seconds"]:.2f} s/ad mean on {timing["calls"]} uncached public validation inputs; '
         f'official/manual-test F1 {official:.4f}/{manual:.4f}, slightly below calibrated Jev. '
         'The default configuration is unchanged.</p>'
-        '<button id="open-private" type="button">View private chart and full comparison</button></aside>'
+        f'{comparison}<button id="open-private" type="button">View private chart and full comparison</button></aside>'
     )
 
 

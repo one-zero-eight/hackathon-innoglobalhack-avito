@@ -49,8 +49,33 @@ SHA-256 таблицы: `cd6f432e3841e842d04bb07827b92f9b644c56b2b528cb360984331
 | order_format_joint::yandex_youla | 2026-11-15T14:16:43+03:00 | 208/208 | 0.778523 | новый локальный run(); опубликованные веса |
 | jev_semantic | 2026-11-15T20:28:13+03:00 | 208/208 | 0.755208 | frozen semantic candidate; private confirmation not used for selection; provenance in JSON |
 | jev_semantic_arbiter | 2026-11-15T20:31:42+03:00 | 208/208 | 0.826709 | frozen semantic candidate; private confirmation not used for selection; provenance in JSON |
+| jev_semantic_arbiter::kimi-k3.1-pro | 2026-11-15T21:43:15+03:00 | 208/208 | 0.821705 | Kimi K3.1 Pro; fixed semantics, explicit schema; provenance in JSON |
 
 ## Протокол и воспроизведение
+
+Kimi K3.1 Pro проверяется фиксированной конфигурацией `jev_semantic_arbiter::kimi-k3.1-pro`:
+тот же native Jev, calibration и категорийные правила, другой structured arbiter.
+Для совместимости с BestAPI JSON Schema дополнительно передаётся в system message;
+одного response_format оказалось недостаточно в синтетических проверках. Строгая
+валидация сохраняется. Это сравнение моделей без подбора по private-меткам;
+прежние development/confirmation уже просмотрены и не являются новым holdout.
+Результаты добавлены в существующие JSON и общие таблицы/графики HTML, GPT-строки сохранены.
+
+```bash
+uv run python src/subcategory_extraction/benchmarks/classifier_methods/export_diagnostic.py \
+  --dataset private_test --size 0 --skip-latency --workers 8 \
+  --configurations jev_semantic_arbiter::kimi-k3.1-pro --report out/kimi-private.json
+uv run python src/subcategory_extraction/benchmarks/classifier_methods/run.py \
+  --configuration jev_semantic_arbiter::kimi-k3.1-pro --workers 4 --report out/kimi-official.json
+uv run python src/subcategory_extraction/benchmarks/improved_dataset/run.py \
+  --configuration jev_semantic_arbiter::kimi-k3.1-pro --workers 4 --report out/kimi-manual.json
+```
+
+F1 переиспользует валидные API-кэши; официальный прогон продолжен после одного
+обрыва соединения и двух разных schema-invalid ответов, manual — после одного
+schema-invalid ответа. Невалидные строки повторены по одному разу без изменений
+параметров, история ошибок сохранена в retry_history. Скорость измеряется отдельно на 10 прежних validation-входах
+без кэша и параллельных benchmark-задач. Private использует тот же одобренный снимок262.
 
 Запуск 15 ноября 2026: 24 модуля, включая шесть новых logistic/order-format модулей и девять опубликованных конфигураций.
 Модели и пороги зафиксированы, обучения и настройки в этом запуске нет. Старые варианты сохраняют свою дату и машину.
@@ -129,7 +154,7 @@ Google/Selectel/BestAPI получили отдельное разрешение
 Ответы кэшируются штатно; совпавшие ответы Jev переиспользуются hybrid-модулем.
 Лимиты и ошибки фиксируются без подстановки пустых ответов и без полной F1 для
 незавершённого метода. Common-subset F1 использует одни и те же завершённые строки
-для всех 13 методов; это отдельный, потенциально более простой поднабор.
+для всех выбранных методов; это отдельный, потенциально более простой поднабор.
 Полный исходный текст передаётся модели; собственные ограничения модели сохраняются.
 Дополнительная latency не измеряется, чтение кэша не выдаётся за скорость внешнего API.
 
@@ -161,7 +186,7 @@ uv run python src/subcategory_extraction/benchmarks/classifier_methods/export_di
 При объединении проверяются table SHA, точные входы/метки, политика source и fingerprint
 моделей. Модели не вызываются; таблицы и веса общей БД не менялись.
 
-Итог: 12 полных F1 на 262 строках. Google завершил 251/262: девять строк превышают
+Исходный shortlist: 12 полных F1 на 262 строках. Google завершил 251/262: девять строк превышают
 budget guard клиента, две вернули HTTP 400. Полного F1 Google нет; его common-subset
 micro-F1 на общих 251 строках — 0.910037. На том же поднаборе jev_calibrated — 0.929052.
 У jev_tfidf и локальных методов нет предсказаний 101 в этом прогоне; 114 пропусков

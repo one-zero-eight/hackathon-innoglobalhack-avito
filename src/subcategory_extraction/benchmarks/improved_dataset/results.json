@@ -96822,6 +96822,6705 @@
         }
       },
       "comparison_configuration_sha256": "e4d7dacef782654b9c09144cf1bcd54bffaefb4cfe72b7ff84cbb1a6a55f674f"
+    },
+    "jev_semantic_arbiter::kimi-k3.1-pro": {
+      "status": "completed",
+      "predicted": [
+        [
+          105,
+          106
+        ],
+        [
+          106
+        ],
+        [
+          104,
+          105
+        ],
+        [],
+        [],
+        [],
+        [
+          102,
+          104,
+          105
+        ],
+        [],
+        [],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        [],
+        [],
+        [
+          102,
+          103,
+          105,
+          106
+        ],
+        [],
+        [],
+        [
+          104,
+          105,
+          106
+        ],
+        [
+          106
+        ],
+        [
+          104,
+          105
+        ],
+        [],
+        [
+          105,
+          106
+        ],
+        [
+          102,
+          104,
+          105
+        ],
+        [],
+        [
+          103,
+          104,
+          105
+        ],
+        [],
+        [
+          102,
+          104,
+          105,
+          106
+        ],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        [],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        [
+          103,
+          106
+        ],
+        [],
+        [],
+        [
+          103,
+          104,
+          105,
+          106
+        ],
+        [],
+        [],
+        [
+          104,
+          105
+        ],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        [],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        [
+          103,
+          104,
+          105
+        ],
+        [
+          103,
+          104,
+          105,
+          106
+        ],
+        [],
+        [
+          102,
+          106
+        ],
+        [],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        [
+          103
+        ],
+        [
+          104,
+          105
+        ],
+        [
+          102,
+          106
+        ],
+        [],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        [],
+        [],
+        [],
+        [],
+        [
+          104,
+          105
+        ],
+        [
+          102,
+          106
+        ],
+        [
+          103
+        ],
+        [],
+        [],
+        [],
+        [],
+        [
+          106
+        ],
+        [
+          103,
+          104,
+          105,
+          106
+        ],
+        [],
+        [],
+        [],
+        [
+          104,
+          105
+        ],
+        [],
+        [],
+        [],
+        [],
+        [
+          102,
+          103,
+          104,
+          105
+        ],
+        [],
+        [],
+        [
+          104,
+          105
+        ],
+        [
+          104,
+          105
+        ],
+        [],
+        [
+          103,
+          105
+        ],
+        [
+          102,
+          106
+        ],
+        [],
+        [],
+        [],
+        [
+          102,
+          103,
+          104,
+          105
+        ],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [
+          102,
+          103,
+          106
+        ],
+        [],
+        [],
+        [],
+        [
+          105
+        ],
+        [],
+        [],
+        [],
+        [
+          104,
+          105
+        ],
+        [
+          103
+        ],
+        [],
+        [],
+        [
+          103,
+          104,
+          105,
+          106
+        ],
+        [],
+        [
+          103
+        ],
+        [],
+        [
+          102,
+          106
+        ],
+        [
+          104,
+          105
+        ],
+        [],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        [
+          102,
+          104,
+          105
+        ],
+        [],
+        [
+          102
+        ],
+        [],
+        [],
+        [
+          103,
+          106
+        ],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        [
+          106
+        ],
+        [],
+        [],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        [
+          102,
+          104,
+          105
+        ],
+        [],
+        [],
+        [],
+        [
+          103
+        ],
+        [
+          103
+        ],
+        [],
+        [],
+        [
+          103,
+          106
+        ],
+        [
+          106
+        ],
+        [],
+        [],
+        [
+          104,
+          105
+        ],
+        [],
+        [],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        []
+      ],
+      "inference": [
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": {
+            "102": 0.0,
+            "103": 0.0,
+            "104": 0.0,
+            "105": 1.0,
+            "106": 1.0
+          },
+          "api_clients": [
+            {
+              "client": "pipeline.arbiter",
+              "model": "kimi-k3.1-pro",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "completion_tokens": 157,
+                "prompt_tokens": 1904,
+                "prompt_tokens_details": {
+                  "cached_tokens": 768
+                },
+                "total_tokens": 2061
+              }
+            },
+            {
+              "client": "pipeline.baseline.client",
+              "model": "typesafe/jev-1.13",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "input_tokens": 5841,
+                "output_tokens": 99,
+                "total_tokens": 5940,
+                "cost": 0.032405868,
+                "cost_details": {
+                  "input_cost": 0.032405868,
+                  "output_cost": 0
+                }
+              }
+            }
+          ]
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": {
+            "102": 0.0,
+            "103": 0.0,
+            "104": 0.0,
+            "105": 0.0,
+            "106": 1.0
+          },
+          "api_clients": [
+            {
+              "client": "pipeline.arbiter",
+              "model": "kimi-k3.1-pro",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "completion_tokens": 366,
+                "prompt_tokens": 2743,
+                "prompt_tokens_details": {
+                  "cached_tokens": 768
+                },
+                "total_tokens": 3109
+              }
+            },
+            {
+              "client": "pipeline.baseline.client",
+              "model": "typesafe/jev-1.13",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "input_tokens": 7062,
+                "output_tokens": 99,
+                "total_tokens": 7161,
+                "cost": 0.039179976,
+                "cost_details": {
+                  "input_cost": 0.039179976,
+                  "output_cost": 0
+                }
+              }
+            }
+          ]
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": {
+            "102": 0.0,
+            "103": 0.0,
+            "104": 1.0,
+            "105": 1.0,
+            "106": 0.0
+          },
+          "api_clients": [
+            {
+              "client": "pipeline.arbiter",
+              "model": "kimi-k3.1-pro",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "completion_tokens": 528,
+                "prompt_tokens": 3195,
+                "prompt_tokens_details": {
+                  "cached_tokens": 2304
+                },
+                "total_tokens": 3723
+              }
+            },
+            {
+              "client": "pipeline.baseline.client",
+              "model": "typesafe/jev-1.13",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "input_tokens": 7829,
+                "output_tokens": 99,
+                "total_tokens": 7928,
+                "cost": 0.043435292,
+                "cost_details": {
+                  "input_cost": 0.043435292,
+                  "output_cost": 0
+                }
+              }
+            }
+          ]
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": {
+            "102": 0.0,
+            "103": 0.0,
+            "104": 0.0,
+            "105": 0.0,
+            "106": 0.0
+          },
+          "api_clients": [
+            {
+              "client": "pipeline.arbiter",
+              "model": "kimi-k3.1-pro",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "completion_tokens": 275,
+                "prompt_tokens": 1856,
+                "prompt_tokens_details": {
+                  "cached_tokens": 768
+                },
+                "total_tokens": 2131
+              }
+            },
+            {
+              "client": "pipeline.baseline.client",
+              "model": "typesafe/jev-1.13",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "input_tokens": 5754,
+                "output_tokens": 99,
+                "total_tokens": 5853,
+                "cost": 0.031923192,
+                "cost_details": {
+                  "input_cost": 0.031923192,
+                  "output_cost": 0
+                }
+              }
+            }
+          ]
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": {
+            "102": 0.0,
+            "103": 0.0,
+            "104": 0.0,
+            "105": 0.0,
+            "106": 0.0
+          },
+          "api_clients": [
+            {
+              "client": "pipeline.arbiter",
+              "model": "kimi-k3.1-pro",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "completion_tokens": 161,
+                "prompt_tokens": 2169,
+                "prompt_tokens_details": {
+                  "cached_tokens": 768
+                },
+                "total_tokens": 2330
+              }
+            },
+            {
+              "client": "pipeline.baseline.client",
+              "model": "typesafe/jev-1.13",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "input_tokens": 6233,
+                "output_tokens": 99,
+                "total_tokens": 6332,
+                "cost": 0.034580684,
+                "cost_details": {
+                  "input_cost": 0.034580684,
+                  "output_cost": 0
+                }
+              }
+            }
+          ]
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": {
+            "102": 0.0,
+            "103": 0.0,
+            "104": 0.0,
+            "105": 0.0,
+            "106": 0.0
+          },
+          "api_clients": [
+            {
+              "client": "pipeline.arbiter",
+              "model": "kimi-k3.1-pro",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "completion_tokens": 118,
+                "prompt_tokens": 1654,
+                "prompt_tokens_details": {
+                  "cached_tokens": 768
+                },
+                "total_tokens": 1772
+              }
+            },
+            {
+              "client": "pipeline.baseline.client",
+              "model": "typesafe/jev-1.13",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "input_tokens": 5490,
+                "output_tokens": 99,
+                "total_tokens": 5589,
+                "cost": 0.03045852,
+                "cost_details": {
+                  "input_cost": 0.03045852,
+                  "output_cost": 0
+                }
+              }
+            }
+          ]
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": {
+            "102": 1.0,
+            "103": 0.0,
+            "104": 1.0,
+            "105": 1.0,
+            "106": 0.0
+          },
+          "api_clients": [
+            {
+              "client": "pipeline.arbiter",
+              "model": "kimi-k3.1-pro",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "completion_tokens": 558,
+                "prompt_tokens": 2829,
+                "prompt_tokens_details": {
+                  "cached_tokens": 768
+                },
+                "total_tokens": 3387
+              }
+            },
+            {
+              "client": "pipeline.baseline.client",
+              "model": "typesafe/jev-1.13",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "input_tokens": 7241,
+                "output_tokens": 99,
+                "total_tokens": 7340,
+                "cost": 0.040173068,
+                "cost_details": {
+                  "input_cost": 0.040173068,
+                  "output_cost": 0
+                }
+              }
+            }
+          ]
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": {
+            "102": 0.0,
+            "103": 0.0,
+            "104": 0.0,
+            "105": 0.0,
+            "106": 0.0
+          },
+          "api_clients": [
+            {
+              "client": "pipeline.arbiter",
+              "model": "kimi-k3.1-pro",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "completion_tokens": 132,
+                "prompt_tokens": 1658,
+                "prompt_tokens_details": {
+                  "cached_tokens": 1536
+                },
+                "total_tokens": 1790
+              }
+            },
+            {
+              "client": "pipeline.baseline.client",
+              "model": "typesafe/jev-1.13",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "input_tokens": 5486,
+                "output_tokens": 99,
+                "total_tokens": 5585,
+                "cost": 0.030436328,
+                "cost_details": {
+                  "input_cost": 0.030436328,
+                  "output_cost": 0
+                }
+              }
+            }
+          ]
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": {
+            "102": 0.0,
+            "103": 0.0,
+            "104": 0.0,
+            "105": 0.0,
+            "106": 0.0
+          },
+          "api_clients": [
+            {
+              "client": "pipeline.arbiter",
+              "model": "kimi-k3.1-pro",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "completion_tokens": 147,
+                "prompt_tokens": 2429,
+                "prompt_tokens_details": {
+                  "cached_tokens": 768
+                },
+                "total_tokens": 2576
+              }
+            },
+            {
+              "client": "pipeline.baseline.client",
+              "model": "typesafe/jev-1.13",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "input_tokens": 6601,
+                "output_tokens": 99,
+                "total_tokens": 6700,
+                "cost": 0.036622348,
+                "cost_details": {
+                  "input_cost": 0.036622348,
+                  "output_cost": 0
+                }
+              }
+            }
+          ]
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": {
+            "102": 1.0,
+            "103": 1.0,
+            "104": 1.0,
+            "105": 1.0,
+            "106": 1.0
+          },
+          "api_clients": [
+            {
+              "client": "pipeline.arbiter",
+              "model": "kimi-k3.1-pro",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "completion_tokens": 285,
+                "prompt_tokens": 2777,
+                "prompt_tokens_details": {
+                  "cached_tokens": 768
+                },
+                "total_tokens": 3062
+              }
+            },
+            {
+              "client": "pipeline.baseline.client",
+              "model": "typesafe/jev-1.13",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "input_tokens": 7060,
+                "output_tokens": 99,
+                "total_tokens": 7159,
+                "cost": 0.03916888,
+                "cost_details": {
+                  "input_cost": 0.03916888,
+                  "output_cost": 0
+                }
+              }
+            }
+          ]
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": {
+            "102": 1.0,
+            "103": 1.0,
+            "104": 1.0,
+            "105": 1.0,
+            "106": 1.0
+          },
+          "api_clients": [
+            {
+              "client": "pipeline.arbiter",
+              "model": "kimi-k3.1-pro",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "completion_tokens": 108,
+                "prompt_tokens": 2942,
+                "prompt_tokens_details": {
+                  "cached_tokens": 768
+                },
+                "total_tokens": 3050
+              }
+            },
+            {
+              "client": "pipeline.baseline.client",
+              "model": "typesafe/jev-1.13",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "input_tokens": 7365,
+                "output_tokens": 99,
+                "total_tokens": 7464,
+                "cost": 0.04086102,
+                "cost_details": {
+                  "input_cost": 0.04086102,
+                  "output_cost": 0
+                }
+              }
+            }
+          ]
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": {
+            "102": 0.0,
+            "103": 0.0,
+            "104": 0.0,
+            "105": 0.0,
+            "106": 0.0
+          },
+          "api_clients": [
+            {
+              "client": "pipeline.arbiter",
+              "model": "kimi-k3.1-pro",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "completion_tokens": 129,
+                "prompt_tokens": 1658,
+                "prompt_tokens_details": {
+                  "cached_tokens": 768
+                },
+                "total_tokens": 1787
+              }
+            },
+            {
+              "client": "pipeline.baseline.client",
+              "model": "typesafe/jev-1.13",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "input_tokens": 5485,
+                "output_tokens": 99,
+                "total_tokens": 5584,
+                "cost": 0.03043078,
+                "cost_details": {
+                  "input_cost": 0.03043078,
+                  "output_cost": 0
+                }
+              }
+            }
+          ]
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": {
+            "102": 0.0,
+            "103": 0.0,
+            "104": 0.0,
+            "105": 0.0,
+            "106": 0.0
+          },
+          "api_clients": [
+            {
+              "client": "pipeline.arbiter",
+              "model": "kimi-k3.1-pro",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "completion_tokens": 117,
+                "prompt_tokens": 1657,
+                "prompt_tokens_details": {
+                  "cached_tokens": 768
+                },
+                "total_tokens": 1774
+              }
+            },
+            {
+              "client": "pipeline.baseline.client",
+              "model": "typesafe/jev-1.13",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "input_tokens": 5490,
+                "output_tokens": 99,
+                "total_tokens": 5589,
+                "cost": 0.03045852,
+                "cost_details": {
+                  "input_cost": 0.03045852,
+                  "output_cost": 0
+                }
+              }
+            }
+          ]
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": {
+            "102": 1.0,
+            "103": 1.0,
+            "104": 0.0,
+            "105": 1.0,
+            "106": 1.0
+          },
+          "api_clients": [
+            {
+              "client": "pipeline.arbiter",
+              "model": "kimi-k3.1-pro",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "completion_tokens": 512,
+                "prompt_tokens": 2357,
+                "prompt_tokens_details": {
+                  "cached_tokens": 768
+                },
+                "total_tokens": 2869
+              }
+            },
+            {
+              "client": "pipeline.baseline.client",
+              "model": "typesafe/jev-1.13",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "input_tokens": 6494,
+                "output_tokens": 99,
+                "total_tokens": 6593,
+                "cost": 0.036028712,
+                "cost_details": {
+                  "input_cost": 0.036028712,
+                  "output_cost": 0
+                }
+              }
+            }
+          ]
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": {
+            "102": 0.0,
+            "103": 0.0,
+            "104": 0.0,
+            "105": 0.0,
+            "106": 0.0
+          },
+          "api_clients": [
+            {
+              "client": "pipeline.arbiter",
+              "model": "kimi-k3.1-pro",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "completion_tokens": 124,
+                "prompt_tokens": 2247,
+                "prompt_tokens_details": {
+                  "cached_tokens": 768
+                },
+                "total_tokens": 2371
+              }
+            },
+            {
+              "client": "pipeline.baseline.client",
+              "model": "typesafe/jev-1.13",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "input_tokens": 6397,
+                "output_tokens": 99,
+                "total_tokens": 6496,
+                "cost": 0.035490556,
+                "cost_details": {
+                  "input_cost": 0.035490556,
+                  "output_cost": 0
+                }
+              }
+            }
+          ]
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": {
+            "102": 0.0,
+            "103": 0.0,
+            "104": 0.0,
+            "105": 0.0,
+            "106": 0.0
+          },
+          "api_clients": [
+            {
+              "client": "pipeline.arbiter",
+              "model": "kimi-k3.1-pro",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "completion_tokens": 184,
+                "prompt_tokens": 2472,
+                "prompt_tokens_details": {
+                  "cached_tokens": 768
+                },
+                "total_tokens": 2656
+              }
+            },
+            {
+              "client": "pipeline.baseline.client",
+              "model": "typesafe/jev-1.13",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "input_tokens": 6713,
+                "output_tokens": 99,
+                "total_tokens": 6812,
+                "cost": 0.037243724,
+                "cost_details": {
+                  "input_cost": 0.037243724,
+                  "output_cost": 0
+                }
+              }
+            }
+          ]
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": {
+            "102": 0.0,
+            "103": 0.0,
+            "104": 1.0,
+            "105": 1.0,
+            "106": 1.0
+          },
+          "api_clients": [
+            {
+              "client": "pipeline.arbiter",
+              "model": "kimi-k3.1-pro",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "completion_tokens": 183,
+                "prompt_tokens": 1986,
+                "prompt_tokens_details": {
+                  "cached_tokens": 768
+                },
+                "total_tokens": 2169
+              }
+            },
+            {
+              "client": "pipeline.baseline.client",
+              "model": "typesafe/jev-1.13",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "input_tokens": 5988,
+                "output_tokens": 99,
+                "total_tokens": 6087,
+                "cost": 0.033221424,
+                "cost_details": {
+                  "input_cost": 0.033221424,
+                  "output_cost": 0
+                }
+              }
+            }
+          ]
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": {
+            "102": 0.0,
+            "103": 0.0,
+            "104": 0.0,
+            "105": 0.0,
+            "106": 1.0
+          },
+          "api_clients": [
+            {
+              "client": "pipeline.arbiter",
+              "model": "kimi-k3.1-pro",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "completion_tokens": 179,
+                "prompt_tokens": 1671,
+                "prompt_tokens_details": {
+                  "cached_tokens": 768
+                },
+                "total_tokens": 1850
+              }
+            },
+            {
+              "client": "pipeline.baseline.client",
+              "model": "typesafe/jev-1.13",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "input_tokens": 5516,
+                "output_tokens": 99,
+                "total_tokens": 5615,
+                "cost": 0.030602768,
+                "cost_details": {
+                  "input_cost": 0.030602768,
+                  "output_cost": 0
+                }
+              }
+            }
+          ]
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": {
+            "102": 0.0,
+            "103": 0.0,
+            "104": 1.0,
+            "105": 1.0,
+            "106": 0.0
+          },
+          "api_clients": [
+            {
+              "client": "pipeline.arbiter",
+              "model": "kimi-k3.1-pro",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "completion_tokens": 190,
+                "prompt_tokens": 2929,
+                "prompt_tokens_details": {
+                  "cached_tokens": 768
+                },
+                "total_tokens": 3119
+              }
+            },
+            {
+              "client": "pipeline.baseline.client",
+              "model": "typesafe/jev-1.13",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "input_tokens": 7520,
+                "output_tokens": 99,
+                "total_tokens": 7619,
+                "cost": 0.04172096,
+                "cost_details": {
+                  "input_cost": 0.04172096,
+                  "output_cost": 0
+                }
+              }
+            }
+          ]
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": {
+            "102": 0.0,
+            "103": 0.0,
+            "104": 0.0,
+            "105": 0.0,
+            "106": 0.0
+          },
+          "api_clients": [
+            {
+              "client": "pipeline.arbiter",
+              "model": "kimi-k3.1-pro",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "completion_tokens": 205,
+                "prompt_tokens": 2617,
+                "prompt_tokens_details": {
+                  "cached_tokens": 768
+                },
+                "total_tokens": 2822
+              }
+            },
+            {
+              "client": "pipeline.baseline.client",
+              "model": "typesafe/jev-1.13",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "input_tokens": 6850,
+                "output_tokens": 99,
+                "total_tokens": 6949,
+                "cost": 0.0380038,
+                "cost_details": {
+                  "input_cost": 0.0380038,
+                  "output_cost": 0
+                }
+              }
+            }
+          ]
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": {
+            "102": 0.0,
+            "103": 0.0,
+            "104": 0.0,
+            "105": 1.0,
+            "106": 1.0
+          },
+          "api_clients": [
+            {
+              "client": "pipeline.arbiter",
+              "model": "kimi-k3.1-pro",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "completion_tokens": 163,
+                "prompt_tokens": 1681,
+                "prompt_tokens_details": {
+                  "cached_tokens": 768
+                },
+                "total_tokens": 1844
+              }
+            },
+            {
+              "client": "pipeline.baseline.client",
+              "model": "typesafe/jev-1.13",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "input_tokens": 5534,
+                "output_tokens": 99,
+                "total_tokens": 5633,
+                "cost": 0.030702632,
+                "cost_details": {
+                  "input_cost": 0.030702632,
+                  "output_cost": 0
+                }
+              }
+            }
+          ]
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": {
+            "102": 1.0,
+            "103": 0.0,
+            "104": 1.0,
+            "105": 1.0,
+            "106": 0.0
+          },
+          "api_clients": [
+            {
+              "client": "pipeline.arbiter",
+              "model": "kimi-k3.1-pro",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "completion_tokens": 171,
+                "prompt_tokens": 2587,
+                "prompt_tokens_details": {
+                  "cached_tokens": 768
+                },
+                "total_tokens": 2758
+              }
+            },
+            {
+              "client": "pipeline.baseline.client",
+              "model": "typesafe/jev-1.13",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "input_tokens": 6992,
+                "output_tokens": 99,
+                "total_tokens": 7091,
+                "cost": 0.038791616,
+                "cost_details": {
+                  "input_cost": 0.038791616,
+                  "output_cost": 0
+                }
+              }
+            }
+          ]
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": {
+            "102": 0.0,
+            "103": 0.0,
+            "104": 0.0,
+            "105": 0.0,
+            "106": 0.0
+          },
+          "api_clients": [
+            {
+              "client": "pipeline.arbiter",
+              "model": "kimi-k3.1-pro",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "completion_tokens": 156,
+                "prompt_tokens": 1679,
+                "prompt_tokens_details": {
+                  "cached_tokens": 768
+                },
+                "total_tokens": 1835
+              }
+            },
+            {
+              "client": "pipeline.baseline.client",
+              "model": "typesafe/jev-1.13",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "input_tokens": 5526,
+                "output_tokens": 99,
+                "total_tokens": 5625,
+                "cost": 0.030658248,
+                "cost_details": {
+                  "input_cost": 0.030658248,
+                  "output_cost": 0
+                }
+              }
+            }
+          ]
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": {
+            "102": 0.0,
+            "103": 1.0,
+            "104": 1.0,
+            "105": 1.0,
+            "106": 0.0
+          },
+          "api_clients": [
+            {
+              "client": "pipeline.arbiter",
+              "model": "kimi-k3.1-pro",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "completion_tokens": 198,
+                "prompt_tokens": 2755,
+                "prompt_tokens_details": {
+                  "cached_tokens": 2560
+                },
+                "total_tokens": 2953
+              }
+            },
+            {
+              "client": "pipeline.baseline.client",
+              "model": "typesafe/jev-1.13",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "input_tokens": 6852,
+                "output_tokens": 99,
+                "total_tokens": 6951,
+                "cost": 0.038014896,
+                "cost_details": {
+                  "input_cost": 0.038014896,
+                  "output_cost": 0
+                }
+              }
+            }
+          ]
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": {
+            "102": 0.0,
+            "103": 0.0,
+            "104": 0.0,
+            "105": 0.0,
+            "106": 0.0
+          },
+          "api_clients": [
+            {
+              "client": "pipeline.arbiter",
+              "model": "kimi-k3.1-pro",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "completion_tokens": 129,
+                "prompt_tokens": 1894,
+                "prompt_tokens_details": {
+                  "cached_tokens": 768
+                },
+                "total_tokens": 2023
+              }
+            },
+            {
+              "client": "pipeline.baseline.client",
+              "model": "typesafe/jev-1.13",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "input_tokens": 5879,
+                "output_tokens": 99,
+                "total_tokens": 5978,
+                "cost": 0.032616692,
+                "cost_details": {
+                  "input_cost": 0.032616692,
+                  "output_cost": 0
+                }
+              }
+            }
+          ]
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": {
+            "102": 1.0,
+            "103": 0.0,
+            "104": 1.0,
+            "105": 1.0,
+            "106": 1.0
+          },
+          "api_clients": [
+            {
+              "client": "pipeline.arbiter",
+              "model": "kimi-k3.1-pro",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "completion_tokens": 171,
+                "prompt_tokens": 2106,
+                "prompt_tokens_details": {
+                  "cached_tokens": 768
+                },
+                "total_tokens": 2277
+              }
+            },
+            {
+              "client": "pipeline.baseline.client",
+              "model": "typesafe/jev-1.13",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "input_tokens": 6101,
+                "output_tokens": 99,
+                "total_tokens": 6200,
+                "cost": 0.033848348,
+                "cost_details": {
+                  "input_cost": 0.033848348,
+                  "output_cost": 0
+                }
+              }
+            }
+          ]
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": {
+            "102": 1.0,
+            "103": 1.0,
+            "104": 1.0,
+            "105": 1.0,
+            "106": 1.0
+          },
+          "api_clients": [
+            {
+              "client": "pipeline.arbiter",
+              "model": "kimi-k3.1-pro",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "completion_tokens": 163,
+                "prompt_tokens": 2120,
+                "prompt_tokens_details": {
+                  "cached_tokens": 768
+                },
+                "total_tokens": 2283
+              }
+            },
+            {
+              "client": "pipeline.baseline.client",
+              "model": "typesafe/jev-1.13",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "input_tokens": 6113,
+                "output_tokens": 99,
+                "total_tokens": 6212,
+                "cost": 0.033914924,
+                "cost_details": {
+                  "input_cost": 0.033914924,
+                  "output_cost": 0
+                }
+              }
+            }
+          ]
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": {
+            "102": 0.0,
+            "103": 0.0,
+            "104": 0.0,
+            "105": 0.0,
+            "106": 0.0
+          },
+          "api_clients": [
+            {
+              "client": "pipeline.arbiter",
+              "model": "kimi-k3.1-pro",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "completion_tokens": 116,
+                "prompt_tokens": 1887,
+                "prompt_tokens_details": {
+                  "cached_tokens": 768
+                },
+                "total_tokens": 2003
+              }
+            },
+            {
+              "client": "pipeline.baseline.client",
+              "model": "typesafe/jev-1.13",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "input_tokens": 5888,
+                "output_tokens": 99,
+                "total_tokens": 5987,
+                "cost": 0.032666624,
+                "cost_details": {
+                  "input_cost": 0.032666624,
+                  "output_cost": 0
+                }
+              }
+            }
+          ]
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": {
+            "102": 1.0,
+            "103": 1.0,
+            "104": 1.0,
+            "105": 1.0,
+            "106": 1.0
+          },
+          "api_clients": [
+            {
+              "client": "pipeline.arbiter",
+              "model": "kimi-k3.1-pro",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "completion_tokens": 229,
+                "prompt_tokens": 2481,
+                "prompt_tokens_details": {
+                  "cached_tokens": 2304
+                },
+                "total_tokens": 2710
+              }
+            },
+            {
+              "client": "pipeline.baseline.client",
+              "model": "typesafe/jev-1.13",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "input_tokens": 6629,
+                "output_tokens": 99,
+                "total_tokens": 6728,
+                "cost": 0.036777692,
+                "cost_details": {
+                  "input_cost": 0.036777692,
+                  "output_cost": 0
+                }
+              }
+            }
+          ]
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": {
+            "102": 1.0,
+            "103": 1.0,
+            "104": 1.0,
+            "105": 1.0,
+            "106": 1.0
+          },
+          "api_clients": [
+            {
+              "client": "pipeline.arbiter",
+              "model": "kimi-k3.1-pro",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "completion_tokens": 787,
+                "prompt_tokens": 2299,
+                "prompt_tokens_details": {
+                  "cached_tokens": 768
+                },
+                "total_tokens": 3086
+              }
+            },
+            {
+              "client": "pipeline.baseline.client",
+              "model": "typesafe/jev-1.13",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "input_tokens": 6420,
+                "output_tokens": 99,
+                "total_tokens": 6519,
+                "cost": 0.03561816,
+                "cost_details": {
+                  "input_cost": 0.03561816,
+                  "output_cost": 0
+                }
+              }
+            }
+          ]
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": {
+            "102": 0.0,
+            "103": 1.0,
+            "104": 0.0,
+            "105": 0.0,
+            "106": 1.0
+          },
+          "api_clients": [
+            {
+              "client": "pipeline.arbiter",
+              "model": "kimi-k3.1-pro",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "completion_tokens": 243,
+                "prompt_tokens": 3348,
+                "prompt_tokens_details": {
+                  "cached_tokens": 768
+                },
+                "total_tokens": 3591
+              }
+            },
+            {
+              "client": "pipeline.baseline.client",
+              "model": "typesafe/jev-1.13",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "input_tokens": 8246,
+                "output_tokens": 99,
+                "total_tokens": 8345,
+                "cost": 0.045748808,
+                "cost_details": {
+                  "input_cost": 0.045748808,
+                  "output_cost": 0
+                }
+              }
+            }
+          ]
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": {
+            "102": 0.0,
+            "103": 0.0,
+            "104": 0.0,
+            "105": 0.0,
+            "106": 0.0
+          },
+          "api_clients": [
+            {
+              "client": "pipeline.arbiter",
+              "model": "kimi-k3.1-pro",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "completion_tokens": 145,
+                "prompt_tokens": 2385,
+                "prompt_tokens_details": {
+                  "cached_tokens": 768
+                },
+                "total_tokens": 2530
+              }
+            },
+            {
+              "client": "pipeline.baseline.client",
+              "model": "typesafe/jev-1.13",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "input_tokens": 6538,
+                "output_tokens": 99,
+                "total_tokens": 6637,
+                "cost": 0.036272824,
+                "cost_details": {
+                  "input_cost": 0.036272824,
+                  "output_cost": 0
+                }
+              }
+            }
+          ]
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": {
+            "102": 0.0,
+            "103": 0.0,
+            "104": 0.0,
+            "105": 0.0,
+            "106": 0.0
+          },
+          "api_clients": [
+            {
+              "client": "pipeline.arbiter",
+              "model": "kimi-k3.1-pro",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "completion_tokens": 274,
+                "prompt_tokens": 1888,
+                "prompt_tokens_details": {
+                  "cached_tokens": 768
+                },
+                "total_tokens": 2162
+              }
+            },
+            {
+              "client": "pipeline.baseline.client",
+              "model": "typesafe/jev-1.13",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "input_tokens": 5867,
+                "output_tokens": 99,
+                "total_tokens": 5966,
+                "cost": 0.032550116,
+                "cost_details": {
+                  "input_cost": 0.032550116,
+                  "output_cost": 0
+                }
+              }
+            }
+          ]
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": {
+            "102": 0.0,
+            "103": 1.0,
+            "104": 1.0,
+            "105": 1.0,
+            "106": 1.0
+          },
+          "api_clients": [
+            {
+              "client": "pipeline.arbiter",
+              "model": "kimi-k3.1-pro",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "completion_tokens": 294,
+                "prompt_tokens": 3450,
+                "prompt_tokens_details": {
+                  "cached_tokens": 768
+                },
+                "total_tokens": 3744
+              }
+            },
+            {
+              "client": "pipeline.baseline.client",
+              "model": "typesafe/jev-1.13",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "input_tokens": 8336,
+                "output_tokens": 99,
+                "total_tokens": 8435,
+                "cost": 0.046248128,
+                "cost_details": {
+                  "input_cost": 0.046248128,
+                  "output_cost": 0
+                }
+              }
+            }
+          ]
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": {
+            "102": 0.0,
+            "103": 0.0,
+            "104": 0.0,
+            "105": 0.0,
+            "106": 0.0
+          },
+          "api_clients": [
+            {
+              "client": "pipeline.arbiter",
+              "model": "kimi-k3.1-pro",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "completion_tokens": 144,
+                "prompt_tokens": 3064,
+                "prompt_tokens_details": {
+                  "cached_tokens": 768
+                },
+                "total_tokens": 3208
+              }
+            },
+            {
+              "client": "pipeline.baseline.client",
+              "model": "typesafe/jev-1.13",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "input_tokens": 7559,
+                "output_tokens": 99,
+                "total_tokens": 7658,
+                "cost": 0.041937332,
+                "cost_details": {
+                  "input_cost": 0.041937332,
+                  "output_cost": 0
+                }
+              }
+            }
+          ]
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": {
+            "102": 0.0,
+            "103": 0.0,
+            "104": 0.0,
+            "105": 0.0,
+            "106": 0.0
+          },
+          "api_clients": [
+            {
+              "client": "pipeline.arbiter",
+              "model": "kimi-k3.1-pro",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "completion_tokens": 453,
+                "prompt_tokens": 2698,
+                "prompt_tokens_details": {
+                  "cached_tokens": 768
+                },
+                "total_tokens": 3151
+              }
+            },
+            {
+              "client": "pipeline.baseline.client",
+              "model": "typesafe/jev-1.13",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "input_tokens": 7029,
+                "output_tokens": 99,
+                "total_tokens": 7128,
+                "cost": 0.038996892,
+                "cost_details": {
+                  "input_cost": 0.038996892,
+                  "output_cost": 0
+                }
+              }
+            }
+          ]
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": {
+            "102": 0.0,
+            "103": 0.0,
+            "104": 1.0,
+            "105": 1.0,
+            "106": 0.0
+          },
+          "api_clients": [
+            {
+              "client": "pipeline.arbiter",
+              "model": "kimi-k3.1-pro",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "completion_tokens": 340,
+                "prompt_tokens": 2779,
+                "prompt_tokens_details": {
+                  "cached_tokens": 768
+                },
+                "total_tokens": 3119
+              }
+            },
+            {
+              "client": "pipeline.baseline.client",
+              "model": "typesafe/jev-1.13",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "input_tokens": 7229,
+                "output_tokens": 99,
+                "total_tokens": 7328,
+                "cost": 0.040106492,
+                "cost_details": {
+                  "input_cost": 0.040106492,
+                  "output_cost": 0
+                }
+              }
+            }
+          ]
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": {
+            "102": 1.0,
+            "103": 1.0,
+            "104": 1.0,
+            "105": 1.0,
+            "106": 1.0
+          },
+          "api_clients": [
+            {
+              "client": "pipeline.arbiter",
+              "model": "kimi-k3.1-pro",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "completion_tokens": 436,
+                "prompt_tokens": 3528,
+                "prompt_tokens_details": {
+                  "cached_tokens": 768
+                },
+                "total_tokens": 3964
+              }
+            },
+            {
+              "client": "pipeline.baseline.client",
+              "model": "typesafe/jev-1.13",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "input_tokens": 8539,
+                "output_tokens": 99,
+                "total_tokens": 8638,
+                "cost": 0.047374372,
+                "cost_details": {
+                  "input_cost": 0.047374372,
+                  "output_cost": 0
+                }
+              }
+            }
+          ]
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": {
+            "102": 0.0,
+            "103": 0.0,
+            "104": 0.0,
+            "105": 0.0,
+            "106": 0.0
+          },
+          "api_clients": [
+            {
+              "client": "pipeline.arbiter",
+              "model": "kimi-k3.1-pro",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "completion_tokens": 106,
+                "prompt_tokens": 1892,
+                "prompt_tokens_details": {
+                  "cached_tokens": 768
+                },
+                "total_tokens": 1998
+              }
+            },
+            {
+              "client": "pipeline.baseline.client",
+              "model": "typesafe/jev-1.13",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "input_tokens": 5908,
+                "output_tokens": 99,
+                "total_tokens": 6007,
+                "cost": 0.032777584,
+                "cost_details": {
+                  "input_cost": 0.032777584,
+                  "output_cost": 0
+                }
+              }
+            }
+          ]
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": {
+            "102": 1.0,
+            "103": 1.0,
+            "104": 1.0,
+            "105": 1.0,
+            "106": 1.0
+          },
+          "api_clients": [
+            {
+              "client": "pipeline.arbiter",
+              "model": "kimi-k3.1-pro",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "completion_tokens": 118,
+                "prompt_tokens": 3032,
+                "prompt_tokens_details": {
+                  "cached_tokens": 768
+                },
+                "total_tokens": 3150
+              }
+            },
+            {
+              "client": "pipeline.baseline.client",
+              "model": "typesafe/jev-1.13",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "input_tokens": 7279,
+                "output_tokens": 99,
+                "total_tokens": 7378,
+                "cost": 0.040383892,
+                "cost_details": {
+                  "input_cost": 0.040383892,
+                  "output_cost": 0
+                }
+              }
+            }
+          ]
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": {
+            "102": 0.0,
+            "103": 1.0,
+            "104": 1.0,
+            "105": 1.0,
+            "106": 0.0
+          },
+          "api_clients": [
+            {
+              "client": "pipeline.arbiter",
+              "model": "kimi-k3.1-pro",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "completion_tokens": 306,
+                "prompt_tokens": 2651,
+                "prompt_tokens_details": {
+                  "cached_tokens": 768
+                },
+                "total_tokens": 2957
+              }
+            },
+            {
+              "client": "pipeline.baseline.client",
+              "model": "typesafe/jev-1.13",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "input_tokens": 6760,
+                "output_tokens": 99,
+                "total_tokens": 6859,
+                "cost": 0.03750448,
+                "cost_details": {
+                  "input_cost": 0.03750448,
+                  "output_cost": 0
+                }
+              }
+            }
+          ]
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": {
+            "102": 0.0,
+            "103": 1.0,
+            "104": 1.0,
+            "105": 1.0,
+            "106": 1.0
+          },
+          "api_clients": [
+            {
+              "client": "pipeline.arbiter",
+              "model": "kimi-k3.1-pro",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "completion_tokens": 377,
+                "prompt_tokens": 3455,
+                "prompt_tokens_details": {
+                  "cached_tokens": 768
+                },
+                "total_tokens": 3832
+              }
+            },
+            {
+              "client": "pipeline.baseline.client",
+              "model": "typesafe/jev-1.13",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "input_tokens": 8373,
+                "output_tokens": 99,
+                "total_tokens": 8472,
+                "cost": 0.046453404,
+                "cost_details": {
+                  "input_cost": 0.046453404,
+                  "output_cost": 0
+                }
+              }
+            }
+          ]
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": {
+            "102": 0.0,
+            "103": 0.0,
+            "104": 0.0,
+            "105": 0.0,
+            "106": 0.0
+          },
+          "api_clients": [
+            {
+              "client": "pipeline.arbiter",
+              "model": "kimi-k3.1-pro",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "completion_tokens": 184,
+                "prompt_tokens": 2249,
+                "prompt_tokens_details": {
+                  "cached_tokens": 768
+                },
+                "total_tokens": 2433
+              }
+            },
+            {
+              "client": "pipeline.baseline.client",
+              "model": "typesafe/jev-1.13",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "input_tokens": 6237,
+                "output_tokens": 99,
+                "total_tokens": 6336,
+                "cost": 0.034602876,
+                "cost_details": {
+                  "input_cost": 0.034602876,
+                  "output_cost": 0
+                }
+              }
+            }
+          ]
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": {
+            "102": 1.0,
+            "103": 0.0,
+            "104": 0.0,
+            "105": 0.0,
+            "106": 1.0
+          },
+          "api_clients": [
+            {
+              "client": "pipeline.arbiter",
+              "model": "kimi-k3.1-pro",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "completion_tokens": 186,
+                "prompt_tokens": 2207,
+                "prompt_tokens_details": {
+                  "cached_tokens": 768
+                },
+                "total_tokens": 2393
+              }
+            },
+            {
+              "client": "pipeline.baseline.client",
+              "model": "typesafe/jev-1.13",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "input_tokens": 6295,
+                "output_tokens": 99,
+                "total_tokens": 6394,
+                "cost": 0.03492466,
+                "cost_details": {
+                  "input_cost": 0.03492466,
+                  "output_cost": 0
+                }
+              }
+            }
+          ]
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": {
+            "102": 0.0,
+            "103": 0.0,
+            "104": 0.0,
+            "105": 0.0,
+            "106": 0.0
+          },
+          "api_clients": [
+            {
+              "client": "pipeline.arbiter",
+              "model": "kimi-k3.1-pro",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "completion_tokens": 99,
+                "prompt_tokens": 2236,
+                "prompt_tokens_details": {
+                  "cached_tokens": 768
+                },
+                "total_tokens": 2335
+              }
+            },
+            {
+              "client": "pipeline.baseline.client",
+              "model": "typesafe/jev-1.13",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "input_tokens": 6366,
+                "output_tokens": 99,
+                "total_tokens": 6465,
+                "cost": 0.035318568,
+                "cost_details": {
+                  "input_cost": 0.035318568,
+                  "output_cost": 0
+                }
+              }
+            }
+          ]
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": {
+            "102": 1.0,
+            "103": 1.0,
+            "104": 1.0,
+            "105": 1.0,
+            "106": 1.0
+          },
+          "api_clients": [
+            {
+              "client": "pipeline.arbiter",
+              "model": "kimi-k3.1-pro",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "completion_tokens": 260,
+                "prompt_tokens": 2713,
+                "prompt_tokens_details": {
+                  "cached_tokens": 768
+                },
+                "total_tokens": 2973
+              }
+            },
+            {
+              "client": "pipeline.baseline.client",
+              "model": "typesafe/jev-1.13",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "input_tokens": 7189,
+                "output_tokens": 99,
+                "total_tokens": 7288,
+                "cost": 0.039884572,
+                "cost_details": {
+                  "input_cost": 0.039884572,
+                  "output_cost": 0
+                }
+              }
+            }
+          ]
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": {
+            "102": 0.0,
+            "103": 1.0,
+            "104": 0.0,
+            "105": 0.0,
+            "106": 0.0
+          },
+          "api_clients": [
+            {
+              "client": "pipeline.arbiter",
+              "model": "kimi-k3.1-pro",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "completion_tokens": 300,
+                "prompt_tokens": 2368,
+                "prompt_tokens_details": {
+                  "cached_tokens": 768
+                },
+                "total_tokens": 2668
+              }
+            },
+            {
+              "client": "pipeline.baseline.client",
+              "model": "typesafe/jev-1.13",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "input_tokens": 6463,
+                "output_tokens": 99,
+                "total_tokens": 6562,
+                "cost": 0.035856724,
+                "cost_details": {
+                  "input_cost": 0.035856724,
+                  "output_cost": 0
+                }
+              }
+            }
+          ]
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": {
+            "102": 0.0,
+            "103": 0.0,
+            "104": 1.0,
+            "105": 1.0,
+            "106": 0.0
+          },
+          "api_clients": [
+            {
+              "client": "pipeline.arbiter",
+              "model": "kimi-k3.1-pro",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "completion_tokens": 275,
+                "prompt_tokens": 3075,
+                "prompt_tokens_details": {
+                  "cached_tokens": 768
+                },
+                "total_tokens": 3350
+              }
+            },
+            {
+              "client": "pipeline.baseline.client",
+              "model": "typesafe/jev-1.13",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "input_tokens": 7704,
+                "output_tokens": 99,
+                "total_tokens": 7803,
+                "cost": 0.042741792,
+                "cost_details": {
+                  "input_cost": 0.042741792,
+                  "output_cost": 0
+                }
+              }
+            }
+          ]
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": {
+            "102": 1.0,
+            "103": 0.0,
+            "104": 0.0,
+            "105": 0.0,
+            "106": 1.0
+          },
+          "api_clients": [
+            {
+              "client": "pipeline.arbiter",
+              "model": "kimi-k3.1-pro",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "completion_tokens": 182,
+                "prompt_tokens": 2048,
+                "prompt_tokens_details": {
+                  "cached_tokens": 768
+                },
+                "total_tokens": 2230
+              }
+            },
+            {
+              "client": "pipeline.baseline.client",
+              "model": "typesafe/jev-1.13",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "input_tokens": 6067,
+                "output_tokens": 99,
+                "total_tokens": 6166,
+                "cost": 0.033659716,
+                "cost_details": {
+                  "input_cost": 0.033659716,
+                  "output_cost": 0
+                }
+              }
+            }
+          ]
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": {
+            "102": 0.0,
+            "103": 0.0,
+            "104": 0.0,
+            "105": 0.0,
+            "106": 0.0
+          },
+          "api_clients": [
+            {
+              "client": "pipeline.arbiter",
+              "model": "kimi-k3.1-pro",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "completion_tokens": 110,
+                "prompt_tokens": 1886,
+                "prompt_tokens_details": {
+                  "cached_tokens": 768
+                },
+                "total_tokens": 1996
+              }
+            },
+            {
+              "client": "pipeline.baseline.client",
+              "model": "typesafe/jev-1.13",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "input_tokens": 5890,
+                "output_tokens": 99,
+                "total_tokens": 5989,
+                "cost": 0.03267772,
+                "cost_details": {
+                  "input_cost": 0.03267772,
+                  "output_cost": 0
+                }
+              }
+            }
+          ]
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": {
+            "102": 1.0,
+            "103": 1.0,
+            "104": 1.0,
+            "105": 1.0,
+            "106": 1.0
+          },
+          "api_clients": [
+            {
+              "client": "pipeline.arbiter",
+              "model": "kimi-k3.1-pro",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "completion_tokens": 180,
+                "prompt_tokens": 3043,
+                "prompt_tokens_details": {
+                  "cached_tokens": 768
+                },
+                "total_tokens": 3223
+              }
+            },
+            {
+              "client": "pipeline.baseline.client",
+              "model": "typesafe/jev-1.13",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "input_tokens": 7295,
+                "output_tokens": 99,
+                "total_tokens": 7394,
+                "cost": 0.04047266,
+                "cost_details": {
+                  "input_cost": 0.04047266,
+                  "output_cost": 0
+                }
+              }
+            }
+          ]
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": {
+            "102": 0.0,
+            "103": 0.0,
+            "104": 0.0,
+            "105": 0.0,
+            "106": 0.0
+          },
+          "api_clients": [
+            {
+              "client": "pipeline.arbiter",
+              "model": "kimi-k3.1-pro",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "completion_tokens": 183,
+                "prompt_tokens": 1670,
+                "prompt_tokens_details": {
+                  "cached_tokens": 768
+                },
+                "total_tokens": 1853
+              }
+            },
+            {
+              "client": "pipeline.baseline.client",
+              "model": "typesafe/jev-1.13",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "input_tokens": 5510,
+                "output_tokens": 99,
+                "total_tokens": 5609,
+                "cost": 0.03056948,
+                "cost_details": {
+                  "input_cost": 0.03056948,
+                  "output_cost": 0
+                }
+              }
+            }
+          ]
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": {
+            "102": 0.0,
+            "103": 0.0,
+            "104": 0.0,
+            "105": 0.0,
+            "106": 0.0
+          },
+          "api_clients": [
+            {
+              "client": "pipeline.arbiter",
+              "model": "kimi-k3.1-pro",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "completion_tokens": 267,
+                "prompt_tokens": 1699,
+                "prompt_tokens_details": {
+                  "cached_tokens": 768
+                },
+                "total_tokens": 1966
+              }
+            },
+            {
+              "client": "pipeline.baseline.client",
+              "model": "typesafe/jev-1.13",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "input_tokens": 5556,
+                "output_tokens": 99,
+                "total_tokens": 5655,
+                "cost": 0.030824688,
+                "cost_details": {
+                  "input_cost": 0.030824688,
+                  "output_cost": 0
+                }
+              }
+            }
+          ]
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": {
+            "102": 0.0,
+            "103": 0.0,
+            "104": 0.0,
+            "105": 0.0,
+            "106": 0.0
+          },
+          "api_clients": [
+            {
+              "client": "pipeline.arbiter",
+              "model": "kimi-k3.1-pro",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "completion_tokens": 103,
+                "prompt_tokens": 1900,
+                "prompt_tokens_details": {
+                  "cached_tokens": 768
+                },
+                "total_tokens": 2003
+              }
+            },
+            {
+              "client": "pipeline.baseline.client",
+              "model": "typesafe/jev-1.13",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "input_tokens": 5905,
+                "output_tokens": 99,
+                "total_tokens": 6004,
+                "cost": 0.03276094,
+                "cost_details": {
+                  "input_cost": 0.03276094,
+                  "output_cost": 0
+                }
+              }
+            }
+          ]
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": {
+            "102": 0.0,
+            "103": 0.0,
+            "104": 0.0,
+            "105": 0.0,
+            "106": 0.0
+          },
+          "api_clients": [
+            {
+              "client": "pipeline.arbiter",
+              "model": "kimi-k3.1-pro",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "completion_tokens": 215,
+                "prompt_tokens": 1884,
+                "prompt_tokens_details": {
+                  "cached_tokens": 768
+                },
+                "total_tokens": 2099
+              }
+            },
+            {
+              "client": "pipeline.baseline.client",
+              "model": "typesafe/jev-1.13",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "input_tokens": 5861,
+                "output_tokens": 99,
+                "total_tokens": 5960,
+                "cost": 0.032516828,
+                "cost_details": {
+                  "input_cost": 0.032516828,
+                  "output_cost": 0
+                }
+              }
+            }
+          ]
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": {
+            "102": 0.0,
+            "103": 0.0,
+            "104": 1.0,
+            "105": 1.0,
+            "106": 0.0
+          },
+          "api_clients": [
+            {
+              "client": "pipeline.arbiter",
+              "model": "kimi-k3.1-pro",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "completion_tokens": 381,
+                "prompt_tokens": 2453,
+                "prompt_tokens_details": {
+                  "cached_tokens": 768
+                },
+                "total_tokens": 2834
+              }
+            },
+            {
+              "client": "pipeline.baseline.client",
+              "model": "typesafe/jev-1.13",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "input_tokens": 6643,
+                "output_tokens": 99,
+                "total_tokens": 6742,
+                "cost": 0.036855364,
+                "cost_details": {
+                  "input_cost": 0.036855364,
+                  "output_cost": 0
+                }
+              }
+            }
+          ]
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": {
+            "102": 1.0,
+            "103": 0.0,
+            "104": 0.0,
+            "105": 0.0,
+            "106": 1.0
+          },
+          "api_clients": [
+            {
+              "client": "pipeline.arbiter",
+              "model": "kimi-k3.1-pro",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "completion_tokens": 181,
+                "prompt_tokens": 2099,
+                "prompt_tokens_details": {
+                  "cached_tokens": 768
+                },
+                "total_tokens": 2280
+              }
+            },
+            {
+              "client": "pipeline.baseline.client",
+              "model": "typesafe/jev-1.13",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "input_tokens": 6071,
+                "output_tokens": 99,
+                "total_tokens": 6170,
+                "cost": 0.033681908,
+                "cost_details": {
+                  "input_cost": 0.033681908,
+                  "output_cost": 0
+                }
+              }
+            }
+          ]
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": {
+            "102": 0.0,
+            "103": 1.0,
+            "104": 0.0,
+            "105": 0.0,
+            "106": 0.0
+          },
+          "api_clients": [
+            {
+              "client": "pipeline.arbiter",
+              "model": "kimi-k3.1-pro",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "completion_tokens": 129,
+                "prompt_tokens": 1895,
+                "prompt_tokens_details": {
+                  "cached_tokens": 768
+                },
+                "total_tokens": 2024
+              }
+            },
+            {
+              "client": "pipeline.baseline.client",
+              "model": "typesafe/jev-1.13",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "input_tokens": 5894,
+                "output_tokens": 99,
+                "total_tokens": 5993,
+                "cost": 0.032699912,
+                "cost_details": {
+                  "input_cost": 0.032699912,
+                  "output_cost": 0
+                }
+              }
+            }
+          ]
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": {
+            "102": 0.0,
+            "103": 0.0,
+            "104": 0.0,
+            "105": 0.0,
+            "106": 0.0
+          },
+          "api_clients": [
+            {
+              "client": "pipeline.arbiter",
+              "model": "kimi-k3.1-pro",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "completion_tokens": 187,
+                "prompt_tokens": 1966,
+                "prompt_tokens_details": {
+                  "cached_tokens": 768
+                },
+                "total_tokens": 2153
+              }
+            },
+            {
+              "client": "pipeline.baseline.client",
+              "model": "typesafe/jev-1.13",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "input_tokens": 5936,
+                "output_tokens": 99,
+                "total_tokens": 6035,
+                "cost": 0.032932928,
+                "cost_details": {
+                  "input_cost": 0.032932928,
+                  "output_cost": 0
+                }
+              }
+            }
+          ]
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": {
+            "102": 0.0,
+            "103": 0.0,
+            "104": 0.0,
+            "105": 0.0,
+            "106": 0.0
+          },
+          "api_clients": [
+            {
+              "client": "pipeline.arbiter",
+              "model": "kimi-k3.1-pro",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "completion_tokens": 161,
+                "prompt_tokens": 2253,
+                "prompt_tokens_details": {
+                  "cached_tokens": 1280
+                },
+                "total_tokens": 2414
+              }
+            },
+            {
+              "client": "pipeline.baseline.client",
+              "model": "typesafe/jev-1.13",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "input_tokens": 6244,
+                "output_tokens": 99,
+                "total_tokens": 6343,
+                "cost": 0.034641712,
+                "cost_details": {
+                  "input_cost": 0.034641712,
+                  "output_cost": 0
+                }
+              }
+            }
+          ]
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": {
+            "102": 0.0,
+            "103": 0.0,
+            "104": 0.0,
+            "105": 0.0,
+            "106": 0.0
+          },
+          "api_clients": [
+            {
+              "client": "pipeline.arbiter",
+              "model": "kimi-k3.1-pro",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "completion_tokens": 115,
+                "prompt_tokens": 1651,
+                "prompt_tokens_details": {
+                  "cached_tokens": 768
+                },
+                "total_tokens": 1766
+              }
+            },
+            {
+              "client": "pipeline.baseline.client",
+              "model": "typesafe/jev-1.13",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "input_tokens": 5480,
+                "output_tokens": 99,
+                "total_tokens": 5579,
+                "cost": 0.03040304,
+                "cost_details": {
+                  "input_cost": 0.03040304,
+                  "output_cost": 0
+                }
+              }
+            }
+          ]
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": {
+            "102": 0.0,
+            "103": 0.0,
+            "104": 0.0,
+            "105": 0.0,
+            "106": 0.0
+          },
+          "api_clients": [
+            {
+              "client": "pipeline.arbiter",
+              "model": "kimi-k3.1-pro",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "completion_tokens": 158,
+                "prompt_tokens": 3007,
+                "prompt_tokens_details": {
+                  "cached_tokens": 768
+                },
+                "total_tokens": 3165
+              }
+            },
+            {
+              "client": "pipeline.baseline.client",
+              "model": "typesafe/jev-1.13",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "input_tokens": 7384,
+                "output_tokens": 99,
+                "total_tokens": 7483,
+                "cost": 0.040966432,
+                "cost_details": {
+                  "input_cost": 0.040966432,
+                  "output_cost": 0
+                }
+              }
+            }
+          ]
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": {
+            "102": 0.0,
+            "103": 0.0,
+            "104": 0.0,
+            "105": 0.0,
+            "106": 1.0
+          },
+          "api_clients": [
+            {
+              "client": "pipeline.arbiter",
+              "model": "kimi-k3.1-pro",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "completion_tokens": 117,
+                "prompt_tokens": 1980,
+                "prompt_tokens_details": {
+                  "cached_tokens": 768
+                },
+                "total_tokens": 2097
+              }
+            },
+            {
+              "client": "pipeline.baseline.client",
+              "model": "typesafe/jev-1.13",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "input_tokens": 5890,
+                "output_tokens": 99,
+                "total_tokens": 5989,
+                "cost": 0.03267772,
+                "cost_details": {
+                  "input_cost": 0.03267772,
+                  "output_cost": 0
+                }
+              }
+            }
+          ]
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": {
+            "102": 0.0,
+            "103": 1.0,
+            "104": 1.0,
+            "105": 1.0,
+            "106": 1.0
+          },
+          "api_clients": [
+            {
+              "client": "pipeline.arbiter",
+              "model": "kimi-k3.1-pro",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "completion_tokens": 341,
+                "prompt_tokens": 3004,
+                "prompt_tokens_details": {
+                  "cached_tokens": 768
+                },
+                "total_tokens": 3345
+              }
+            },
+            {
+              "client": "pipeline.baseline.client",
+              "model": "typesafe/jev-1.13",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "input_tokens": 7557,
+                "output_tokens": 99,
+                "total_tokens": 7656,
+                "cost": 0.041926236,
+                "cost_details": {
+                  "input_cost": 0.041926236,
+                  "output_cost": 0
+                }
+              }
+            }
+          ]
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": {
+            "102": 0.0,
+            "103": 0.0,
+            "104": 0.0,
+            "105": 0.0,
+            "106": 0.0
+          },
+          "api_clients": [
+            {
+              "client": "pipeline.arbiter",
+              "model": "kimi-k3.1-pro",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "completion_tokens": 320,
+                "prompt_tokens": 1784,
+                "prompt_tokens_details": {
+                  "cached_tokens": 768
+                },
+                "total_tokens": 2104
+              }
+            },
+            {
+              "client": "pipeline.baseline.client",
+              "model": "typesafe/jev-1.13",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "input_tokens": 5682,
+                "output_tokens": 99,
+                "total_tokens": 5781,
+                "cost": 0.031523736,
+                "cost_details": {
+                  "input_cost": 0.031523736,
+                  "output_cost": 0
+                }
+              }
+            }
+          ]
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": {
+            "102": 0.0,
+            "103": 0.0,
+            "104": 0.0,
+            "105": 0.0,
+            "106": 0.0
+          },
+          "api_clients": [
+            {
+              "client": "pipeline.arbiter",
+              "model": "kimi-k3.1-pro",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "completion_tokens": 164,
+                "prompt_tokens": 1661,
+                "prompt_tokens_details": {
+                  "cached_tokens": 768
+                },
+                "total_tokens": 1825
+              }
+            },
+            {
+              "client": "pipeline.baseline.client",
+              "model": "typesafe/jev-1.13",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "input_tokens": 5488,
+                "output_tokens": 99,
+                "total_tokens": 5587,
+                "cost": 0.030447424,
+                "cost_details": {
+                  "input_cost": 0.030447424,
+                  "output_cost": 0
+                }
+              }
+            }
+          ]
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": {
+            "102": 0.0,
+            "103": 0.0,
+            "104": 0.0,
+            "105": 0.0,
+            "106": 0.0
+          },
+          "api_clients": [
+            {
+              "client": "pipeline.arbiter",
+              "model": "kimi-k3.1-pro",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "completion_tokens": 170,
+                "prompt_tokens": 3015,
+                "prompt_tokens_details": {
+                  "cached_tokens": 768
+                },
+                "total_tokens": 3185
+              }
+            },
+            {
+              "client": "pipeline.baseline.client",
+              "model": "typesafe/jev-1.13",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "input_tokens": 7142,
+                "output_tokens": 99,
+                "total_tokens": 7241,
+                "cost": 0.039623816,
+                "cost_details": {
+                  "input_cost": 0.039623816,
+                  "output_cost": 0
+                }
+              }
+            }
+          ]
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": {
+            "102": 0.0,
+            "103": 0.0,
+            "104": 1.0,
+            "105": 1.0,
+            "106": 0.0
+          },
+          "api_clients": [
+            {
+              "client": "pipeline.arbiter",
+              "model": "kimi-k3.1-pro",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "completion_tokens": 428,
+                "prompt_tokens": 1824,
+                "prompt_tokens_details": {
+                  "cached_tokens": 768
+                },
+                "total_tokens": 2252
+              }
+            },
+            {
+              "client": "pipeline.baseline.client",
+              "model": "typesafe/jev-1.13",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "input_tokens": 5761,
+                "output_tokens": 99,
+                "total_tokens": 5860,
+                "cost": 0.031962028,
+                "cost_details": {
+                  "input_cost": 0.031962028,
+                  "output_cost": 0
+                }
+              }
+            }
+          ]
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": {
+            "102": 0.0,
+            "103": 0.0,
+            "104": 0.0,
+            "105": 0.0,
+            "106": 0.0
+          },
+          "api_clients": [
+            {
+              "client": "pipeline.arbiter",
+              "model": "kimi-k3.1-pro",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "completion_tokens": 122,
+                "prompt_tokens": 1657,
+                "prompt_tokens_details": {
+                  "cached_tokens": 768
+                },
+                "total_tokens": 1779
+              }
+            },
+            {
+              "client": "pipeline.baseline.client",
+              "model": "typesafe/jev-1.13",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "input_tokens": 5484,
+                "output_tokens": 99,
+                "total_tokens": 5583,
+                "cost": 0.030425232,
+                "cost_details": {
+                  "input_cost": 0.030425232,
+                  "output_cost": 0
+                }
+              }
+            }
+          ]
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": {
+            "102": 0.0,
+            "103": 0.0,
+            "104": 0.0,
+            "105": 0.0,
+            "106": 0.0
+          },
+          "api_clients": [
+            {
+              "client": "pipeline.arbiter",
+              "model": "kimi-k3.1-pro",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "completion_tokens": 102,
+                "prompt_tokens": 1655,
+                "prompt_tokens_details": {
+                  "cached_tokens": 768
+                },
+                "total_tokens": 1757
+              }
+            },
+            {
+              "client": "pipeline.baseline.client",
+              "model": "typesafe/jev-1.13",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "input_tokens": 5487,
+                "output_tokens": 99,
+                "total_tokens": 5586,
+                "cost": 0.030441876,
+                "cost_details": {
+                  "input_cost": 0.030441876,
+                  "output_cost": 0
+                }
+              }
+            }
+          ]
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": {
+            "102": 0.0,
+            "103": 0.0,
+            "104": 0.0,
+            "105": 0.0,
+            "106": 0.0
+          },
+          "api_clients": [
+            {
+              "client": "pipeline.arbiter",
+              "model": "kimi-k3.1-pro",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "completion_tokens": 187,
+                "prompt_tokens": 2552,
+                "prompt_tokens_details": {
+                  "cached_tokens": 768
+                },
+                "total_tokens": 2739
+              }
+            },
+            {
+              "client": "pipeline.baseline.client",
+              "model": "typesafe/jev-1.13",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "input_tokens": 6716,
+                "output_tokens": 99,
+                "total_tokens": 6815,
+                "cost": 0.037260368,
+                "cost_details": {
+                  "input_cost": 0.037260368,
+                  "output_cost": 0
+                }
+              }
+            }
+          ]
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": {
+            "102": 0.0,
+            "103": 0.0,
+            "104": 0.0,
+            "105": 0.0,
+            "106": 0.0
+          },
+          "api_clients": [
+            {
+              "client": "pipeline.arbiter",
+              "model": "kimi-k3.1-pro",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "completion_tokens": 132,
+                "prompt_tokens": 1655,
+                "prompt_tokens_details": {
+                  "cached_tokens": 768
+                },
+                "total_tokens": 1787
+              }
+            },
+            {
+              "client": "pipeline.baseline.client",
+              "model": "typesafe/jev-1.13",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "input_tokens": 5486,
+                "output_tokens": 99,
+                "total_tokens": 5585,
+                "cost": 0.030436328,
+                "cost_details": {
+                  "input_cost": 0.030436328,
+                  "output_cost": 0
+                }
+              }
+            }
+          ]
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": {
+            "102": 1.0,
+            "103": 1.0,
+            "104": 1.0,
+            "105": 1.0,
+            "106": 0.0
+          },
+          "api_clients": [
+            {
+              "client": "pipeline.arbiter",
+              "model": "kimi-k3.1-pro",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "completion_tokens": 623,
+                "prompt_tokens": 2636,
+                "prompt_tokens_details": {
+                  "cached_tokens": 768
+                },
+                "total_tokens": 3259
+              }
+            },
+            {
+              "client": "pipeline.baseline.client",
+              "model": "typesafe/jev-1.13",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "input_tokens": 6736,
+                "output_tokens": 99,
+                "total_tokens": 6835,
+                "cost": 0.037371328,
+                "cost_details": {
+                  "input_cost": 0.037371328,
+                  "output_cost": 0
+                }
+              }
+            }
+          ]
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": {
+            "102": 0.0,
+            "103": 0.0,
+            "104": 0.0,
+            "105": 0.0,
+            "106": 0.0
+          },
+          "api_clients": [
+            {
+              "client": "pipeline.arbiter",
+              "model": "kimi-k3.1-pro",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "completion_tokens": 202,
+                "prompt_tokens": 1707,
+                "prompt_tokens_details": {
+                  "cached_tokens": 768
+                },
+                "total_tokens": 1909
+              }
+            },
+            {
+              "client": "pipeline.baseline.client",
+              "model": "typesafe/jev-1.13",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "input_tokens": 5577,
+                "output_tokens": 99,
+                "total_tokens": 5676,
+                "cost": 0.030941196,
+                "cost_details": {
+                  "input_cost": 0.030941196,
+                  "output_cost": 0
+                }
+              }
+            }
+          ]
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": {
+            "102": 0.0,
+            "103": 0.0,
+            "104": 0.0,
+            "105": 0.0,
+            "106": 0.0
+          },
+          "api_clients": [
+            {
+              "client": "pipeline.arbiter",
+              "model": "kimi-k3.1-pro",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "completion_tokens": 217,
+                "prompt_tokens": 2559,
+                "prompt_tokens_details": {
+                  "cached_tokens": 768
+                },
+                "total_tokens": 2776
+              }
+            },
+            {
+              "client": "pipeline.baseline.client",
+              "model": "typesafe/jev-1.13",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "input_tokens": 6647,
+                "output_tokens": 99,
+                "total_tokens": 6746,
+                "cost": 0.036877556,
+                "cost_details": {
+                  "input_cost": 0.036877556,
+                  "output_cost": 0
+                }
+              }
+            }
+          ]
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": {
+            "102": 0.0,
+            "103": 0.0,
+            "104": 1.0,
+            "105": 1.0,
+            "106": 0.0
+          },
+          "api_clients": [
+            {
+              "client": "pipeline.arbiter",
+              "model": "kimi-k3.1-pro",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "completion_tokens": 330,
+                "prompt_tokens": 3165,
+                "prompt_tokens_details": {
+                  "cached_tokens": 768
+                },
+                "total_tokens": 3495
+              }
+            },
+            {
+              "client": "pipeline.baseline.client",
+              "model": "typesafe/jev-1.13",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "input_tokens": 7709,
+                "output_tokens": 99,
+                "total_tokens": 7808,
+                "cost": 0.042769532,
+                "cost_details": {
+                  "input_cost": 0.042769532,
+                  "output_cost": 0
+                }
+              }
+            }
+          ]
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": {
+            "102": 0.0,
+            "103": 0.0,
+            "104": 1.0,
+            "105": 1.0,
+            "106": 0.0
+          },
+          "api_clients": [
+            {
+              "client": "pipeline.arbiter",
+              "model": "kimi-k3.1-pro",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "completion_tokens": 197,
+                "prompt_tokens": 3003,
+                "prompt_tokens_details": {
+                  "cached_tokens": 768
+                },
+                "total_tokens": 3200
+              }
+            },
+            {
+              "client": "pipeline.baseline.client",
+              "model": "typesafe/jev-1.13",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "input_tokens": 7650,
+                "output_tokens": 99,
+                "total_tokens": 7749,
+                "cost": 0.0424422,
+                "cost_details": {
+                  "input_cost": 0.0424422,
+                  "output_cost": 0
+                }
+              }
+            }
+          ]
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": {
+            "102": 0.0,
+            "103": 0.0,
+            "104": 0.0,
+            "105": 0.0,
+            "106": 0.0
+          },
+          "api_clients": [
+            {
+              "client": "pipeline.arbiter",
+              "model": "kimi-k3.1-pro",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "completion_tokens": 123,
+                "prompt_tokens": 2806,
+                "prompt_tokens_details": {
+                  "cached_tokens": 768
+                },
+                "total_tokens": 2929
+              }
+            },
+            {
+              "client": "pipeline.baseline.client",
+              "model": "typesafe/jev-1.13",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "input_tokens": 7207,
+                "output_tokens": 99,
+                "total_tokens": 7306,
+                "cost": 0.039984436,
+                "cost_details": {
+                  "input_cost": 0.039984436,
+                  "output_cost": 0
+                }
+              }
+            }
+          ]
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": {
+            "102": 0.0,
+            "103": 1.0,
+            "104": 0.0,
+            "105": 1.0,
+            "106": 0.0
+          },
+          "api_clients": [
+            {
+              "client": "pipeline.arbiter",
+              "model": "kimi-k3.1-pro",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "completion_tokens": 436,
+                "prompt_tokens": 2445,
+                "prompt_tokens_details": {
+                  "cached_tokens": 768
+                },
+                "total_tokens": 2881
+              }
+            },
+            {
+              "client": "pipeline.baseline.client",
+              "model": "typesafe/jev-1.13",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "input_tokens": 6549,
+                "output_tokens": 99,
+                "total_tokens": 6648,
+                "cost": 0.036333852,
+                "cost_details": {
+                  "input_cost": 0.036333852,
+                  "output_cost": 0
+                }
+              }
+            }
+          ]
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": {
+            "102": 1.0,
+            "103": 0.0,
+            "104": 0.0,
+            "105": 0.0,
+            "106": 1.0
+          },
+          "api_clients": [
+            {
+              "client": "pipeline.arbiter",
+              "model": "kimi-k3.1-pro",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "completion_tokens": 161,
+                "prompt_tokens": 2118,
+                "prompt_tokens_details": {
+                  "cached_tokens": 768
+                },
+                "total_tokens": 2279
+              }
+            },
+            {
+              "client": "pipeline.baseline.client",
+              "model": "typesafe/jev-1.13",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "input_tokens": 6127,
+                "output_tokens": 99,
+                "total_tokens": 6226,
+                "cost": 0.033992596,
+                "cost_details": {
+                  "input_cost": 0.033992596,
+                  "output_cost": 0
+                }
+              }
+            }
+          ]
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": {
+            "102": 0.0,
+            "103": 0.0,
+            "104": 0.0,
+            "105": 0.0,
+            "106": 0.0
+          },
+          "api_clients": [
+            {
+              "client": "pipeline.arbiter",
+              "model": "kimi-k3.1-pro",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "completion_tokens": 149,
+                "prompt_tokens": 1662,
+                "prompt_tokens_details": {
+                  "cached_tokens": 768
+                },
+                "total_tokens": 1811
+              }
+            },
+            {
+              "client": "pipeline.baseline.client",
+              "model": "typesafe/jev-1.13",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "input_tokens": 5491,
+                "output_tokens": 99,
+                "total_tokens": 5590,
+                "cost": 0.030464068,
+                "cost_details": {
+                  "input_cost": 0.030464068,
+                  "output_cost": 0
+                }
+              }
+            }
+          ]
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": {
+            "102": 0.0,
+            "103": 0.0,
+            "104": 0.0,
+            "105": 0.0,
+            "106": 0.0
+          },
+          "api_clients": [
+            {
+              "client": "pipeline.arbiter",
+              "model": "kimi-k3.1-pro",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "completion_tokens": 93,
+                "prompt_tokens": 1885,
+                "prompt_tokens_details": {
+                  "cached_tokens": 768
+                },
+                "total_tokens": 1978
+              }
+            },
+            {
+              "client": "pipeline.baseline.client",
+              "model": "typesafe/jev-1.13",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "input_tokens": 5884,
+                "output_tokens": 99,
+                "total_tokens": 5983,
+                "cost": 0.032644432,
+                "cost_details": {
+                  "input_cost": 0.032644432,
+                  "output_cost": 0
+                }
+              }
+            }
+          ]
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": {
+            "102": 0.0,
+            "103": 0.0,
+            "104": 0.0,
+            "105": 0.0,
+            "106": 0.0
+          },
+          "api_clients": [
+            {
+              "client": "pipeline.arbiter",
+              "model": "kimi-k3.1-pro",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "completion_tokens": 148,
+                "prompt_tokens": 1677,
+                "prompt_tokens_details": {
+                  "cached_tokens": 768
+                },
+                "total_tokens": 1825
+              }
+            },
+            {
+              "client": "pipeline.baseline.client",
+              "model": "typesafe/jev-1.13",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "input_tokens": 5519,
+                "output_tokens": 99,
+                "total_tokens": 5618,
+                "cost": 0.030619412,
+                "cost_details": {
+                  "input_cost": 0.030619412,
+                  "output_cost": 0
+                }
+              }
+            }
+          ]
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": {
+            "102": 1.0,
+            "103": 1.0,
+            "104": 1.0,
+            "105": 1.0,
+            "106": 0.0
+          },
+          "api_clients": [
+            {
+              "client": "pipeline.arbiter",
+              "model": "kimi-k3.1-pro",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "completion_tokens": 310,
+                "prompt_tokens": 2447,
+                "prompt_tokens_details": {
+                  "cached_tokens": 768
+                },
+                "total_tokens": 2757
+              }
+            },
+            {
+              "client": "pipeline.baseline.client",
+              "model": "typesafe/jev-1.13",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "input_tokens": 6682,
+                "output_tokens": 99,
+                "total_tokens": 6781,
+                "cost": 0.037071736,
+                "cost_details": {
+                  "input_cost": 0.037071736,
+                  "output_cost": 0
+                }
+              }
+            }
+          ]
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": {
+            "102": 0.0,
+            "103": 0.0,
+            "104": 0.0,
+            "105": 0.0,
+            "106": 0.0
+          },
+          "api_clients": [
+            {
+              "client": "pipeline.arbiter",
+              "model": "kimi-k3.1-pro",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "completion_tokens": 223,
+                "prompt_tokens": 2973,
+                "prompt_tokens_details": {
+                  "cached_tokens": 768
+                },
+                "total_tokens": 3196
+              }
+            },
+            {
+              "client": "pipeline.baseline.client",
+              "model": "typesafe/jev-1.13",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "input_tokens": 7086,
+                "output_tokens": 99,
+                "total_tokens": 7185,
+                "cost": 0.039313128,
+                "cost_details": {
+                  "input_cost": 0.039313128,
+                  "output_cost": 0
+                }
+              }
+            }
+          ]
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": {
+            "102": 0.0,
+            "103": 0.0,
+            "104": 0.0,
+            "105": 0.0,
+            "106": 0.0
+          },
+          "api_clients": [
+            {
+              "client": "pipeline.arbiter",
+              "model": "kimi-k3.1-pro",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "completion_tokens": 159,
+                "prompt_tokens": 1666,
+                "prompt_tokens_details": {
+                  "cached_tokens": 768
+                },
+                "total_tokens": 1825
+              }
+            },
+            {
+              "client": "pipeline.baseline.client",
+              "model": "typesafe/jev-1.13",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "input_tokens": 5503,
+                "output_tokens": 99,
+                "total_tokens": 5602,
+                "cost": 0.030530644,
+                "cost_details": {
+                  "input_cost": 0.030530644,
+                  "output_cost": 0
+                }
+              }
+            }
+          ]
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": {
+            "102": 0.0,
+            "103": 0.0,
+            "104": 0.0,
+            "105": 0.0,
+            "106": 0.0
+          },
+          "api_clients": [
+            {
+              "client": "pipeline.arbiter",
+              "model": "kimi-k3.1-pro",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "completion_tokens": 183,
+                "prompt_tokens": 1893,
+                "prompt_tokens_details": {
+                  "cached_tokens": 768
+                },
+                "total_tokens": 2076
+              }
+            },
+            {
+              "client": "pipeline.baseline.client",
+              "model": "typesafe/jev-1.13",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "input_tokens": 5888,
+                "output_tokens": 99,
+                "total_tokens": 5987,
+                "cost": 0.032666624,
+                "cost_details": {
+                  "input_cost": 0.032666624,
+                  "output_cost": 0
+                }
+              }
+            }
+          ]
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": {
+            "102": 0.0,
+            "103": 0.0,
+            "104": 0.0,
+            "105": 0.0,
+            "106": 0.0
+          },
+          "api_clients": [
+            {
+              "client": "pipeline.arbiter",
+              "model": "kimi-k3.1-pro",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "completion_tokens": 153,
+                "prompt_tokens": 1864,
+                "prompt_tokens_details": {
+                  "cached_tokens": 768
+                },
+                "total_tokens": 2017
+              }
+            },
+            {
+              "client": "pipeline.baseline.client",
+              "model": "typesafe/jev-1.13",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "input_tokens": 5867,
+                "output_tokens": 99,
+                "total_tokens": 5966,
+                "cost": 0.032550116,
+                "cost_details": {
+                  "input_cost": 0.032550116,
+                  "output_cost": 0
+                }
+              }
+            }
+          ]
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": {
+            "102": 0.0,
+            "103": 0.0,
+            "104": 0.0,
+            "105": 0.0,
+            "106": 0.0
+          },
+          "api_clients": [
+            {
+              "client": "pipeline.arbiter",
+              "model": "kimi-k3.1-pro",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "completion_tokens": 117,
+                "prompt_tokens": 1893,
+                "prompt_tokens_details": {
+                  "cached_tokens": 768
+                },
+                "total_tokens": 2010
+              }
+            },
+            {
+              "client": "pipeline.baseline.client",
+              "model": "typesafe/jev-1.13",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "input_tokens": 5900,
+                "output_tokens": 99,
+                "total_tokens": 5999,
+                "cost": 0.0327332,
+                "cost_details": {
+                  "input_cost": 0.0327332,
+                  "output_cost": 0
+                }
+              }
+            }
+          ]
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": {
+            "102": 1.0,
+            "103": 1.0,
+            "104": 0.0,
+            "105": 0.0,
+            "106": 1.0
+          },
+          "api_clients": [
+            {
+              "client": "pipeline.arbiter",
+              "model": "kimi-k3.1-pro",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "completion_tokens": 189,
+                "prompt_tokens": 3625,
+                "prompt_tokens_details": {
+                  "cached_tokens": 768
+                },
+                "total_tokens": 3814
+              }
+            },
+            {
+              "client": "pipeline.baseline.client",
+              "model": "typesafe/jev-1.13",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "input_tokens": 7912,
+                "output_tokens": 99,
+                "total_tokens": 8011,
+                "cost": 0.043895776,
+                "cost_details": {
+                  "input_cost": 0.043895776,
+                  "output_cost": 0
+                }
+              }
+            }
+          ]
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": {
+            "102": 0.0,
+            "103": 0.0,
+            "104": 0.0,
+            "105": 0.0,
+            "106": 0.0
+          },
+          "api_clients": [
+            {
+              "client": "pipeline.arbiter",
+              "model": "kimi-k3.1-pro",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "completion_tokens": 217,
+                "prompt_tokens": 2492,
+                "prompt_tokens_details": {
+                  "cached_tokens": 768
+                },
+                "total_tokens": 2709
+              }
+            },
+            {
+              "client": "pipeline.baseline.client",
+              "model": "typesafe/jev-1.13",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "input_tokens": 6664,
+                "output_tokens": 99,
+                "total_tokens": 6763,
+                "cost": 0.036971872,
+                "cost_details": {
+                  "input_cost": 0.036971872,
+                  "output_cost": 0
+                }
+              }
+            }
+          ]
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": {
+            "102": 0.0,
+            "103": 0.0,
+            "104": 0.0,
+            "105": 0.0,
+            "106": 0.0
+          },
+          "api_clients": [
+            {
+              "client": "pipeline.arbiter",
+              "model": "kimi-k3.1-pro",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "completion_tokens": 257,
+                "prompt_tokens": 2074,
+                "prompt_tokens_details": {
+                  "cached_tokens": 768
+                },
+                "total_tokens": 2331
+              }
+            },
+            {
+              "client": "pipeline.baseline.client",
+              "model": "typesafe/jev-1.13",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "input_tokens": 6124,
+                "output_tokens": 99,
+                "total_tokens": 6223,
+                "cost": 0.033975952,
+                "cost_details": {
+                  "input_cost": 0.033975952,
+                  "output_cost": 0
+                }
+              }
+            }
+          ]
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": {
+            "102": 0.0,
+            "103": 0.0,
+            "104": 0.0,
+            "105": 0.0,
+            "106": 0.0
+          },
+          "api_clients": [
+            {
+              "client": "pipeline.arbiter",
+              "model": "kimi-k3.1-pro",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "completion_tokens": 106,
+                "prompt_tokens": 1890,
+                "prompt_tokens_details": {
+                  "cached_tokens": 768
+                },
+                "total_tokens": 1996
+              }
+            },
+            {
+              "client": "pipeline.baseline.client",
+              "model": "typesafe/jev-1.13",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "input_tokens": 5881,
+                "output_tokens": 99,
+                "total_tokens": 5980,
+                "cost": 0.032627788,
+                "cost_details": {
+                  "input_cost": 0.032627788,
+                  "output_cost": 0
+                }
+              }
+            }
+          ]
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": {
+            "102": 0.0,
+            "103": 0.0,
+            "104": 0.0,
+            "105": 1.0,
+            "106": 0.0
+          },
+          "api_clients": [
+            {
+              "client": "pipeline.arbiter",
+              "model": "kimi-k3.1-pro",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "completion_tokens": 245,
+                "prompt_tokens": 1715,
+                "prompt_tokens_details": {
+                  "cached_tokens": 1536
+                },
+                "total_tokens": 1960
+              }
+            },
+            {
+              "client": "pipeline.baseline.client",
+              "model": "typesafe/jev-1.13",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "input_tokens": 5590,
+                "output_tokens": 99,
+                "total_tokens": 5689,
+                "cost": 0.03101332,
+                "cost_details": {
+                  "input_cost": 0.03101332,
+                  "output_cost": 0
+                }
+              }
+            }
+          ]
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": {
+            "102": 0.0,
+            "103": 0.0,
+            "104": 0.0,
+            "105": 0.0,
+            "106": 0.0
+          },
+          "api_clients": [
+            {
+              "client": "pipeline.arbiter",
+              "model": "kimi-k3.1-pro",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "completion_tokens": 111,
+                "prompt_tokens": 1889,
+                "prompt_tokens_details": {
+                  "cached_tokens": 768
+                },
+                "total_tokens": 2000
+              }
+            },
+            {
+              "client": "pipeline.baseline.client",
+              "model": "typesafe/jev-1.13",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "input_tokens": 5882,
+                "output_tokens": 99,
+                "total_tokens": 5981,
+                "cost": 0.032633336,
+                "cost_details": {
+                  "input_cost": 0.032633336,
+                  "output_cost": 0
+                }
+              }
+            }
+          ]
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": {
+            "102": 0.0,
+            "103": 0.0,
+            "104": 0.0,
+            "105": 0.0,
+            "106": 0.0
+          },
+          "api_clients": [
+            {
+              "client": "pipeline.arbiter",
+              "model": "kimi-k3.1-pro",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "completion_tokens": 236,
+                "prompt_tokens": 2611,
+                "prompt_tokens_details": {
+                  "cached_tokens": 768
+                },
+                "total_tokens": 2847
+              }
+            },
+            {
+              "client": "pipeline.baseline.client",
+              "model": "typesafe/jev-1.13",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "input_tokens": 6772,
+                "output_tokens": 99,
+                "total_tokens": 6871,
+                "cost": 0.037571056,
+                "cost_details": {
+                  "input_cost": 0.037571056,
+                  "output_cost": 0
+                }
+              }
+            }
+          ]
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": {
+            "102": 0.0,
+            "103": 0.0,
+            "104": 0.0,
+            "105": 0.0,
+            "106": 0.0
+          },
+          "api_clients": [
+            {
+              "client": "pipeline.arbiter",
+              "model": "kimi-k3.1-pro",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "completion_tokens": 165,
+                "prompt_tokens": 1884,
+                "prompt_tokens_details": {
+                  "cached_tokens": 768
+                },
+                "total_tokens": 2049
+              }
+            },
+            {
+              "client": "pipeline.baseline.client",
+              "model": "typesafe/jev-1.13",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "input_tokens": 5861,
+                "output_tokens": 99,
+                "total_tokens": 5960,
+                "cost": 0.032516828,
+                "cost_details": {
+                  "input_cost": 0.032516828,
+                  "output_cost": 0
+                }
+              }
+            }
+          ]
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": {
+            "102": 0.0,
+            "103": 0.0,
+            "104": 1.0,
+            "105": 1.0,
+            "106": 0.0
+          },
+          "api_clients": [
+            {
+              "client": "pipeline.arbiter",
+              "model": "kimi-k3.1-pro",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "completion_tokens": 165,
+                "prompt_tokens": 2836,
+                "prompt_tokens_details": {
+                  "cached_tokens": 768
+                },
+                "total_tokens": 3001
+              }
+            },
+            {
+              "client": "pipeline.baseline.client",
+              "model": "typesafe/jev-1.13",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "input_tokens": 7260,
+                "output_tokens": 99,
+                "total_tokens": 7359,
+                "cost": 0.04027848,
+                "cost_details": {
+                  "input_cost": 0.04027848,
+                  "output_cost": 0
+                }
+              }
+            }
+          ]
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": {
+            "102": 0.0,
+            "103": 1.0,
+            "104": 0.0,
+            "105": 0.0,
+            "106": 0.0
+          },
+          "api_clients": [
+            {
+              "client": "pipeline.arbiter",
+              "model": "kimi-k3.1-pro",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "completion_tokens": 185,
+                "prompt_tokens": 1888,
+                "prompt_tokens_details": {
+                  "cached_tokens": 768
+                },
+                "total_tokens": 2073
+              }
+            },
+            {
+              "client": "pipeline.baseline.client",
+              "model": "typesafe/jev-1.13",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "input_tokens": 5881,
+                "output_tokens": 99,
+                "total_tokens": 5980,
+                "cost": 0.032627788,
+                "cost_details": {
+                  "input_cost": 0.032627788,
+                  "output_cost": 0
+                }
+              }
+            }
+          ]
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": {
+            "102": 0.0,
+            "103": 0.0,
+            "104": 0.0,
+            "105": 0.0,
+            "106": 0.0
+          },
+          "api_clients": [
+            {
+              "client": "pipeline.arbiter",
+              "model": "kimi-k3.1-pro",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "completion_tokens": 105,
+                "prompt_tokens": 1880,
+                "prompt_tokens_details": {
+                  "cached_tokens": 768
+                },
+                "total_tokens": 1985
+              }
+            },
+            {
+              "client": "pipeline.baseline.client",
+              "model": "typesafe/jev-1.13",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "input_tokens": 5857,
+                "output_tokens": 99,
+                "total_tokens": 5956,
+                "cost": 0.032494636,
+                "cost_details": {
+                  "input_cost": 0.032494636,
+                  "output_cost": 0
+                }
+              }
+            }
+          ]
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": {
+            "102": 0.0,
+            "103": 0.0,
+            "104": 0.0,
+            "105": 0.0,
+            "106": 0.0
+          },
+          "api_clients": [
+            {
+              "client": "pipeline.arbiter",
+              "model": "kimi-k3.1-pro",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "completion_tokens": 166,
+                "prompt_tokens": 1884,
+                "prompt_tokens_details": {
+                  "cached_tokens": 768
+                },
+                "total_tokens": 2050
+              }
+            },
+            {
+              "client": "pipeline.baseline.client",
+              "model": "typesafe/jev-1.13",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "input_tokens": 5873,
+                "output_tokens": 99,
+                "total_tokens": 5972,
+                "cost": 0.032583404,
+                "cost_details": {
+                  "input_cost": 0.032583404,
+                  "output_cost": 0
+                }
+              }
+            }
+          ]
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": {
+            "102": 0.0,
+            "103": 1.0,
+            "104": 1.0,
+            "105": 1.0,
+            "106": 1.0
+          },
+          "api_clients": [
+            {
+              "client": "pipeline.arbiter",
+              "model": "kimi-k3.1-pro",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "completion_tokens": 460,
+                "prompt_tokens": 2430,
+                "prompt_tokens_details": {
+                  "cached_tokens": 768
+                },
+                "total_tokens": 2890
+              }
+            },
+            {
+              "client": "pipeline.baseline.client",
+              "model": "typesafe/jev-1.13",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "input_tokens": 6671,
+                "output_tokens": 99,
+                "total_tokens": 6770,
+                "cost": 0.037010708,
+                "cost_details": {
+                  "input_cost": 0.037010708,
+                  "output_cost": 0
+                }
+              }
+            }
+          ]
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": {
+            "102": 0.0,
+            "103": 0.0,
+            "104": 0.0,
+            "105": 0.0,
+            "106": 0.0
+          },
+          "api_clients": [
+            {
+              "client": "pipeline.arbiter",
+              "model": "kimi-k3.1-pro",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "completion_tokens": 166,
+                "prompt_tokens": 1882,
+                "prompt_tokens_details": {
+                  "cached_tokens": 768
+                },
+                "total_tokens": 2048
+              }
+            },
+            {
+              "client": "pipeline.baseline.client",
+              "model": "typesafe/jev-1.13",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "input_tokens": 5861,
+                "output_tokens": 99,
+                "total_tokens": 5960,
+                "cost": 0.032516828,
+                "cost_details": {
+                  "input_cost": 0.032516828,
+                  "output_cost": 0
+                }
+              }
+            }
+          ]
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": {
+            "102": 0.0,
+            "103": 1.0,
+            "104": 0.0,
+            "105": 0.0,
+            "106": 0.0
+          },
+          "api_clients": [
+            {
+              "client": "pipeline.arbiter",
+              "model": "kimi-k3.1-pro",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "completion_tokens": 107,
+                "prompt_tokens": 1889,
+                "prompt_tokens_details": {
+                  "cached_tokens": 768
+                },
+                "total_tokens": 1996
+              }
+            },
+            {
+              "client": "pipeline.baseline.client",
+              "model": "typesafe/jev-1.13",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "input_tokens": 5892,
+                "output_tokens": 99,
+                "total_tokens": 5991,
+                "cost": 0.032688816,
+                "cost_details": {
+                  "input_cost": 0.032688816,
+                  "output_cost": 0
+                }
+              }
+            }
+          ]
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": {
+            "102": 0.0,
+            "103": 0.0,
+            "104": 0.0,
+            "105": 0.0,
+            "106": 0.0
+          },
+          "api_clients": [
+            {
+              "client": "pipeline.arbiter",
+              "model": "kimi-k3.1-pro",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "completion_tokens": 202,
+                "prompt_tokens": 1895,
+                "prompt_tokens_details": {
+                  "cached_tokens": 768
+                },
+                "total_tokens": 2097
+              }
+            },
+            {
+              "client": "pipeline.baseline.client",
+              "model": "typesafe/jev-1.13",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "input_tokens": 5900,
+                "output_tokens": 99,
+                "total_tokens": 5999,
+                "cost": 0.0327332,
+                "cost_details": {
+                  "input_cost": 0.0327332,
+                  "output_cost": 0
+                }
+              }
+            }
+          ]
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": {
+            "102": 1.0,
+            "103": 0.0,
+            "104": 0.0,
+            "105": 0.0,
+            "106": 1.0
+          },
+          "api_clients": [
+            {
+              "client": "pipeline.arbiter",
+              "model": "kimi-k3.1-pro",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "completion_tokens": 158,
+                "prompt_tokens": 1686,
+                "prompt_tokens_details": {
+                  "cached_tokens": 768
+                },
+                "total_tokens": 1844
+              }
+            },
+            {
+              "client": "pipeline.baseline.client",
+              "model": "typesafe/jev-1.13",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "input_tokens": 5529,
+                "output_tokens": 99,
+                "total_tokens": 5628,
+                "cost": 0.030674892,
+                "cost_details": {
+                  "input_cost": 0.030674892,
+                  "output_cost": 0
+                }
+              }
+            }
+          ]
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": {
+            "102": 0.0,
+            "103": 0.0,
+            "104": 1.0,
+            "105": 1.0,
+            "106": 0.0
+          },
+          "api_clients": [
+            {
+              "client": "pipeline.arbiter",
+              "model": "kimi-k3.1-pro",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "completion_tokens": 191,
+                "prompt_tokens": 1850,
+                "prompt_tokens_details": {
+                  "cached_tokens": 768
+                },
+                "total_tokens": 2041
+              }
+            },
+            {
+              "client": "pipeline.baseline.client",
+              "model": "typesafe/jev-1.13",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "input_tokens": 5771,
+                "output_tokens": 99,
+                "total_tokens": 5870,
+                "cost": 0.032017508,
+                "cost_details": {
+                  "input_cost": 0.032017508,
+                  "output_cost": 0
+                }
+              }
+            }
+          ]
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": {
+            "102": 0.0,
+            "103": 0.0,
+            "104": 0.0,
+            "105": 0.0,
+            "106": 0.0
+          },
+          "api_clients": [
+            {
+              "client": "pipeline.arbiter",
+              "model": "kimi-k3.1-pro",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "completion_tokens": 134,
+                "prompt_tokens": 1900,
+                "prompt_tokens_details": {
+                  "cached_tokens": 768
+                },
+                "total_tokens": 2034
+              }
+            },
+            {
+              "client": "pipeline.baseline.client",
+              "model": "typesafe/jev-1.13",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "input_tokens": 5907,
+                "output_tokens": 99,
+                "total_tokens": 6006,
+                "cost": 0.032772036,
+                "cost_details": {
+                  "input_cost": 0.032772036,
+                  "output_cost": 0
+                }
+              }
+            }
+          ]
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": {
+            "102": 1.0,
+            "103": 1.0,
+            "104": 1.0,
+            "105": 1.0,
+            "106": 1.0
+          },
+          "api_clients": [
+            {
+              "client": "pipeline.arbiter",
+              "model": "kimi-k3.1-pro",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "completion_tokens": 381,
+                "prompt_tokens": 1675,
+                "prompt_tokens_details": {
+                  "cached_tokens": 768
+                },
+                "total_tokens": 2056
+              }
+            },
+            {
+              "client": "pipeline.baseline.client",
+              "model": "typesafe/jev-1.13",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "input_tokens": 5513,
+                "output_tokens": 99,
+                "total_tokens": 5612,
+                "cost": 0.030586124,
+                "cost_details": {
+                  "input_cost": 0.030586124,
+                  "output_cost": 0
+                }
+              }
+            }
+          ]
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": {
+            "102": 1.0,
+            "103": 0.0,
+            "104": 1.0,
+            "105": 1.0,
+            "106": 0.0
+          },
+          "api_clients": [
+            {
+              "client": "pipeline.arbiter",
+              "model": "kimi-k3.1-pro",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "completion_tokens": 143,
+                "prompt_tokens": 2562,
+                "prompt_tokens_details": {
+                  "cached_tokens": 768
+                },
+                "total_tokens": 2705
+              }
+            },
+            {
+              "client": "pipeline.baseline.client",
+              "model": "typesafe/jev-1.13",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "input_tokens": 6910,
+                "output_tokens": 99,
+                "total_tokens": 7009,
+                "cost": 0.03833668,
+                "cost_details": {
+                  "input_cost": 0.03833668,
+                  "output_cost": 0
+                }
+              }
+            }
+          ]
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": {
+            "102": 0.0,
+            "103": 0.0,
+            "104": 0.0,
+            "105": 0.0,
+            "106": 0.0
+          },
+          "api_clients": [
+            {
+              "client": "pipeline.arbiter",
+              "model": "kimi-k3.1-pro",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "completion_tokens": 114,
+                "prompt_tokens": 1887,
+                "prompt_tokens_details": {
+                  "cached_tokens": 768
+                },
+                "total_tokens": 2001
+              }
+            },
+            {
+              "client": "pipeline.baseline.client",
+              "model": "typesafe/jev-1.13",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "input_tokens": 5888,
+                "output_tokens": 99,
+                "total_tokens": 5987,
+                "cost": 0.032666624,
+                "cost_details": {
+                  "input_cost": 0.032666624,
+                  "output_cost": 0
+                }
+              }
+            }
+          ]
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": {
+            "102": 1.0,
+            "103": 0.0,
+            "104": 0.0,
+            "105": 0.0,
+            "106": 0.0
+          },
+          "api_clients": [
+            {
+              "client": "pipeline.arbiter",
+              "model": "kimi-k3.1-pro",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "completion_tokens": 178,
+                "prompt_tokens": 1689,
+                "prompt_tokens_details": {
+                  "cached_tokens": 768
+                },
+                "total_tokens": 1867
+              }
+            },
+            {
+              "client": "pipeline.baseline.client",
+              "model": "typesafe/jev-1.13",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "input_tokens": 5544,
+                "output_tokens": 99,
+                "total_tokens": 5643,
+                "cost": 0.030758112,
+                "cost_details": {
+                  "input_cost": 0.030758112,
+                  "output_cost": 0
+                }
+              }
+            }
+          ]
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": {
+            "102": 0.0,
+            "103": 0.0,
+            "104": 0.0,
+            "105": 0.0,
+            "106": 0.0
+          },
+          "api_clients": [
+            {
+              "client": "pipeline.arbiter",
+              "model": "kimi-k3.1-pro",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "completion_tokens": 155,
+                "prompt_tokens": 3095,
+                "prompt_tokens_details": {
+                  "cached_tokens": 768
+                },
+                "total_tokens": 3250
+              }
+            },
+            {
+              "client": "pipeline.baseline.client",
+              "model": "typesafe/jev-1.13",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "input_tokens": 7609,
+                "output_tokens": 99,
+                "total_tokens": 7708,
+                "cost": 0.042214732,
+                "cost_details": {
+                  "input_cost": 0.042214732,
+                  "output_cost": 0
+                }
+              }
+            }
+          ]
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": {
+            "102": 0.0,
+            "103": 0.0,
+            "104": 0.0,
+            "105": 0.0,
+            "106": 0.0
+          },
+          "api_clients": [
+            {
+              "client": "pipeline.arbiter",
+              "model": "kimi-k3.1-pro",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "completion_tokens": 142,
+                "prompt_tokens": 1967,
+                "prompt_tokens_details": {
+                  "cached_tokens": 768
+                },
+                "total_tokens": 2109
+              }
+            },
+            {
+              "client": "pipeline.baseline.client",
+              "model": "typesafe/jev-1.13",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "input_tokens": 5926,
+                "output_tokens": 99,
+                "total_tokens": 6025,
+                "cost": 0.032877448,
+                "cost_details": {
+                  "input_cost": 0.032877448,
+                  "output_cost": 0
+                }
+              }
+            }
+          ]
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": {
+            "102": 0.0,
+            "103": 1.0,
+            "104": 0.0,
+            "105": 0.0,
+            "106": 1.0
+          },
+          "api_clients": [
+            {
+              "client": "pipeline.arbiter",
+              "model": "kimi-k3.1-pro",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "completion_tokens": 203,
+                "prompt_tokens": 3359,
+                "prompt_tokens_details": {
+                  "cached_tokens": 768
+                },
+                "total_tokens": 3562
+              }
+            },
+            {
+              "client": "pipeline.baseline.client",
+              "model": "typesafe/jev-1.13",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "input_tokens": 8280,
+                "output_tokens": 99,
+                "total_tokens": 8379,
+                "cost": 0.04593744,
+                "cost_details": {
+                  "input_cost": 0.04593744,
+                  "output_cost": 0
+                }
+              }
+            }
+          ]
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": {
+            "102": 1.0,
+            "103": 1.0,
+            "104": 1.0,
+            "105": 1.0,
+            "106": 1.0
+          },
+          "api_clients": [
+            {
+              "client": "pipeline.arbiter",
+              "model": "kimi-k3.1-pro",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "completion_tokens": 191,
+                "prompt_tokens": 3114,
+                "prompt_tokens_details": {
+                  "cached_tokens": 768
+                },
+                "total_tokens": 3305
+              }
+            },
+            {
+              "client": "pipeline.baseline.client",
+              "model": "typesafe/jev-1.13",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "input_tokens": 7658,
+                "output_tokens": 99,
+                "total_tokens": 7757,
+                "cost": 0.042486584,
+                "cost_details": {
+                  "input_cost": 0.042486584,
+                  "output_cost": 0
+                }
+              }
+            }
+          ]
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": {
+            "102": 0.0,
+            "103": 0.0,
+            "104": 0.0,
+            "105": 0.0,
+            "106": 1.0
+          },
+          "api_clients": [
+            {
+              "client": "pipeline.arbiter",
+              "model": "kimi-k3.1-pro",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "completion_tokens": 160,
+                "prompt_tokens": 1862,
+                "prompt_tokens_details": {
+                  "cached_tokens": 768
+                },
+                "total_tokens": 2022
+              }
+            },
+            {
+              "client": "pipeline.baseline.client",
+              "model": "typesafe/jev-1.13",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "input_tokens": 5863,
+                "output_tokens": 99,
+                "total_tokens": 5962,
+                "cost": 0.032527924,
+                "cost_details": {
+                  "input_cost": 0.032527924,
+                  "output_cost": 0
+                }
+              }
+            }
+          ]
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": {
+            "102": 0.0,
+            "103": 0.0,
+            "104": 0.0,
+            "105": 0.0,
+            "106": 0.0
+          },
+          "api_clients": [
+            {
+              "client": "pipeline.arbiter",
+              "model": "kimi-k3.1-pro",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "completion_tokens": 116,
+                "prompt_tokens": 1891,
+                "prompt_tokens_details": {
+                  "cached_tokens": 768
+                },
+                "total_tokens": 2007
+              }
+            },
+            {
+              "client": "pipeline.baseline.client",
+              "model": "typesafe/jev-1.13",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "input_tokens": 5896,
+                "output_tokens": 99,
+                "total_tokens": 5995,
+                "cost": 0.032711008,
+                "cost_details": {
+                  "input_cost": 0.032711008,
+                  "output_cost": 0
+                }
+              }
+            }
+          ]
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": {
+            "102": 0.0,
+            "103": 0.0,
+            "104": 0.0,
+            "105": 0.0,
+            "106": 0.0
+          },
+          "api_clients": [
+            {
+              "client": "pipeline.arbiter",
+              "model": "kimi-k3.1-pro",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "completion_tokens": 171,
+                "prompt_tokens": 1888,
+                "prompt_tokens_details": {
+                  "cached_tokens": 768
+                },
+                "total_tokens": 2059
+              }
+            },
+            {
+              "client": "pipeline.baseline.client",
+              "model": "typesafe/jev-1.13",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "input_tokens": 5888,
+                "output_tokens": 99,
+                "total_tokens": 5987,
+                "cost": 0.032666624,
+                "cost_details": {
+                  "input_cost": 0.032666624,
+                  "output_cost": 0
+                }
+              }
+            }
+          ]
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": {
+            "102": 1.0,
+            "103": 1.0,
+            "104": 1.0,
+            "105": 1.0,
+            "106": 1.0
+          },
+          "api_clients": [
+            {
+              "client": "pipeline.arbiter",
+              "model": "kimi-k3.1-pro",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "completion_tokens": 190,
+                "prompt_tokens": 3731,
+                "prompt_tokens_details": {
+                  "cached_tokens": 3584
+                },
+                "total_tokens": 3921
+              }
+            },
+            {
+              "client": "pipeline.baseline.client",
+              "model": "typesafe/jev-1.13",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "input_tokens": 8448,
+                "output_tokens": 99,
+                "total_tokens": 8547,
+                "cost": 0.046869504,
+                "cost_details": {
+                  "input_cost": 0.046869504,
+                  "output_cost": 0
+                }
+              }
+            }
+          ]
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": {
+            "102": 1.0,
+            "103": 1.0,
+            "104": 1.0,
+            "105": 1.0,
+            "106": 1.0
+          },
+          "api_clients": [
+            {
+              "client": "pipeline.arbiter",
+              "model": "kimi-k3.1-pro",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "completion_tokens": 126,
+                "prompt_tokens": 3567,
+                "prompt_tokens_details": {
+                  "cached_tokens": 768
+                },
+                "total_tokens": 3693
+              }
+            },
+            {
+              "client": "pipeline.baseline.client",
+              "model": "typesafe/jev-1.13",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "input_tokens": 8300,
+                "output_tokens": 99,
+                "total_tokens": 8399,
+                "cost": 0.0460484,
+                "cost_details": {
+                  "input_cost": 0.0460484,
+                  "output_cost": 0
+                }
+              }
+            }
+          ]
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": {
+            "102": 1.0,
+            "103": 1.0,
+            "104": 1.0,
+            "105": 1.0,
+            "106": 1.0
+          },
+          "api_clients": [
+            {
+              "client": "pipeline.arbiter",
+              "model": "kimi-k3.1-pro",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "completion_tokens": 159,
+                "prompt_tokens": 3293,
+                "prompt_tokens_details": {
+                  "cached_tokens": 768
+                },
+                "total_tokens": 3452
+              }
+            },
+            {
+              "client": "pipeline.baseline.client",
+              "model": "typesafe/jev-1.13",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "input_tokens": 8053,
+                "output_tokens": 99,
+                "total_tokens": 8152,
+                "cost": 0.044678044,
+                "cost_details": {
+                  "input_cost": 0.044678044,
+                  "output_cost": 0
+                }
+              }
+            }
+          ]
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": {
+            "102": 1.0,
+            "103": 0.0,
+            "104": 1.0,
+            "105": 1.0,
+            "106": 0.0
+          },
+          "api_clients": [
+            {
+              "client": "pipeline.arbiter",
+              "model": "kimi-k3.1-pro",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "completion_tokens": 309,
+                "prompt_tokens": 2972,
+                "prompt_tokens_details": {
+                  "cached_tokens": 768
+                },
+                "total_tokens": 3281
+              }
+            },
+            {
+              "client": "pipeline.baseline.client",
+              "model": "typesafe/jev-1.13",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "input_tokens": 7520,
+                "output_tokens": 99,
+                "total_tokens": 7619,
+                "cost": 0.04172096,
+                "cost_details": {
+                  "input_cost": 0.04172096,
+                  "output_cost": 0
+                }
+              }
+            }
+          ]
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": {
+            "102": 0.0,
+            "103": 0.0,
+            "104": 0.0,
+            "105": 0.0,
+            "106": 0.0
+          },
+          "api_clients": [
+            {
+              "client": "pipeline.arbiter",
+              "model": "kimi-k3.1-pro",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "completion_tokens": 305,
+                "prompt_tokens": 3018,
+                "prompt_tokens_details": {
+                  "cached_tokens": 1024
+                },
+                "total_tokens": 3323
+              }
+            },
+            {
+              "client": "pipeline.baseline.client",
+              "model": "typesafe/jev-1.13",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "input_tokens": 7144,
+                "output_tokens": 99,
+                "total_tokens": 7243,
+                "cost": 0.039634912,
+                "cost_details": {
+                  "input_cost": 0.039634912,
+                  "output_cost": 0
+                }
+              }
+            }
+          ]
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": {
+            "102": 0.0,
+            "103": 0.0,
+            "104": 0.0,
+            "105": 0.0,
+            "106": 0.0
+          },
+          "api_clients": [
+            {
+              "client": "pipeline.arbiter",
+              "model": "kimi-k3.1-pro",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "completion_tokens": 160,
+                "prompt_tokens": 1655,
+                "prompt_tokens_details": {
+                  "cached_tokens": 768
+                },
+                "total_tokens": 1815
+              }
+            },
+            {
+              "client": "pipeline.baseline.client",
+              "model": "typesafe/jev-1.13",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "input_tokens": 5485,
+                "output_tokens": 99,
+                "total_tokens": 5584,
+                "cost": 0.03043078,
+                "cost_details": {
+                  "input_cost": 0.03043078,
+                  "output_cost": 0
+                }
+              }
+            }
+          ]
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": {
+            "102": 0.0,
+            "103": 0.0,
+            "104": 0.0,
+            "105": 0.0,
+            "106": 0.0
+          },
+          "api_clients": [
+            {
+              "client": "pipeline.arbiter",
+              "model": "kimi-k3.1-pro",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "completion_tokens": 178,
+                "prompt_tokens": 1887,
+                "prompt_tokens_details": {
+                  "cached_tokens": 768
+                },
+                "total_tokens": 2065
+              }
+            },
+            {
+              "client": "pipeline.baseline.client",
+              "model": "typesafe/jev-1.13",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "input_tokens": 5796,
+                "output_tokens": 99,
+                "total_tokens": 5895,
+                "cost": 0.032156208,
+                "cost_details": {
+                  "input_cost": 0.032156208,
+                  "output_cost": 0
+                }
+              }
+            }
+          ]
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": {
+            "102": 0.0,
+            "103": 1.0,
+            "104": 0.0,
+            "105": 0.0,
+            "106": 0.0
+          },
+          "api_clients": [
+            {
+              "client": "pipeline.arbiter",
+              "model": "kimi-k3.1-pro",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "completion_tokens": 144,
+                "prompt_tokens": 1894,
+                "prompt_tokens_details": {
+                  "cached_tokens": 768
+                },
+                "total_tokens": 2038
+              }
+            },
+            {
+              "client": "pipeline.baseline.client",
+              "model": "typesafe/jev-1.13",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "input_tokens": 5898,
+                "output_tokens": 99,
+                "total_tokens": 5997,
+                "cost": 0.032722104,
+                "cost_details": {
+                  "input_cost": 0.032722104,
+                  "output_cost": 0
+                }
+              }
+            }
+          ]
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": {
+            "102": 0.0,
+            "103": 1.0,
+            "104": 0.0,
+            "105": 0.0,
+            "106": 0.0
+          },
+          "api_clients": [
+            {
+              "client": "pipeline.arbiter",
+              "model": "kimi-k3.1-pro",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "completion_tokens": 150,
+                "prompt_tokens": 1891,
+                "prompt_tokens_details": {
+                  "cached_tokens": 768
+                },
+                "total_tokens": 2041
+              }
+            },
+            {
+              "client": "pipeline.baseline.client",
+              "model": "typesafe/jev-1.13",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "input_tokens": 5886,
+                "output_tokens": 99,
+                "total_tokens": 5985,
+                "cost": 0.032655528,
+                "cost_details": {
+                  "input_cost": 0.032655528,
+                  "output_cost": 0
+                }
+              }
+            }
+          ]
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": {
+            "102": 0.0,
+            "103": 0.0,
+            "104": 0.0,
+            "105": 0.0,
+            "106": 0.0
+          },
+          "api_clients": [
+            {
+              "client": "pipeline.arbiter",
+              "model": "kimi-k3.1-pro",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "completion_tokens": 119,
+                "prompt_tokens": 1908,
+                "prompt_tokens_details": {
+                  "cached_tokens": 1792
+                },
+                "total_tokens": 2027
+              }
+            },
+            {
+              "client": "pipeline.baseline.client",
+              "model": "typesafe/jev-1.13",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "input_tokens": 5779,
+                "output_tokens": 99,
+                "total_tokens": 5878,
+                "cost": 0.032061892,
+                "cost_details": {
+                  "input_cost": 0.032061892,
+                  "output_cost": 0
+                }
+              }
+            }
+          ]
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": {
+            "102": 0.0,
+            "103": 0.0,
+            "104": 0.0,
+            "105": 0.0,
+            "106": 0.0
+          },
+          "api_clients": [
+            {
+              "client": "pipeline.arbiter",
+              "model": "kimi-k3.1-pro",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "completion_tokens": 229,
+                "prompt_tokens": 1879,
+                "prompt_tokens_details": {
+                  "cached_tokens": 768
+                },
+                "total_tokens": 2108
+              }
+            },
+            {
+              "client": "pipeline.baseline.client",
+              "model": "typesafe/jev-1.13",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "input_tokens": 5860,
+                "output_tokens": 99,
+                "total_tokens": 5959,
+                "cost": 0.03251128,
+                "cost_details": {
+                  "input_cost": 0.03251128,
+                  "output_cost": 0
+                }
+              }
+            }
+          ]
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": {
+            "102": 0.0,
+            "103": 1.0,
+            "104": 0.0,
+            "105": 0.0,
+            "106": 1.0
+          },
+          "api_clients": [
+            {
+              "client": "pipeline.arbiter",
+              "model": "kimi-k3.1-pro",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "completion_tokens": 204,
+                "prompt_tokens": 3355,
+                "prompt_tokens_details": {
+                  "cached_tokens": 768
+                },
+                "total_tokens": 3559
+              }
+            },
+            {
+              "client": "pipeline.baseline.client",
+              "model": "typesafe/jev-1.13",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "input_tokens": 8234,
+                "output_tokens": 99,
+                "total_tokens": 8333,
+                "cost": 0.045682232,
+                "cost_details": {
+                  "input_cost": 0.045682232,
+                  "output_cost": 0
+                }
+              }
+            }
+          ]
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": {
+            "102": 0.0,
+            "103": 0.0,
+            "104": 0.0,
+            "105": 0.0,
+            "106": 1.0
+          },
+          "api_clients": [
+            {
+              "client": "pipeline.arbiter",
+              "model": "kimi-k3.1-pro",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "completion_tokens": 407,
+                "prompt_tokens": 2276,
+                "prompt_tokens_details": {
+                  "cached_tokens": 768
+                },
+                "total_tokens": 2683
+              }
+            },
+            {
+              "client": "pipeline.baseline.client",
+              "model": "typesafe/jev-1.13",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "input_tokens": 6281,
+                "output_tokens": 99,
+                "total_tokens": 6380,
+                "cost": 0.034846988,
+                "cost_details": {
+                  "input_cost": 0.034846988,
+                  "output_cost": 0
+                }
+              }
+            }
+          ]
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": {
+            "102": 0.0,
+            "103": 0.0,
+            "104": 0.0,
+            "105": 0.0,
+            "106": 0.0
+          },
+          "api_clients": [
+            {
+              "client": "pipeline.arbiter",
+              "model": "kimi-k3.1-pro",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "completion_tokens": 163,
+                "prompt_tokens": 1664,
+                "prompt_tokens_details": {
+                  "cached_tokens": 768
+                },
+                "total_tokens": 1827
+              }
+            },
+            {
+              "client": "pipeline.baseline.client",
+              "model": "typesafe/jev-1.13",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "input_tokens": 5490,
+                "output_tokens": 99,
+                "total_tokens": 5589,
+                "cost": 0.03045852,
+                "cost_details": {
+                  "input_cost": 0.03045852,
+                  "output_cost": 0
+                }
+              }
+            }
+          ]
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": {
+            "102": 0.0,
+            "103": 0.0,
+            "104": 0.0,
+            "105": 0.0,
+            "106": 0.0
+          },
+          "api_clients": [
+            {
+              "client": "pipeline.arbiter",
+              "model": "kimi-k3.1-pro",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "completion_tokens": 129,
+                "prompt_tokens": 1888,
+                "prompt_tokens_details": {
+                  "cached_tokens": 1792
+                },
+                "total_tokens": 2017
+              }
+            },
+            {
+              "client": "pipeline.baseline.client",
+              "model": "typesafe/jev-1.13",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "input_tokens": 5877,
+                "output_tokens": 99,
+                "total_tokens": 5976,
+                "cost": 0.032605596,
+                "cost_details": {
+                  "input_cost": 0.032605596,
+                  "output_cost": 0
+                }
+              }
+            }
+          ]
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": {
+            "102": 0.0,
+            "103": 0.0,
+            "104": 1.0,
+            "105": 1.0,
+            "106": 0.0
+          },
+          "api_clients": [
+            {
+              "client": "pipeline.arbiter",
+              "model": "kimi-k3.1-pro",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "completion_tokens": 212,
+                "prompt_tokens": 1967,
+                "prompt_tokens_details": {
+                  "cached_tokens": 768
+                },
+                "total_tokens": 2179
+              }
+            },
+            {
+              "client": "pipeline.baseline.client",
+              "model": "typesafe/jev-1.13",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "input_tokens": 5892,
+                "output_tokens": 99,
+                "total_tokens": 5991,
+                "cost": 0.032688816,
+                "cost_details": {
+                  "input_cost": 0.032688816,
+                  "output_cost": 0
+                }
+              }
+            }
+          ]
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": {
+            "102": 0.0,
+            "103": 0.0,
+            "104": 0.0,
+            "105": 0.0,
+            "106": 0.0
+          },
+          "api_clients": [
+            {
+              "client": "pipeline.arbiter",
+              "model": "kimi-k3.1-pro",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "completion_tokens": 162,
+                "prompt_tokens": 1659,
+                "prompt_tokens_details": {
+                  "cached_tokens": 768
+                },
+                "total_tokens": 1821
+              }
+            },
+            {
+              "client": "pipeline.baseline.client",
+              "model": "typesafe/jev-1.13",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "input_tokens": 5491,
+                "output_tokens": 99,
+                "total_tokens": 5590,
+                "cost": 0.030464068,
+                "cost_details": {
+                  "input_cost": 0.030464068,
+                  "output_cost": 0
+                }
+              }
+            }
+          ]
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": {
+            "102": 0.0,
+            "103": 0.0,
+            "104": 0.0,
+            "105": 0.0,
+            "106": 0.0
+          },
+          "api_clients": [
+            {
+              "client": "pipeline.arbiter",
+              "model": "kimi-k3.1-pro",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "completion_tokens": 178,
+                "prompt_tokens": 2377,
+                "prompt_tokens_details": {
+                  "cached_tokens": 768
+                },
+                "total_tokens": 2555
+              }
+            },
+            {
+              "client": "pipeline.baseline.client",
+              "model": "typesafe/jev-1.13",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "input_tokens": 6509,
+                "output_tokens": 99,
+                "total_tokens": 6608,
+                "cost": 0.036111932,
+                "cost_details": {
+                  "input_cost": 0.036111932,
+                  "output_cost": 0
+                }
+              }
+            }
+          ]
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": {
+            "102": 1.0,
+            "103": 1.0,
+            "104": 1.0,
+            "105": 1.0,
+            "106": 1.0
+          },
+          "api_clients": [
+            {
+              "client": "pipeline.arbiter",
+              "model": "kimi-k3.1-pro",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "completion_tokens": 122,
+                "prompt_tokens": 3049,
+                "prompt_tokens_details": {
+                  "cached_tokens": 768
+                },
+                "total_tokens": 3171
+              }
+            },
+            {
+              "client": "pipeline.baseline.client",
+              "model": "typesafe/jev-1.13",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "input_tokens": 7317,
+                "output_tokens": 99,
+                "total_tokens": 7416,
+                "cost": 0.040594716,
+                "cost_details": {
+                  "input_cost": 0.040594716,
+                  "output_cost": 0
+                }
+              }
+            }
+          ]
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": {
+            "102": 0.0,
+            "103": 0.0,
+            "104": 0.0,
+            "105": 0.0,
+            "106": 0.0
+          },
+          "api_clients": [
+            {
+              "client": "pipeline.arbiter",
+              "model": "kimi-k3.1-pro",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "completion_tokens": 134,
+                "prompt_tokens": 1884,
+                "prompt_tokens_details": {
+                  "cached_tokens": 768
+                },
+                "total_tokens": 2018
+              }
+            },
+            {
+              "client": "pipeline.baseline.client",
+              "model": "typesafe/jev-1.13",
+              "cache_hit": true,
+              "http_attempts": null,
+              "usage": {
+                "input_tokens": 5866,
+                "output_tokens": 99,
+                "total_tokens": 5965,
+                "cost": 0.032544568,
+                "cost_details": {
+                  "input_cost": 0.032544568,
+                  "output_cost": 0
+                }
+              }
+            }
+          ]
+        }
+      ],
+      "workers": 4,
+      "configuration": {
+        "key": "jev_semantic_arbiter::kimi-k3.1-pro",
+        "module": "hybrid.jev_semantic_arbiter",
+        "environment": {
+          "JEV_MODEL": "typesafe/jev-1.13",
+          "LLM_MODEL_ID": "gemini-decision-1",
+          "QWEN_DECISION_MODEL": "decision-model-preview",
+          "STRUCTURED_LLM_MODEL": "kimi-k3.1-pro",
+          "STRUCTURED_LLM_SCHEMA_IN_PROMPT": "1",
+          "JEV_THRESHOLD": "0.5",
+          "GOOGLE_DECISION_THRESHOLD": "0.5",
+          "JEV_TFIDF_WEIGHT": "0.5",
+          "JEV_TFIDF_THRESHOLD": "0.5",
+          "LOCAL_JEV_MODEL": "jevos-v5",
+          "LOCAL_JEV_THRESHOLD": "0.5",
+          "SEMANTIC_ENCODER_DEVICE": "cpu",
+          "RUBERT_F1_DEVICE": "cpu",
+          "TFIDF_ARTIFACT_PATH": "out/classifier-methods/tfidf.json",
+          "LEARNED_KEYWORDS_ARTIFACT": "src/subcategory_extraction/lexical/learned_keywords/artifacts/learned-keywords.json",
+          "SEMANTIC_ENCODER_ARTIFACT_PATH": "out/semantic-encoder",
+          "RUBERT_F1_ARTIFACT_PATH": "src/subcategory_extraction/semantic/semantic_encoder_f1/artifacts",
+          "JEV_REFERENCE_DATASET": "out/hybrid-training.jsonl",
+          "JEV_REFERENCE_MAX_CHARS": "1800",
+          "JEV_PROVIDER": "selectel",
+          "JEV_ENDPOINT": "https://api.selectel.ru/aig/v1/decisions",
+          "JEV_SEMANTIC_PROMPT": "auto"
+        },
+        "artifact_sha256": {
+          "src/subcategory_extraction/lexical/learned_keywords/artifacts/learned-keywords.json": "d06457a8c082171a096da05d18812528247c8c90e3c06157dc93e5ea6b65f3fa",
+          "src/subcategory_extraction/semantic/semantic_encoder_f1/artifacts/calibration.json": "08810b988729fc370d1c03677c38430a27da8a9501d9d6edc5d9532bd0e1dee4",
+          "src/subcategory_extraction/semantic/semantic_encoder_f1/artifacts/encoder/config.json": "5d75152afedf12d8b30edf67fc9fdd0eedf9578a70679373db46ba94256335a0",
+          "src/subcategory_extraction/semantic/semantic_encoder_f1/artifacts/encoder/model.safetensors": "9fc639dd6813e8481b7d21577924df1973636e38e5992bba20f06700b2d0ada1",
+          "src/subcategory_extraction/semantic/semantic_encoder_f1/artifacts/head.safetensors": "81f56fffeaf4a5460e36b362b3e7d3e804a1579a9f8b7ae6adeb357d3da4772b",
+          "src/subcategory_extraction/semantic/semantic_encoder_f1/artifacts/metadata.json": "d523ce9fd906ede91463053c94d664c5ae04b40b1588ce2802e5be0eb2d330f9",
+          "src/subcategory_extraction/semantic/semantic_encoder_f1/artifacts/tokenizer/special_tokens_map.json": "5d5b662e421ea9fac075174bb0688ee0d9431699900b90662acd44b2a350503a",
+          "src/subcategory_extraction/semantic/semantic_encoder_f1/artifacts/tokenizer/tokenizer.json": "b6a9f282c732603652189b1fc2f32a2e2578b43927c5cf44a2e3585631419bb0",
+          "src/subcategory_extraction/semantic/semantic_encoder_f1/artifacts/tokenizer/tokenizer_config.json": "71b22b163773e6d2a3bc53236a6dca9245f2e0422b09e2d9597dbf02825c7135",
+          "src/subcategory_extraction/semantic/semantic_encoder_f1/artifacts/tokenizer/vocab.txt": "f056a69b097422652053bf87565c35543e5d81540ca4b7dddd28de4157a969e0"
+        },
+        "training_table": "manual_train",
+        "selection": "existing configurations fixed before test; no threshold search"
+      },
+      "model_training_overlap": {
+        "checked": true,
+        "method": "normalized_exact_description",
+        "training_dataset": "manual_train",
+        "overlapping_rows": 13,
+        "row_numbers": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13
+        ]
+      },
+      "execution": "pipeline_run",
+      "reused_predictions": 0,
+      "model_provenance": {
+        "native": {
+          "provider": "selectel",
+          "model": "typesafe/jev-1.13",
+          "endpoint": "https://api.selectel.ru/aig/v1/decisions",
+          "prompt": "task",
+          "prompt_sha256": "f87247407f3cd387c615dcaddd8500eea1d5c06df511634b3374f7e317b6a901",
+          "thresholds": {
+            "101": 0.5,
+            "102": 0.27,
+            "103": 0.48,
+            "104": 0.20999999999999996,
+            "105": 0.3,
+            "106": 0.51
+          },
+          "training_dataset": "manual_train",
+          "calibration_sha256": "5dc7d9d28be8f0b3dd4319507b5dc62a2b17224cf90841228bc6c2db3dd09119"
+        },
+        "arbiter_model": "kimi-k3.1-pro",
+        "schema_in_system_prompt": true,
+        "arbiter_endpoint": "https://bestapi.fugue.pro/v1/chat/completions",
+        "prompt_sha256": "7ddde1b7d3ab1688e6dc57852c58c29a7149a5cb4aedeb8428f24ea7ce3c94c5",
+        "decision_type": "structured binary decisions; not calibrated probabilities",
+        "full_context": true
+      },
+      "metrics": {
+        "micro_f1": 0.7381974248927039,
+        "classification_points": 44.291845493562235,
+        "tp": 172,
+        "fp": 16,
+        "fn": 106
+      },
+      "fixed_threshold_metrics": {
+        "mode": "same_recorded_probabilities_with_fixed_0.5_not_a_new_model_run",
+        "metrics": {
+          "micro_f1": 0.7381974248927039,
+          "classification_points": 44.291845493562235,
+          "tp": 172,
+          "fp": 16,
+          "fn": 106
+        }
+      },
+      "measurement_metadata": {
+        "date": "2026-11-15T21:44:15+03:00",
+        "commit": "62c19623ba561d41bf9650ac4c9fa25a7310e815",
+        "code_sha256": "d6d071470d49cde59e1736ddd47905ccbb23b11512688eb1c4f72d2648b8a3d6",
+        "mode": "pipeline_run",
+        "protocol": {
+          "dataset_table": "manual_test",
+          "training_table": "manual_train",
+          "dataset_sha256": "fae05cba56fdf57a15aa3979afd828b73928efcca64694be5d805d34e002b99d",
+          "table_sha256": "fae05cba56fdf57a15aa3979afd828b73928efcca64694be5d805d34e002b99d",
+          "training_sha256": "6e53aa521160a02e8dcbfdd89281a16c07e817454910765bb0c67168a7ffcb27",
+          "rows": 139,
+          "source_mc_id_assumption": 101
+        },
+        "overlap": {
+          "checked": true,
+          "method": "normalized_exact_description",
+          "training_dataset": "manual_train",
+          "overlapping_rows": 13,
+          "row_numbers": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13
+          ]
+        },
+        "run_id": "2026-11-15-kimi-k3.1",
+        "inference_fingerprint": null
+      },
+      "module": "hybrid.jev_semantic_arbiter",
+      "comparison_configuration": {
+        "module": "hybrid.jev_semantic_arbiter",
+        "model_provenance": {
+          "native": {
+            "provider": "selectel",
+            "model": "typesafe/jev-1.13",
+            "endpoint": "https://api.selectel.ru/aig/v1/decisions",
+            "prompt": "task",
+            "prompt_sha256": "f87247407f3cd387c615dcaddd8500eea1d5c06df511634b3374f7e317b6a901",
+            "thresholds": {
+              "101": 0.5,
+              "102": 0.27,
+              "103": 0.48,
+              "104": 0.20999999999999996,
+              "105": 0.3,
+              "106": 0.51
+            },
+            "training_dataset": "manual_train",
+            "calibration_sha256": "5dc7d9d28be8f0b3dd4319507b5dc62a2b17224cf90841228bc6c2db3dd09119"
+          },
+          "arbiter_model": "kimi-k3.1-pro",
+          "schema_in_system_prompt": true,
+          "arbiter_endpoint": "https://bestapi.fugue.pro/v1/chat/completions",
+          "prompt_sha256": "7ddde1b7d3ab1688e6dc57852c58c29a7149a5cb4aedeb8428f24ea7ce3c94c5",
+          "decision_type": "structured binary decisions; not calibrated probabilities",
+          "full_context": true
+        }
+      },
+      "comparison_configuration_sha256": "76ebc43b829c2389802fed4e5999f88292909d5a5d7e515e0209efebc3ff9721",
+      "retry_history": [
+        {
+          "reason": "schema-invalid category set; rejected and retried once without changes",
+          "completed_prefix_rows": 132
+        }
+      ],
+      "comparison_note": "Fixed category rules/native calibration. Kimi receives explicit schema in system message; prior private partitions already observed, not a new holdout. F1 may reuse validated API caches; fresh latency is separate."
     }
   },
   "comparison_run": {

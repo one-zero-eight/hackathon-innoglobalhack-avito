@@ -77,6 +77,12 @@ CONFIGURATIONS = (
         "JEV_PROVIDER": "selectel", "JEV_MODEL": "typesafe/jev-1.13",
         "JEV_ENDPOINT": "https://api.selectel.ru/aig/v1/decisions", "JEV_SEMANTIC_PROMPT": "auto",
     }, "manual_train"),
+    Configuration("jev_semantic_arbiter::kimi-k3.1-pro", "hybrid.jev_semantic_arbiter", {
+        "JEV_PROVIDER": "selectel", "JEV_MODEL": "typesafe/jev-1.13",
+        "JEV_ENDPOINT": "https://api.selectel.ru/aig/v1/decisions", "JEV_SEMANTIC_PROMPT": "auto",
+        "STRUCTURED_LLM_MODEL": "kimi-k3.1-pro",
+        "STRUCTURED_LLM_SCHEMA_IN_PROMPT": "1",
+    }, "manual_train"),
     Configuration("jev::baseline", "decisions.jev", {"JEV_PROMPT_PATH": BASELINE}),
     Configuration("jev_boundaries", "decisions.jev_boundaries"),
     Configuration("jev_tfidf", "hybrid.jev_tfidf", {"JEV_PROMPT_PATH": GUIDED}, "case_train"),
@@ -101,6 +107,7 @@ LOCAL_METHODS = {"lexical.regex", "lexical.tfidf", "lexical.learned_keywords", "
 FIXED_ENVIRONMENT = {
     "JEV_MODEL": "jev-1.13.0", "LLM_MODEL_ID": "gemini-decision-1",
     "QWEN_DECISION_MODEL": "decision-model-preview", "STRUCTURED_LLM_MODEL": "gpt-6.1-terra",
+    "STRUCTURED_LLM_SCHEMA_IN_PROMPT": "0",
     "JEV_THRESHOLD": "0.5", "GOOGLE_DECISION_THRESHOLD": "0.5",
     "JEV_TFIDF_WEIGHT": "0.5", "JEV_TFIDF_THRESHOLD": "0.5",
     "LOCAL_JEV_MODEL": "jevos-v5", "LOCAL_JEV_THRESHOLD": "0.5",

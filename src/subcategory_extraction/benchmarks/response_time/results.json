@@ -9363,6 +9363,975 @@
         }
       },
       "comparison_configuration_sha256": "e4d7dacef782654b9c09144cf1bcd54bffaefb4cfe72b7ff84cbb1a6a55f674f"
+    },
+    "jev_semantic_arbiter::kimi-k3.1-pro": {
+      "status": "complete",
+      "model": "hybrid.jev_semantic_arbiter",
+      "rows": [
+        {
+          "group_id": "1755d70b12029ca196b7b0db67ab296db96a38e58bfa37db4f9eddc1e435d87e",
+          "seconds": 6.916484767003567,
+          "predicted": [
+            102,
+            103,
+            104,
+            105,
+            106
+          ],
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "api_clients": [
+            {
+              "client": "pipeline.arbiter",
+              "model": "kimi-k3.1-pro",
+              "cache_hit": false,
+              "http_attempts": null,
+              "usage": {
+                "completion_tokens": 112,
+                "prompt_tokens": 2112,
+                "prompt_tokens_details": {
+                  "cached_tokens": 2048
+                },
+                "total_tokens": 2224
+              }
+            },
+            {
+              "client": "pipeline.baseline.client",
+              "model": "typesafe/jev-1.13",
+              "cache_hit": false,
+              "http_attempts": null,
+              "usage": {
+                "input_tokens": 6278,
+                "output_tokens": 99,
+                "total_tokens": 6377,
+                "cost": 0.034830344,
+                "cost_details": {
+                  "input_cost": 0.034830344,
+                  "output_cost": 0
+                }
+              }
+            }
+          ]
+        },
+        {
+          "group_id": "df3453fa719bcc9c4120f73540192a23c48886d1d05117214da3af68fdc290c9",
+          "seconds": 17.73075452700141,
+          "predicted": [
+            102,
+            103,
+            104,
+            105,
+            106
+          ],
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "api_clients": [
+            {
+              "client": "pipeline.arbiter",
+              "model": "kimi-k3.1-pro",
+              "cache_hit": false,
+              "http_attempts": null,
+              "usage": {
+                "completion_tokens": 204,
+                "prompt_tokens": 2655,
+                "prompt_tokens_details": {
+                  "cached_tokens": 2560
+                },
+                "total_tokens": 2859
+              }
+            },
+            {
+              "client": "pipeline.baseline.client",
+              "model": "typesafe/jev-1.13",
+              "cache_hit": false,
+              "http_attempts": null,
+              "usage": {
+                "input_tokens": 6934,
+                "output_tokens": 99,
+                "total_tokens": 7033,
+                "cost": 0.038469832,
+                "cost_details": {
+                  "input_cost": 0.038469832,
+                  "output_cost": 0
+                }
+              }
+            }
+          ]
+        },
+        {
+          "group_id": "270d30c0fee5b8ec5ce8309bc25a5dec6f0a874bdf86a75c9e6c29d1a30c80b1",
+          "seconds": 17.37017588099843,
+          "predicted": [
+            102,
+            103,
+            104,
+            105,
+            106
+          ],
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "api_clients": [
+            {
+              "client": "pipeline.arbiter",
+              "model": "kimi-k3.1-pro",
+              "cache_hit": false,
+              "http_attempts": null,
+              "usage": {
+                "completion_tokens": 148,
+                "prompt_tokens": 3920,
+                "prompt_tokens_details": {
+                  "cached_tokens": 3840
+                },
+                "total_tokens": 4068
+              }
+            },
+            {
+              "client": "pipeline.baseline.client",
+              "model": "typesafe/jev-1.13",
+              "cache_hit": false,
+              "http_attempts": null,
+              "usage": {
+                "input_tokens": 8669,
+                "output_tokens": 99,
+                "total_tokens": 8768,
+                "cost": 0.048095612,
+                "cost_details": {
+                  "input_cost": 0.048095612,
+                  "output_cost": 0
+                }
+              }
+            }
+          ]
+        },
+        {
+          "group_id": "716b71093f6ffcb8457d664a34eaeafd6b20130cfc8a637d2324960aea030387",
+          "seconds": 11.57123792800121,
+          "predicted": [
+            102,
+            103,
+            104,
+            105,
+            106
+          ],
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "api_clients": [
+            {
+              "client": "pipeline.arbiter",
+              "model": "kimi-k3.1-pro",
+              "cache_hit": false,
+              "http_attempts": null,
+              "usage": {
+                "completion_tokens": 297,
+                "prompt_tokens": 1856,
+                "prompt_tokens_details": {
+                  "cached_tokens": 1792
+                },
+                "total_tokens": 2153
+              }
+            },
+            {
+              "client": "pipeline.baseline.client",
+              "model": "typesafe/jev-1.13",
+              "cache_hit": false,
+              "http_attempts": null,
+              "usage": {
+                "input_tokens": 5780,
+                "output_tokens": 99,
+                "total_tokens": 5879,
+                "cost": 0.03206744,
+                "cost_details": {
+                  "input_cost": 0.03206744,
+                  "output_cost": 0
+                }
+              }
+            }
+          ]
+        },
+        {
+          "group_id": "8d8689783ae7b2d19ae5d3e5a199cea32bf1458a91a5936230bdc502c4051cdf",
+          "seconds": 8.29878157699568,
+          "predicted": [
+            103,
+            104,
+            105,
+            106
+          ],
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "api_clients": [
+            {
+              "client": "pipeline.arbiter",
+              "model": "kimi-k3.1-pro",
+              "cache_hit": false,
+              "http_attempts": null,
+              "usage": {
+                "completion_tokens": 215,
+                "prompt_tokens": 1724,
+                "prompt_tokens_details": {
+                  "cached_tokens": 1536
+                },
+                "total_tokens": 1939
+              }
+            },
+            {
+              "client": "pipeline.baseline.client",
+              "model": "typesafe/jev-1.13",
+              "cache_hit": false,
+              "http_attempts": null,
+              "usage": {
+                "input_tokens": 5608,
+                "output_tokens": 99,
+                "total_tokens": 5707,
+                "cost": 0.031113184,
+                "cost_details": {
+                  "input_cost": 0.031113184,
+                  "output_cost": 0
+                }
+              }
+            }
+          ]
+        },
+        {
+          "group_id": "bdcf8534a4ad2c0f2d370814f3b22e61e250e397c60d1c1dc45b54364947a03d",
+          "seconds": 15.150882932000968,
+          "predicted": [
+            102,
+            103,
+            104,
+            105,
+            106
+          ],
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "api_clients": [
+            {
+              "client": "pipeline.arbiter",
+              "model": "kimi-k3.1-pro",
+              "cache_hit": false,
+              "http_attempts": null,
+              "usage": {
+                "completion_tokens": 162,
+                "prompt_tokens": 2789,
+                "prompt_tokens_details": {
+                  "cached_tokens": 2560
+                },
+                "total_tokens": 2951
+              }
+            },
+            {
+              "client": "pipeline.baseline.client",
+              "model": "typesafe/jev-1.13",
+              "cache_hit": false,
+              "http_attempts": null,
+              "usage": {
+                "input_tokens": 7089,
+                "output_tokens": 99,
+                "total_tokens": 7188,
+                "cost": 0.039329772,
+                "cost_details": {
+                  "input_cost": 0.039329772,
+                  "output_cost": 0
+                }
+              }
+            }
+          ]
+        },
+        {
+          "group_id": "5524cc0b4bc58d27f2d87abc371da359477b802a890b3d21bc34fc51e0214caa",
+          "seconds": 9.345007074000023,
+          "predicted": [
+            102,
+            104,
+            105,
+            106
+          ],
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "api_clients": [
+            {
+              "client": "pipeline.arbiter",
+              "model": "kimi-k3.1-pro",
+              "cache_hit": false,
+              "http_attempts": null,
+              "usage": {
+                "completion_tokens": 166,
+                "prompt_tokens": 2082,
+                "prompt_tokens_details": {
+                  "cached_tokens": 1792
+                },
+                "total_tokens": 2248
+              }
+            },
+            {
+              "client": "pipeline.baseline.client",
+              "model": "typesafe/jev-1.13",
+              "cache_hit": false,
+              "http_attempts": null,
+              "usage": {
+                "input_tokens": 6072,
+                "output_tokens": 99,
+                "total_tokens": 6171,
+                "cost": 0.033687456,
+                "cost_details": {
+                  "input_cost": 0.033687456,
+                  "output_cost": 0
+                }
+              }
+            }
+          ]
+        },
+        {
+          "group_id": "01feb66f2e21c5fb187fedd281f87e93c750cae9f62dd731f95d32ec0e2c0807",
+          "seconds": 7.884071633998246,
+          "predicted": [
+            102,
+            103,
+            104,
+            105,
+            106
+          ],
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "api_clients": [
+            {
+              "client": "pipeline.arbiter",
+              "model": "kimi-k3.1-pro",
+              "cache_hit": false,
+              "http_attempts": null,
+              "usage": {
+                "completion_tokens": 221,
+                "prompt_tokens": 2607,
+                "prompt_tokens_details": {
+                  "cached_tokens": 768
+                },
+                "total_tokens": 2828
+              }
+            },
+            {
+              "client": "pipeline.baseline.client",
+              "model": "typesafe/jev-1.13",
+              "cache_hit": false,
+              "http_attempts": null,
+              "usage": {
+                "input_tokens": 7027,
+                "output_tokens": 99,
+                "total_tokens": 7126,
+                "cost": 0.038985796,
+                "cost_details": {
+                  "input_cost": 0.038985796,
+                  "output_cost": 0
+                }
+              }
+            }
+          ]
+        },
+        {
+          "group_id": "1f07801ecf1efcabe5f51f854601df2993b41894476fb12115c72242d382ab08",
+          "seconds": 12.494826870002726,
+          "predicted": [
+            104,
+            105
+          ],
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "api_clients": [
+            {
+              "client": "pipeline.arbiter",
+              "model": "kimi-k3.1-pro",
+              "cache_hit": false,
+              "http_attempts": null,
+              "usage": {
+                "completion_tokens": 369,
+                "prompt_tokens": 2757,
+                "prompt_tokens_details": {
+                  "cached_tokens": 768
+                },
+                "total_tokens": 3126
+              }
+            },
+            {
+              "client": "pipeline.baseline.client",
+              "model": "typesafe/jev-1.13",
+              "cache_hit": false,
+              "http_attempts": null,
+              "usage": {
+                "input_tokens": 7096,
+                "output_tokens": 99,
+                "total_tokens": 7195,
+                "cost": 0.039368608,
+                "cost_details": {
+                  "input_cost": 0.039368608,
+                  "output_cost": 0
+                }
+              }
+            }
+          ]
+        },
+        {
+          "group_id": "b06fa5d52b80f154594a544c282106fb90f32dccc057b670b9ad89a60e27d185",
+          "seconds": 14.625970814995526,
+          "predicted": [
+            102,
+            106
+          ],
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "api_clients": [
+            {
+              "client": "pipeline.arbiter",
+              "model": "kimi-k3.1-pro",
+              "cache_hit": false,
+              "http_attempts": null,
+              "usage": {
+                "completion_tokens": 377,
+                "prompt_tokens": 2292,
+                "prompt_tokens_details": {
+                  "cached_tokens": 768
+                },
+                "total_tokens": 2669
+              }
+            },
+            {
+              "client": "pipeline.baseline.client",
+              "model": "typesafe/jev-1.13",
+              "cache_hit": false,
+              "http_attempts": null,
+              "usage": {
+                "input_tokens": 6383,
+                "output_tokens": 99,
+                "total_tokens": 6482,
+                "cost": 0.035412884,
+                "cost_details": {
+                  "input_cost": 0.035412884,
+                  "output_cost": 0
+                }
+              }
+            }
+          ]
+        }
+      ],
+      "configuration": {
+        "key": "jev_semantic_arbiter::kimi-k3.1-pro",
+        "module": "hybrid.jev_semantic_arbiter",
+        "environment": {
+          "JEV_MODEL": "typesafe/jev-1.13",
+          "LLM_MODEL_ID": "gemini-decision-1",
+          "QWEN_DECISION_MODEL": "decision-model-preview",
+          "STRUCTURED_LLM_MODEL": "kimi-k3.1-pro",
+          "STRUCTURED_LLM_SCHEMA_IN_PROMPT": "1",
+          "JEV_THRESHOLD": "0.5",
+          "GOOGLE_DECISION_THRESHOLD": "0.5",
+          "JEV_TFIDF_WEIGHT": "0.5",
+          "JEV_TFIDF_THRESHOLD": "0.5",
+          "LOCAL_JEV_MODEL": "jevos-v5",
+          "LOCAL_JEV_THRESHOLD": "0.5",
+          "SEMANTIC_ENCODER_DEVICE": "cpu",
+          "RUBERT_F1_DEVICE": "cpu",
+          "TFIDF_ARTIFACT_PATH": "out/classifier-methods/tfidf.json",
+          "LEARNED_KEYWORDS_ARTIFACT": "src/subcategory_extraction/lexical/learned_keywords/artifacts/learned-keywords.json",
+          "SEMANTIC_ENCODER_ARTIFACT_PATH": "out/semantic-encoder",
+          "RUBERT_F1_ARTIFACT_PATH": "src/subcategory_extraction/semantic/semantic_encoder_f1/artifacts",
+          "JEV_REFERENCE_DATASET": "out/hybrid-training.jsonl",
+          "JEV_REFERENCE_MAX_CHARS": "1800",
+          "JEV_PROVIDER": "selectel",
+          "JEV_ENDPOINT": "https://api.selectel.ru/aig/v1/decisions",
+          "JEV_SEMANTIC_PROMPT": "auto"
+        },
+        "artifact_sha256": {
+          "src/subcategory_extraction/lexical/learned_keywords/artifacts/learned-keywords.json": "d06457a8c082171a096da05d18812528247c8c90e3c06157dc93e5ea6b65f3fa",
+          "src/subcategory_extraction/semantic/semantic_encoder_f1/artifacts/calibration.json": "08810b988729fc370d1c03677c38430a27da8a9501d9d6edc5d9532bd0e1dee4",
+          "src/subcategory_extraction/semantic/semantic_encoder_f1/artifacts/encoder/config.json": "5d75152afedf12d8b30edf67fc9fdd0eedf9578a70679373db46ba94256335a0",
+          "src/subcategory_extraction/semantic/semantic_encoder_f1/artifacts/encoder/model.safetensors": "9fc639dd6813e8481b7d21577924df1973636e38e5992bba20f06700b2d0ada1",
+          "src/subcategory_extraction/semantic/semantic_encoder_f1/artifacts/head.safetensors": "81f56fffeaf4a5460e36b362b3e7d3e804a1579a9f8b7ae6adeb357d3da4772b",
+          "src/subcategory_extraction/semantic/semantic_encoder_f1/artifacts/metadata.json": "d523ce9fd906ede91463053c94d664c5ae04b40b1588ce2802e5be0eb2d330f9",
+          "src/subcategory_extraction/semantic/semantic_encoder_f1/artifacts/tokenizer/special_tokens_map.json": "5d5b662e421ea9fac075174bb0688ee0d9431699900b90662acd44b2a350503a",
+          "src/subcategory_extraction/semantic/semantic_encoder_f1/artifacts/tokenizer/tokenizer.json": "b6a9f282c732603652189b1fc2f32a2e2578b43927c5cf44a2e3585631419bb0",
+          "src/subcategory_extraction/semantic/semantic_encoder_f1/artifacts/tokenizer/tokenizer_config.json": "71b22b163773e6d2a3bc53236a6dca9245f2e0422b09e2d9597dbf02825c7135",
+          "src/subcategory_extraction/semantic/semantic_encoder_f1/artifacts/tokenizer/vocab.txt": "f056a69b097422652053bf87565c35543e5d81540ca4b7dddd28de4157a969e0"
+        },
+        "training_table": "manual_train",
+        "selection": "existing configurations fixed before test; no threshold search"
+      },
+      "measurement_metadata": {
+        "date": "2026-11-15T21:48:37+03:00",
+        "commit": "62c19623ba561d41bf9650ac4c9fa25a7310e815",
+        "code_sha256": "d6d071470d49cde59e1736ddd47905ccbb23b11512688eb1c4f72d2648b8a3d6",
+        "machine": "Linux-7.0.0-43-generic-x86_64-with-glibc2.43",
+        "environment": {
+          "OMP_NUM_THREADS": "1",
+          "OPENBLAS_NUM_THREADS": "1",
+          "MKL_NUM_THREADS": "1",
+          "TOKENIZERS_PARALLELISM": "false"
+        },
+        "run_id": "2026-11-15-kimi-k3.1",
+        "protocol": null,
+        "inference_fingerprint": null
+      },
+      "model_provenance": {
+        "native": {
+          "provider": "selectel",
+          "model": "typesafe/jev-1.13",
+          "endpoint": "https://api.selectel.ru/aig/v1/decisions",
+          "prompt": "task",
+          "prompt_sha256": "f87247407f3cd387c615dcaddd8500eea1d5c06df511634b3374f7e317b6a901",
+          "thresholds": {
+            "101": 0.5,
+            "102": 0.27,
+            "103": 0.48,
+            "104": 0.20999999999999996,
+            "105": 0.3,
+            "106": 0.51
+          },
+          "training_dataset": "manual_train",
+          "calibration_sha256": "5dc7d9d28be8f0b3dd4319507b5dc62a2b17224cf90841228bc6c2db3dd09119"
+        },
+        "arbiter_model": "kimi-k3.1-pro",
+        "schema_in_system_prompt": true,
+        "arbiter_endpoint": "https://bestapi.fugue.pro/v1/chat/completions",
+        "prompt_sha256": "7ddde1b7d3ab1688e6dc57852c58c29a7149a5cb4aedeb8428f24ea7ce3c94c5",
+        "decision_type": "structured binary decisions; not calibrated probabilities",
+        "full_context": true
+      },
+      "timing_scope": {
+        "loading_included": false,
+        "first_call_included": true,
+        "cache_enabled": null,
+        "quota_wait_and_retries_included_if_any": true,
+        "warmup": false,
+        "fresh_client_caches": true,
+        "p95_method": "numpy.percentile linear interpolation"
+      },
+      "response_time": {
+        "calls": 10,
+        "total_seconds": 121.38819400499779,
+        "mean_seconds": 12.138819400499779,
+        "median_seconds": 12.033032399001968,
+        "p95_seconds": 17.568494136300068,
+        "min_seconds": 6.916484767003567,
+        "max_seconds": 17.73075452700141
+      },
+      "module": "hybrid.jev_semantic_arbiter",
+      "comparison_configuration": {
+        "module": "hybrid.jev_semantic_arbiter",
+        "model_provenance": {
+          "native": {
+            "provider": "selectel",
+            "model": "typesafe/jev-1.13",
+            "endpoint": "https://api.selectel.ru/aig/v1/decisions",
+            "prompt": "task",
+            "prompt_sha256": "f87247407f3cd387c615dcaddd8500eea1d5c06df511634b3374f7e317b6a901",
+            "thresholds": {
+              "101": 0.5,
+              "102": 0.27,
+              "103": 0.48,
+              "104": 0.20999999999999996,
+              "105": 0.3,
+              "106": 0.51
+            },
+            "training_dataset": "manual_train",
+            "calibration_sha256": "5dc7d9d28be8f0b3dd4319507b5dc62a2b17224cf90841228bc6c2db3dd09119"
+          },
+          "arbiter_model": "kimi-k3.1-pro",
+          "schema_in_system_prompt": true,
+          "arbiter_endpoint": "https://bestapi.fugue.pro/v1/chat/completions",
+          "prompt_sha256": "7ddde1b7d3ab1688e6dc57852c58c29a7149a5cb4aedeb8428f24ea7ce3c94c5",
+          "decision_type": "structured binary decisions; not calibrated probabilities",
+          "full_context": true
+        }
+      },
+      "comparison_configuration_sha256": "76ebc43b829c2389802fed4e5999f88292909d5a5d7e515e0209efebc3ff9721",
+      "previous_failed_timing_attempt": {
+        "status": "failed",
+        "model": "hybrid.jev_semantic_arbiter",
+        "rows": [
+          {
+            "group_id": "1755d70b12029ca196b7b0db67ab296db96a38e58bfa37db4f9eddc1e435d87e",
+            "seconds": 9.791445903996646,
+            "predicted": [
+              102,
+              103,
+              104,
+              105,
+              106
+            ],
+            "cache_hit": null,
+            "http_attempts": null,
+            "usage": null,
+            "api_clients": [
+              {
+                "client": "pipeline.arbiter",
+                "model": "kimi-k3.1-pro",
+                "cache_hit": false,
+                "http_attempts": null,
+                "usage": {
+                  "completion_tokens": 162,
+                  "prompt_tokens": 2112,
+                  "prompt_tokens_details": {
+                    "cached_tokens": 768
+                  },
+                  "total_tokens": 2274
+                }
+              },
+              {
+                "client": "pipeline.baseline.client",
+                "model": "typesafe/jev-1.13",
+                "cache_hit": false,
+                "http_attempts": null,
+                "usage": {
+                  "input_tokens": 6278,
+                  "output_tokens": 99,
+                  "total_tokens": 6377,
+                  "cost": 0.034830344,
+                  "cost_details": {
+                    "input_cost": 0.034830344,
+                    "output_cost": 0
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "group_id": "df3453fa719bcc9c4120f73540192a23c48886d1d05117214da3af68fdc290c9",
+            "seconds": 26.479290934003075,
+            "predicted": [
+              102,
+              103,
+              104,
+              105,
+              106
+            ],
+            "cache_hit": null,
+            "http_attempts": null,
+            "usage": null,
+            "api_clients": [
+              {
+                "client": "pipeline.arbiter",
+                "model": "kimi-k3.1-pro",
+                "cache_hit": false,
+                "http_attempts": null,
+                "usage": {
+                  "completion_tokens": 211,
+                  "prompt_tokens": 2655,
+                  "prompt_tokens_details": {
+                    "cached_tokens": 768
+                  },
+                  "total_tokens": 2866
+                }
+              },
+              {
+                "client": "pipeline.baseline.client",
+                "model": "typesafe/jev-1.13",
+                "cache_hit": false,
+                "http_attempts": null,
+                "usage": {
+                  "input_tokens": 6934,
+                  "output_tokens": 99,
+                  "total_tokens": 7033,
+                  "cost": 0.038469832,
+                  "cost_details": {
+                    "input_cost": 0.038469832,
+                    "output_cost": 0
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "group_id": "270d30c0fee5b8ec5ce8309bc25a5dec6f0a874bdf86a75c9e6c29d1a30c80b1",
+            "seconds": 13.926916584001447,
+            "predicted": [
+              102,
+              103,
+              104,
+              105,
+              106
+            ],
+            "cache_hit": null,
+            "http_attempts": null,
+            "usage": null,
+            "api_clients": [
+              {
+                "client": "pipeline.arbiter",
+                "model": "kimi-k3.1-pro",
+                "cache_hit": false,
+                "http_attempts": null,
+                "usage": {
+                  "completion_tokens": 138,
+                  "prompt_tokens": 3920,
+                  "prompt_tokens_details": {
+                    "cached_tokens": 768
+                  },
+                  "total_tokens": 4058
+                }
+              },
+              {
+                "client": "pipeline.baseline.client",
+                "model": "typesafe/jev-1.13",
+                "cache_hit": false,
+                "http_attempts": null,
+                "usage": {
+                  "input_tokens": 8669,
+                  "output_tokens": 99,
+                  "total_tokens": 8768,
+                  "cost": 0.048095612,
+                  "cost_details": {
+                    "input_cost": 0.048095612,
+                    "output_cost": 0
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "group_id": "716b71093f6ffcb8457d664a34eaeafd6b20130cfc8a637d2324960aea030387",
+            "seconds": 14.232194575000904,
+            "predicted": [
+              102,
+              103,
+              104,
+              105,
+              106
+            ],
+            "cache_hit": null,
+            "http_attempts": null,
+            "usage": null,
+            "api_clients": [
+              {
+                "client": "pipeline.arbiter",
+                "model": "kimi-k3.1-pro",
+                "cache_hit": false,
+                "http_attempts": null,
+                "usage": {
+                  "completion_tokens": 159,
+                  "prompt_tokens": 1856,
+                  "prompt_tokens_details": {
+                    "cached_tokens": 768
+                  },
+                  "total_tokens": 2015
+                }
+              },
+              {
+                "client": "pipeline.baseline.client",
+                "model": "typesafe/jev-1.13",
+                "cache_hit": false,
+                "http_attempts": null,
+                "usage": {
+                  "input_tokens": 5780,
+                  "output_tokens": 99,
+                  "total_tokens": 5879,
+                  "cost": 0.03206744,
+                  "cost_details": {
+                    "input_cost": 0.03206744,
+                    "output_cost": 0
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "group_id": "8d8689783ae7b2d19ae5d3e5a199cea32bf1458a91a5936230bdc502c4051cdf",
+            "seconds": 14.070492608996574,
+            "predicted": [
+              103,
+              104,
+              105,
+              106
+            ],
+            "cache_hit": null,
+            "http_attempts": null,
+            "usage": null,
+            "api_clients": [
+              {
+                "client": "pipeline.arbiter",
+                "model": "kimi-k3.1-pro",
+                "cache_hit": false,
+                "http_attempts": null,
+                "usage": {
+                  "completion_tokens": 240,
+                  "prompt_tokens": 1724,
+                  "prompt_tokens_details": {
+                    "cached_tokens": 768
+                  },
+                  "total_tokens": 1964
+                }
+              },
+              {
+                "client": "pipeline.baseline.client",
+                "model": "typesafe/jev-1.13",
+                "cache_hit": false,
+                "http_attempts": null,
+                "usage": {
+                  "input_tokens": 5608,
+                  "output_tokens": 99,
+                  "total_tokens": 5707,
+                  "cost": 0.031113184,
+                  "cost_details": {
+                    "input_cost": 0.031113184,
+                    "output_cost": 0
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "group_id": "bdcf8534a4ad2c0f2d370814f3b22e61e250e397c60d1c1dc45b54364947a03d",
+            "seconds": 6.825902460004727,
+            "predicted": [
+              102,
+              103,
+              104,
+              105,
+              106
+            ],
+            "cache_hit": null,
+            "http_attempts": null,
+            "usage": null,
+            "api_clients": [
+              {
+                "client": "pipeline.arbiter",
+                "model": "kimi-k3.1-pro",
+                "cache_hit": false,
+                "http_attempts": null,
+                "usage": {
+                  "completion_tokens": 139,
+                  "prompt_tokens": 2789,
+                  "prompt_tokens_details": {
+                    "cached_tokens": 768
+                  },
+                  "total_tokens": 2928
+                }
+              },
+              {
+                "client": "pipeline.baseline.client",
+                "model": "typesafe/jev-1.13",
+                "cache_hit": false,
+                "http_attempts": null,
+                "usage": {
+                  "input_tokens": 7089,
+                  "output_tokens": 99,
+                  "total_tokens": 7188,
+                  "cost": 0.039329772,
+                  "cost_details": {
+                    "input_cost": 0.039329772,
+                    "output_cost": 0
+                  }
+                }
+              }
+            ]
+          }
+        ],
+        "configuration": {
+          "key": "jev_semantic_arbiter::kimi-k3.1-pro",
+          "module": "hybrid.jev_semantic_arbiter",
+          "environment": {
+            "JEV_MODEL": "typesafe/jev-1.13",
+            "LLM_MODEL_ID": "gemini-decision-1",
+            "QWEN_DECISION_MODEL": "decision-model-preview",
+            "STRUCTURED_LLM_MODEL": "kimi-k3.1-pro",
+            "STRUCTURED_LLM_SCHEMA_IN_PROMPT": "1",
+            "JEV_THRESHOLD": "0.5",
+            "GOOGLE_DECISION_THRESHOLD": "0.5",
+            "JEV_TFIDF_WEIGHT": "0.5",
+            "JEV_TFIDF_THRESHOLD": "0.5",
+            "LOCAL_JEV_MODEL": "jevos-v5",
+            "LOCAL_JEV_THRESHOLD": "0.5",
+            "SEMANTIC_ENCODER_DEVICE": "cpu",
+            "RUBERT_F1_DEVICE": "cpu",
+            "TFIDF_ARTIFACT_PATH": "out/classifier-methods/tfidf.json",
+            "LEARNED_KEYWORDS_ARTIFACT": "src/subcategory_extraction/lexical/learned_keywords/artifacts/learned-keywords.json",
+            "SEMANTIC_ENCODER_ARTIFACT_PATH": "out/semantic-encoder",
+            "RUBERT_F1_ARTIFACT_PATH": "src/subcategory_extraction/semantic/semantic_encoder_f1/artifacts",
+            "JEV_REFERENCE_DATASET": "out/hybrid-training.jsonl",
+            "JEV_REFERENCE_MAX_CHARS": "1800",
+            "JEV_PROVIDER": "selectel",
+            "JEV_ENDPOINT": "https://api.selectel.ru/aig/v1/decisions",
+            "JEV_SEMANTIC_PROMPT": "auto"
+          },
+          "artifact_sha256": {
+            "src/subcategory_extraction/lexical/learned_keywords/artifacts/learned-keywords.json": "d06457a8c082171a096da05d18812528247c8c90e3c06157dc93e5ea6b65f3fa",
+            "src/subcategory_extraction/semantic/semantic_encoder_f1/artifacts/calibration.json": "08810b988729fc370d1c03677c38430a27da8a9501d9d6edc5d9532bd0e1dee4",
+            "src/subcategory_extraction/semantic/semantic_encoder_f1/artifacts/encoder/config.json": "5d75152afedf12d8b30edf67fc9fdd0eedf9578a70679373db46ba94256335a0",
+            "src/subcategory_extraction/semantic/semantic_encoder_f1/artifacts/encoder/model.safetensors": "9fc639dd6813e8481b7d21577924df1973636e38e5992bba20f06700b2d0ada1",
+            "src/subcategory_extraction/semantic/semantic_encoder_f1/artifacts/head.safetensors": "81f56fffeaf4a5460e36b362b3e7d3e804a1579a9f8b7ae6adeb357d3da4772b",
+            "src/subcategory_extraction/semantic/semantic_encoder_f1/artifacts/metadata.json": "d523ce9fd906ede91463053c94d664c5ae04b40b1588ce2802e5be0eb2d330f9",
+            "src/subcategory_extraction/semantic/semantic_encoder_f1/artifacts/tokenizer/special_tokens_map.json": "5d5b662e421ea9fac075174bb0688ee0d9431699900b90662acd44b2a350503a",
+            "src/subcategory_extraction/semantic/semantic_encoder_f1/artifacts/tokenizer/tokenizer.json": "b6a9f282c732603652189b1fc2f32a2e2578b43927c5cf44a2e3585631419bb0",
+            "src/subcategory_extraction/semantic/semantic_encoder_f1/artifacts/tokenizer/tokenizer_config.json": "71b22b163773e6d2a3bc53236a6dca9245f2e0422b09e2d9597dbf02825c7135",
+            "src/subcategory_extraction/semantic/semantic_encoder_f1/artifacts/tokenizer/vocab.txt": "f056a69b097422652053bf87565c35543e5d81540ca4b7dddd28de4157a969e0"
+          },
+          "training_table": "manual_train",
+          "selection": "existing configurations fixed before test; no threshold search"
+        },
+        "measurement_metadata": {
+          "date": "2026-11-15T21:45:20+03:00",
+          "commit": "62c19623ba561d41bf9650ac4c9fa25a7310e815",
+          "code_sha256": "d6d071470d49cde59e1736ddd47905ccbb23b11512688eb1c4f72d2648b8a3d6",
+          "machine": "Linux-7.0.0-43-generic-x86_64-with-glibc2.43",
+          "environment": {
+            "OMP_NUM_THREADS": "1",
+            "OPENBLAS_NUM_THREADS": "1",
+            "MKL_NUM_THREADS": "1",
+            "TOKENIZERS_PARALLELISM": "false"
+          }
+        },
+        "model_provenance": {
+          "native": {
+            "provider": "selectel",
+            "model": "typesafe/jev-1.13",
+            "endpoint": "https://api.selectel.ru/aig/v1/decisions",
+            "prompt": "task",
+            "prompt_sha256": "f87247407f3cd387c615dcaddd8500eea1d5c06df511634b3374f7e317b6a901",
+            "thresholds": {
+              "101": 0.5,
+              "102": 0.27,
+              "103": 0.48,
+              "104": 0.20999999999999996,
+              "105": 0.3,
+              "106": 0.51
+            },
+            "training_dataset": "manual_train",
+            "calibration_sha256": "5dc7d9d28be8f0b3dd4319507b5dc62a2b17224cf90841228bc6c2db3dd09119"
+          },
+          "arbiter_model": "kimi-k3.1-pro",
+          "schema_in_system_prompt": true,
+          "arbiter_endpoint": "https://bestapi.fugue.pro/v1/chat/completions",
+          "prompt_sha256": "7ddde1b7d3ab1688e6dc57852c58c29a7149a5cb4aedeb8428f24ea7ce3c94c5",
+          "decision_type": "structured binary decisions; not calibrated probabilities",
+          "full_context": true
+        },
+        "timing_scope": {
+          "loading_included": false,
+          "first_call_included": true,
+          "cache_enabled": null,
+          "quota_wait_and_retries_included_if_any": true,
+          "warmup": false,
+          "fresh_client_caches": true,
+          "p95_method": "numpy.percentile linear interpolation"
+        },
+        "error": "ValidationError: 1 validation error for Response\n  Value error, Ответ арбитра должен содержать ровно все переданные категории [type=value_error, input_value={'decisions': [{'mcId': 1... 106, 'offered': True}]}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.14/v/value_error",
+        "failed_seconds": 10.08908416399936,
+        "response_time": {
+          "calls": 6,
+          "total_seconds": 85.32624306600337,
+          "mean_seconds": 14.221040511000561,
+          "median_seconds": 13.99870459649901,
+          "p95_seconds": 23.417516844252532,
+          "min_seconds": 6.825902460004727,
+          "max_seconds": 26.479290934003075
+        }
+      },
+      "comparison_note": "Fixed category rules/native calibration. Kimi receives explicit schema in system message; prior private partitions already observed, not a new holdout. F1 may reuse validated API caches; fresh latency is separate."
     }
   },
   "status": "failed",
