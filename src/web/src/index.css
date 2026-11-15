@@ -1,0 +1,243 @@
+/*
+ * Порядок CSS-слоёв важен для каскада: Tailwind utilities должны
+ * перекрывать стили компонентов Mantine, а не наоборот.
+ */
+@layer theme, base, components, utilities;
+
+/* Сброс и базовые стили Mantine (свой preflight-подобный reset). */
+@import '@mantine/core/styles.css' layer(components);
+
+/*
+ * Tailwind v4 подключаем точечно: только theme и utilities.
+ * Полноценный `@import 'tailwindcss'` (со слоем base/preflight) НЕ
+ * используем, чтобы preflight Tailwind не конфликтовал с reset'ом Mantine.
+ */
+@import 'tailwindcss/theme.css' layer(theme);
+@import 'tailwindcss/utilities.css' layer(utilities);
+
+/*
+ * Базовые цвета страницы вне слоёв: приоритет выше Mantine-слоя, поэтому
+ * фон страницы и цвет текста детерминированы. Поверхности карточек
+ * (Paper/AppShell) остаются белыми через --mantine-color-body.
+ *
+ * Hex-значения фирменных цветов живут только здесь и в theme.ts:
+ * компоненты берут цвета из CSS-переменных Mantine (--mantine-color-*).
+ */
+html {
+  background-color: #f4f5f6;
+}
+
+body {
+  background-color: #f4f5f6;
+  color: #2b2b2b;
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+:root {
+  /* Плавные переходы в фирменном диапазоне 150–250 мс. */
+  --transition-duration: 180ms;
+  --transition-duration-expand: 220ms;
+
+  /* Радужная градиентная линия в стиле Avito (цвета из палитр темы). */
+  --avito-rainbow: linear-gradient(
+    90deg,
+    var(--mantine-color-brandGreen-5) 0%,
+    var(--mantine-color-avito-5) 28%,
+    var(--mantine-color-brandViolet-5) 55%,
+    var(--mantine-color-brandCoral-5) 78%,
+    var(--mantine-color-brandYellow-5) 100%
+  );
+}
+
+/* Цветная полоса-акцент под шапкой страницы. */
+.avito-accent-line {
+  block-size: 4px;
+  background: var(--avito-rainbow);
+  background-size: 200% 100%;
+}
+
+/* Панели перекрываются, а контейнер плавно следует за высотой активной. */
+.input-panels-viewport {
+  position: relative;
+  overflow: hidden;
+  transition: height var(--transition-duration-expand) ease-out;
+}
+
+.input-panel {
+  position: absolute;
+  inset: 0 0 auto;
+  opacity: 1;
+  translate: 0 0;
+  transition:
+    display var(--transition-duration) ease-out,
+    opacity var(--transition-duration) ease-out,
+    translate var(--transition-duration) ease-out;
+  transition-behavior: allow-discrete;
+}
+
+.input-panel[hidden] {
+  display: none;
+  opacity: 0;
+  translate: 0 6px;
+}
+
+@starting-style {
+  .input-panel {
+    opacity: 0;
+    translate: 0 6px;
+  }
+}
+
+/* Короткая обратная связь у кнопок и интерактивных поверхностей. */
+:where(
+  .mantine-Button-root,
+  .mantine-ActionIcon-root,
+  .mantine-SegmentedControl-label,
+  .mantine-Dropzone-root,
+  .mantine-Anchor-root
+) {
+  transition:
+    color var(--transition-duration) ease-out,
+    background-color var(--transition-duration) ease-out,
+    border-color var(--transition-duration) ease-out,
+    box-shadow var(--transition-duration) ease-out,
+    translate var(--transition-duration) ease-out;
+}
+
+:where(.mantine-Button-root, .mantine-ActionIcon-root):active {
+  translate: 0 1px;
+}
+
+@media (hover: hover) {
+  :where(
+    .mantine-Button-root[data-variant='filled'],
+    .mantine-Button-root[data-variant='light'],
+    .mantine-ActionIcon-root[data-variant='filled'],
+    .mantine-ActionIcon-root[data-variant='light']
+  ):hover {
+    box-shadow: var(--mantine-shadow-xs);
+  }
+}
+
+/* Карточка черновика: мягкий подъём при наведении + цветная топ-полоска. */
+.avito-card {
+  transition:
+    box-shadow var(--transition-duration) ease-out,
+    border-color var(--transition-duration) ease-out,
+    translate var(--transition-duration) ease-out;
+}
+
+@media (hover: hover) {
+  .avito-card:hover {
+    translate: 0 -2px;
+    border-color: var(--mantine-color-avito-3);
+    box-shadow: var(--mantine-shadow-sm);
+  }
+}
+
+.avito-card-accent {
+  block-size: 4px;
+  border-start-start-radius: var(--mantine-radius-sm);
+  border-start-end-radius: var(--mantine-radius-sm);
+}
+
+.draft-text-collapsible {
+  overflow: hidden;
+  transition: height var(--transition-duration-expand) ease-out;
+}
+
+@keyframes avito-result-enter {
+  from {
+    opacity: 0;
+    translate: 0 6px;
+  }
+  to {
+    opacity: 1;
+    translate: 0 0;
+  }
+}
+
+/* Ватермарк-лого: очень светлый, не мешает чтению, не ловит клики. */
+.avito-watermark {
+  position: absolute;
+  inset-block-end: -14px;
+  inset-inline-end: -6px;
+  inline-size: 190px;
+  opacity: 0.05;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* Пульсация фирменного знака в скелетоне загрузки. */
+@keyframes avito-pulse {
+  0%,
+  100% {
+    opacity: 0.35;
+    scale: 1;
+  }
+  50% {
+    opacity: 0.9;
+    scale: 1.06;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .avito-card {
+    animation: avito-result-enter 200ms ease-out;
+  }
+
+  .avito-pulse {
+    animation: avito-pulse 1.4s ease-in-out infinite;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .input-panels-viewport,
+  .input-panel,
+  .avito-card,
+  .draft-text-collapsible {
+    translate: none;
+    transition: none;
+  }
+
+  .avito-card:hover,
+  :where(.mantine-Button-root, .mantine-ActionIcon-root):active {
+    translate: none;
+  }
+
+  :where(
+    .mantine-Button-root,
+    .mantine-ActionIcon-root,
+    .mantine-SegmentedControl-label,
+    .mantine-Dropzone-root,
+    .mantine-Anchor-root
+  ) {
+    transition-property: color, background-color, border-color, box-shadow;
+  }
+
+  @starting-style {
+    .input-panel {
+      translate: none;
+    }
+  }
+}
+
+/*
+ * Тач-цели: поля ввода и кнопки не ниже 44 px. В Mantine по умолчанию
+ * size="sm" (36 px), а переменная --input-height вычисляется на обёртке
+ * InputWrapper, поэтому переопределяем её на элементах по стабильным
+ * именам классов; правило вне слоёв приоритетнее styles.css Mantine.
+ */
+.mantine-Input-wrapper,
+.mantine-Combobox-wrapper {
+  --input-height-sm: 2.75rem;
+  --input-height-md: 2.75rem;
+}
+
+/* Видимый фокус в фирменном синем — выше дефолтного outline Mantine. */
+:focus-visible {
+  outline: 2px solid var(--mantine-color-avito-7);
+  outline-offset: 2px;
+}

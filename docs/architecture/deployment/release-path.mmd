@@ -1,0 +1,52 @@
+%% Release path — hackathon solution (source delivery, manual runtime setup)
+%% Skill: deployment-topology-analyzer. Red dotted nodes are NOT evidenced.
+flowchart TB
+  DEV["Feature branch<br/>&lt;username&gt;/feature/&lt;slug&gt;"]
+  PR["Pull request"]
+  REVIEW["Review + at least one teammate approval<br/>(AGENTS.md §7)"]
+  MAIN["main branch"]
+  CLONE["git clone / git pull<br/>on runtime workstation"]
+  SYNC["uv sync (uv.lock)<br/>resolves dependencies from PyPI"]
+  ENV["Configure .env<br/>BESTAPI_API_KEY + LLM_API_KEY"]
+  CONFIG["Select modules in config.json<br/>current: jev + sample_llm"]
+  ART["Optional local artifacts<br/>out/tfidf.json · out/hybrid-training.jsonl<br/>out/semantic-encoder/ (training scripts)"]
+  RUN["Run CLI<br/>uv run python src/main.py<br/>--input data/input.json --output out/result.json"]
+  API["Live third-party inference<br/>BestAPI (Jev) + Google API (drafts)"]
+  RESULT["Output JSON / evaluation report<br/>out/result.json · out/evaluation.json"]
+  DEMO["Hackathon live demo + defense<br/>operability scored up to 25 points"]
+
+  CI["Automated checks / benchmarks in CI<br/>NOT EVIDENCED"]
+  IMAGE["Build container image<br/>NOT EVIDENCED"]
+  DEPLOY["Deploy to server / hosted API<br/>NOT EVIDENCED — unknown"]
+  MONITOR["Metrics / logs / alerts<br/>NOT EVIDENCED (stderr logging only)"]
+
+  DEV --> PR
+  PR --> REVIEW
+  REVIEW --> MAIN
+  MAIN --> CLONE
+  CLONE --> SYNC
+  SYNC --> ENV
+  ENV --> CONFIG
+  CONFIG --> RUN
+  RUN --> API
+  API --> RESULT
+  RESULT --> DEMO
+  ART -.->|"required by local-artifact modules"| RUN
+  PR -.->|"manual benchmarks only"| CI
+  MAIN -.->|"not evidenced"| IMAGE
+  IMAGE -.-> DEPLOY
+  DEPLOY -.->|"if hosted, path unknown"| RUN
+  RUN -.->|"logging only"| MONITOR
+
+  classDef ok fill:#E8F1FB,stroke:#2F6DB5,color:#111
+  classDef active fill:#DCEBFA,stroke:#2F6DB5,color:#111
+  classDef step fill:#F7F7F7,stroke:#888888,color:#111,stroke-dasharray: 5 5
+  classDef absent fill:#FDECEA,stroke:#C0392B,color:#111,stroke-dasharray: 5 5
+  classDef service fill:#FDECEA,stroke:#C0392B,color:#111
+  classDef demo fill:#FFF3CD,stroke:#B7791F,color:#111
+  class DEV,PR,REVIEW,MAIN,CLONE,SYNC,ENV,CONFIG,RESULT ok
+  class RUN active
+  class ART step
+  class CI,IMAGE,DEPLOY,MONITOR absent
+  class API service
+  class DEMO demo

@@ -1,0 +1,52 @@
+# Инфраструктура веб-сервиса черновиков Avito: PostgreSQL + FastAPI API + веб-клиент.
+# Запуск: docker compose up -d          (всё вместе)
+#         docker compose up -d db       (только база данных)
+services:
+  db:
+    image: postgres:18-alpine
+    container_name: avito-db
+    environment:
+      POSTGRES_USER: avito
+      POSTGRES_PASSWORD: avito
+      POSTGRES_DB: avito
+    ports:
+      - "127.0.0.1:5432:5432"
+    volumes:
+      # Инициализация схемы и справочника микрокатегорий при первом старте
+      - ./deploy/db/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    healthcheck:
+      # api ждёт db только когда эта проверка проходит
+      test: ["CMD-SHELL", "pg_isready -U avito -d avito"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  api:
+    build:
+      context: .
+      dockerfile: deploy/api.Dockerfile
+    container_name: avito-api
+    env_file: .env
+    environment:
+      # Внутри сети compose база доступна по сервисному имени db
+      DATABASE_URL: postgresql://avito:avito@db:5432/avito
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "8000:8000"
+    volumes:
+      # Датасет кейса для эндпоинтов /api/dataset/* и лоадера (см. README).
+      - ./data:/app/data:ro
+
+  web:
+    build:
+      context: .
+      dockerfile: deploy/web.Dockerfile
+    container_name: avito-web
+    depends_on:
+      - api
+    ports:
+      # Хост-порт веб-клиента: 8081 (8080 на машине занят другим сервисом).
+      # Настраивается переменной WEB_PORT из окружения или файла .env.
+      - "${WEB_PORT:-8081}:80"
