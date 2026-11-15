@@ -8,7 +8,8 @@
   `regex` (существующие правила офлайн-аннотатора без индивидуальных исключений),
   `tfidf` (локальная логистическая регрессия, JSON-артефакт),
   `learned_keywords` (TF-IDF и бинарные признаки выученных фраз),
-  `jev` (нативный Jev через BestAPI), `jev_tfidf` (среднее вероятностей),
+  `jev` (нативный Jev через Selectel),
+  `jev_calibrated` (отдельный вариант с train-калибровкой), `jev_tfidf` (среднее вероятностей),
   `jev_retrieval` (размеченные соседи), `evidence_jev` (цитаты → Jev),
   `jev_arbiter` (сильный арбитр), `semantic_encoder` (fine-tuned RuBERT-tiny2),
   `semantic_encoder_calibrated` (validation-пороги),
@@ -25,7 +26,7 @@
 [Общий список и команды](benchmarks/README.md). Новые бенчмарки и папки запрещены.
 
 - [Стоимость токенов](benchmarks/cpu_costs/README.md) — ручная запись.
-- [F1 improved_dataset](benchmarks/improved_dataset/README.md) — 119 строк.
+- [F1 improved_dataset](benchmarks/improved_dataset/README.md) — PostgreSQL manual_test, 139 строк.
 - [F1 InnoGlobalHack](benchmarks/classifier_methods/README.md) — 208 строк.
 - [Время работы](benchmarks/response_time/README.md) — настоящие вызовы `run()`.
 

@@ -1,0 +1,4647 @@
+{
+  "date": "2026-11-15T00:32:42+03:00",
+  "commit": "6802b41bdcb9b27320bf4ee31621d761a5b6b13a",
+  "code_sha256": "4d3992446013ace7e9001307c5adc0af4b1f1243427ba01cbd853d77cfb60dde",
+  "working_tree": true,
+  "status": "complete",
+  "mode": "train_only_prompt_threshold_selection",
+  "training_dataset": "docs/innoglobalhack_avito/public-train-annotated.jsonl",
+  "training_sha256": "b7118d68086624fbeab43839f22a635d4e325e4ee339f22d4aa0ad3c2e986615",
+  "grouping": {
+    "method": "normalized_exact_then_char_wb_3_5_cosine_components",
+    "near_duplicate_similarity": 0.85,
+    "seed": 20261115,
+    "original_rows": 10000,
+    "unique_rows": 4854,
+    "eligible_groups": 2813,
+    "excluded_test_touching_groups": 13,
+    "fit_groups": [
+      792,
+      4596,
+      1997,
+      1398,
+      328,
+      4498,
+      1255,
+      3527,
+      4316,
+      69,
+      1610,
+      2209,
+      3883,
+      4599,
+      4447,
+      3274,
+      4439,
+      4366,
+      3049,
+      998,
+      379,
+      4081,
+      1595,
+      1843,
+      4449,
+      4586,
+      2404,
+      2967,
+      736,
+      3270,
+      571,
+      3515,
+      4200,
+      2385,
+      2909,
+      3863,
+      3781,
+      803,
+      3661,
+      2042,
+      3506,
+      1688,
+      4676,
+      4456,
+      3430,
+      4758,
+      2720,
+      668
+    ],
+    "control_groups": [
+      1455,
+      4425,
+      4412,
+      85,
+      2607,
+      1516,
+      3286,
+      2427,
+      289,
+      17,
+      4005,
+      615,
+      4420,
+      1028,
+      3819,
+      513,
+      2511,
+      283,
+      2097,
+      1733,
+      45,
+      3288,
+      4077,
+      2717
+    ],
+    "cross_split_groups": 0,
+    "limitation": "heuristic near-duplicate grouping, not semantic equivalence"
+  },
+  "fit_rows": 48,
+  "control_rows": 24,
+  "fit_positive_counts": {
+    "102": 22,
+    "103": 26,
+    "104": 21,
+    "105": 20,
+    "106": 20
+  },
+  "test_labels_used_for_selection": false,
+  "control_used_for_selection": false,
+  "promotion_rule": "crossfit-selected candidate must beat guided@0.5 on untouched control by >=0.002",
+  "candidates": {
+    "guided": {
+      "fit_responses": [
+        {
+          "description_sha256": "7fb0229efe153e2d259d8e68410e987f27c9a6f6ea9efb0ca9f9132456494ec1",
+          "expected": [],
+          "probabilities": {
+            "102": 0.09,
+            "103": 0.08,
+            "104": 0.08,
+            "105": 0.08,
+            "106": 0.1
+          },
+          "cache_hit": true,
+          "usage": {
+            "input_tokens": 1900,
+            "output_tokens": 99,
+            "total_tokens": 1999,
+            "cost": 0.0105412,
+            "cost_details": {
+              "input_cost": 0.0105412,
+              "output_cost": 0
+            }
+          }
+        },
+        {
+          "description_sha256": "a351bb39fee12ca7136721c8e8919b7481a08e8bc0b418948003c24f9adc3d50",
+          "expected": [
+            102,
+            106
+          ],
+          "probabilities": {
+            "102": 0.25,
+            "103": 0.03,
+            "104": 0.02,
+            "105": 0.03,
+            "106": 0.96
+          },
+          "cache_hit": true,
+          "usage": {
+            "input_tokens": 2039,
+            "output_tokens": 99,
+            "total_tokens": 2138,
+            "cost": 0.011312372,
+            "cost_details": {
+              "input_cost": 0.011312372,
+              "output_cost": 0
+            }
+          }
+        },
+        {
+          "description_sha256": "c629af290bd1a76849c9a5b1e0848bb90ebcfcf8f7bccbe064d2cb25a3d4132b",
+          "expected": [],
+          "probabilities": {
+            "102": 0.13,
+            "103": 0.11,
+            "104": 0.15,
+            "105": 0.15,
+            "106": 0.15
+          },
+          "cache_hit": true,
+          "usage": {
+            "input_tokens": 1928,
+            "output_tokens": 99,
+            "total_tokens": 2027,
+            "cost": 0.010696544,
+            "cost_details": {
+              "input_cost": 0.010696544,
+              "output_cost": 0
+            }
+          }
+        },
+        {
+          "description_sha256": "8ec370896dd3451d475a7555e7b080cc802ee3826107a325db5786b1d3ebae0b",
+          "expected": [],
+          "probabilities": {
+            "102": 0.18,
+            "103": 0.1,
+            "104": 0.1,
+            "105": 0.1,
+            "106": 0.24
+          },
+          "cache_hit": true,
+          "usage": {
+            "input_tokens": 1912,
+            "output_tokens": 99,
+            "total_tokens": 2011,
+            "cost": 0.010607776,
+            "cost_details": {
+              "input_cost": 0.010607776,
+              "output_cost": 0
+            }
+          }
+        },
+        {
+          "description_sha256": "0794955da45bd976003c36d71cc4dafeac88ecd47c4258c54bbeee68eafdc7a6",
+          "expected": [
+            102,
+            103,
+            106
+          ],
+          "probabilities": {
+            "102": 0.98,
+            "103": 0.99,
+            "104": 0.04,
+            "105": 0.04,
+            "106": 0.99
+          },
+          "cache_hit": true,
+          "usage": {
+            "input_tokens": 4415,
+            "output_tokens": 99,
+            "total_tokens": 4514,
+            "cost": 0.02449442,
+            "cost_details": {
+              "input_cost": 0.02449442,
+              "output_cost": 0
+            }
+          }
+        },
+        {
+          "description_sha256": "15af2f49ac8c6442c4f37b88375277623e47757b9987c1400c895c10c31029c9",
+          "expected": [
+            103,
+            104,
+            105
+          ],
+          "probabilities": {
+            "102": 0.29,
+            "103": 0.96,
+            "104": 0.97,
+            "105": 0.97,
+            "106": 0.37
+          },
+          "cache_hit": true,
+          "usage": {
+            "input_tokens": 3716,
+            "output_tokens": 99,
+            "total_tokens": 3815,
+            "cost": 0.020616368,
+            "cost_details": {
+              "input_cost": 0.020616368,
+              "output_cost": 0
+            }
+          }
+        },
+        {
+          "description_sha256": "148f6b214c27957d79e3d0a187f48d623c9feb7d97357488f5fbe261d3659d6e",
+          "expected": [
+            103,
+            104,
+            105
+          ],
+          "probabilities": {
+            "102": 0.2,
+            "103": 0.97,
+            "104": 0.98,
+            "105": 0.97,
+            "106": 0.18
+          },
+          "cache_hit": true,
+          "usage": {
+            "input_tokens": 2456,
+            "output_tokens": 99,
+            "total_tokens": 2555,
+            "cost": 0.013625888,
+            "cost_details": {
+              "input_cost": 0.013625888,
+              "output_cost": 0
+            }
+          }
+        },
+        {
+          "description_sha256": "2ba365a6d3f52c0a55a492a71219114577e2b297a7eeb7b47ba8d918f53f63fc",
+          "expected": [
+            102,
+            103,
+            104,
+            105,
+            106
+          ],
+          "probabilities": {
+            "102": 0.98,
+            "103": 0.99,
+            "104": 0.99,
+            "105": 0.99,
+            "106": 0.98
+          },
+          "cache_hit": true,
+          "usage": {
+            "input_tokens": 2577,
+            "output_tokens": 99,
+            "total_tokens": 2676,
+            "cost": 0.014297196,
+            "cost_details": {
+              "input_cost": 0.014297196,
+              "output_cost": 0
+            }
+          }
+        },
+        {
+          "description_sha256": "06382fde718389a76f56742bb0a77af362f86b492eaf34f1382843646069491e",
+          "expected": [
+            102,
+            103,
+            104,
+            106
+          ],
+          "probabilities": {
+            "102": 0.99,
+            "103": 0.98,
+            "104": 0.94,
+            "105": 0.08,
+            "106": 0.97
+          },
+          "cache_hit": true,
+          "usage": {
+            "input_tokens": 2194,
+            "output_tokens": 99,
+            "total_tokens": 2293,
+            "cost": 0.012172312,
+            "cost_details": {
+              "input_cost": 0.012172312,
+              "output_cost": 0
+            }
+          }
+        },
+        {
+          "description_sha256": "90fd10c4284406ffc17c88058ffde000d3171588d03e044cd66e86d75c093223",
+          "expected": [],
+          "probabilities": {
+            "102": 0.91,
+            "103": 0.18,
+            "104": 0.95,
+            "105": 0.92,
+            "106": 0.3
+          },
+          "cache_hit": true,
+          "usage": {
+            "input_tokens": 2724,
+            "output_tokens": 99,
+            "total_tokens": 2823,
+            "cost": 0.015112752,
+            "cost_details": {
+              "input_cost": 0.015112752,
+              "output_cost": 0
+            }
+          }
+        },
+        {
+          "description_sha256": "1e2655b9ebc6d739440108336d9b1bd6e289b7ce30c7abf7ec0ea8d3790be9fa",
+          "expected": [
+            102,
+            103,
+            106
+          ],
+          "probabilities": {
+            "102": 0.99,
+            "103": 0.98,
+            "104": 0.33,
+            "105": 0.21,
+            "106": 0.99
+          },
+          "cache_hit": true,
+          "usage": {
+            "input_tokens": 3921,
+            "output_tokens": 99,
+            "total_tokens": 4020,
+            "cost": 0.021753708,
+            "cost_details": {
+              "input_cost": 0.021753708,
+              "output_cost": 0
+            }
+          }
+        },
+        {
+          "description_sha256": "53e08cfbf8d4eb534267517a3250e9124ec6434fd70416bdf6cf8d63eaf78d2a",
+          "expected": [
+            102,
+            103,
+            104,
+            105
+          ],
+          "probabilities": {
+            "102": 0.98,
+            "103": 0.98,
+            "104": 0.96,
+            "105": 0.95,
+            "106": 0.32
+          },
+          "cache_hit": true,
+          "usage": {
+            "input_tokens": 2181,
+            "output_tokens": 99,
+            "total_tokens": 2280,
+            "cost": 0.012100188,
+            "cost_details": {
+              "input_cost": 0.012100188,
+              "output_cost": 0
+            }
+          }
+        },
+        {
+          "description_sha256": "f820e2083c495094d2c324bf20df9f10d91ac09e90e4b50e0061ac20390f8999",
+          "expected": [],
+          "probabilities": {
+            "102": 0.11,
+            "103": 0.11,
+            "104": 0.13,
+            "105": 0.13,
+            "106": 0.14
+          },
+          "cache_hit": true,
+          "usage": {
+            "input_tokens": 1877,
+            "output_tokens": 99,
+            "total_tokens": 1976,
+            "cost": 0.010413596,
+            "cost_details": {
+              "input_cost": 0.010413596,
+              "output_cost": 0
+            }
+          }
+        },
+        {
+          "description_sha256": "3e28d83e03df57ea72c2f86027a1987c032070b6de00ffe8805770ce83165c8a",
+          "expected": [
+            106
+          ],
+          "probabilities": {
+            "102": 0.06,
+            "103": 0.05,
+            "104": 0.06,
+            "105": 0.04,
+            "106": 0.99
+          },
+          "cache_hit": true,
+          "usage": {
+            "input_tokens": 2173,
+            "output_tokens": 99,
+            "total_tokens": 2272,
+            "cost": 0.012055804,
+            "cost_details": {
+              "input_cost": 0.012055804,
+              "output_cost": 0
+            }
+          }
+        },
+        {
+          "description_sha256": "0b2d48e500510934de4f6e15e3d3513ba37faf7397385adc5737d127c769c56b",
+          "expected": [
+            102,
+            103,
+            104,
+            105,
+            106
+          ],
+          "probabilities": {
+            "102": 0.98,
+            "103": 0.98,
+            "104": 0.98,
+            "105": 0.97,
+            "106": 0.99
+          },
+          "cache_hit": true,
+          "usage": {
+            "input_tokens": 2616,
+            "output_tokens": 99,
+            "total_tokens": 2715,
+            "cost": 0.014513568,
+            "cost_details": {
+              "input_cost": 0.014513568,
+              "output_cost": 0
+            }
+          }
+        },
+        {
+          "description_sha256": "317aa53b51cb0e8f4a63a731636e79906aa74ff5b463ecd575e24db8feb88593",
+          "expected": [
+            102,
+            103,
+            104,
+            105,
+            106
+          ],
+          "probabilities": {
+            "102": 0.98,
+            "103": 0.98,
+            "104": 0.97,
+            "105": 0.97,
+            "106": 0.98
+          },
+          "cache_hit": true,
+          "usage": {
+            "input_tokens": 2357,
+            "output_tokens": 99,
+            "total_tokens": 2456,
+            "cost": 0.013076636,
+            "cost_details": {
+              "input_cost": 0.013076636,
+              "output_cost": 0
+            }
+          }
+        },
+        {
+          "description_sha256": "0b32d036e24a174491bd6d8c229164d1f447467e028d59b0a118fb45d8a12868",
+          "expected": [],
+          "probabilities": {
+            "102": 0.09,
+            "103": 0.04,
+            "104": 0.06,
+            "105": 0.03,
+            "106": 0.68
+          },
+          "cache_hit": true,
+          "usage": {
+            "input_tokens": 2060,
+            "output_tokens": 99,
+            "total_tokens": 2159,
+            "cost": 0.01142888,
+            "cost_details": {
+              "input_cost": 0.01142888,
+              "output_cost": 0
+            }
+          }
+        },
+        {
+          "description_sha256": "fdb6c4cce2b35a628dac04fd1f63e0cd49e0be308d6a83c3dfc0ccdf83472aba",
+          "expected": [],
+          "probabilities": {
+            "102": 0.35,
+            "103": 0.25,
+            "104": 0.97,
+            "105": 0.97,
+            "106": 0.69
+          },
+          "cache_hit": true,
+          "usage": {
+            "input_tokens": 4755,
+            "output_tokens": 99,
+            "total_tokens": 4854,
+            "cost": 0.02638074,
+            "cost_details": {
+              "input_cost": 0.02638074,
+              "output_cost": 0
+            }
+          }
+        },
+        {
+          "description_sha256": "30d9ff583b7e99ded04f8a2c5e45e43f0e8babfab76d03ca1c9c3894905f166d",
+          "expected": [],
+          "probabilities": {
+            "102": 0.98,
+            "103": 0.98,
+            "104": 0.97,
+            "105": 0.97,
+            "106": 0.27
+          },
+          "cache_hit": true,
+          "usage": {
+            "input_tokens": 3980,
+            "output_tokens": 99,
+            "total_tokens": 4079,
+            "cost": 0.02208104,
+            "cost_details": {
+              "input_cost": 0.02208104,
+              "output_cost": 0
+            }
+          }
+        },
+        {
+          "description_sha256": "7dc73f5f28c2b5a9464aa83ad4a439f241c9df7d106e2dac106cd338355573f5",
+          "expected": [
+            102,
+            103,
+            104,
+            105,
+            106
+          ],
+          "probabilities": {
+            "102": 0.98,
+            "103": 0.98,
+            "104": 0.97,
+            "105": 0.97,
+            "106": 0.95
+          },
+          "cache_hit": true,
+          "usage": {
+            "input_tokens": 2420,
+            "output_tokens": 99,
+            "total_tokens": 2519,
+            "cost": 0.01342616,
+            "cost_details": {
+              "input_cost": 0.01342616,
+              "output_cost": 0
+            }
+          }
+        },
+        {
+          "description_sha256": "b8cf3388b9dfc54c5e68000dd8bd64bfeb2d2ce3267391a9b64d2a20d3d4ce88",
+          "expected": [],
+          "probabilities": {
+            "102": 0.21,
+            "103": 0.13,
+            "104": 0.08,
+            "105": 0.1,
+            "106": 0.25
+          },
+          "cache_hit": true,
+          "usage": {
+            "input_tokens": 1897,
+            "output_tokens": 99,
+            "total_tokens": 1996,
+            "cost": 0.010524556,
+            "cost_details": {
+              "input_cost": 0.010524556,
+              "output_cost": 0
+            }
+          }
+        },
+        {
+          "description_sha256": "6b924828ee8723c7b6df58316aba0f703a6318c6ca1d3aad9bb0b33171a77b40",
+          "expected": [
+            103,
+            104,
+            105
+          ],
+          "probabilities": {
+            "102": 0.21,
+            "103": 0.98,
+            "104": 0.97,
+            "105": 0.95,
+            "106": 0.29
+          },
+          "cache_hit": true,
+          "usage": {
+            "input_tokens": 2521,
+            "output_tokens": 99,
+            "total_tokens": 2620,
+            "cost": 0.013986508,
+            "cost_details": {
+              "input_cost": 0.013986508,
+              "output_cost": 0
+            }
+          }
+        },
+        {
+          "description_sha256": "0a0c689351039009d891b113057023b13b47619d5fccdf1f50968f6471ffc429",
+          "expected": [],
+          "probabilities": {
+            "102": 0.27,
+            "103": 0.13,
+            "104": 0.96,
+            "105": 0.95,
+            "106": 0.37
+          },
+          "cache_hit": true,
+          "usage": {
+            "input_tokens": 4130,
+            "output_tokens": 99,
+            "total_tokens": 4229,
+            "cost": 0.02291324,
+            "cost_details": {
+              "input_cost": 0.02291324,
+              "output_cost": 0
+            }
+          }
+        },
+        {
+          "description_sha256": "66e048efbfa1a69e499e1dbb40585aa4f48c51ec5bd6903db719753fc3f150dd",
+          "expected": [
+            102,
+            103,
+            104,
+            105,
+            106
+          ],
+          "probabilities": {
+            "102": 0.97,
+            "103": 0.98,
+            "104": 0.98,
+            "105": 0.96,
+            "106": 0.98
+          },
+          "cache_hit": true,
+          "usage": {
+            "input_tokens": 2510,
+            "output_tokens": 99,
+            "total_tokens": 2609,
+            "cost": 0.01392548,
+            "cost_details": {
+              "input_cost": 0.01392548,
+              "output_cost": 0
+            }
+          }
+        },
+        {
+          "description_sha256": "2ad0614a00d35c82bbf547f2a8e19409cf8667ddf001ae3af09e491ca4b2f250",
+          "expected": [
+            102,
+            103,
+            104,
+            105,
+            106
+          ],
+          "probabilities": {
+            "102": 0.66,
+            "103": 0.98,
+            "104": 0.98,
+            "105": 0.98,
+            "106": 0.98
+          },
+          "cache_hit": true,
+          "usage": {
+            "input_tokens": 2476,
+            "output_tokens": 99,
+            "total_tokens": 2575,
+            "cost": 0.013736848,
+            "cost_details": {
+              "input_cost": 0.013736848,
+              "output_cost": 0
+            }
+          }
+        },
+        {
+          "description_sha256": "3d6a025c238b3c1ab19c279b6cc1a9783da0c98d3227073b0e6b02b7f6551250",
+          "expected": [
+            102,
+            103,
+            106
+          ],
+          "probabilities": {
+            "102": 0.98,
+            "103": 0.98,
+            "104": 0.08,
+            "105": 0.08,
+            "106": 0.98
+          },
+          "cache_hit": true,
+          "usage": {
+            "input_tokens": 2633,
+            "output_tokens": 99,
+            "total_tokens": 2732,
+            "cost": 0.014607884,
+            "cost_details": {
+              "input_cost": 0.014607884,
+              "output_cost": 0
+            }
+          }
+        },
+        {
+          "description_sha256": "3a8e2164c8f976f778a0b653d5461e45fa7087f468f4d094a9eaffb9bde799b4",
+          "expected": [
+            103
+          ],
+          "probabilities": {
+            "102": 0.03,
+            "103": 0.98,
+            "104": 0.03,
+            "105": 0.02,
+            "106": 0.03
+          },
+          "cache_hit": true,
+          "usage": {
+            "input_tokens": 2046,
+            "output_tokens": 99,
+            "total_tokens": 2145,
+            "cost": 0.011351208,
+            "cost_details": {
+              "input_cost": 0.011351208,
+              "output_cost": 0
+            }
+          }
+        },
+        {
+          "description_sha256": "86bcc6b3110049fd69343883b373d05235628216b012c60b97233a3c33916ec8",
+          "expected": [
+            102,
+            103,
+            104,
+            105
+          ],
+          "probabilities": {
+            "102": 0.98,
+            "103": 0.94,
+            "104": 0.97,
+            "105": 0.97,
+            "106": 0.12
+          },
+          "cache_hit": true,
+          "usage": {
+            "input_tokens": 1953,
+            "output_tokens": 99,
+            "total_tokens": 2052,
+            "cost": 0.010835244,
+            "cost_details": {
+              "input_cost": 0.010835244,
+              "output_cost": 0
+            }
+          }
+        },
+        {
+          "description_sha256": "a9044add93efc149ad20fac411c10b98aa6d5a43652f8f71ec2bf95f82cac5c8",
+          "expected": [],
+          "probabilities": {
+            "102": 0.22,
+            "103": 0.4,
+            "104": 0.1,
+            "105": 0.14,
+            "106": 0.23
+          },
+          "cache_hit": true,
+          "usage": {
+            "input_tokens": 2452,
+            "output_tokens": 99,
+            "total_tokens": 2551,
+            "cost": 0.013603696,
+            "cost_details": {
+              "input_cost": 0.013603696,
+              "output_cost": 0
+            }
+          }
+        },
+        {
+          "description_sha256": "4c461fce02353a61fab90a8a719f5036ef911581881aa4fd4cb4ece8d08f8090",
+          "expected": [],
+          "probabilities": {
+            "102": 0.04,
+            "103": 0.05,
+            "104": 0.05,
+            "105": 0.05,
+            "106": 0.05
+          },
+          "cache_hit": true,
+          "usage": {
+            "input_tokens": 1894,
+            "output_tokens": 99,
+            "total_tokens": 1993,
+            "cost": 0.010507912,
+            "cost_details": {
+              "input_cost": 0.010507912,
+              "output_cost": 0
+            }
+          }
+        },
+        {
+          "description_sha256": "64bfde99193f578f154755082e5e4cca6ee28dbd6683fba3ab9063a8812abf6a",
+          "expected": [
+            102,
+            103,
+            104,
+            105,
+            106
+          ],
+          "probabilities": {
+            "102": 0.98,
+            "103": 0.98,
+            "104": 0.97,
+            "105": 0.98,
+            "106": 0.94
+          },
+          "cache_hit": true,
+          "usage": {
+            "input_tokens": 4118,
+            "output_tokens": 99,
+            "total_tokens": 4217,
+            "cost": 0.022846664,
+            "cost_details": {
+              "input_cost": 0.022846664,
+              "output_cost": 0
+            }
+          }
+        },
+        {
+          "description_sha256": "d313e2866b7f4f725f48f5725df87ac91db0e8d1944530a87cf034f655f3fd2d",
+          "expected": [
+            102,
+            103,
+            104,
+            105,
+            106
+          ],
+          "probabilities": {
+            "102": 0.98,
+            "103": 0.99,
+            "104": 0.99,
+            "105": 0.99,
+            "106": 0.98
+          },
+          "cache_hit": true,
+          "usage": {
+            "input_tokens": 3232,
+            "output_tokens": 99,
+            "total_tokens": 3331,
+            "cost": 0.017931136,
+            "cost_details": {
+              "input_cost": 0.017931136,
+              "output_cost": 0
+            }
+          }
+        },
+        {
+          "description_sha256": "905048ab2cfc4880eb1ecdae32d7d5c52d484b802d53ec59203e47a10cf99483",
+          "expected": [
+            103,
+            104,
+            105
+          ],
+          "probabilities": {
+            "102": 0.12,
+            "103": 0.77,
+            "104": 0.95,
+            "105": 0.96,
+            "106": 0.11
+          },
+          "cache_hit": true,
+          "usage": {
+            "input_tokens": 2130,
+            "output_tokens": 99,
+            "total_tokens": 2229,
+            "cost": 0.01181724,
+            "cost_details": {
+              "input_cost": 0.01181724,
+              "output_cost": 0
+            }
+          }
+        },
+        {
+          "description_sha256": "d8d747f6d89cfcdace2780a870fa8b58396b3aa7ed28efde3a8e28639c2f502d",
+          "expected": [
+            102,
+            103,
+            104,
+            105,
+            106
+          ],
+          "probabilities": {
+            "102": 0.98,
+            "103": 0.98,
+            "104": 0.99,
+            "105": 0.99,
+            "106": 0.98
+          },
+          "cache_hit": true,
+          "usage": {
+            "input_tokens": 3631,
+            "output_tokens": 99,
+            "total_tokens": 3730,
+            "cost": 0.020144788,
+            "cost_details": {
+              "input_cost": 0.020144788,
+              "output_cost": 0
+            }
+          }
+        },
+        {
+          "description_sha256": "173cffc204e413eb97754949dc69a0082666223bb411d53198709dd9b41d1592",
+          "expected": [
+            102,
+            103,
+            104,
+            105,
+            106
+          ],
+          "probabilities": {
+            "102": 0.98,
+            "103": 0.99,
+            "104": 0.97,
+            "105": 0.98,
+            "106": 0.98
+          },
+          "cache_hit": true,
+          "usage": {
+            "input_tokens": 3224,
+            "output_tokens": 99,
+            "total_tokens": 3323,
+            "cost": 0.017886752,
+            "cost_details": {
+              "input_cost": 0.017886752,
+              "output_cost": 0
+            }
+          }
+        },
+        {
+          "description_sha256": "016c40f0ac7165de940fe0f21418f58b4af296e5a37684c0d87cda83f1b06cac",
+          "expected": [
+            102,
+            103,
+            104,
+            105
+          ],
+          "probabilities": {
+            "102": 0.66,
+            "103": 0.99,
+            "104": 0.99,
+            "105": 0.79,
+            "106": 0.11
+          },
+          "cache_hit": true,
+          "usage": {
+            "input_tokens": 2309,
+            "output_tokens": 99,
+            "total_tokens": 2408,
+            "cost": 0.012810332,
+            "cost_details": {
+              "input_cost": 0.012810332,
+              "output_cost": 0
+            }
+          }
+        },
+        {
+          "description_sha256": "f332ab831d38ec46bf7b93e89156c9f221935271317df0070c4370f48d1c119a",
+          "expected": [
+            102,
+            106
+          ],
+          "probabilities": {
+            "102": 0.98,
+            "103": 0.97,
+            "104": 0.13,
+            "105": 0.14,
+            "106": 0.99
+          },
+          "cache_hit": true,
+          "usage": {
+            "input_tokens": 2935,
+            "output_tokens": 99,
+            "total_tokens": 3034,
+            "cost": 0.01628338,
+            "cost_details": {
+              "input_cost": 0.01628338,
+              "output_cost": 0
+            }
+          }
+        },
+        {
+          "description_sha256": "2d91e59074d53da0d7aea768e9e15902333c9770e2975b610402f6e202ce7b0e",
+          "expected": [],
+          "probabilities": {
+            "102": 0.2,
+            "103": 0.21,
+            "104": 0.19,
+            "105": 0.16,
+            "106": 0.3
+          },
+          "cache_hit": true,
+          "usage": {
+            "input_tokens": 2208,
+            "output_tokens": 99,
+            "total_tokens": 2307,
+            "cost": 0.012249984,
+            "cost_details": {
+              "input_cost": 0.012249984,
+              "output_cost": 0
+            }
+          }
+        },
+        {
+          "description_sha256": "157e672fb4a146e9100e94e54dac418be5e8df8f7b75ac46933ce9e087e8d828",
+          "expected": [
+            102,
+            103,
+            106
+          ],
+          "probabilities": {
+            "102": 0.99,
+            "103": 0.99,
+            "104": 0.05,
+            "105": 0.04,
+            "106": 0.99
+          },
+          "cache_hit": true,
+          "usage": {
+            "input_tokens": 2507,
+            "output_tokens": 99,
+            "total_tokens": 2606,
+            "cost": 0.013908836,
+            "cost_details": {
+              "input_cost": 0.013908836,
+              "output_cost": 0
+            }
+          }
+        },
+        {
+          "description_sha256": "6d0ca127418220ab93765f98ac77bf858dcfc129c3f0a9ba772c71c0712cc340",
+          "expected": [],
+          "probabilities": {
+            "102": 0.12,
+            "103": 0.09,
+            "104": 0.22,
+            "105": 0.06,
+            "106": 0.11
+          },
+          "cache_hit": true,
+          "usage": {
+            "input_tokens": 1913,
+            "output_tokens": 99,
+            "total_tokens": 2012,
+            "cost": 0.010613324,
+            "cost_details": {
+              "input_cost": 0.010613324,
+              "output_cost": 0
+            }
+          }
+        },
+        {
+          "description_sha256": "1a3ce026d3f162bc1c5486cc84df6dc58d4ffda48084f4551feb50498c63854b",
+          "expected": [],
+          "probabilities": {
+            "102": 0.13,
+            "103": 0.07,
+            "104": 0.04,
+            "105": 0.62,
+            "106": 0.27
+          },
+          "cache_hit": true,
+          "usage": {
+            "input_tokens": 2097,
+            "output_tokens": 99,
+            "total_tokens": 2196,
+            "cost": 0.011634156,
+            "cost_details": {
+              "input_cost": 0.011634156,
+              "output_cost": 0
+            }
+          }
+        },
+        {
+          "description_sha256": "cf55a7045f2f2e9ddd97bec8f37dd9d7138ab975bc878177068fa73e649d6e04",
+          "expected": [
+            103
+          ],
+          "probabilities": {
+            "102": 0.03,
+            "103": 0.98,
+            "104": 0.03,
+            "105": 0.02,
+            "106": 0.03
+          },
+          "cache_hit": true,
+          "usage": {
+            "input_tokens": 2111,
+            "output_tokens": 99,
+            "total_tokens": 2210,
+            "cost": 0.011711828,
+            "cost_details": {
+              "input_cost": 0.011711828,
+              "output_cost": 0
+            }
+          }
+        },
+        {
+          "description_sha256": "241bf7cfc644dadb04bec62fd4a34c24f2d73bd42a4696f8b2347bb166bcde14",
+          "expected": [
+            102,
+            103,
+            104,
+            105,
+            106
+          ],
+          "probabilities": {
+            "102": 0.75,
+            "103": 0.99,
+            "104": 0.98,
+            "105": 0.98,
+            "106": 0.99
+          },
+          "cache_hit": true,
+          "usage": {
+            "input_tokens": 2913,
+            "output_tokens": 99,
+            "total_tokens": 3012,
+            "cost": 0.016161324,
+            "cost_details": {
+              "input_cost": 0.016161324,
+              "output_cost": 0
+            }
+          }
+        },
+        {
+          "description_sha256": "09ea52b9786d6fd4f48c8dd788d71766c54b41efdff3accd40eebe7ef68f6f3a",
+          "expected": [
+            104,
+            105
+          ],
+          "probabilities": {
+            "102": 0.09,
+            "103": 0.07,
+            "104": 0.92,
+            "105": 0.96,
+            "106": 0.11
+          },
+          "cache_hit": true,
+          "usage": {
+            "input_tokens": 2048,
+            "output_tokens": 99,
+            "total_tokens": 2147,
+            "cost": 0.011362304,
+            "cost_details": {
+              "input_cost": 0.011362304,
+              "output_cost": 0
+            }
+          }
+        },
+        {
+          "description_sha256": "cfaacef8207e8aa5c64e3d5a5bb61b6f58d7c5c434aef7b1c20b1b9884681bd8",
+          "expected": [
+            102,
+            103,
+            104,
+            105,
+            106
+          ],
+          "probabilities": {
+            "102": 0.98,
+            "103": 0.05,
+            "104": 0.98,
+            "105": 0.96,
+            "106": 0.85
+          },
+          "cache_hit": true,
+          "usage": {
+            "input_tokens": 2756,
+            "output_tokens": 99,
+            "total_tokens": 2855,
+            "cost": 0.015290288,
+            "cost_details": {
+              "input_cost": 0.015290288,
+              "output_cost": 0
+            }
+          }
+        },
+        {
+          "description_sha256": "9ab3327cb84a08199bea30a57852a3cf51c8656d4e8cae1ab260c5a15093c6b6",
+          "expected": [],
+          "probabilities": {
+            "102": 0.13,
+            "103": 0.11,
+            "104": 0.14,
+            "105": 0.13,
+            "106": 0.15
+          },
+          "cache_hit": true,
+          "usage": {
+            "input_tokens": 2036,
+            "output_tokens": 99,
+            "total_tokens": 2135,
+            "cost": 0.011295728,
+            "cost_details": {
+              "input_cost": 0.011295728,
+              "output_cost": 0
+            }
+          }
+        },
+        {
+          "description_sha256": "2a9baa704b02b487329e40fc637fdf1235932798926bf5d8a7efe7ab765d0b71",
+          "expected": [],
+          "probabilities": {
+            "102": 0.16,
+            "103": 0.13,
+            "104": 0.08,
+            "105": 0.1,
+            "106": 0.2
+          },
+          "cache_hit": true,
+          "usage": {
+            "input_tokens": 1890,
+            "output_tokens": 99,
+            "total_tokens": 1989,
+            "cost": 0.01048572,
+            "cost_details": {
+              "input_cost": 0.01048572,
+              "output_cost": 0
+            }
+          }
+        },
+        {
+          "description_sha256": "1acaafdf3dd48ed859f88dd5582fa0934f88cc5489cc3c1321bac47839032a3f",
+          "expected": [],
+          "probabilities": {
+            "102": 0.93,
+            "103": 0.04,
+            "104": 0.05,
+            "105": 0.97,
+            "106": 0.39
+          },
+          "cache_hit": true,
+          "usage": {
+            "input_tokens": 2504,
+            "output_tokens": 99,
+            "total_tokens": 2603,
+            "cost": 0.013892192,
+            "cost_details": {
+              "input_cost": 0.013892192,
+              "output_cost": 0
+            }
+          }
+        }
+      ],
+      "tuning": {
+        "selected_method": "per_category_shrink_050",
+        "thresholds": {
+          "101": 0.5,
+          "102": 0.5800000000000001,
+          "103": 0.5800000000000001,
+          "104": 0.5800000000000001,
+          "105": 0.5800000000000001,
+          "106": 0.675
+        },
+        "selection_metric": {
+          "micro_f1": 0.9224137931034483,
+          "tp": 107,
+          "fp": 16,
+          "fn": 2,
+          "precision": 0.8699186991869918,
+          "recall": 0.981651376146789
+        },
+        "validation_fit_metric": {
+          "micro_f1": 0.9184549356223176,
+          "tp": 107,
+          "fp": 17,
+          "fn": 2,
+          "precision": 0.8629032258064516,
+          "recall": 0.981651376146789
+        },
+        "crossfit_candidates": {
+          "fixed": {
+            "micro_f1": 0.9184549356223176,
+            "tp": 107,
+            "fp": 17,
+            "fn": 2,
+            "precision": 0.8629032258064516,
+            "recall": 0.981651376146789
+          },
+          "global_shrink_025": {
+            "micro_f1": 0.9184549356223176,
+            "tp": 107,
+            "fp": 17,
+            "fn": 2,
+            "precision": 0.8629032258064516,
+            "recall": 0.981651376146789
+          },
+          "global_shrink_050": {
+            "micro_f1": 0.9177489177489178,
+            "tp": 106,
+            "fp": 16,
+            "fn": 3,
+            "precision": 0.8688524590163934,
+            "recall": 0.9724770642201835
+          },
+          "global_shrink_075": {
+            "micro_f1": 0.9082969432314411,
+            "tp": 104,
+            "fp": 16,
+            "fn": 5,
+            "precision": 0.8666666666666667,
+            "recall": 0.9541284403669725
+          },
+          "global_shrink_100": {
+            "micro_f1": 0.8986784140969163,
+            "tp": 102,
+            "fp": 16,
+            "fn": 7,
+            "precision": 0.864406779661017,
+            "recall": 0.9357798165137615
+          },
+          "per_category_shrink_025": {
+            "micro_f1": 0.9184549356223176,
+            "tp": 107,
+            "fp": 17,
+            "fn": 2,
+            "precision": 0.8629032258064516,
+            "recall": 0.981651376146789
+          },
+          "per_category_shrink_050": {
+            "micro_f1": 0.9224137931034483,
+            "tp": 107,
+            "fp": 16,
+            "fn": 2,
+            "precision": 0.8699186991869918,
+            "recall": 0.981651376146789
+          },
+          "per_category_shrink_075": {
+            "micro_f1": 0.9170305676855895,
+            "tp": 105,
+            "fp": 15,
+            "fn": 4,
+            "precision": 0.875,
+            "recall": 0.963302752293578
+          },
+          "per_category_shrink_100": {
+            "micro_f1": 0.9074889867841409,
+            "tp": 103,
+            "fp": 15,
+            "fn": 6,
+            "precision": 0.8728813559322034,
+            "recall": 0.944954128440367
+          }
+        },
+        "folds": [
+          {
+            "fold": 1,
+            "fit_rows": 32,
+            "heldout_rows": 16,
+            "metrics": {
+              "fixed": {
+                "micro_f1": 0.88,
+                "tp": 33,
+                "fp": 7,
+                "fn": 2,
+                "precision": 0.825,
+                "recall": 0.9428571428571428
+              },
+              "global_shrink_025": {
+                "micro_f1": 0.88,
+                "tp": 33,
+                "fp": 7,
+                "fn": 2,
+                "precision": 0.825,
+                "recall": 0.9428571428571428
+              },
+              "global_shrink_050": {
+                "micro_f1": 0.8767123287671232,
+                "tp": 32,
+                "fp": 6,
+                "fn": 3,
+                "precision": 0.8421052631578947,
+                "recall": 0.9142857142857143
+              },
+              "global_shrink_075": {
+                "micro_f1": 0.8450704225352113,
+                "tp": 30,
+                "fp": 6,
+                "fn": 5,
+                "precision": 0.8333333333333334,
+                "recall": 0.8571428571428571
+              },
+              "global_shrink_100": {
+                "micro_f1": 0.8115942028985508,
+                "tp": 28,
+                "fp": 6,
+                "fn": 7,
+                "precision": 0.8235294117647058,
+                "recall": 0.8
+              },
+              "per_category_shrink_025": {
+                "micro_f1": 0.88,
+                "tp": 33,
+                "fp": 7,
+                "fn": 2,
+                "precision": 0.825,
+                "recall": 0.9428571428571428
+              },
+              "per_category_shrink_050": {
+                "micro_f1": 0.8918918918918919,
+                "tp": 33,
+                "fp": 6,
+                "fn": 2,
+                "precision": 0.8461538461538461,
+                "recall": 0.9428571428571428
+              },
+              "per_category_shrink_075": {
+                "micro_f1": 0.8611111111111112,
+                "tp": 31,
+                "fp": 6,
+                "fn": 4,
+                "precision": 0.8378378378378378,
+                "recall": 0.8857142857142857
+              },
+              "per_category_shrink_100": {
+                "micro_f1": 0.8285714285714286,
+                "tp": 29,
+                "fp": 6,
+                "fn": 6,
+                "precision": 0.8285714285714286,
+                "recall": 0.8285714285714286
+              }
+            }
+          },
+          {
+            "fold": 2,
+            "fit_rows": 32,
+            "heldout_rows": 16,
+            "metrics": {
+              "fixed": {
+                "micro_f1": 0.925,
+                "tp": 37,
+                "fp": 6,
+                "fn": 0,
+                "precision": 0.8604651162790697,
+                "recall": 1.0
+              },
+              "global_shrink_025": {
+                "micro_f1": 0.925,
+                "tp": 37,
+                "fp": 6,
+                "fn": 0,
+                "precision": 0.8604651162790697,
+                "recall": 1.0
+              },
+              "global_shrink_050": {
+                "micro_f1": 0.925,
+                "tp": 37,
+                "fp": 6,
+                "fn": 0,
+                "precision": 0.8604651162790697,
+                "recall": 1.0
+              },
+              "global_shrink_075": {
+                "micro_f1": 0.925,
+                "tp": 37,
+                "fp": 6,
+                "fn": 0,
+                "precision": 0.8604651162790697,
+                "recall": 1.0
+              },
+              "global_shrink_100": {
+                "micro_f1": 0.925,
+                "tp": 37,
+                "fp": 6,
+                "fn": 0,
+                "precision": 0.8604651162790697,
+                "recall": 1.0
+              },
+              "per_category_shrink_025": {
+                "micro_f1": 0.925,
+                "tp": 37,
+                "fp": 6,
+                "fn": 0,
+                "precision": 0.8604651162790697,
+                "recall": 1.0
+              },
+              "per_category_shrink_050": {
+                "micro_f1": 0.925,
+                "tp": 37,
+                "fp": 6,
+                "fn": 0,
+                "precision": 0.8604651162790697,
+                "recall": 1.0
+              },
+              "per_category_shrink_075": {
+                "micro_f1": 0.9367088607594937,
+                "tp": 37,
+                "fp": 5,
+                "fn": 0,
+                "precision": 0.8809523809523809,
+                "recall": 1.0
+              },
+              "per_category_shrink_100": {
+                "micro_f1": 0.9367088607594937,
+                "tp": 37,
+                "fp": 5,
+                "fn": 0,
+                "precision": 0.8809523809523809,
+                "recall": 1.0
+              }
+            }
+          },
+          {
+            "fold": 3,
+            "fit_rows": 32,
+            "heldout_rows": 16,
+            "metrics": {
+              "fixed": {
+                "micro_f1": 0.9487179487179487,
+                "tp": 37,
+                "fp": 4,
+                "fn": 0,
+                "precision": 0.9024390243902439,
+                "recall": 1.0
+              },
+              "global_shrink_025": {
+                "micro_f1": 0.9487179487179487,
+                "tp": 37,
+                "fp": 4,
+                "fn": 0,
+                "precision": 0.9024390243902439,
+                "recall": 1.0
+              },
+              "global_shrink_050": {
+                "micro_f1": 0.9487179487179487,
+                "tp": 37,
+                "fp": 4,
+                "fn": 0,
+                "precision": 0.9024390243902439,
+                "recall": 1.0
+              },
+              "global_shrink_075": {
+                "micro_f1": 0.9487179487179487,
+                "tp": 37,
+                "fp": 4,
+                "fn": 0,
+                "precision": 0.9024390243902439,
+                "recall": 1.0
+              },
+              "global_shrink_100": {
+                "micro_f1": 0.9487179487179487,
+                "tp": 37,
+                "fp": 4,
+                "fn": 0,
+                "precision": 0.9024390243902439,
+                "recall": 1.0
+              },
+              "per_category_shrink_025": {
+                "micro_f1": 0.9487179487179487,
+                "tp": 37,
+                "fp": 4,
+                "fn": 0,
+                "precision": 0.9024390243902439,
+                "recall": 1.0
+              },
+              "per_category_shrink_050": {
+                "micro_f1": 0.9487179487179487,
+                "tp": 37,
+                "fp": 4,
+                "fn": 0,
+                "precision": 0.9024390243902439,
+                "recall": 1.0
+              },
+              "per_category_shrink_075": {
+                "micro_f1": 0.9487179487179487,
+                "tp": 37,
+                "fp": 4,
+                "fn": 0,
+                "precision": 0.9024390243902439,
+                "recall": 1.0
+              },
+              "per_category_shrink_100": {
+                "micro_f1": 0.9487179487179487,
+                "tp": 37,
+                "fp": 4,
+                "fn": 0,
+                "precision": 0.9024390243902439,
+                "recall": 1.0
+              }
+            }
+          }
+        ],
+        "method": "threshold_only_GroupKFold3_shrinkage_towards_0.5",
+        "minimum_crossfit_gain": 0.002,
+        "group_count": 48,
+        "encoder_outputs_are_oof": false,
+        "full_validation_raw_search": {
+          "selected_method": "per_category",
+          "thresholds": {
+            "102": 0.66,
+            "103": 0.66,
+            "104": 0.66,
+            "105": 0.66,
+            "106": 0.85
+          },
+          "candidates": {
+            "fixed": {
+              "thresholds": {
+                "102": 0.5,
+                "103": 0.5,
+                "104": 0.5,
+                "105": 0.5,
+                "106": 0.5
+              },
+              "metrics": {
+                "micro_f1": 0.9184549356223176,
+                "tp": 107,
+                "fp": 17,
+                "fn": 2,
+                "precision": 0.8629032258064516,
+                "recall": 0.981651376146789
+              }
+            },
+            "global": {
+              "thresholds": {
+                "102": 0.66,
+                "103": 0.66,
+                "104": 0.66,
+                "105": 0.66,
+                "106": 0.66
+              },
+              "metrics": {
+                "micro_f1": 0.9224137931034483,
+                "tp": 107,
+                "fp": 16,
+                "fn": 2,
+                "precision": 0.8699186991869918,
+                "recall": 0.981651376146789
+              }
+            },
+            "per_category": {
+              "thresholds": {
+                "102": 0.66,
+                "103": 0.66,
+                "104": 0.66,
+                "105": 0.66,
+                "106": 0.85
+              },
+              "metrics": {
+                "micro_f1": 0.9304347826086956,
+                "tp": 107,
+                "fp": 14,
+                "fn": 2,
+                "precision": 0.8842975206611571,
+                "recall": 0.981651376146789
+              }
+            }
+          },
+          "search": {
+            "objective": "micro_f1",
+            "data": "validation_only",
+            "comparison": ">=",
+            "global": "Точный перебор уникальных score; равные score переключаются атомарно",
+            "boundary_thresholds": [
+              0.0,
+              0.5,
+              1.0
+            ],
+            "tie_preference": "Исходный порог, затем 0.5, близость к 0.5, больший порог",
+            "method_tie_preference": [
+              "fixed",
+              "global",
+              "per_category"
+            ],
+            "per_category": {
+              "initialization": "global",
+              "objective": "Общий micro-F1, не среднее по категориям",
+              "acceptance": "Только строгое улучшение, точное сравнение дробей",
+              "category_order": [
+                102,
+                103,
+                104,
+                105,
+                106
+              ],
+              "max_passes": 20,
+              "passes": 2,
+              "accepted_updates": 1,
+              "converged": true
+            },
+            "zero_positive_categories": [],
+            "zero_positive_policy": "Без отдельной настройки; сохранён global (в fixed — 0.5)",
+            "undefined_metric_value": 0.0
+          }
+        },
+        "selection_data": "validation only; no control/public-test scores or labels"
+      },
+      "fixed": {
+        "micro_f1": 0.9184549356223176,
+        "tp": 107,
+        "fp": 17,
+        "fn": 2,
+        "precision": 0.8629032258064516,
+        "recall": 0.981651376146789
+      },
+      "control_responses": [
+        {
+          "description_sha256": "92ccb48fcc42163b58bde18a359424d33be3934dadd48bf8b8086444d1b1fb87",
+          "expected": [],
+          "probabilities": {
+            "102": 0.15,
+            "103": 0.24,
+            "104": 0.4,
+            "105": 0.1,
+            "106": 0.26
+          },
+          "cache_hit": true,
+          "usage": {
+            "input_tokens": 1902,
+            "output_tokens": 99,
+            "total_tokens": 2001,
+            "cost": 0.010552296,
+            "cost_details": {
+              "input_cost": 0.010552296,
+              "output_cost": 0
+            }
+          }
+        },
+        {
+          "description_sha256": "7e18ae2ef930cf01f4448b3df6861876046797e8d66e14242162cadd6eed566d",
+          "expected": [
+            103
+          ],
+          "probabilities": {
+            "102": 0.13,
+            "103": 0.97,
+            "104": 0.05,
+            "105": 0.05,
+            "106": 0.14
+          },
+          "cache_hit": true,
+          "usage": {
+            "input_tokens": 2106,
+            "output_tokens": 99,
+            "total_tokens": 2205,
+            "cost": 0.011684088,
+            "cost_details": {
+              "input_cost": 0.011684088,
+              "output_cost": 0
+            }
+          }
+        },
+        {
+          "description_sha256": "3a7d71a2d95db571de83bcdbb19a27e0a869f9c18675dc307109706c5f55faac",
+          "expected": [
+            104,
+            105
+          ],
+          "probabilities": {
+            "102": 0.17,
+            "103": 0.13,
+            "104": 0.97,
+            "105": 0.97,
+            "106": 0.33
+          },
+          "cache_hit": true,
+          "usage": {
+            "input_tokens": 1937,
+            "output_tokens": 99,
+            "total_tokens": 2036,
+            "cost": 0.010746476,
+            "cost_details": {
+              "input_cost": 0.010746476,
+              "output_cost": 0
+            }
+          }
+        },
+        {
+          "description_sha256": "6610373cb7a82bdae97b72de3372214c6d18c3c0b94e1eeb3d73e85d041a9a02",
+          "expected": [],
+          "probabilities": {
+            "102": 0.81,
+            "103": 0.04,
+            "104": 0.02,
+            "105": 0.82,
+            "106": 0.9
+          },
+          "cache_hit": true,
+          "usage": {
+            "input_tokens": 3574,
+            "output_tokens": 99,
+            "total_tokens": 3673,
+            "cost": 0.019828552,
+            "cost_details": {
+              "input_cost": 0.019828552,
+              "output_cost": 0
+            }
+          }
+        },
+        {
+          "description_sha256": "2e03166bcfb35d3b7fb671d668f0f0c3793469203a499e95c551ab476e9bd854",
+          "expected": [
+            102,
+            105,
+            106
+          ],
+          "probabilities": {
+            "102": 0.4,
+            "103": 0.15,
+            "104": 0.04,
+            "105": 0.91,
+            "106": 0.99
+          },
+          "cache_hit": true,
+          "usage": {
+            "input_tokens": 3588,
+            "output_tokens": 99,
+            "total_tokens": 3687,
+            "cost": 0.019906224,
+            "cost_details": {
+              "input_cost": 0.019906224,
+              "output_cost": 0
+            }
+          }
+        },
+        {
+          "description_sha256": "f54d0b8ff161e373e83281568b7eb44c973a33e711ca3d72c46a19de54e94e87",
+          "expected": [
+            102,
+            103
+          ],
+          "probabilities": {
+            "102": 0.97,
+            "103": 0.98,
+            "104": 0.03,
+            "105": 0.03,
+            "106": 0.17
+          },
+          "cache_hit": true,
+          "usage": {
+            "input_tokens": 1964,
+            "output_tokens": 99,
+            "total_tokens": 2063,
+            "cost": 0.010896272,
+            "cost_details": {
+              "input_cost": 0.010896272,
+              "output_cost": 0
+            }
+          }
+        },
+        {
+          "description_sha256": "e51538651e9bc1f311c3c20b652e447a8663383993e2c2914edc2399b315f2f5",
+          "expected": [
+            102,
+            103,
+            104,
+            106
+          ],
+          "probabilities": {
+            "102": 0.97,
+            "103": 0.94,
+            "104": 0.95,
+            "105": 0.07,
+            "106": 0.98
+          },
+          "cache_hit": true,
+          "usage": {
+            "input_tokens": 2176,
+            "output_tokens": 99,
+            "total_tokens": 2275,
+            "cost": 0.012072448,
+            "cost_details": {
+              "input_cost": 0.012072448,
+              "output_cost": 0
+            }
+          }
+        },
+        {
+          "description_sha256": "a161c56872d57fb054d41fb24192212e854c515cd09da5496a8ea4996bffcbcd",
+          "expected": [
+            104,
+            105
+          ],
+          "probabilities": {
+            "102": 0.32,
+            "103": 0.17,
+            "104": 0.98,
+            "105": 0.97,
+            "106": 0.46
+          },
+          "cache_hit": true,
+          "usage": {
+            "input_tokens": 2819,
+            "output_tokens": 99,
+            "total_tokens": 2918,
+            "cost": 0.015639812,
+            "cost_details": {
+              "input_cost": 0.015639812,
+              "output_cost": 0
+            }
+          }
+        },
+        {
+          "description_sha256": "dc5cf45dab056978cdb13090e630d1ec21ec9fc39ad031bf88cdb73645fc7364",
+          "expected": [],
+          "probabilities": {
+            "102": 0.1,
+            "103": 0.09,
+            "104": 0.16,
+            "105": 0.13,
+            "106": 0.11
+          },
+          "cache_hit": true,
+          "usage": {
+            "input_tokens": 2219,
+            "output_tokens": 99,
+            "total_tokens": 2318,
+            "cost": 0.012311012,
+            "cost_details": {
+              "input_cost": 0.012311012,
+              "output_cost": 0
+            }
+          }
+        },
+        {
+          "description_sha256": "b3c7ee307f607f53dadae68619b9117b57b732fbb6123c26610ccf24c1740ccf",
+          "expected": [
+            102,
+            103,
+            104,
+            105
+          ],
+          "probabilities": {
+            "102": 0.98,
+            "103": 0.98,
+            "104": 0.97,
+            "105": 0.97,
+            "106": 0.97
+          },
+          "cache_hit": true,
+          "usage": {
+            "input_tokens": 4483,
+            "output_tokens": 99,
+            "total_tokens": 4582,
+            "cost": 0.024871684,
+            "cost_details": {
+              "input_cost": 0.024871684,
+              "output_cost": 0
+            }
+          }
+        },
+        {
+          "description_sha256": "7f8bb08267b0b617944c835cdbcf3dd6f204750d3c0cd44cea7ff0d3eaef9f44",
+          "expected": [],
+          "probabilities": {
+            "102": 0.07,
+            "103": 0.07,
+            "104": 0.08,
+            "105": 0.09,
+            "106": 0.09
+          },
+          "cache_hit": true,
+          "usage": {
+            "input_tokens": 1879,
+            "output_tokens": 99,
+            "total_tokens": 1978,
+            "cost": 0.010424692,
+            "cost_details": {
+              "input_cost": 0.010424692,
+              "output_cost": 0
+            }
+          }
+        },
+        {
+          "description_sha256": "5283041a29ed81c374973daf0bd2711e25088372e3ee4c3f29cd73a54269450d",
+          "expected": [
+            102,
+            103,
+            104,
+            105,
+            106
+          ],
+          "probabilities": {
+            "102": 0.98,
+            "103": 0.98,
+            "104": 0.95,
+            "105": 0.93,
+            "106": 0.99
+          },
+          "cache_hit": true,
+          "usage": {
+            "input_tokens": 3388,
+            "output_tokens": 99,
+            "total_tokens": 3487,
+            "cost": 0.018796624,
+            "cost_details": {
+              "input_cost": 0.018796624,
+              "output_cost": 0
+            }
+          }
+        },
+        {
+          "description_sha256": "c40e24d0cdd55e7339bf9e3e71159202deb4bd232e19920cb8147c7153fbcfce",
+          "expected": [
+            102,
+            103,
+            104,
+            105,
+            106
+          ],
+          "probabilities": {
+            "102": 0.98,
+            "103": 0.98,
+            "104": 0.96,
+            "105": 0.95,
+            "106": 0.93
+          },
+          "cache_hit": true,
+          "usage": {
+            "input_tokens": 2711,
+            "output_tokens": 99,
+            "total_tokens": 2810,
+            "cost": 0.015040628,
+            "cost_details": {
+              "input_cost": 0.015040628,
+              "output_cost": 0
+            }
+          }
+        },
+        {
+          "description_sha256": "a6808a9bab5172933478ff6d134196c1ed215e1ba65b481a59e26bba494248ad",
+          "expected": [
+            102,
+            106
+          ],
+          "probabilities": {
+            "102": 0.23,
+            "103": 0.03,
+            "104": 0.02,
+            "105": 0.03,
+            "106": 0.98
+          },
+          "cache_hit": true,
+          "usage": {
+            "input_tokens": 2040,
+            "output_tokens": 99,
+            "total_tokens": 2139,
+            "cost": 0.01131792,
+            "cost_details": {
+              "input_cost": 0.01131792,
+              "output_cost": 0
+            }
+          }
+        },
+        {
+          "description_sha256": "2bc71a996a45457cdecb670a8c19ce41b143f5f96b31784d7c0ab6d7d2cb044e",
+          "expected": [],
+          "probabilities": {
+            "102": 0.01,
+            "103": 0.01,
+            "104": 0.01,
+            "105": 0.01,
+            "106": 0.01
+          },
+          "cache_hit": true,
+          "usage": {
+            "input_tokens": 1942,
+            "output_tokens": 99,
+            "total_tokens": 2041,
+            "cost": 0.010774216,
+            "cost_details": {
+              "input_cost": 0.010774216,
+              "output_cost": 0
+            }
+          }
+        },
+        {
+          "description_sha256": "dfd026c4ead5588317ff62992a68332ee9090d3e1d4be1947de8bbc09339aa54",
+          "expected": [
+            102
+          ],
+          "probabilities": {
+            "102": 0.92,
+            "103": 0.09,
+            "104": 0.05,
+            "105": 0.06,
+            "106": 0.32
+          },
+          "cache_hit": true,
+          "usage": {
+            "input_tokens": 3502,
+            "output_tokens": 99,
+            "total_tokens": 3601,
+            "cost": 0.019429096,
+            "cost_details": {
+              "input_cost": 0.019429096,
+              "output_cost": 0
+            }
+          }
+        },
+        {
+          "description_sha256": "bb70c98701f5036fa2aa0e8ae4c2978f3294fbe59cf9648aa21ee72712fe42de",
+          "expected": [
+            104,
+            105
+          ],
+          "probabilities": {
+            "102": 0.18,
+            "103": 0.16,
+            "104": 0.96,
+            "105": 0.95,
+            "106": 0.23
+          },
+          "cache_hit": true,
+          "usage": {
+            "input_tokens": 2418,
+            "output_tokens": 99,
+            "total_tokens": 2517,
+            "cost": 0.013415064,
+            "cost_details": {
+              "input_cost": 0.013415064,
+              "output_cost": 0
+            }
+          }
+        },
+        {
+          "description_sha256": "8bfd392cf079c0c41d9bb9fa2d1ca3aecfe986038915e8f9cd8b5a4f6d81ea0e",
+          "expected": [],
+          "probabilities": {
+            "102": 0.09,
+            "103": 0.09,
+            "104": 0.11,
+            "105": 0.12,
+            "106": 0.11
+          },
+          "cache_hit": true,
+          "usage": {
+            "input_tokens": 1911,
+            "output_tokens": 99,
+            "total_tokens": 2010,
+            "cost": 0.010602228,
+            "cost_details": {
+              "input_cost": 0.010602228,
+              "output_cost": 0
+            }
+          }
+        },
+        {
+          "description_sha256": "36aa2df59c9a512f391a22073982cf58f85708394338a5b6179081249325ebfd",
+          "expected": [
+            102,
+            103,
+            104,
+            105,
+            106
+          ],
+          "probabilities": {
+            "102": 0.98,
+            "103": 0.98,
+            "104": 0.98,
+            "105": 0.93,
+            "106": 0.98
+          },
+          "cache_hit": true,
+          "usage": {
+            "input_tokens": 2151,
+            "output_tokens": 99,
+            "total_tokens": 2250,
+            "cost": 0.011933748,
+            "cost_details": {
+              "input_cost": 0.011933748,
+              "output_cost": 0
+            }
+          }
+        },
+        {
+          "description_sha256": "e7241b22ffea102e32afc9bf064748a8cc175425fc9b7e225b716ba10f1c3961",
+          "expected": [],
+          "probabilities": {
+            "102": 0.15,
+            "103": 0.11,
+            "104": 0.25,
+            "105": 0.15,
+            "106": 0.21
+          },
+          "cache_hit": true,
+          "usage": {
+            "input_tokens": 3210,
+            "output_tokens": 99,
+            "total_tokens": 3309,
+            "cost": 0.01780908,
+            "cost_details": {
+              "input_cost": 0.01780908,
+              "output_cost": 0
+            }
+          }
+        },
+        {
+          "description_sha256": "39a9f302c220044f2ce26e143148ac7d472a2659ac3fada04a8c51bdac9a32ef",
+          "expected": [],
+          "probabilities": {
+            "102": 0.13,
+            "103": 0.09,
+            "104": 0.13,
+            "105": 0.14,
+            "106": 0.13
+          },
+          "cache_hit": true,
+          "usage": {
+            "input_tokens": 1882,
+            "output_tokens": 99,
+            "total_tokens": 1981,
+            "cost": 0.010441336,
+            "cost_details": {
+              "input_cost": 0.010441336,
+              "output_cost": 0
+            }
+          }
+        },
+        {
+          "description_sha256": "ff0b478e272d4f11381f0df0e1902aec8e135131ca0056fca472ed5abf3804b8",
+          "expected": [],
+          "probabilities": {
+            "102": 0.17,
+            "103": 0.13,
+            "104": 0.43,
+            "105": 0.14,
+            "106": 0.17
+          },
+          "cache_hit": true,
+          "usage": {
+            "input_tokens": 2553,
+            "output_tokens": 99,
+            "total_tokens": 2652,
+            "cost": 0.014164044,
+            "cost_details": {
+              "input_cost": 0.014164044,
+              "output_cost": 0
+            }
+          }
+        },
+        {
+          "description_sha256": "2dccc49740fa559b23d920e43797fcd6c462948e923dcc8719b9e0e3432b65dd",
+          "expected": [
+            104,
+            105
+          ],
+          "probabilities": {
+            "102": 0.09,
+            "103": 0.11,
+            "104": 0.96,
+            "105": 0.94,
+            "106": 0.08
+          },
+          "cache_hit": true,
+          "usage": {
+            "input_tokens": 1913,
+            "output_tokens": 99,
+            "total_tokens": 2012,
+            "cost": 0.010613324,
+            "cost_details": {
+              "input_cost": 0.010613324,
+              "output_cost": 0
+            }
+          }
+        },
+        {
+          "description_sha256": "974f1ebb12140a77163d414922af370fd1a7f63c5835a0060b2fa06806e00079",
+          "expected": [],
+          "probabilities": {
+            "102": 0.15,
+            "103": 0.12,
+            "104": 0.16,
+            "105": 0.15,
+            "106": 0.18
+          },
+          "cache_hit": true,
+          "usage": {
+            "input_tokens": 2962,
+            "output_tokens": 99,
+            "total_tokens": 3061,
+            "cost": 0.016433176,
+            "cost_details": {
+              "input_cost": 0.016433176,
+              "output_cost": 0
+            }
+          }
+        }
+      ],
+      "control": {
+        "fixed": {
+          "micro_f1": 0.926829268292683,
+          "tp": 38,
+          "fp": 4,
+          "fn": 2,
+          "precision": 0.9047619047619048,
+          "recall": 0.95
+        },
+        "calibrated": {
+          "micro_f1": 0.926829268292683,
+          "tp": 38,
+          "fp": 4,
+          "fn": 2,
+          "precision": 0.9047619047619048,
+          "recall": 0.95
+        },
+        "used_for_selection": false
+      }
+    },
+    "baseline": {
+      "fit_responses": [
+        {
+          "description_sha256": "7fb0229efe153e2d259d8e68410e987f27c9a6f6ea9efb0ca9f9132456494ec1",
+          "expected": [],
+          "probabilities": {
+            "102": 0.14,
+            "103": 0.14,
+            "104": 0.16,
+            "105": 0.11,
+            "106": 0.22
+          },
+          "cache_hit": true,
+          "usage": {
+            "input_tokens": 560,
+            "output_tokens": 99,
+            "total_tokens": 659,
+            "cost": 0.00310688,
+            "cost_details": {
+              "input_cost": 0.00310688,
+              "output_cost": 0
+            }
+          }
+        },
+        {
+          "description_sha256": "a351bb39fee12ca7136721c8e8919b7481a08e8bc0b418948003c24f9adc3d50",
+          "expected": [
+            102,
+            106
+          ],
+          "probabilities": {
+            "102": 0.83,
+            "103": 0.03,
+            "104": 0.02,
+            "105": 0.02,
+            "106": 0.92
+          },
+          "cache_hit": true,
+          "usage": {
+            "input_tokens": 699,
+            "output_tokens": 99,
+            "total_tokens": 798,
+            "cost": 0.003878052,
+            "cost_details": {
+              "input_cost": 0.003878052,
+              "output_cost": 0
+            }
+          }
+        },
+        {
+          "description_sha256": "c629af290bd1a76849c9a5b1e0848bb90ebcfcf8f7bccbe064d2cb25a3d4132b",
+          "expected": [],
+          "probabilities": {
+            "102": 0.16,
+            "103": 0.11,
+            "104": 0.14,
+            "105": 0.12,
+            "106": 0.21
+          },
+          "cache_hit": true,
+          "usage": {
+            "input_tokens": 588,
+            "output_tokens": 99,
+            "total_tokens": 687,
+            "cost": 0.003262224,
+            "cost_details": {
+              "input_cost": 0.003262224,
+              "output_cost": 0
+            }
+          }
+        },
+        {
+          "description_sha256": "8ec370896dd3451d475a7555e7b080cc802ee3826107a325db5786b1d3ebae0b",
+          "expected": [],
+          "probabilities": {
+            "102": 0.35,
+            "103": 0.19,
+            "104": 0.07,
+            "105": 0.12,
+            "106": 0.48
+          },
+          "cache_hit": true,
+          "usage": {
+            "input_tokens": 572,
+            "output_tokens": 99,
+            "total_tokens": 671,
+            "cost": 0.003173456,
+            "cost_details": {
+              "input_cost": 0.003173456,
+              "output_cost": 0
+            }
+          }
+        },
+        {
+          "description_sha256": "0794955da45bd976003c36d71cc4dafeac88ecd47c4258c54bbeee68eafdc7a6",
+          "expected": [
+            102,
+            103,
+            106
+          ],
+          "probabilities": {
+            "102": 0.99,
+            "103": 0.99,
+            "104": 0.03,
+            "105": 0.03,
+            "106": 0.98
+          },
+          "cache_hit": true,
+          "usage": {
+            "input_tokens": 3075,
+            "output_tokens": 99,
+            "total_tokens": 3174,
+            "cost": 0.0170601,
+            "cost_details": {
+              "input_cost": 0.0170601,
+              "output_cost": 0
+            }
+          }
+        },
+        {
+          "description_sha256": "15af2f49ac8c6442c4f37b88375277623e47757b9987c1400c895c10c31029c9",
+          "expected": [
+            103,
+            104,
+            105
+          ],
+          "probabilities": {
+            "102": 0.36,
+            "103": 0.98,
+            "104": 0.99,
+            "105": 0.99,
+            "106": 0.46
+          },
+          "cache_hit": true,
+          "usage": {
+            "input_tokens": 2376,
+            "output_tokens": 99,
+            "total_tokens": 2475,
+            "cost": 0.013182048,
+            "cost_details": {
+              "input_cost": 0.013182048,
+              "output_cost": 0
+            }
+          }
+        },
+        {
+          "description_sha256": "148f6b214c27957d79e3d0a187f48d623c9feb7d97357488f5fbe261d3659d6e",
+          "expected": [
+            103,
+            104,
+            105
+          ],
+          "probabilities": {
+            "102": 0.23,
+            "103": 0.97,
+            "104": 0.98,
+            "105": 0.98,
+            "106": 0.23
+          },
+          "cache_hit": true,
+          "usage": {
+            "input_tokens": 1116,
+            "output_tokens": 99,
+            "total_tokens": 1215,
+            "cost": 0.006191568,
+            "cost_details": {
+              "input_cost": 0.006191568,
+              "output_cost": 0
+            }
+          }
+        },
+        {
+          "description_sha256": "2ba365a6d3f52c0a55a492a71219114577e2b297a7eeb7b47ba8d918f53f63fc",
+          "expected": [
+            102,
+            103,
+            104,
+            105,
+            106
+          ],
+          "probabilities": {
+            "102": 0.98,
+            "103": 0.99,
+            "104": 0.99,
+            "105": 0.99,
+            "106": 0.98
+          },
+          "cache_hit": true,
+          "usage": {
+            "input_tokens": 1237,
+            "output_tokens": 99,
+            "total_tokens": 1336,
+            "cost": 0.006862876,
+            "cost_details": {
+              "input_cost": 0.006862876,
+              "output_cost": 0
+            }
+          }
+        },
+        {
+          "description_sha256": "06382fde718389a76f56742bb0a77af362f86b492eaf34f1382843646069491e",
+          "expected": [
+            102,
+            103,
+            104,
+            106
+          ],
+          "probabilities": {
+            "102": 0.98,
+            "103": 0.98,
+            "104": 0.98,
+            "105": 0.04,
+            "106": 0.96
+          },
+          "cache_hit": true,
+          "usage": {
+            "input_tokens": 854,
+            "output_tokens": 99,
+            "total_tokens": 953,
+            "cost": 0.004737992,
+            "cost_details": {
+              "input_cost": 0.004737992,
+              "output_cost": 0
+            }
+          }
+        },
+        {
+          "description_sha256": "90fd10c4284406ffc17c88058ffde000d3171588d03e044cd66e86d75c093223",
+          "expected": [],
+          "probabilities": {
+            "102": 0.88,
+            "103": 0.13,
+            "104": 0.97,
+            "105": 0.95,
+            "106": 0.33
+          },
+          "cache_hit": true,
+          "usage": {
+            "input_tokens": 1384,
+            "output_tokens": 99,
+            "total_tokens": 1483,
+            "cost": 0.007678432,
+            "cost_details": {
+              "input_cost": 0.007678432,
+              "output_cost": 0
+            }
+          }
+        },
+        {
+          "description_sha256": "1e2655b9ebc6d739440108336d9b1bd6e289b7ce30c7abf7ec0ea8d3790be9fa",
+          "expected": [
+            102,
+            103,
+            106
+          ],
+          "probabilities": {
+            "102": 0.99,
+            "103": 0.98,
+            "104": 0.25,
+            "105": 0.21,
+            "106": 0.99
+          },
+          "cache_hit": true,
+          "usage": {
+            "input_tokens": 2581,
+            "output_tokens": 99,
+            "total_tokens": 2680,
+            "cost": 0.014319388,
+            "cost_details": {
+              "input_cost": 0.014319388,
+              "output_cost": 0
+            }
+          }
+        },
+        {
+          "description_sha256": "53e08cfbf8d4eb534267517a3250e9124ec6434fd70416bdf6cf8d63eaf78d2a",
+          "expected": [
+            102,
+            103,
+            104,
+            105
+          ],
+          "probabilities": {
+            "102": 0.98,
+            "103": 0.98,
+            "104": 0.98,
+            "105": 0.97,
+            "106": 0.24
+          },
+          "cache_hit": true,
+          "usage": {
+            "input_tokens": 841,
+            "output_tokens": 99,
+            "total_tokens": 940,
+            "cost": 0.004665868,
+            "cost_details": {
+              "input_cost": 0.004665868,
+              "output_cost": 0
+            }
+          }
+        },
+        {
+          "description_sha256": "f820e2083c495094d2c324bf20df9f10d91ac09e90e4b50e0061ac20390f8999",
+          "expected": [],
+          "probabilities": {
+            "102": 0.19,
+            "103": 0.18,
+            "104": 0.26,
+            "105": 0.19,
+            "106": 0.29
+          },
+          "cache_hit": true,
+          "usage": {
+            "input_tokens": 537,
+            "output_tokens": 99,
+            "total_tokens": 636,
+            "cost": 0.002979276,
+            "cost_details": {
+              "input_cost": 0.002979276,
+              "output_cost": 0
+            }
+          }
+        },
+        {
+          "description_sha256": "3e28d83e03df57ea72c2f86027a1987c032070b6de00ffe8805770ce83165c8a",
+          "expected": [
+            106
+          ],
+          "probabilities": {
+            "102": 0.06,
+            "103": 0.06,
+            "104": 0.04,
+            "105": 0.03,
+            "106": 0.99
+          },
+          "cache_hit": true,
+          "usage": {
+            "input_tokens": 833,
+            "output_tokens": 99,
+            "total_tokens": 932,
+            "cost": 0.004621484,
+            "cost_details": {
+              "input_cost": 0.004621484,
+              "output_cost": 0
+            }
+          }
+        },
+        {
+          "description_sha256": "0b2d48e500510934de4f6e15e3d3513ba37faf7397385adc5737d127c769c56b",
+          "expected": [
+            102,
+            103,
+            104,
+            105,
+            106
+          ],
+          "probabilities": {
+            "102": 0.99,
+            "103": 0.98,
+            "104": 0.99,
+            "105": 0.99,
+            "106": 0.98
+          },
+          "cache_hit": true,
+          "usage": {
+            "input_tokens": 1276,
+            "output_tokens": 99,
+            "total_tokens": 1375,
+            "cost": 0.007079248,
+            "cost_details": {
+              "input_cost": 0.007079248,
+              "output_cost": 0
+            }
+          }
+        },
+        {
+          "description_sha256": "317aa53b51cb0e8f4a63a731636e79906aa74ff5b463ecd575e24db8feb88593",
+          "expected": [
+            102,
+            103,
+            104,
+            105,
+            106
+          ],
+          "probabilities": {
+            "102": 0.98,
+            "103": 0.98,
+            "104": 0.98,
+            "105": 0.99,
+            "106": 0.98
+          },
+          "cache_hit": true,
+          "usage": {
+            "input_tokens": 1017,
+            "output_tokens": 99,
+            "total_tokens": 1116,
+            "cost": 0.005642316,
+            "cost_details": {
+              "input_cost": 0.005642316,
+              "output_cost": 0
+            }
+          }
+        },
+        {
+          "description_sha256": "0b32d036e24a174491bd6d8c229164d1f447467e028d59b0a118fb45d8a12868",
+          "expected": [],
+          "probabilities": {
+            "102": 0.58,
+            "103": 0.08,
+            "104": 0.16,
+            "105": 0.03,
+            "106": 0.63
+          },
+          "cache_hit": true,
+          "usage": {
+            "input_tokens": 720,
+            "output_tokens": 99,
+            "total_tokens": 819,
+            "cost": 0.00399456,
+            "cost_details": {
+              "input_cost": 0.00399456,
+              "output_cost": 0
+            }
+          }
+        },
+        {
+          "description_sha256": "fdb6c4cce2b35a628dac04fd1f63e0cd49e0be308d6a83c3dfc0ccdf83472aba",
+          "expected": [],
+          "probabilities": {
+            "102": 0.43,
+            "103": 0.29,
+            "104": 0.99,
+            "105": 0.99,
+            "106": 0.4
+          },
+          "cache_hit": true,
+          "usage": {
+            "input_tokens": 3415,
+            "output_tokens": 99,
+            "total_tokens": 3514,
+            "cost": 0.01894642,
+            "cost_details": {
+              "input_cost": 0.01894642,
+              "output_cost": 0
+            }
+          }
+        },
+        {
+          "description_sha256": "30d9ff583b7e99ded04f8a2c5e45e43f0e8babfab76d03ca1c9c3894905f166d",
+          "expected": [],
+          "probabilities": {
+            "102": 0.96,
+            "103": 0.96,
+            "104": 0.95,
+            "105": 0.97,
+            "106": 0.2
+          },
+          "cache_hit": true,
+          "usage": {
+            "input_tokens": 2640,
+            "output_tokens": 99,
+            "total_tokens": 2739,
+            "cost": 0.01464672,
+            "cost_details": {
+              "input_cost": 0.01464672,
+              "output_cost": 0
+            }
+          }
+        },
+        {
+          "description_sha256": "7dc73f5f28c2b5a9464aa83ad4a439f241c9df7d106e2dac106cd338355573f5",
+          "expected": [
+            102,
+            103,
+            104,
+            105,
+            106
+          ],
+          "probabilities": {
+            "102": 0.98,
+            "103": 0.98,
+            "104": 0.98,
+            "105": 0.98,
+            "106": 0.84
+          },
+          "cache_hit": true,
+          "usage": {
+            "input_tokens": 1080,
+            "output_tokens": 99,
+            "total_tokens": 1179,
+            "cost": 0.00599184,
+            "cost_details": {
+              "input_cost": 0.00599184,
+              "output_cost": 0
+            }
+          }
+        },
+        {
+          "description_sha256": "b8cf3388b9dfc54c5e68000dd8bd64bfeb2d2ce3267391a9b64d2a20d3d4ce88",
+          "expected": [],
+          "probabilities": {
+            "102": 0.43,
+            "103": 0.24,
+            "104": 0.08,
+            "105": 0.12,
+            "106": 0.54
+          },
+          "cache_hit": true,
+          "usage": {
+            "input_tokens": 557,
+            "output_tokens": 99,
+            "total_tokens": 656,
+            "cost": 0.003090236,
+            "cost_details": {
+              "input_cost": 0.003090236,
+              "output_cost": 0
+            }
+          }
+        },
+        {
+          "description_sha256": "6b924828ee8723c7b6df58316aba0f703a6318c6ca1d3aad9bb0b33171a77b40",
+          "expected": [
+            103,
+            104,
+            105
+          ],
+          "probabilities": {
+            "102": 0.17,
+            "103": 0.98,
+            "104": 0.98,
+            "105": 0.98,
+            "106": 0.15
+          },
+          "cache_hit": true,
+          "usage": {
+            "input_tokens": 1181,
+            "output_tokens": 99,
+            "total_tokens": 1280,
+            "cost": 0.006552188,
+            "cost_details": {
+              "input_cost": 0.006552188,
+              "output_cost": 0
+            }
+          }
+        },
+        {
+          "description_sha256": "0a0c689351039009d891b113057023b13b47619d5fccdf1f50968f6471ffc429",
+          "expected": [],
+          "probabilities": {
+            "102": 0.51,
+            "103": 0.19,
+            "104": 0.97,
+            "105": 0.97,
+            "106": 0.54
+          },
+          "cache_hit": true,
+          "usage": {
+            "input_tokens": 2790,
+            "output_tokens": 99,
+            "total_tokens": 2889,
+            "cost": 0.01547892,
+            "cost_details": {
+              "input_cost": 0.01547892,
+              "output_cost": 0
+            }
+          }
+        },
+        {
+          "description_sha256": "66e048efbfa1a69e499e1dbb40585aa4f48c51ec5bd6903db719753fc3f150dd",
+          "expected": [
+            102,
+            103,
+            104,
+            105,
+            106
+          ],
+          "probabilities": {
+            "102": 0.98,
+            "103": 0.99,
+            "104": 0.97,
+            "105": 0.98,
+            "106": 0.98
+          },
+          "cache_hit": true,
+          "usage": {
+            "input_tokens": 1170,
+            "output_tokens": 99,
+            "total_tokens": 1269,
+            "cost": 0.00649116,
+            "cost_details": {
+              "input_cost": 0.00649116,
+              "output_cost": 0
+            }
+          }
+        },
+        {
+          "description_sha256": "2ad0614a00d35c82bbf547f2a8e19409cf8667ddf001ae3af09e491ca4b2f250",
+          "expected": [
+            102,
+            103,
+            104,
+            105,
+            106
+          ],
+          "probabilities": {
+            "102": 0.84,
+            "103": 0.98,
+            "104": 0.98,
+            "105": 0.98,
+            "106": 0.98
+          },
+          "cache_hit": true,
+          "usage": {
+            "input_tokens": 1136,
+            "output_tokens": 99,
+            "total_tokens": 1235,
+            "cost": 0.006302528,
+            "cost_details": {
+              "input_cost": 0.006302528,
+              "output_cost": 0
+            }
+          }
+        },
+        {
+          "description_sha256": "3d6a025c238b3c1ab19c279b6cc1a9783da0c98d3227073b0e6b02b7f6551250",
+          "expected": [
+            102,
+            103,
+            106
+          ],
+          "probabilities": {
+            "102": 0.98,
+            "103": 0.98,
+            "104": 0.03,
+            "105": 0.04,
+            "106": 0.99
+          },
+          "cache_hit": true,
+          "usage": {
+            "input_tokens": 1293,
+            "output_tokens": 99,
+            "total_tokens": 1392,
+            "cost": 0.007173564,
+            "cost_details": {
+              "input_cost": 0.007173564,
+              "output_cost": 0
+            }
+          }
+        },
+        {
+          "description_sha256": "3a8e2164c8f976f778a0b653d5461e45fa7087f468f4d094a9eaffb9bde799b4",
+          "expected": [
+            103
+          ],
+          "probabilities": {
+            "102": 0.05,
+            "103": 0.98,
+            "104": 0.04,
+            "105": 0.02,
+            "106": 0.03
+          },
+          "cache_hit": true,
+          "usage": {
+            "input_tokens": 706,
+            "output_tokens": 99,
+            "total_tokens": 805,
+            "cost": 0.003916888,
+            "cost_details": {
+              "input_cost": 0.003916888,
+              "output_cost": 0
+            }
+          }
+        },
+        {
+          "description_sha256": "86bcc6b3110049fd69343883b373d05235628216b012c60b97233a3c33916ec8",
+          "expected": [
+            102,
+            103,
+            104,
+            105
+          ],
+          "probabilities": {
+            "102": 0.97,
+            "103": 0.98,
+            "104": 0.98,
+            "105": 0.97,
+            "106": 0.15
+          },
+          "cache_hit": true,
+          "usage": {
+            "input_tokens": 613,
+            "output_tokens": 99,
+            "total_tokens": 712,
+            "cost": 0.003400924,
+            "cost_details": {
+              "input_cost": 0.003400924,
+              "output_cost": 0
+            }
+          }
+        },
+        {
+          "description_sha256": "a9044add93efc149ad20fac411c10b98aa6d5a43652f8f71ec2bf95f82cac5c8",
+          "expected": [],
+          "probabilities": {
+            "102": 0.23,
+            "103": 0.38,
+            "104": 0.04,
+            "105": 0.05,
+            "106": 0.23
+          },
+          "cache_hit": true,
+          "usage": {
+            "input_tokens": 1112,
+            "output_tokens": 99,
+            "total_tokens": 1211,
+            "cost": 0.006169376,
+            "cost_details": {
+              "input_cost": 0.006169376,
+              "output_cost": 0
+            }
+          }
+        },
+        {
+          "description_sha256": "4c461fce02353a61fab90a8a719f5036ef911581881aa4fd4cb4ece8d08f8090",
+          "expected": [],
+          "probabilities": {
+            "102": 0.06,
+            "103": 0.06,
+            "104": 0.06,
+            "105": 0.06,
+            "106": 0.09
+          },
+          "cache_hit": true,
+          "usage": {
+            "input_tokens": 554,
+            "output_tokens": 99,
+            "total_tokens": 653,
+            "cost": 0.003073592,
+            "cost_details": {
+              "input_cost": 0.003073592,
+              "output_cost": 0
+            }
+          }
+        },
+        {
+          "description_sha256": "64bfde99193f578f154755082e5e4cca6ee28dbd6683fba3ab9063a8812abf6a",
+          "expected": [
+            102,
+            103,
+            104,
+            105,
+            106
+          ],
+          "probabilities": {
+            "102": 0.97,
+            "103": 0.99,
+            "104": 0.98,
+            "105": 0.99,
+            "106": 0.71
+          },
+          "cache_hit": true,
+          "usage": {
+            "input_tokens": 2778,
+            "output_tokens": 99,
+            "total_tokens": 2877,
+            "cost": 0.015412344,
+            "cost_details": {
+              "input_cost": 0.015412344,
+              "output_cost": 0
+            }
+          }
+        },
+        {
+          "description_sha256": "d313e2866b7f4f725f48f5725df87ac91db0e8d1944530a87cf034f655f3fd2d",
+          "expected": [
+            102,
+            103,
+            104,
+            105,
+            106
+          ],
+          "probabilities": {
+            "102": 0.99,
+            "103": 0.99,
+            "104": 0.99,
+            "105": 0.98,
+            "106": 0.98
+          },
+          "cache_hit": true,
+          "usage": {
+            "input_tokens": 1892,
+            "output_tokens": 99,
+            "total_tokens": 1991,
+            "cost": 0.010496816,
+            "cost_details": {
+              "input_cost": 0.010496816,
+              "output_cost": 0
+            }
+          }
+        },
+        {
+          "description_sha256": "905048ab2cfc4880eb1ecdae32d7d5c52d484b802d53ec59203e47a10cf99483",
+          "expected": [
+            103,
+            104,
+            105
+          ],
+          "probabilities": {
+            "102": 0.16,
+            "103": 0.88,
+            "104": 0.95,
+            "105": 0.98,
+            "106": 0.14
+          },
+          "cache_hit": true,
+          "usage": {
+            "input_tokens": 790,
+            "output_tokens": 99,
+            "total_tokens": 889,
+            "cost": 0.00438292,
+            "cost_details": {
+              "input_cost": 0.00438292,
+              "output_cost": 0
+            }
+          }
+        },
+        {
+          "description_sha256": "d8d747f6d89cfcdace2780a870fa8b58396b3aa7ed28efde3a8e28639c2f502d",
+          "expected": [
+            102,
+            103,
+            104,
+            105,
+            106
+          ],
+          "probabilities": {
+            "102": 0.98,
+            "103": 0.97,
+            "104": 0.99,
+            "105": 0.99,
+            "106": 0.98
+          },
+          "cache_hit": true,
+          "usage": {
+            "input_tokens": 2291,
+            "output_tokens": 99,
+            "total_tokens": 2390,
+            "cost": 0.012710468,
+            "cost_details": {
+              "input_cost": 0.012710468,
+              "output_cost": 0
+            }
+          }
+        },
+        {
+          "description_sha256": "173cffc204e413eb97754949dc69a0082666223bb411d53198709dd9b41d1592",
+          "expected": [
+            102,
+            103,
+            104,
+            105,
+            106
+          ],
+          "probabilities": {
+            "102": 0.98,
+            "103": 0.98,
+            "104": 0.97,
+            "105": 0.97,
+            "106": 0.96
+          },
+          "cache_hit": true,
+          "usage": {
+            "input_tokens": 1884,
+            "output_tokens": 99,
+            "total_tokens": 1983,
+            "cost": 0.010452432,
+            "cost_details": {
+              "input_cost": 0.010452432,
+              "output_cost": 0
+            }
+          }
+        },
+        {
+          "description_sha256": "016c40f0ac7165de940fe0f21418f58b4af296e5a37684c0d87cda83f1b06cac",
+          "expected": [
+            102,
+            103,
+            104,
+            105
+          ],
+          "probabilities": {
+            "102": 0.68,
+            "103": 0.98,
+            "104": 0.98,
+            "105": 0.94,
+            "106": 0.05
+          },
+          "cache_hit": true,
+          "usage": {
+            "input_tokens": 969,
+            "output_tokens": 99,
+            "total_tokens": 1068,
+            "cost": 0.005376012,
+            "cost_details": {
+              "input_cost": 0.005376012,
+              "output_cost": 0
+            }
+          }
+        },
+        {
+          "description_sha256": "f332ab831d38ec46bf7b93e89156c9f221935271317df0070c4370f48d1c119a",
+          "expected": [
+            102,
+            106
+          ],
+          "probabilities": {
+            "102": 0.98,
+            "103": 0.95,
+            "104": 0.21,
+            "105": 0.18,
+            "106": 0.99
+          },
+          "cache_hit": true,
+          "usage": {
+            "input_tokens": 1595,
+            "output_tokens": 99,
+            "total_tokens": 1694,
+            "cost": 0.00884906,
+            "cost_details": {
+              "input_cost": 0.00884906,
+              "output_cost": 0
+            }
+          }
+        },
+        {
+          "description_sha256": "2d91e59074d53da0d7aea768e9e15902333c9770e2975b610402f6e202ce7b0e",
+          "expected": [],
+          "probabilities": {
+            "102": 0.21,
+            "103": 0.13,
+            "104": 0.09,
+            "105": 0.08,
+            "106": 0.29
+          },
+          "cache_hit": true,
+          "usage": {
+            "input_tokens": 868,
+            "output_tokens": 99,
+            "total_tokens": 967,
+            "cost": 0.004815664,
+            "cost_details": {
+              "input_cost": 0.004815664,
+              "output_cost": 0
+            }
+          }
+        },
+        {
+          "description_sha256": "157e672fb4a146e9100e94e54dac418be5e8df8f7b75ac46933ce9e087e8d828",
+          "expected": [
+            102,
+            103,
+            106
+          ],
+          "probabilities": {
+            "102": 0.99,
+            "103": 0.99,
+            "104": 0.08,
+            "105": 0.03,
+            "106": 0.99
+          },
+          "cache_hit": true,
+          "usage": {
+            "input_tokens": 1167,
+            "output_tokens": 99,
+            "total_tokens": 1266,
+            "cost": 0.006474516,
+            "cost_details": {
+              "input_cost": 0.006474516,
+              "output_cost": 0
+            }
+          }
+        },
+        {
+          "description_sha256": "6d0ca127418220ab93765f98ac77bf858dcfc129c3f0a9ba772c71c0712cc340",
+          "expected": [],
+          "probabilities": {
+            "102": 0.14,
+            "103": 0.1,
+            "104": 0.29,
+            "105": 0.05,
+            "106": 0.1
+          },
+          "cache_hit": true,
+          "usage": {
+            "input_tokens": 573,
+            "output_tokens": 99,
+            "total_tokens": 672,
+            "cost": 0.003179004,
+            "cost_details": {
+              "input_cost": 0.003179004,
+              "output_cost": 0
+            }
+          }
+        },
+        {
+          "description_sha256": "1a3ce026d3f162bc1c5486cc84df6dc58d4ffda48084f4551feb50498c63854b",
+          "expected": [],
+          "probabilities": {
+            "102": 0.17,
+            "103": 0.06,
+            "104": 0.03,
+            "105": 0.69,
+            "106": 0.29
+          },
+          "cache_hit": true,
+          "usage": {
+            "input_tokens": 757,
+            "output_tokens": 99,
+            "total_tokens": 856,
+            "cost": 0.004199836,
+            "cost_details": {
+              "input_cost": 0.004199836,
+              "output_cost": 0
+            }
+          }
+        },
+        {
+          "description_sha256": "cf55a7045f2f2e9ddd97bec8f37dd9d7138ab975bc878177068fa73e649d6e04",
+          "expected": [
+            103
+          ],
+          "probabilities": {
+            "102": 0.05,
+            "103": 0.99,
+            "104": 0.04,
+            "105": 0.02,
+            "106": 0.03
+          },
+          "cache_hit": true,
+          "usage": {
+            "input_tokens": 771,
+            "output_tokens": 99,
+            "total_tokens": 870,
+            "cost": 0.004277508,
+            "cost_details": {
+              "input_cost": 0.004277508,
+              "output_cost": 0
+            }
+          }
+        },
+        {
+          "description_sha256": "241bf7cfc644dadb04bec62fd4a34c24f2d73bd42a4696f8b2347bb166bcde14",
+          "expected": [
+            102,
+            103,
+            104,
+            105,
+            106
+          ],
+          "probabilities": {
+            "102": 0.8,
+            "103": 0.98,
+            "104": 0.99,
+            "105": 0.99,
+            "106": 0.99
+          },
+          "cache_hit": true,
+          "usage": {
+            "input_tokens": 1573,
+            "output_tokens": 99,
+            "total_tokens": 1672,
+            "cost": 0.008727004,
+            "cost_details": {
+              "input_cost": 0.008727004,
+              "output_cost": 0
+            }
+          }
+        },
+        {
+          "description_sha256": "09ea52b9786d6fd4f48c8dd788d71766c54b41efdff3accd40eebe7ef68f6f3a",
+          "expected": [
+            104,
+            105
+          ],
+          "probabilities": {
+            "102": 0.07,
+            "103": 0.06,
+            "104": 0.97,
+            "105": 0.91,
+            "106": 0.1
+          },
+          "cache_hit": true,
+          "usage": {
+            "input_tokens": 708,
+            "output_tokens": 99,
+            "total_tokens": 807,
+            "cost": 0.003927984,
+            "cost_details": {
+              "input_cost": 0.003927984,
+              "output_cost": 0
+            }
+          }
+        },
+        {
+          "description_sha256": "cfaacef8207e8aa5c64e3d5a5bb61b6f58d7c5c434aef7b1c20b1b9884681bd8",
+          "expected": [
+            102,
+            103,
+            104,
+            105,
+            106
+          ],
+          "probabilities": {
+            "102": 0.98,
+            "103": 0.09,
+            "104": 0.95,
+            "105": 0.97,
+            "106": 0.24
+          },
+          "cache_hit": true,
+          "usage": {
+            "input_tokens": 1416,
+            "output_tokens": 99,
+            "total_tokens": 1515,
+            "cost": 0.007855968,
+            "cost_details": {
+              "input_cost": 0.007855968,
+              "output_cost": 0
+            }
+          }
+        },
+        {
+          "description_sha256": "9ab3327cb84a08199bea30a57852a3cf51c8656d4e8cae1ab260c5a15093c6b6",
+          "expected": [],
+          "probabilities": {
+            "102": 0.18,
+            "103": 0.1,
+            "104": 0.15,
+            "105": 0.08,
+            "106": 0.25
+          },
+          "cache_hit": true,
+          "usage": {
+            "input_tokens": 696,
+            "output_tokens": 99,
+            "total_tokens": 795,
+            "cost": 0.003861408,
+            "cost_details": {
+              "input_cost": 0.003861408,
+              "output_cost": 0
+            }
+          }
+        },
+        {
+          "description_sha256": "2a9baa704b02b487329e40fc637fdf1235932798926bf5d8a7efe7ab765d0b71",
+          "expected": [],
+          "probabilities": {
+            "102": 0.29,
+            "103": 0.22,
+            "104": 0.09,
+            "105": 0.13,
+            "106": 0.4
+          },
+          "cache_hit": true,
+          "usage": {
+            "input_tokens": 550,
+            "output_tokens": 99,
+            "total_tokens": 649,
+            "cost": 0.0030514,
+            "cost_details": {
+              "input_cost": 0.0030514,
+              "output_cost": 0
+            }
+          }
+        },
+        {
+          "description_sha256": "1acaafdf3dd48ed859f88dd5582fa0934f88cc5489cc3c1321bac47839032a3f",
+          "expected": [],
+          "probabilities": {
+            "102": 0.96,
+            "103": 0.09,
+            "104": 0.04,
+            "105": 0.98,
+            "106": 0.52
+          },
+          "cache_hit": true,
+          "usage": {
+            "input_tokens": 1164,
+            "output_tokens": 99,
+            "total_tokens": 1263,
+            "cost": 0.006457872,
+            "cost_details": {
+              "input_cost": 0.006457872,
+              "output_cost": 0
+            }
+          }
+        }
+      ],
+      "tuning": {
+        "selected_method": "global_shrink_075",
+        "thresholds": {
+          "101": 0.5,
+          "102": 0.635,
+          "103": 0.635,
+          "104": 0.635,
+          "105": 0.635,
+          "106": 0.635
+        },
+        "selection_metric": {
+          "micro_f1": 0.9264069264069265,
+          "tp": 107,
+          "fp": 15,
+          "fn": 2,
+          "precision": 0.8770491803278688,
+          "recall": 0.981651376146789
+        },
+        "validation_fit_metric": {
+          "micro_f1": 0.9264069264069265,
+          "tp": 107,
+          "fp": 15,
+          "fn": 2,
+          "precision": 0.8770491803278688,
+          "recall": 0.981651376146789
+        },
+        "crossfit_candidates": {
+          "fixed": {
+            "micro_f1": 0.9029535864978903,
+            "tp": 107,
+            "fp": 21,
+            "fn": 2,
+            "precision": 0.8359375,
+            "recall": 0.981651376146789
+          },
+          "global_shrink_025": {
+            "micro_f1": 0.9184549356223176,
+            "tp": 107,
+            "fp": 17,
+            "fn": 2,
+            "precision": 0.8629032258064516,
+            "recall": 0.981651376146789
+          },
+          "global_shrink_050": {
+            "micro_f1": 0.9224137931034483,
+            "tp": 107,
+            "fp": 16,
+            "fn": 2,
+            "precision": 0.8699186991869918,
+            "recall": 0.981651376146789
+          },
+          "global_shrink_075": {
+            "micro_f1": 0.9264069264069265,
+            "tp": 107,
+            "fp": 15,
+            "fn": 2,
+            "precision": 0.8770491803278688,
+            "recall": 0.981651376146789
+          },
+          "global_shrink_100": {
+            "micro_f1": 0.9217391304347826,
+            "tp": 106,
+            "fp": 15,
+            "fn": 3,
+            "precision": 0.8760330578512396,
+            "recall": 0.9724770642201835
+          },
+          "per_category_shrink_025": {
+            "micro_f1": 0.9184549356223176,
+            "tp": 107,
+            "fp": 17,
+            "fn": 2,
+            "precision": 0.8629032258064516,
+            "recall": 0.981651376146789
+          },
+          "per_category_shrink_050": {
+            "micro_f1": 0.9224137931034483,
+            "tp": 107,
+            "fp": 16,
+            "fn": 2,
+            "precision": 0.8699186991869918,
+            "recall": 0.981651376146789
+          },
+          "per_category_shrink_075": {
+            "micro_f1": 0.9264069264069265,
+            "tp": 107,
+            "fp": 15,
+            "fn": 2,
+            "precision": 0.8770491803278688,
+            "recall": 0.981651376146789
+          },
+          "per_category_shrink_100": {
+            "micro_f1": 0.9017857142857143,
+            "tp": 101,
+            "fp": 14,
+            "fn": 8,
+            "precision": 0.8782608695652174,
+            "recall": 0.926605504587156
+          }
+        },
+        "folds": [
+          {
+            "fold": 1,
+            "fit_rows": 32,
+            "heldout_rows": 16,
+            "metrics": {
+              "fixed": {
+                "micro_f1": 0.8354430379746836,
+                "tp": 33,
+                "fp": 11,
+                "fn": 2,
+                "precision": 0.75,
+                "recall": 0.9428571428571428
+              },
+              "global_shrink_025": {
+                "micro_f1": 0.868421052631579,
+                "tp": 33,
+                "fp": 8,
+                "fn": 2,
+                "precision": 0.8048780487804879,
+                "recall": 0.9428571428571428
+              },
+              "global_shrink_050": {
+                "micro_f1": 0.88,
+                "tp": 33,
+                "fp": 7,
+                "fn": 2,
+                "precision": 0.825,
+                "recall": 0.9428571428571428
+              },
+              "global_shrink_075": {
+                "micro_f1": 0.8918918918918919,
+                "tp": 33,
+                "fp": 6,
+                "fn": 2,
+                "precision": 0.8461538461538461,
+                "recall": 0.9428571428571428
+              },
+              "global_shrink_100": {
+                "micro_f1": 0.8767123287671232,
+                "tp": 32,
+                "fp": 6,
+                "fn": 3,
+                "precision": 0.8421052631578947,
+                "recall": 0.9142857142857143
+              },
+              "per_category_shrink_025": {
+                "micro_f1": 0.868421052631579,
+                "tp": 33,
+                "fp": 8,
+                "fn": 2,
+                "precision": 0.8048780487804879,
+                "recall": 0.9428571428571428
+              },
+              "per_category_shrink_050": {
+                "micro_f1": 0.88,
+                "tp": 33,
+                "fp": 7,
+                "fn": 2,
+                "precision": 0.825,
+                "recall": 0.9428571428571428
+              },
+              "per_category_shrink_075": {
+                "micro_f1": 0.8918918918918919,
+                "tp": 33,
+                "fp": 6,
+                "fn": 2,
+                "precision": 0.8461538461538461,
+                "recall": 0.9428571428571428
+              },
+              "per_category_shrink_100": {
+                "micro_f1": 0.8405797101449275,
+                "tp": 29,
+                "fp": 5,
+                "fn": 6,
+                "precision": 0.8529411764705882,
+                "recall": 0.8285714285714286
+              }
+            }
+          },
+          {
+            "fold": 2,
+            "fit_rows": 32,
+            "heldout_rows": 16,
+            "metrics": {
+              "fixed": {
+                "micro_f1": 0.925,
+                "tp": 37,
+                "fp": 6,
+                "fn": 0,
+                "precision": 0.8604651162790697,
+                "recall": 1.0
+              },
+              "global_shrink_025": {
+                "micro_f1": 0.9367088607594937,
+                "tp": 37,
+                "fp": 5,
+                "fn": 0,
+                "precision": 0.8809523809523809,
+                "recall": 1.0
+              },
+              "global_shrink_050": {
+                "micro_f1": 0.9367088607594937,
+                "tp": 37,
+                "fp": 5,
+                "fn": 0,
+                "precision": 0.8809523809523809,
+                "recall": 1.0
+              },
+              "global_shrink_075": {
+                "micro_f1": 0.9367088607594937,
+                "tp": 37,
+                "fp": 5,
+                "fn": 0,
+                "precision": 0.8809523809523809,
+                "recall": 1.0
+              },
+              "global_shrink_100": {
+                "micro_f1": 0.9367088607594937,
+                "tp": 37,
+                "fp": 5,
+                "fn": 0,
+                "precision": 0.8809523809523809,
+                "recall": 1.0
+              },
+              "per_category_shrink_025": {
+                "micro_f1": 0.9367088607594937,
+                "tp": 37,
+                "fp": 5,
+                "fn": 0,
+                "precision": 0.8809523809523809,
+                "recall": 1.0
+              },
+              "per_category_shrink_050": {
+                "micro_f1": 0.9367088607594937,
+                "tp": 37,
+                "fp": 5,
+                "fn": 0,
+                "precision": 0.8809523809523809,
+                "recall": 1.0
+              },
+              "per_category_shrink_075": {
+                "micro_f1": 0.9367088607594937,
+                "tp": 37,
+                "fp": 5,
+                "fn": 0,
+                "precision": 0.8809523809523809,
+                "recall": 1.0
+              },
+              "per_category_shrink_100": {
+                "micro_f1": 0.9367088607594937,
+                "tp": 37,
+                "fp": 5,
+                "fn": 0,
+                "precision": 0.8809523809523809,
+                "recall": 1.0
+              }
+            }
+          },
+          {
+            "fold": 3,
+            "fit_rows": 32,
+            "heldout_rows": 16,
+            "metrics": {
+              "fixed": {
+                "micro_f1": 0.9487179487179487,
+                "tp": 37,
+                "fp": 4,
+                "fn": 0,
+                "precision": 0.9024390243902439,
+                "recall": 1.0
+              },
+              "global_shrink_025": {
+                "micro_f1": 0.9487179487179487,
+                "tp": 37,
+                "fp": 4,
+                "fn": 0,
+                "precision": 0.9024390243902439,
+                "recall": 1.0
+              },
+              "global_shrink_050": {
+                "micro_f1": 0.9487179487179487,
+                "tp": 37,
+                "fp": 4,
+                "fn": 0,
+                "precision": 0.9024390243902439,
+                "recall": 1.0
+              },
+              "global_shrink_075": {
+                "micro_f1": 0.9487179487179487,
+                "tp": 37,
+                "fp": 4,
+                "fn": 0,
+                "precision": 0.9024390243902439,
+                "recall": 1.0
+              },
+              "global_shrink_100": {
+                "micro_f1": 0.9487179487179487,
+                "tp": 37,
+                "fp": 4,
+                "fn": 0,
+                "precision": 0.9024390243902439,
+                "recall": 1.0
+              },
+              "per_category_shrink_025": {
+                "micro_f1": 0.9487179487179487,
+                "tp": 37,
+                "fp": 4,
+                "fn": 0,
+                "precision": 0.9024390243902439,
+                "recall": 1.0
+              },
+              "per_category_shrink_050": {
+                "micro_f1": 0.9487179487179487,
+                "tp": 37,
+                "fp": 4,
+                "fn": 0,
+                "precision": 0.9024390243902439,
+                "recall": 1.0
+              },
+              "per_category_shrink_075": {
+                "micro_f1": 0.9487179487179487,
+                "tp": 37,
+                "fp": 4,
+                "fn": 0,
+                "precision": 0.9024390243902439,
+                "recall": 1.0
+              },
+              "per_category_shrink_100": {
+                "micro_f1": 0.9210526315789473,
+                "tp": 35,
+                "fp": 4,
+                "fn": 2,
+                "precision": 0.8974358974358975,
+                "recall": 0.9459459459459459
+              }
+            }
+          }
+        ],
+        "method": "threshold_only_GroupKFold3_shrinkage_towards_0.5",
+        "minimum_crossfit_gain": 0.002,
+        "group_count": 48,
+        "encoder_outputs_are_oof": false,
+        "full_validation_raw_search": {
+          "selected_method": "per_category",
+          "thresholds": {
+            "102": 0.68,
+            "103": 0.97,
+            "104": 0.68,
+            "105": 0.91,
+            "106": 0.68
+          },
+          "candidates": {
+            "fixed": {
+              "thresholds": {
+                "102": 0.5,
+                "103": 0.5,
+                "104": 0.5,
+                "105": 0.5,
+                "106": 0.5
+              },
+              "metrics": {
+                "micro_f1": 0.9029535864978903,
+                "tp": 107,
+                "fp": 21,
+                "fn": 2,
+                "precision": 0.8359375,
+                "recall": 0.981651376146789
+              }
+            },
+            "global": {
+              "thresholds": {
+                "102": 0.68,
+                "103": 0.68,
+                "104": 0.68,
+                "105": 0.68,
+                "106": 0.68
+              },
+              "metrics": {
+                "micro_f1": 0.9264069264069265,
+                "tp": 107,
+                "fp": 15,
+                "fn": 2,
+                "precision": 0.8770491803278688,
+                "recall": 0.981651376146789
+              }
+            },
+            "per_category": {
+              "thresholds": {
+                "102": 0.68,
+                "103": 0.97,
+                "104": 0.68,
+                "105": 0.91,
+                "106": 0.68
+              },
+              "metrics": {
+                "micro_f1": 0.933920704845815,
+                "tp": 106,
+                "fp": 12,
+                "fn": 3,
+                "precision": 0.8983050847457628,
+                "recall": 0.9724770642201835
+              }
+            }
+          },
+          "search": {
+            "objective": "micro_f1",
+            "data": "validation_only",
+            "comparison": ">=",
+            "global": "Точный перебор уникальных score; равные score переключаются атомарно",
+            "boundary_thresholds": [
+              0.0,
+              0.5,
+              1.0
+            ],
+            "tie_preference": "Исходный порог, затем 0.5, близость к 0.5, больший порог",
+            "method_tie_preference": [
+              "fixed",
+              "global",
+              "per_category"
+            ],
+            "per_category": {
+              "initialization": "global",
+              "objective": "Общий micro-F1, не среднее по категориям",
+              "acceptance": "Только строгое улучшение, точное сравнение дробей",
+              "category_order": [
+                102,
+                103,
+                104,
+                105,
+                106
+              ],
+              "max_passes": 20,
+              "passes": 2,
+              "accepted_updates": 2,
+              "converged": true
+            },
+            "zero_positive_categories": [],
+            "zero_positive_policy": "Без отдельной настройки; сохранён global (в fixed — 0.5)",
+            "undefined_metric_value": 0.0
+          }
+        },
+        "selection_data": "validation only; no control/public-test scores or labels"
+      },
+      "fixed": {
+        "micro_f1": 0.9029535864978903,
+        "tp": 107,
+        "fp": 21,
+        "fn": 2,
+        "precision": 0.8359375,
+        "recall": 0.981651376146789
+      },
+      "control_responses": [
+        {
+          "description_sha256": "92ccb48fcc42163b58bde18a359424d33be3934dadd48bf8b8086444d1b1fb87",
+          "expected": [],
+          "probabilities": {
+            "102": 0.18,
+            "103": 0.27,
+            "104": 0.36,
+            "105": 0.06,
+            "106": 0.47
+          },
+          "cache_hit": true,
+          "usage": {
+            "input_tokens": 562,
+            "output_tokens": 99,
+            "total_tokens": 661,
+            "cost": 0.003117976,
+            "cost_details": {
+              "input_cost": 0.003117976,
+              "output_cost": 0
+            }
+          }
+        },
+        {
+          "description_sha256": "7e18ae2ef930cf01f4448b3df6861876046797e8d66e14242162cadd6eed566d",
+          "expected": [
+            103
+          ],
+          "probabilities": {
+            "102": 0.09,
+            "103": 0.98,
+            "104": 0.03,
+            "105": 0.03,
+            "106": 0.06
+          },
+          "cache_hit": true,
+          "usage": {
+            "input_tokens": 766,
+            "output_tokens": 99,
+            "total_tokens": 865,
+            "cost": 0.004249768,
+            "cost_details": {
+              "input_cost": 0.004249768,
+              "output_cost": 0
+            }
+          }
+        },
+        {
+          "description_sha256": "3a7d71a2d95db571de83bcdbb19a27e0a869f9c18675dc307109706c5f55faac",
+          "expected": [
+            104,
+            105
+          ],
+          "probabilities": {
+            "102": 0.19,
+            "103": 0.14,
+            "104": 0.98,
+            "105": 0.97,
+            "106": 0.46
+          },
+          "cache_hit": true,
+          "usage": {
+            "input_tokens": 597,
+            "output_tokens": 99,
+            "total_tokens": 696,
+            "cost": 0.003312156,
+            "cost_details": {
+              "input_cost": 0.003312156,
+              "output_cost": 0
+            }
+          }
+        },
+        {
+          "description_sha256": "6610373cb7a82bdae97b72de3372214c6d18c3c0b94e1eeb3d73e85d041a9a02",
+          "expected": [],
+          "probabilities": {
+            "102": 0.79,
+            "103": 0.08,
+            "104": 0.02,
+            "105": 0.82,
+            "106": 0.84
+          },
+          "cache_hit": true,
+          "usage": {
+            "input_tokens": 2234,
+            "output_tokens": 99,
+            "total_tokens": 2333,
+            "cost": 0.012394232,
+            "cost_details": {
+              "input_cost": 0.012394232,
+              "output_cost": 0
+            }
+          }
+        },
+        {
+          "description_sha256": "2e03166bcfb35d3b7fb671d668f0f0c3793469203a499e95c551ab476e9bd854",
+          "expected": [
+            102,
+            105,
+            106
+          ],
+          "probabilities": {
+            "102": 0.67,
+            "103": 0.37,
+            "104": 0.05,
+            "105": 0.78,
+            "106": 0.98
+          },
+          "cache_hit": true,
+          "usage": {
+            "input_tokens": 2248,
+            "output_tokens": 99,
+            "total_tokens": 2347,
+            "cost": 0.012471904,
+            "cost_details": {
+              "input_cost": 0.012471904,
+              "output_cost": 0
+            }
+          }
+        },
+        {
+          "description_sha256": "f54d0b8ff161e373e83281568b7eb44c973a33e711ca3d72c46a19de54e94e87",
+          "expected": [
+            102,
+            103
+          ],
+          "probabilities": {
+            "102": 0.97,
+            "103": 0.97,
+            "104": 0.03,
+            "105": 0.03,
+            "106": 0.1
+          },
+          "cache_hit": true,
+          "usage": {
+            "input_tokens": 624,
+            "output_tokens": 99,
+            "total_tokens": 723,
+            "cost": 0.003461952,
+            "cost_details": {
+              "input_cost": 0.003461952,
+              "output_cost": 0
+            }
+          }
+        },
+        {
+          "description_sha256": "e51538651e9bc1f311c3c20b652e447a8663383993e2c2914edc2399b315f2f5",
+          "expected": [
+            102,
+            103,
+            104,
+            106
+          ],
+          "probabilities": {
+            "102": 0.97,
+            "103": 0.96,
+            "104": 0.97,
+            "105": 0.06,
+            "106": 0.98
+          },
+          "cache_hit": true,
+          "usage": {
+            "input_tokens": 836,
+            "output_tokens": 99,
+            "total_tokens": 935,
+            "cost": 0.004638128,
+            "cost_details": {
+              "input_cost": 0.004638128,
+              "output_cost": 0
+            }
+          }
+        },
+        {
+          "description_sha256": "a161c56872d57fb054d41fb24192212e854c515cd09da5496a8ea4996bffcbcd",
+          "expected": [
+            104,
+            105
+          ],
+          "probabilities": {
+            "102": 0.47,
+            "103": 0.21,
+            "104": 0.98,
+            "105": 0.98,
+            "106": 0.41
+          },
+          "cache_hit": true,
+          "usage": {
+            "input_tokens": 1479,
+            "output_tokens": 99,
+            "total_tokens": 1578,
+            "cost": 0.008205492,
+            "cost_details": {
+              "input_cost": 0.008205492,
+              "output_cost": 0
+            }
+          }
+        },
+        {
+          "description_sha256": "dc5cf45dab056978cdb13090e630d1ec21ec9fc39ad031bf88cdb73645fc7364",
+          "expected": [],
+          "probabilities": {
+            "102": 0.06,
+            "103": 0.07,
+            "104": 0.12,
+            "105": 0.07,
+            "106": 0.06
+          },
+          "cache_hit": true,
+          "usage": {
+            "input_tokens": 879,
+            "output_tokens": 99,
+            "total_tokens": 978,
+            "cost": 0.004876692,
+            "cost_details": {
+              "input_cost": 0.004876692,
+              "output_cost": 0
+            }
+          }
+        },
+        {
+          "description_sha256": "b3c7ee307f607f53dadae68619b9117b57b732fbb6123c26610ccf24c1740ccf",
+          "expected": [
+            102,
+            103,
+            104,
+            105
+          ],
+          "probabilities": {
+            "102": 0.99,
+            "103": 0.97,
+            "104": 0.98,
+            "105": 0.99,
+            "106": 0.97
+          },
+          "cache_hit": true,
+          "usage": {
+            "input_tokens": 3143,
+            "output_tokens": 99,
+            "total_tokens": 3242,
+            "cost": 0.017437364,
+            "cost_details": {
+              "input_cost": 0.017437364,
+              "output_cost": 0
+            }
+          }
+        },
+        {
+          "description_sha256": "7f8bb08267b0b617944c835cdbcf3dd6f204750d3c0cd44cea7ff0d3eaef9f44",
+          "expected": [],
+          "probabilities": {
+            "102": 0.08,
+            "103": 0.13,
+            "104": 0.09,
+            "105": 0.11,
+            "106": 0.11
+          },
+          "cache_hit": true,
+          "usage": {
+            "input_tokens": 539,
+            "output_tokens": 99,
+            "total_tokens": 638,
+            "cost": 0.002990372,
+            "cost_details": {
+              "input_cost": 0.002990372,
+              "output_cost": 0
+            }
+          }
+        },
+        {
+          "description_sha256": "5283041a29ed81c374973daf0bd2711e25088372e3ee4c3f29cd73a54269450d",
+          "expected": [
+            102,
+            103,
+            104,
+            105,
+            106
+          ],
+          "probabilities": {
+            "102": 0.99,
+            "103": 0.99,
+            "104": 0.97,
+            "105": 0.97,
+            "106": 0.99
+          },
+          "cache_hit": true,
+          "usage": {
+            "input_tokens": 2048,
+            "output_tokens": 99,
+            "total_tokens": 2147,
+            "cost": 0.011362304,
+            "cost_details": {
+              "input_cost": 0.011362304,
+              "output_cost": 0
+            }
+          }
+        },
+        {
+          "description_sha256": "c40e24d0cdd55e7339bf9e3e71159202deb4bd232e19920cb8147c7153fbcfce",
+          "expected": [
+            102,
+            103,
+            104,
+            105,
+            106
+          ],
+          "probabilities": {
+            "102": 0.98,
+            "103": 0.98,
+            "104": 0.98,
+            "105": 0.98,
+            "106": 0.81
+          },
+          "cache_hit": true,
+          "usage": {
+            "input_tokens": 1371,
+            "output_tokens": 99,
+            "total_tokens": 1470,
+            "cost": 0.007606308,
+            "cost_details": {
+              "input_cost": 0.007606308,
+              "output_cost": 0
+            }
+          }
+        },
+        {
+          "description_sha256": "a6808a9bab5172933478ff6d134196c1ed215e1ba65b481a59e26bba494248ad",
+          "expected": [
+            102,
+            106
+          ],
+          "probabilities": {
+            "102": 0.38,
+            "103": 0.04,
+            "104": 0.03,
+            "105": 0.03,
+            "106": 0.97
+          },
+          "cache_hit": true,
+          "usage": {
+            "input_tokens": 700,
+            "output_tokens": 99,
+            "total_tokens": 799,
+            "cost": 0.0038836,
+            "cost_details": {
+              "input_cost": 0.0038836,
+              "output_cost": 0
+            }
+          }
+        },
+        {
+          "description_sha256": "2bc71a996a45457cdecb670a8c19ce41b143f5f96b31784d7c0ab6d7d2cb044e",
+          "expected": [],
+          "probabilities": {
+            "102": 0.01,
+            "103": 0.02,
+            "104": 0.02,
+            "105": 0.02,
+            "106": 0.02
+          },
+          "cache_hit": true,
+          "usage": {
+            "input_tokens": 602,
+            "output_tokens": 99,
+            "total_tokens": 701,
+            "cost": 0.003339896,
+            "cost_details": {
+              "input_cost": 0.003339896,
+              "output_cost": 0
+            }
+          }
+        },
+        {
+          "description_sha256": "dfd026c4ead5588317ff62992a68332ee9090d3e1d4be1947de8bbc09339aa54",
+          "expected": [
+            102
+          ],
+          "probabilities": {
+            "102": 0.97,
+            "103": 0.05,
+            "104": 0.03,
+            "105": 0.03,
+            "106": 0.2
+          },
+          "cache_hit": true,
+          "usage": {
+            "input_tokens": 2162,
+            "output_tokens": 99,
+            "total_tokens": 2261,
+            "cost": 0.011994776,
+            "cost_details": {
+              "input_cost": 0.011994776,
+              "output_cost": 0
+            }
+          }
+        },
+        {
+          "description_sha256": "bb70c98701f5036fa2aa0e8ae4c2978f3294fbe59cf9648aa21ee72712fe42de",
+          "expected": [
+            104,
+            105
+          ],
+          "probabilities": {
+            "102": 0.29,
+            "103": 0.2,
+            "104": 0.97,
+            "105": 0.97,
+            "106": 0.36
+          },
+          "cache_hit": true,
+          "usage": {
+            "input_tokens": 1078,
+            "output_tokens": 99,
+            "total_tokens": 1177,
+            "cost": 0.005980744,
+            "cost_details": {
+              "input_cost": 0.005980744,
+              "output_cost": 0
+            }
+          }
+        },
+        {
+          "description_sha256": "8bfd392cf079c0c41d9bb9fa2d1ca3aecfe986038915e8f9cd8b5a4f6d81ea0e",
+          "expected": [],
+          "probabilities": {
+            "102": 0.16,
+            "103": 0.12,
+            "104": 0.11,
+            "105": 0.14,
+            "106": 0.18
+          },
+          "cache_hit": true,
+          "usage": {
+            "input_tokens": 571,
+            "output_tokens": 99,
+            "total_tokens": 670,
+            "cost": 0.003167908,
+            "cost_details": {
+              "input_cost": 0.003167908,
+              "output_cost": 0
+            }
+          }
+        },
+        {
+          "description_sha256": "36aa2df59c9a512f391a22073982cf58f85708394338a5b6179081249325ebfd",
+          "expected": [
+            102,
+            103,
+            104,
+            105,
+            106
+          ],
+          "probabilities": {
+            "102": 0.97,
+            "103": 0.98,
+            "104": 0.98,
+            "105": 0.97,
+            "106": 0.98
+          },
+          "cache_hit": true,
+          "usage": {
+            "input_tokens": 811,
+            "output_tokens": 99,
+            "total_tokens": 910,
+            "cost": 0.004499428,
+            "cost_details": {
+              "input_cost": 0.004499428,
+              "output_cost": 0
+            }
+          }
+        },
+        {
+          "description_sha256": "e7241b22ffea102e32afc9bf064748a8cc175425fc9b7e225b716ba10f1c3961",
+          "expected": [],
+          "probabilities": {
+            "102": 0.12,
+            "103": 0.07,
+            "104": 0.14,
+            "105": 0.15,
+            "106": 0.18
+          },
+          "cache_hit": true,
+          "usage": {
+            "input_tokens": 1870,
+            "output_tokens": 99,
+            "total_tokens": 1969,
+            "cost": 0.01037476,
+            "cost_details": {
+              "input_cost": 0.01037476,
+              "output_cost": 0
+            }
+          }
+        },
+        {
+          "description_sha256": "39a9f302c220044f2ce26e143148ac7d472a2659ac3fada04a8c51bdac9a32ef",
+          "expected": [],
+          "probabilities": {
+            "102": 0.21,
+            "103": 0.14,
+            "104": 0.2,
+            "105": 0.18,
+            "106": 0.25
+          },
+          "cache_hit": true,
+          "usage": {
+            "input_tokens": 542,
+            "output_tokens": 99,
+            "total_tokens": 641,
+            "cost": 0.003007016,
+            "cost_details": {
+              "input_cost": 0.003007016,
+              "output_cost": 0
+            }
+          }
+        },
+        {
+          "description_sha256": "ff0b478e272d4f11381f0df0e1902aec8e135131ca0056fca472ed5abf3804b8",
+          "expected": [],
+          "probabilities": {
+            "102": 0.17,
+            "103": 0.09,
+            "104": 0.33,
+            "105": 0.07,
+            "106": 0.26
+          },
+          "cache_hit": true,
+          "usage": {
+            "input_tokens": 1213,
+            "output_tokens": 99,
+            "total_tokens": 1312,
+            "cost": 0.006729724,
+            "cost_details": {
+              "input_cost": 0.006729724,
+              "output_cost": 0
+            }
+          }
+        },
+        {
+          "description_sha256": "2dccc49740fa559b23d920e43797fcd6c462948e923dcc8719b9e0e3432b65dd",
+          "expected": [
+            104,
+            105
+          ],
+          "probabilities": {
+            "102": 0.05,
+            "103": 0.13,
+            "104": 0.97,
+            "105": 0.97,
+            "106": 0.04
+          },
+          "cache_hit": true,
+          "usage": {
+            "input_tokens": 573,
+            "output_tokens": 99,
+            "total_tokens": 672,
+            "cost": 0.003179004,
+            "cost_details": {
+              "input_cost": 0.003179004,
+              "output_cost": 0
+            }
+          }
+        },
+        {
+          "description_sha256": "974f1ebb12140a77163d414922af370fd1a7f63c5835a0060b2fa06806e00079",
+          "expected": [],
+          "probabilities": {
+            "102": 0.23,
+            "103": 0.12,
+            "104": 0.21,
+            "105": 0.16,
+            "106": 0.37
+          },
+          "cache_hit": true,
+          "usage": {
+            "input_tokens": 1622,
+            "output_tokens": 99,
+            "total_tokens": 1721,
+            "cost": 0.008998856,
+            "cost_details": {
+              "input_cost": 0.008998856,
+              "output_cost": 0
+            }
+          }
+        }
+      ],
+      "control": {
+        "fixed": {
+          "micro_f1": 0.9397590361445783,
+          "tp": 39,
+          "fp": 4,
+          "fn": 1,
+          "precision": 0.9069767441860465,
+          "recall": 0.975
+        },
+        "calibrated": {
+          "micro_f1": 0.9397590361445783,
+          "tp": 39,
+          "fp": 4,
+          "fn": 1,
+          "precision": 0.9069767441860465,
+          "recall": 0.975
+        },
+        "used_for_selection": false
+      }
+    }
+  },
+  "selected_prompt": "baseline",
+  "frozen_thresholds": {
+    "101": 0.5,
+    "102": 0.635,
+    "103": 0.635,
+    "104": 0.635,
+    "105": 0.635,
+    "106": 0.635
+  },
+  "control_baseline": {
+    "micro_f1": 0.926829268292683,
+    "tp": 38,
+    "fp": 4,
+    "fn": 2,
+    "precision": 0.9047619047619048,
+    "recall": 0.95
+  },
+  "control_selected": {
+    "micro_f1": 0.9397590361445783,
+    "tp": 39,
+    "fp": 4,
+    "fn": 1,
+    "precision": 0.9069767441860465,
+    "recall": 0.975
+  },
+  "control_confirmed": true,
+  "artifact_saved": true,
+  "calibration_sha256": "feb46e14d986f3a1f178b4ab3215272a18a7875c2d40be5d4616adeab1fd3e25"
+}

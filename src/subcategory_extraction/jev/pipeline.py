@@ -1,5 +1,6 @@
 """Выделение дополнительных категорий нативными вероятностями Jev."""
 
+import hashlib
 import json
 import math
 import os
@@ -24,6 +25,18 @@ class SubcategoryExtractionPipeline(BasePipeline):
         self.threshold = float(os.getenv("JEV_THRESHOLD", "0.5"))
         if not math.isfinite(self.threshold) or not 0 <= self.threshold <= 1:
             raise ValueError("JEV_THRESHOLD должен быть конечным числом от 0 до 1")
+        self.last_probabilities: dict[int, float] = {}
+
+    def benchmark_metadata(self) -> dict:
+        """Зафиксировать провайдера, модель и промпт без API-ключа."""
+        return {
+            "provider": self.client.provider,
+            "endpoint": self.client.endpoint,
+            "model": self.client.model_id,
+            "threshold": self.threshold,
+            "prompt_sha256": hashlib.sha256(self.prompt.encode()).hexdigest(),
+            "cache_enabled": True,
+        }
 
     def probabilities(
         self, inp: PipelineInput, categories: set[int] | None = None,
@@ -42,12 +55,14 @@ class SubcategoryExtractionPipeline(BasePipeline):
             if cid != inp.mc_id and (categories is None or cid in categories)
         }
         if not questions:
+            self.last_probabilities = {}
             return {}
         result = json.loads(self.client.complete(inp.description, questions=questions))
-        return {
+        self.last_probabilities = {
             int(name[2:]): float(answer["noul"])
             for name, answer in result["answers"].items()
         }
+        return self.last_probabilities.copy()
 
     def run(self, inp: PipelineInput) -> list[int]:
         """Вернуть категории с вероятностью не ниже фиксированного порога."""
