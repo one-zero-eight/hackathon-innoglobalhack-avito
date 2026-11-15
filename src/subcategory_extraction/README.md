@@ -1,38 +1,47 @@
-# subcategory_extraction
+# Выделение дополнительных микрокатегорий
 
-Шаг 1 пайплайна: по тексту объявления (`description`) выбранный модуль выделяет услуги
-и определяет микрокатегории (101–106), к которым они относятся.
+Вход и выход раздела не изменены:
+`SubcategoryExtractionPipeline.run(PipelineInput) -> list[int]`.
+Возвращаются дополнительные категории 101–106, исходная категория исключается.
 
-- Интерфейс: `SubcategoryExtractionPipeline.run(PipelineInput) -> list[int]`
-- Варианты: `google_decision` (Google API, промпты baseline/guided),
-  `regex` (существующие правила офлайн-аннотатора без индивидуальных исключений),
-  `tfidf` (локальная логистическая регрессия, JSON-артефакт),
-  `learned_keywords` (TF-IDF и бинарные признаки выученных фраз),
-  `jev` (нативный Jev через Selectel),
-  `jev_calibrated` (отдельный вариант с train-калибровкой), `jev_tfidf` (среднее вероятностей),
-  `jev_retrieval` (размеченные соседи), `evidence_jev` (цитаты → Jev),
-  `jev_arbiter` (сильный арбитр), `semantic_encoder` (fine-tuned RuBERT-tiny2),
-  `semantic_encoder_calibrated` (validation-пороги),
-  `semantic_encoder_f1` (выбор checkpoint, окна/attention и дистилляция; CPU),
-  `jev_boundaries` (точные границы категорий),
-  [qwen_decision](qwen_decision/README.md) (Qwen Token Plan System One,
-  выбор промпта и порогов только по train).
-- Выбор: ключ `subcategory_extraction` в корневом `config.json`
-- `null` — модуль не выбран.
-- Результат содержит только дополнительные mcId, исходная категория исключена.
+| Группа | Модули |
+| --- | --- |
+| Лексические — `lexical` | `regex`, `tfidf`, `learned_keywords`, `snippet_logistic_regression` |
+| Семантические — `semantic` | `semantic_encoder`, `semantic_encoder_calibrated`, `semantic_encoder_f1`, `semantic_evidence` |
+| Decision-модели — `decisions` | `google_decision`, `qwen_decision`, `jev`, `local_jev`, `jev_calibrated`, `jev_boundaries`, `jev_retrieval` |
+| Гибриды и каскады — `hybrid` | `jev_tfidf`, `evidence_jev`, `jev_arbiter` |
 
-## Четыре проверки
+Выбор в корневом `config.json` — полный путь внутри раздела:
 
-[Общий список и команды](benchmarks/README.md). Новые бенчмарки и папки запрещены.
+```json
+{
+  "subcategory_extraction": "decisions.jev",
+  "draft_generation": "sample_llm"
+}
+```
 
-- [Стоимость токенов](benchmarks/cpu_costs/README.md) — ручная запись.
-- [F1 improved_dataset](benchmarks/improved_dataset/README.md) — PostgreSQL manual_test, 139 строк.
-- [F1 InnoGlobalHack](benchmarks/classifier_methods/README.md) — 208 строк.
-- [Время работы](benchmarks/response_time/README.md) — настоящие вызовы `run()`.
+Старые короткие значения не поддерживаются: обновите локальные конфиги.
+Каждый модуль хранит `pipeline.py`, обучение и ресурсы рядом с реализацией.
+В каждом модуле `decisions` есть `prompts/` и `PROMPTS.md` с анализом вариантов.
+TinyBERT исключён из поддерживаемых реализаций.
 
-Оба F1-runner по умолчанию проверяют сохранённые ответы без API и обучения.
-Для оценки текущего модуля передайте `--methods <имя>`; параметры и пути
-к весам берутся из `.env`. Подготовка весов описана в README модулей,
-код обучения хранится внутри модуля. Старые эксперименты доступны в истории Git.
+Заранее подготовленные веса и другие зависимости перечислены в
+[ARTIFACTS.md](ARTIFACTS.md). Перенос не меняет веса, пороги и протоколы обучения.
+Исходные хеши и пути в исторических метаданных артефактов сохранены как
+происхождение обучения; текущие пути загрузки задаются кодом и конфигурацией.
 
-[dataset_annotation: время и шесть примеров с mcId](../dataset_annotation/rubert_review/README.md).
+## Общие проверки
+
+[Четыре существующих сценария](benchmarks/README.md) общие для всех групп.
+Исторические ключи строк результатов сохранены; новые пути импорта указаны
+в `benchmarks/configurations.py`. Сохранённые ответы не изменены.
+
+```bash
+uv run python src/subcategory_extraction/benchmarks/classifier_methods/run.py --methods lexical.regex
+uv run python src/subcategory_extraction/benchmarks/improved_dataset/run.py --methods lexical.regex
+uv run python src/subcategory_extraction/benchmarks/response_time/run.py --module lexical.regex
+```
+
+Перенос файлов не является новым замером F1 или времени. Для воспроизведения
+существующих конфигураций используйте прежние ключи `--configuration`, например
+`--configuration jev::baseline`.

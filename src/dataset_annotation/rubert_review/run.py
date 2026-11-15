@@ -199,7 +199,7 @@ def score_training_rows(train_path: Path, artifact: Path, batch_size: int = 16) 
     """Выполнить настоящий локальный CPU-инференс только на исходном train."""
     import torch
 
-    from subcategory_extraction.semantic_encoder.model import (
+    from subcategory_extraction.semantic.semantic_encoder.model import (
         collate_documents, load_resource, tokenize_document,
     )
 

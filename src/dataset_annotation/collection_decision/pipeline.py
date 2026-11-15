@@ -3,7 +3,7 @@
 import json
 
 from main import MICROCATEGORIES
-from subcategory_extraction.google_decision.pipeline import (
+from subcategory_extraction.decisions.google_decision.pipeline import (
     CATEGORY_EXAMPLES,
     SubcategoryExtractionPipeline,
 )

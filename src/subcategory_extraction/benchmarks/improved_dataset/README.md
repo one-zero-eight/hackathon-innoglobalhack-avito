@@ -22,23 +22,34 @@ SHA-256 содержимого таблицы: `fae05cba56fdf57a15aa3979afd828b7
 
 | Модуль | Версия / дата измерения | Промпт | N | micro-F1 | Происхождение |
 | --- | --- | --- | ---: | ---: | --- |
-| tfidf | локальный прогон из БД / 2026-11-15 | — | 139 | 0.681128 | локальные run(), источник — БД |
-| semantic_encoder_calibrated | локальный прогон из БД / 2026-11-15 | — | 139 | 0.751852 | локальные run(), источник — БД |
-| semantic_encoder | локальный прогон из БД / 2026-11-15 | — | 139 | 0.756856 | локальные run(), источник — БД |
-| learned_keywords | локальный прогон из БД / 2026-11-15 | — | 139 | 0.730697 | локальные run(), источник — БД |
+| semantic_evidence | selection.json / 2026-11-15 | — | 139 | 0.774674 | локальные run(), источник — БД |
 | semantic_encoder_f1 | локальный прогон из БД / 2026-11-15 | — | 139 | 0.770093 | локальные run(), источник — БД |
-| google_decision | требуется пересчёт | guided | — | — | прежний результат на reviewed_test несовместим |
-| jev | требуется пересчёт | guided | — | — | прежний результат на reviewed_test несовместим |
-| jev_calibrated / Selectel typesafe/jev-1.13 | требуется пересчёт | minimal / train-порог 0.635 | — | — | только 137/139 точных входов покрыты сохранёнными ответами |
-| jev_tfidf | требуется пересчёт | guided | — | — | прежний результат на reviewed_test несовместим |
-| qwen_decision | требуется пересчёт | boundaries | — | — | прежний результат на reviewed_test несовместим |
-| local_jev / jevos-v5 | требуется пересчёт | english / 0.5 | — | — | прежние 119 предсказаний несовместимы с manual_test |
-| local_jev / jevos-v5 | требуется пересчёт | guided_ru / 0.5 | — | — | прежние 119 предсказаний несовместимы с manual_test |
+| regex | правила / 2026-11-15 | — | 139 | 0.768362 | локальные run(), источник — БД |
+| snippet_logistic_regression | model.json.gz / 2026-11-15 | — | 139 | 0.759295 | локальные run(), источник — БД |
+| semantic_encoder::threshold-encoder | out/rubert-thresholds/encoder / 2026-11-15 | — | 139 | 0.756856 | локальные run(), источник — БД |
+| semantic_encoder_calibrated | локальный прогон из БД / 2026-11-15 | — | 139 | 0.751852 | локальные run(), источник — БД |
+| google_decision::baseline | gemini-decision-1 / 2026-11-15 | baseline | 139 | 0.787671 | локальные run(), источник — БД |
+| learned_keywords | локальный прогон из БД / 2026-11-15 | — | 139 | 0.730697 | локальные run(), источник — БД |
+| google_decision | gemini-decision-1 / 2026-11-15 | guided | 139 | 0.737945 | локальные run(), источник — БД |
+| tfidf::legacy | out/tfidf.json / 2026-11-15 | — | 139 | 0.697872 | локальные run(), источник — БД |
+| tfidf | локальный прогон из БД / 2026-11-15 | — | 139 | 0.681128 | локальные run(), источник — БД |
+| jev | требуется пересчёт | guided | — | — | нет рабочего BESTAPI-ключа (HTTP 401) |
+| jev_tfidf | требуется пересчёт | guided | — | — | нет рабочего BESTAPI-ключа (HTTP 401) |
+| qwen_decision | не прогоняется | boundaries | — | — | по решению команды Qwen не запускаем |
+| local_jev / jevos-v5 | требуется пересчёт | english / 0.5 | — | — | runtime только для Linux x86_64 |
+| local_jev / jevos-v5 | требуется пересчёт | guided_ru / 0.5 | — | — | runtime только для Linux x86_64 |
+
+Недоступны в этом окружении: `jev::baseline`, `jev_boundaries`,
+`jev_tfidf`(+baseline), `jev_retrieval`(+baseline), `evidence_jev`,
+`jev_arbiter`(+baseline) — с текущим `BESTAPI_API_KEY` API `bestapi.fugue.pro`
+отвечает HTTP 401; `qwen_decision`(+guided/+boundaries) — не прогоняем по
+решению команды; `local_jev`(+guided_ru) — runtime Linux-only;
+`semantic_encoder` (базовая) — артефакт не загружен.
 
 ## Запуск
 
 ```bash
-OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 TFIDF_ARTIFACT_PATH=out/classifier-methods/tfidf.json uv run python src/subcategory_extraction/benchmarks/improved_dataset/run.py --methods tfidf learned_keywords --offline
+OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 TFIDF_ARTIFACT_PATH=out/classifier-methods/tfidf.json uv run python src/subcategory_extraction/benchmarks/improved_dataset/run.py --methods lexical.tfidf lexical.learned_keywords --offline
 ```
 
 Для других реализаций замените список `--methods`. Для проверки исходного
@@ -88,14 +99,3 @@ API-модули (`google_decision`, `jev`, `jev_tfidf`, `qwen_decision`) ещё
 предсказания и вероятности, сохранён в истории Git: commit a2893bf,
 файл src/subcategory_extraction/benchmarks/improved_dataset/results.json.
 Его F1 не переносится на manual_test. После merge новый прогон не выполнялся.
-
-## Selectel-калибровка при merge
-
-На119 прежних reviewed_test-строках калиброванный вариант имел F1 0.775068,
-базовый Selectel jev —0.816754. Это не результаты текущего manual_test из139
-строк с ручной разметкой. Они доступны в истории0dbba19 и не подставляются
-в эту таблицу. На137 из139 текущих описаний есть точные сохранённые вероятности;
-две строки отличаются. Неполное покрытие не получает F1 и не достраивается
-по похожим текстам. Новых запросов для merge не делалось.
-JSON rows приведён к полному списку текущих входов/меток, чтобы --append
-сравнивал именно139 строк, а не старый числовой счётчик.

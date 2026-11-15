@@ -1,0 +1,47 @@
+{
+  "version": 1,
+  "artifact": "src/subcategory_extraction/semantic/semantic_encoder_f1/artifacts",
+  "model": "cointegrated/rubert-tiny2",
+  "teacher_required": false,
+  "storage": "Git LFS for encoder/model.safetensors; other runtime files in Git",
+  "diagnostic_micro_f1": 0.8571428571428571,
+  "files": {
+    "metadata.json": {
+      "bytes": 2214,
+      "sha256": "d523ce9fd906ede91463053c94d664c5ae04b40b1588ce2802e5be0eb2d330f9"
+    },
+    "calibration.json": {
+      "bytes": 12237,
+      "sha256": "08810b988729fc370d1c03677c38430a27da8a9501d9d6edc5d9532bd0e1dee4"
+    },
+    "head.safetensors": {
+      "bytes": 7672,
+      "sha256": "81f56fffeaf4a5460e36b362b3e7d3e804a1579a9f8b7ae6adeb357d3da4772b"
+    },
+    "encoder/config.json": {
+      "bytes": 630,
+      "sha256": "5d75152afedf12d8b30edf67fc9fdd0eedf9578a70679373db46ba94256335a0"
+    },
+    "encoder/model.safetensors": {
+      "bytes": 116781184,
+      "sha256": "9fc639dd6813e8481b7d21577924df1973636e38e5992bba20f06700b2d0ada1"
+    },
+    "tokenizer/tokenizer_config.json": {
+      "bytes": 1458,
+      "sha256": "71b22b163773e6d2a3bc53236a6dca9245f2e0422b09e2d9597dbf02825c7135"
+    },
+    "tokenizer/special_tokens_map.json": {
+      "bytes": 695,
+      "sha256": "5d5b662e421ea9fac075174bb0688ee0d9431699900b90662acd44b2a350503a"
+    },
+    "tokenizer/tokenizer.json": {
+      "bytes": 2413438,
+      "sha256": "b6a9f282c732603652189b1fc2f32a2e2578b43927c5cf44a2e3585631419bb0"
+    },
+    "tokenizer/vocab.txt": {
+      "bytes": 1080667,
+      "sha256": "f056a69b097422652053bf87565c35543e5d81540ca4b7dddd28de4157a969e0"
+    }
+  },
+  "source_commit": "1c2a6f5c079df450f03561039321273d5f0e379b"
+}

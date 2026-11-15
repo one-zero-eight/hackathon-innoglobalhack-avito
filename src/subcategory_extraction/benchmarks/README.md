@@ -3,7 +3,8 @@
 | Папка | Что измеряет |
 | --- | --- |
 | [cpu_costs](cpu_costs/README.md) | Стоимость токенов: только ручная запись фактической цены или неизвестного тарифа |
-| [improved_dataset](improved_dataset/README.md) | Micro-F1 на 119 диагностических строках исправленного датасета |
+| [improved_dataset](improved_dataset/README.md) | Micro-F1 на 139 строках ручной разметки `manual_test` |
+| [visualizations](approaches-map.png) | 2D-карта «Micro-F1 (case_test) × время вызова» всех подходов |
 | [classifier_methods](classifier_methods/README.md) | Micro-F1 на 208 строках исходного InnoGlobalHack |
 | [response_time](response_time/README.md) | Время настоящих `run()` |
 
@@ -12,3 +13,9 @@
 офлайн и **не** считаются новым инференсом. Прочие исторические эксперименты доступны в Git, но не подменяют результаты текущих вызовов.
 Оба F1-runner без аргументов пересчитывают сохранённые ответы;
 новый инференс запускается только с `--methods <модуль>`.
+
+После переноса: 18 модулей и 28 конфигураций в `configurations.py`.
+TinyBERT удалён из активной матрицы. `--methods` и `--module` принимают
+полные пути (`lexical.regex`, `decisions.jev`); `--configuration` сохраняет
+прежние ключи строк результатов. Метрики и recorded-results не менялись:
+перенос не является новым прогоном модели.

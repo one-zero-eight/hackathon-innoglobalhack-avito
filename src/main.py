@@ -388,12 +388,17 @@ PIPELINE_CLASSES: dict[ServiceName, str] = {
 ModuleName = Annotated[str, Field(strict=True, pattern=r"^[a-z][a-z0-9_]*$")]
 
 
+ExtractionModuleName = Annotated[
+    str, Field(strict=True, pattern=r"^(lexical|semantic|decisions|hybrid)\.[a-z][a-z0-9_]*$")
+]
+
+
 class PipelineConfig(BaseModel):
     """Выбранный модуль для каждого раздела проекта."""
 
     model_config = ConfigDict(extra="forbid")
 
-    subcategory_extraction: ModuleName | None
+    subcategory_extraction: ExtractionModuleName | None
     draft_generation: ModuleName | None
 
 
@@ -405,7 +410,7 @@ def load_config(path: Path = DEFAULT_CONFIG_PATH) -> PipelineConfig:
 def load_pipeline(
     service: ServiceName, config: PipelineConfig | None = None
 ) -> BasePipeline:
-    """Загрузить выбранный класс из <service>/<module>/pipeline.py."""
+    """Загрузить выбранный класс; для extraction путь включает группу."""
     if service not in PIPELINE_CLASSES:
         raise ValueError(f"Неизвестный раздел: {service}")
     config = config if config is not None else load_config()
@@ -416,7 +421,8 @@ def load_pipeline(
     try:
         module = import_module(module_path)
     except ModuleNotFoundError as exc:
-        if exc.name in {service, f"{service}.{module_name}", module_path}:
+        if exc.name in {".".join(module_path.split(".")[:index])
+                        for index in range(1, len(module_path.split(".")) + 1)}:
             raise ValueError(f"Модуль раздела не найден: {module_path}") from exc
         raise
     class_name = PIPELINE_CLASSES[service]

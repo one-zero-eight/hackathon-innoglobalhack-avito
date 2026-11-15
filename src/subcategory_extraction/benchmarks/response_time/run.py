@@ -1,6 +1,7 @@
-"""Измерить задержку настоящего run() у TF-IDF и Google Decision."""
+"""Измерить задержку настоящего run() у всех конфигураций классификатора."""
 
 import sys
+from contextlib import nullcontext
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[3]))
@@ -11,8 +12,12 @@ import logging
 from time import perf_counter
 
 from benchmark_support import metadata, save_report, setup, timing, validation_sample
-from main import PipelineConfig, load_pipeline
+from main import MICROCATEGORIES, PipelineConfig, load_pipeline
 from subcategory_extraction.benchmarks.classifier_methods.run import METHODS
+from subcategory_extraction.benchmarks.configurations import (
+    BY_KEY, CONFIGURATIONS, Configuration, client_observations,
+    configuration_metadata, configured,
+)
 
 
 def main() -> int:
@@ -20,7 +25,10 @@ def main() -> int:
     setup()
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--size", type=int, default=10)
-    parser.add_argument("--module", choices=METHODS, default="tfidf")
+    selection = parser.add_mutually_exclusive_group()
+    selection.add_argument("--module", choices=METHODS)
+    selection.add_argument("--configuration", choices=BY_KEY)
+    selection.add_argument("--all-configurations", action="store_true")
     parser.add_argument("--report", type=Path, default=Path(__file__).with_name("results.json"))
     parser.add_argument("--append", action="store_true", help="Сохранить другие замеры с исходной датой")
     args = parser.parse_args()
@@ -37,45 +45,62 @@ def main() -> int:
                 key: previous.get(key) for key in ("date", "commit", "code_sha256", "timing_scope")
             })
             report["results"][module] = item
-    modules = (args.module,)
-    for module in modules:
-        try:
-            pipeline = load_pipeline("subcategory_extraction", PipelineConfig(subcategory_extraction=module, draft_generation=None))
-        except Exception as exc:
-            report["results"][module] = {"status": "failed", "error": f"{type(exc).__name__}: {exc}", "response_time": {"calls": 0}}
-            save_report(args.report, report)
-            return 1
-        result = {"status": "running", "model": getattr(getattr(pipeline, "client", None), "model_id", module), "rows": []}
-        report["results"][module] = result
-        describe = getattr(pipeline, "benchmark_metadata", None)
-        if callable(describe):
-            result["model_provenance"] = describe()
-        result["timing_scope"] = {
-            "loading_included": False, "first_call_included": True,
-            "cache_enabled": getattr(getattr(pipeline, "client", None), "cache_enabled", None),
-            "quota_wait_and_retries_included_if_any": True,
-        }
-        durations = []
-        for row in rows:
-            started = perf_counter()
+    configurations = (list(CONFIGURATIONS) if args.all_configurations else
+                      [BY_KEY[args.configuration]] if args.configuration else
+                      [Configuration((args.module or "lexical.tfidf").rsplit(".", 1)[-1], args.module or "lexical.tfidf")])
+    matrix_mode = bool(args.configuration or args.all_configurations)
+    for configuration in configurations:
+        module = configuration.module
+        with configured(configuration, fresh=True) if matrix_mode else nullcontext():
+            result = {"status": "running", "model": module, "rows": []}
+            if matrix_mode:
+                result["configuration"] = configuration_metadata(configuration)
+            result["measurement_metadata"] = {key: report[key] for key in ("date", "commit", "code_sha256", "machine", "environment")}
+            report["results"][configuration.key] = result
             try:
-                output = pipeline.run(row["inp"])
+                pipeline = load_pipeline("subcategory_extraction", PipelineConfig(subcategory_extraction=module, draft_generation=None))
             except Exception as exc:
-                result.update(status="failed", error=f"{type(exc).__name__}: {exc}", failed_seconds=perf_counter() - started)
-                break
-            elapsed = perf_counter() - started
-            durations.append(elapsed)
-            client = getattr(pipeline, "client", None)
-            result["rows"].append({"group_id": row["group_id"], "seconds": elapsed, "predicted": output,
-                                   "cache_hit": getattr(client, "last_cache_hit", None),
-                                   "http_attempts": getattr(client, "last_attempts", None),
-                                   "usage": getattr(client, "last_usage", None)})
+                result.update(status="failed", error=f"{type(exc).__name__}: {exc}", response_time={"calls": 0})
+                save_report(args.report, report)
+                continue
+            result["model"] = getattr(getattr(pipeline, "client", None), "model_id", module)
+            describe = getattr(pipeline, "benchmark_metadata", None)
+            if callable(describe):
+                result["model_provenance"] = describe()
+            result["timing_scope"] = {
+                "loading_included": False, "first_call_included": True,
+                "cache_enabled": getattr(getattr(pipeline, "client", None), "cache_enabled", None),
+                "quota_wait_and_retries_included_if_any": True,
+                "warmup": False, "fresh_client_caches": matrix_mode,
+                "p95_method": "numpy.percentile linear interpolation",
+            }
+            durations = []
+            for row in rows:
+                started = perf_counter()
+                try:
+                    output = pipeline.run(row["inp"])
+                    if not isinstance(output, list) or len(output) != len(set(output)) or any(
+                        type(cid) is not int or cid not in MICROCATEGORIES or cid == row["inp"].mc_id
+                        for cid in output
+                    ):
+                        raise ValueError("Неверный набор выходных микрокатегорий")
+                except Exception as exc:
+                    result.update(status="failed", error=f"{type(exc).__name__}: {exc}", failed_seconds=perf_counter() - started)
+                    break
+                elapsed = perf_counter() - started
+                durations.append(elapsed)
+                client = getattr(pipeline, "client", None)
+                result["rows"].append({"group_id": row["group_id"], "seconds": elapsed, "predicted": output,
+                                       "cache_hit": getattr(client, "last_cache_hit", None),
+                                       "http_attempts": getattr(client, "last_attempts", None),
+                                       "usage": getattr(client, "last_usage", None),
+                                       "api_clients": client_observations(pipeline)})
+                save_report(args.report, report)
+                logging.info("%s: %d/%d, %.3f с", configuration.key, len(durations), len(rows), elapsed)
+            result["response_time"] = timing(durations)
+            if len(durations) == len(rows):
+                result["status"] = "complete"
             save_report(args.report, report)
-            logging.info("%s: %d/%d, %.3f с", module, len(durations), len(rows), elapsed)
-        result["response_time"] = timing(durations)
-        if len(durations) == len(rows):
-            result["status"] = "complete"
-        save_report(args.report, report)
     report["status"] = "complete" if all(r["status"] == "complete" for r in report["results"].values()) else "failed"
     save_report(args.report, report)
     return 0 if report["status"] == "complete" else 1

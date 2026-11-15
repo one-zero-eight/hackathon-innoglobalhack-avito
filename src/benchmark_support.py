@@ -3,6 +3,8 @@
 from collections import Counter
 import hashlib
 import json
+import os
+import platform
 import subprocess
 import unicodedata
 from datetime import datetime
@@ -36,6 +38,11 @@ def metadata() -> dict[str, Any]:
         "commit": subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=ROOT, text=True).strip(),
         "code_sha256": digest.hexdigest(),
         "working_tree": True,
+        "machine": platform.platform(),
+        "environment": {key: os.getenv(key) for key in (
+            "OMP_NUM_THREADS", "OPENBLAS_NUM_THREADS", "MKL_NUM_THREADS",
+            "TOKENIZERS_PARALLELISM",
+        )},
     }
 
 
@@ -59,8 +66,8 @@ def save_report(path: Path, report: dict[str, Any]) -> None:
             for key in ("scenario", "dataset_sha256", "sample_seed", "sample_size"):
                 if key in previous and key in report and previous[key] != report[key]:
                     raise ValueError(f"Нельзя объединить разные протоколы: {key}; выберите другой --report")
-            before = previous.get("protocol", {}).get("dataset_sha256", previous.get("dataset_sha256"))
-            after = report.get("protocol", {}).get("dataset_sha256", report.get("dataset_sha256"))
+            before = previous.get("protocol", {}).get("table_sha256", previous.get("protocol", {}).get("dataset_sha256", previous.get("dataset_sha256")))
+            after = report.get("protocol", {}).get("table_sha256", report.get("protocol", {}).get("dataset_sha256", report.get("dataset_sha256")))
             if before is not None and after is not None and before != after:
                 raise ValueError("Нельзя объединить результаты разных датасетов; выберите другой --report")
             retained = {}

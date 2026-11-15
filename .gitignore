@@ -56,4 +56,4 @@ out/
 /local_agents.md
 
 # Официальные файлы local_jev загружаются при первом запуске.
-src/subcategory_extraction/local_jev/artifacts/
+src/subcategory_extraction/decisions/local_jev/artifacts/

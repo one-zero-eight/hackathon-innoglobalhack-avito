@@ -1,4 +1,4 @@
 {
-  "subcategory_extraction": "jev",
+  "subcategory_extraction": "decisions.jev",
   "draft_generation": "sample_llm"
 }

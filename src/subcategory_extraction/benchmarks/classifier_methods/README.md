@@ -18,28 +18,63 @@ PostgreSQL), SHA-256 исходного файла —
 Значения измерены на данных, идентичных прежнему parquet, поэтому
 результаты остаются валидными после перевода источника в PostgreSQL.
 
-| Модуль | Версия / дата измерения | Промпт | N | micro-F1 | Происхождение |
+### Результаты (все конфигурации)
+
+| Конфигурация | Версия / дата измерения | Промпт | N | micro-F1 | Происхождение |
 | --- | --- | --- | ---: | ---: | --- |
-| regex | правила annotate_dataset / 2026-11-14 | — | 208 | 0.751979 | локальные run() |
-| tfidf | веса 2ef7ed22c74a / 2026-11-14 | — | 208 | 0.778462 | локальные run() |
-| learned_keywords | веса d06457a8c082 / 2026-11-14 | — | 208 | 0.745358 | локальные run() |
-| semantic_encoder_f1 | веса 1c2a6f5 / 2026-11-14 | — | 208 | 0.769433 | локальные run() |
-| google_decision | версия в recorded-results.json / 2026-11-14 | guided | 208 | 0.839394 | сохранённые ответы, без новых вызовов |
-| jev / BestAPI | версия в recorded-results.json / 2026-11-14 | guided | 208 | 0.846154 | сохранённые ответы, без новых вызовов |
-| jev / Selectel typesafe/jev-1.13 | 6802b41 / 2026-11-14 | guided / 0.5 | 208 | 0.842415 | записанные Selectel-ответы, входы и метки совпали |
-| jev_calibrated / Selectel typesafe/jev-1.13 | 0dbba19 / 2026-11-15 | minimal / train-порог 0.635 | 208 | 0.844376 | выбран по train; проверенные сохранённые ответы |
-| jev_calibrated / minimal, fixed 0.5 | 0dbba19 / 2026-11-15 | minimal / 0.5 | 208 | 0.834081 | офлайн-абляция тех же вероятностей, не новый вызов |
-| jev / guided, train-пороги | 0dbba19 / 2026-11-15 | guided / 0.58 и 0.675 | 208 | 0.846847 | офлайн-абляция; не победитель train/control |
-| jev_tfidf | версия в recorded-results.json / 2026-11-14 | guided | 208 | 0.842262 | сохранённые ответы, без новых вызовов |
-| semantic_encoder | версия в recorded-results.json / 2026-11-14 | — | 208 | 0.786704 | сохранённые ответы, без новых вызовов |
-| local_jev / jevos-v5 | v5 / 2026-11-14 | english / 0.5 | 208 | 0.399050 | сохранённые CPU-предсказания; входы и метки совпали с case_test |
-| local_jev / jevos-v5 | v5 / 2026-11-14 | guided_ru / 0.5 | 208 | 0.000000 | сохранённые CPU-предсказания; входы и метки совпали с case_test |
-| qwen_decision | preview / 2026-11-14 | boundaries / train-калибровка | 208 | 0.629674 | сохранённые ответы; новый API-прогон не выполнялся |
+| jev | jev-1.13.0 / сохранённые ответы | guided | 208 | 0.846154 | сохранённые ответы, без новых вызовов |
+| jev_tfidf | jev-1.13.0 / сохранённые ответы | guided | 208 | 0.842262 | сохранённые ответы, без новых вызовов |
+| google_decision | gemini-decision-1 / 2026-11-15 | guided | 208 | 0.839394 | локальные run() |
+| tfidf::legacy | локальные веса out/tfidf.json / 2026-11-15 | — | 208 | 0.800000 | локальные run() |
+| semantic_encoder (базовый) | rubert-tiny2 / сохранённые ответы | — | 208 | 0.786704 | сохранённые ответы, без новых вызовов |
+| tfidf | веса 2ef7ed22c74a / 2026-11-15 | — | 208 | 0.778462 | локальные run() |
+| semantic_encoder_f1 | веса 1c2a6f5 / 2026-11-15 | — | 208 | 0.769433 | локальные run() |
+| semantic_evidence | веса selection.json / 2026-11-15 | — | 208 | 0.764314 | локальные run() |
+| snippet_logistic_regression | model.json.gz / 2026-11-15 | — | 208 | 0.763194 | локальные run() |
+| regex | правила annotate_dataset / 2026-11-15 | — | 208 | 0.751979 | локальные run() |
+| learned_keywords | веса d06457a8c082 / 2026-11-15 | — | 208 | 0.745358 | локальные run() |
+| google_decision::baseline | gemini-decision-1 / 2026-11-15 | baseline | 208 | 0.738462 | локальные run() |
+| semantic_encoder::threshold-encoder | out/rubert-thresholds/encoder / 2026-11-15 | — | 208 | 0.728411 | локальные run() |
+| semantic_encoder_calibrated | out/rubert-thresholds/encoder / 2026-11-15 | — | 208 | 0.727273 | локальные run() |
+| qwen_decision | decision-model-preview / сохранённые ответы | boundaries | 208 | 0.629674 | сохранённые ответы, без новых вызовов |
+| local_jev / jevos-v5 | jevos-v5 / сохранённые предсказания | english / 0.5 | 208 | 0.399050 | сохранённые CPU-предсказания |
+| local_jev / jevos-v5 | jevos-v5 / сохранённые предсказания | guided_ru / 0.5 | 208 | 0.000000 | сохранённые CPU-предсказания; на macOS runtime недоступен, результат невалиден |
+
+Порядок — убывание micro-F1. «Сохранённые ответы» — пересчёт исторических
+предсказаний (`recorded-results.json`) без новых API-вызовов, не измерение
+текущих весов. Строки 2026-11-15 — свежие локальные run() в едином
+конфигурационном прогоне; `google_decision` и `google_decision::baseline`
+перепрогнаны вживую с рабочим `LLM_API_KEY`.
+
+### Недоступно в текущем окружении (без ключа / runtime / артефакта)
+
+Не прогоняются на этой машине, потому что в `.env` нет работающего ключа
+API, runtime `local_jev` поддерживает только Linux x86_64, либо отсутствует
+артефакт. Фиктивные значения не подставляются:
+
+- `jev`, `jev::baseline`, `jev_boundaries`, `jev_tfidf`(+baseline),
+  `jev_retrieval`(+baseline), `evidence_jev`, `jev_arbiter`(+baseline),
+  `jev_calibrated` — в `.env` нет ключа, авторизующего выбранного провайдера
+  (`SELECTEL_API_KEY` отсутствует; `BESTAPI_API_KEY` отвечает HTTP 401);
+  новых вызовов нет, для `jev`/`jev_tfidf` остаются исторические
+  сохранённые ответы (выше отмечены как «сохранённые»);
+- `qwen_decision`, `qwen_decision::guided`, `qwen_decision::boundaries` —
+  не прогоняются по решению команды (Qwen не запускаем);
+- `local_jev` (+ guided_ru) — runtime только для Linux x86_64;
+- `semantic_encoder` (базовая) — артефакт `out/semantic-encoder/metadata.json`
+  не загружен (известен исторический результат 0.786704 по сохранённым ответам);
+## Карта результатов
+
+![Подходы: Micro-F1 (case_test) × время](approaches-map.png)
+
+Ось X — среднее время одного вызова (логарифмическая шкала), ось Y —
+micro-F1 на исходном test. Источник времени — сценарий `response_time`.
+Синие точки — свежие локальные замеры; красные — исторические/сохранённые.
 
 ## Запуск
 
 ```bash
-OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 TFIDF_ARTIFACT_PATH=out/classifier-methods/tfidf.json uv run python src/subcategory_extraction/benchmarks/classifier_methods/run.py --methods regex tfidf learned_keywords --offline
+OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 TFIDF_ARTIFACT_PATH=out/classifier-methods/tfidf.json uv run python src/subcategory_extraction/benchmarks/classifier_methods/run.py --methods lexical.regex lexical.tfidf lexical.learned_keywords --offline
 ```
 
 Для других реализаций замените список `--methods`. Для проверки исходного
@@ -57,7 +92,7 @@ API-модули. Отсутствие весов/API фиксируется к�
 
 
 ```bash
-OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 TOKENIZERS_PARALLELISM=false RUBERT_F1_ARTIFACT_PATH=src/subcategory_extraction/semantic_encoder_f1/artifacts RUBERT_F1_DEVICE=cpu uv run python src/subcategory_extraction/benchmarks/classifier_methods/run.py --methods semantic_encoder_f1 --offline
+OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 TOKENIZERS_PARALLELISM=false RUBERT_F1_ARTIFACT_PATH=src/subcategory_extraction/semantic/semantic_encoder_f1/artifacts RUBERT_F1_DEVICE=cpu uv run python src/subcategory_extraction/benchmarks/classifier_methods/run.py --methods semantic.semantic_encoder_f1 --offline
 ```
 
 Точные нормализованные совпадения с train модели (`improved_dataset/train.jsonl`):
@@ -89,7 +124,7 @@ OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 TOKENIZERS_PARALLELISM=false RUBERT_F1_ARTIF
 
 
 ```bash
-OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 uv run python src/subcategory_extraction/benchmarks/classifier_methods/run.py --methods learned_keywords
+OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 uv run python src/subcategory_extraction/benchmarks/classifier_methods/run.py --methods lexical.learned_keywords
 ```
 
 Настоящие локальные run(), без API, переобучения внутри runner и подбора
@@ -111,7 +146,7 @@ OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 uv run python src/subcategory_extractio
 
 
 ```bash
-OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 LEARNED_KEYWORDS_ARTIFACT=src/subcategory_extraction/learned_keywords/artifacts/learned-keywords.json uv run python src/subcategory_extraction/benchmarks/classifier_methods/run.py --methods learned_keywords qwen_decision --workers 4 --append
+OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 LEARNED_KEYWORDS_ARTIFACT=src/subcategory_extraction/lexical/learned_keywords/artifacts/learned-keywords.json uv run python src/subcategory_extraction/benchmarks/classifier_methods/run.py --methods lexical.learned_keywords decisions.qwen_decision --workers 4 --append
 ```
 
 Промпт и пороги выбраны только по 240 группам исправленного train и сохранены
@@ -149,24 +184,3 @@ Jevos совместимы с этим сценарием. Новые вызов
 Манифест весов, вероятности и исходная дата измерения сохранены в results.json.
 Первый запуск теперь загружает модель и runtime в игнорируемый out/local-jev/;
 команды и ограничения — в ../../local_jev/README.md.
-
-## Интеграция Selectel и калибровки
-
-Протокол case_test совпал с входами/метками обоих merge-родителей. В JSON
-исторический BestAPI выделен отдельным ключом, а актуальный jev обозначает
-Selectel. Даты, модели и measurement_metadata сохраняют исходные измерения;
-при merge новых вызовов моделей не было. Проверка БД выполнялась по
-read-only снимкам импортера с совпадающим table_sha256; live-соединение недоступно.
-Поля dataset_sha256/training_sha256 нормализованы к содержимому таблиц;
-исходные файловые хеши сохранены отдельно как *_source_sha256.
-
-Калибровка обучена только на48 группах case_train,24 control-группы отдельные.
-Два промпта ×девять схем порогов; параметры выбраны до test. Control вырос
-0.926829→0.939759, но это одна дополнительная услуга на малой выборке.
-При merge эти значения не пересчитывались как новый train/API-прогон.
-Подробности и единственная таблица train-вариантов — в
-[jev_calibrated](../../jev_calibrated/README.md) и [отчёте](jev-training-results.json).
-
-Прежний диагностический reviewed_test имел119 строк и другой эталон.
-Его результаты не перенесены в manual_test. Полный прежний отчёт доступен:
-`git show 0dbba19:src/subcategory_extraction/benchmarks/improved_dataset/results.json`.

@@ -23,10 +23,11 @@
 Обученные модели храним внутри своего решения:
 
 ```text
-src/<service>/<module>/
+src/subcategory_extraction/<group>/<module>/  # остальные сервисы: src/<service>/<module>/
 ├── __init__.py
 ├── pipeline.py
-├── prompts/       # при необходимости
+├── prompts/       # обязательно для decisions, иначе при необходимости
+├── PROMPTS.md     # анализ различий промптов для каждого decision-модуля
 └── artifacts/     # обученные веса, токенизатор, метаданные и калибровка
 ```
 
@@ -40,20 +41,30 @@ src/<service>/<module>/
 
 ## Выбор реализации
 
-Корневой `config.json` задаёт имя папки модуля для каждого шага:
+Корневой `config.json` задаёт модуль каждого шага; для extraction — `<group>.<module>`:
 
 ```json
 {
-  "subcategory_extraction": "jev",
+  "subcategory_extraction": "decisions.jev",
   "draft_generation": "sample_llm"
 }
 ```
 
-Доступны `subcategory_extraction/google_decision`, `tfidf`, `jev`, `jev_tfidf`,
-`jev_retrieval`, `evidence_jev`, `jev_arbiter`, `semantic_encoder`,
-`semantic_encoder_calibrated`, `semantic_encoder_f1`, `jev_boundaries`,
-[qwen_decision](src/subcategory_extraction/qwen_decision/README.md),
-[jev_calibrated](src/subcategory_extraction/jev_calibrated/README.md).
+Модули выделения сгруппированы по подходам. Внутри каждой группы — папки модулей:
+
+```text
+src/subcategory_extraction/
+├── lexical/       # regex/, tfidf/, learned_keywords/, snippet_logistic_regression/
+├── semantic/      # semantic_encoder/, semantic_encoder_calibrated/, semantic_encoder_f1/, semantic_evidence/
+├── decisions/     # google_decision/, qwen_decision/, jev/, local_jev/, jev_calibrated/, jev_boundaries/, jev_retrieval/
+├── hybrid/        # jev_tfidf/, evidence_jev/, jev_arbiter/
+└── benchmarks/    # четыре общих сценария для всех подходов
+```
+
+TinyBERT исключён из поддерживаемых модулей.
+Указывайте полный путь, например `lexical.tfidf` или `decisions.jev`.
+[Список методов](src/subcategory_extraction/README.md),
+[веса и подготовленные ресурсы](src/subcategory_extraction/ARTIFACTS.md).
 Доступен генератор `draft_generation/sample_llm`. `null` означает, что модуль
 не выбран. CLI выдаёт явную ошибку.
 
@@ -61,8 +72,8 @@ src/<service>/<module>/
 `JEV_MODEL=typesafe/jev-1.13`,
 `JEV_ENDPOINT=https://api.selectel.ru/aig/v1/decisions`.
 Задайте отдельный `SELECTEL_API_KEY` в `.env`; детали — в
-[README Jev](src/subcategory_extraction/jev/README.md).
-Доступен экспериментальный [jev_calibrated](src/subcategory_extraction/jev_calibrated/README.md):
+[README Jev](src/subcategory_extraction/decisions/jev/README.md).
+Доступен экспериментальный [jev_calibrated](src/subcategory_extraction/decisions/jev_calibrated/README.md):
 минимальный промпт и порог 0.635 выбраны по train-группам; control micro-F1
 0.926829 → 0.939759. На официальном test: 0.842415 → 0.844376,
 на диагностическом: 0.816754 → 0.775068. Из-за этого компромисса по умолчанию
@@ -101,7 +112,7 @@ uv run python src/subcategory_extraction/benchmarks/classifier_methods/run.py --
 это предварительная разметка, не независимый ручной эталон.
 Опубликованные веса Leo включены в модуль через Git LFS (`git lfs pull`).
 Загрузка и повторное обучение описаны в
-[инструкции модуля](src/subcategory_extraction/semantic_encoder_f1/README.md).
+[инструкции модуля](src/subcategory_extraction/semantic/semantic_encoder_f1/README.md).
 
 Для [dataset_annotation](src/dataset_annotation/rubert_review/README.md) —
 только время применения сохранённых решений и шесть примеров с mcId.

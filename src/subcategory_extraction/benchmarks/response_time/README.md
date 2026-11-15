@@ -7,20 +7,41 @@ train, seed=44. SHA-256 train:
 
 ## Результаты
 
-| Модуль | Версия / дата | N | Среднее, с | Медиана, с | p95, с | Происхождение |
+Настоящие последовательные `run()` на штатных 10 validation-входах seed=44.
+Свежие замеры 2026-11-15 — Apple Silicon CPU, один поток OpenMP/OpenBLAS
+и PyTorch, загрузка модели исключена, первый вызов включён, прогрева и кэша
+предсказаний нет. p95 — линейный percentile NumPy.
+
+| Конфигурация | Версия / дата | N | Среднее, с | Медиана, с | p95, с | Происхождение |
 | --- | --- | ---: | ---: | ---: | ---: | --- |
-| learned_keywords | Linux CPU / 2026-11-14 | 10 | 0.002126 | 0.002292 | 0.002644 | сохранённый замер на той же машине, что local_jev |
-| semantic_encoder_f1 | веса 1c2a6f5 / 2026-11-14 | 10 | 0.040450 | 0.036370 | 0.081191 | настоящие CPU run(), сохранённый замер |
-| tfidf | e814b58 / 2026-11-14 | 10 | 0.001142 | 0.000819 | 0.002920 | сохранённая округлённая сводка |
-| local_jev / jevos-v5 | OpenVINO INT8 / 2026-11-14 | 10 | 1.199780 | 1.126392 | 2.275740 | сохранённый замер готового сервера, english / 0.5 |
-| qwen_decision | preview / 2026-11-14 | 10 | 14.309403 | 2.499930 | 62.312641 | сохранённый сетевой API-замер |
-| jev / Selectel typesafe/jev-1.13 | 6802b41 / 2026-11-14 | 10 | 1.026307 | 0.954630 | 1.367622 | guided, свежие API-ответы исходного прогона |
-| jev_calibrated / Selectel typesafe/jev-1.13 | 0dbba19 / 2026-11-15 | 0/10 | — | — | — | failed: бюджетный guard остановил до API; времени модели нет |
+| tfidf::legacy | out/tfidf.json / 2026-11-15 | 10 | 0.000837 | 0.000714 | 0.001605 | локальный run() |
+| tfidf | out/classifier-methods/tfidf.json / 2026-11-15 | 10 | 0.001197 | 0.000742 | 0.003397 | локальный run() |
+| learned_keywords | веса d06457a8c082 / 2026-11-15 | 10 | 0.001796 | 0.001509 | 0.003364 | локальный run() |
+| regex | — / 2026-11-15 | 10 | 0.005204 | 0.005992 | 0.009410 | локальный run() |
+| semantic_encoder_calibrated | out/rubert-thresholds/encoder / 2026-11-15 | 10 | 0.011291 | 0.008832 | 0.023364 | локальный CPU run() |
+| semantic_encoder::threshold-encoder | out/rubert-thresholds/encoder / 2026-11-15 | 10 | 0.012444 | 0.009354 | 0.025328 | локальный CPU run() |
+| semantic_encoder_f1 | веса 1c2a6f5 / 2026-11-15 | 10 | 0.013947 | 0.010074 | 0.027228 | локальный CPU run() |
+| snippet_logistic_regression | model.json.gz / 2026-11-15 | 10 | 0.008473 | 0.006652 | 0.021653 | локальный run() |
+| semantic_evidence | selection.json / 2026-11-15 | 10 | 0.032729 | 0.024371 | 0.098837 | локальный CPU run() |
+| google_decision | gemini-decision-1 / 2026-11-15 | 10 | 0.801300 | — | — | сетевой API run(), свежий |
+| google_decision::baseline | gemini-decision-1 / 2026-11-15 | 10 | 0.821800 | — | — | сетевой API run(), свежий |
+| qwen_decision | preview / 2026-11-14 | 10 | 14.309403 | 2.499930 | 62.312641 | сохранённый сетевой API-замер (не тот же прогон, что выше) |
+| local_jev / jevos-v5 | OpenVINO INT8 / 2026-11-14 | 10 | 1.199780 | 1.126392 | 2.275740 | сохранённый замер готового сервера (Linux), english / 0.5 |
+
+Свежие 9 строк перемерены на этой машине в одном протоколе (seed=44, size=10).
+Строки `qwen_decision` и `local_jev` — исторические замеры других орудий
+(внешний API / Linux-сервер), сохранены с исходной датой и происхождением,
+их не сравниваем напрямую с локальными CPU-строками.
+
+## Карта
+
+График «Micro-F1 (case_test) × время вызова» объединяет этот сценарий
+(время по оси X) с F1 на исходном test — см. [карта](../approaches-map.png).
 
 ## Запуск
 
 ```bash
-TFIDF_ARTIFACT_PATH=out/classifier-methods/tfidf.json uv run python src/subcategory_extraction/benchmarks/response_time/run.py --module tfidf --size 10
+TFIDF_ARTIFACT_PATH=out/classifier-methods/tfidf.json uv run python src/subcategory_extraction/benchmarks/response_time/run.py --module lexical.tfidf --size 10
 ```
 
 Для другого решения замените `--module`. Отчёт — [results.json](results.json).
@@ -47,7 +68,7 @@ p95 посчитан nearest rank. Его не сравниваем напрям
 ## Свежий прогон опубликованных весов Leo
 
 ```bash
-OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 TOKENIZERS_PARALLELISM=false RUBERT_F1_ARTIFACT_PATH=src/subcategory_extraction/semantic_encoder_f1/artifacts RUBERT_F1_DEVICE=cpu uv run python src/subcategory_extraction/benchmarks/response_time/run.py --module semantic_encoder_f1 --size 10
+OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 TOKENIZERS_PARALLELISM=false RUBERT_F1_ARTIFACT_PATH=src/subcategory_extraction/semantic/semantic_encoder_f1/artifacts RUBERT_F1_DEVICE=cpu uv run python src/subcategory_extraction/benchmarks/response_time/run.py --module semantic.semantic_encoder_f1 --size 10
 ```
 
 Apple Silicon arm64, CPU, один поток PyTorch; версии и платформа — в `results.json`.
@@ -62,7 +83,7 @@ Apple Silicon arm64, CPU, один поток PyTorch; версии и плат�
 
 
 ```bash
-OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 uv run python src/subcategory_extraction/benchmarks/response_time/run.py --module learned_keywords --size 10
+OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 uv run python src/subcategory_extraction/benchmarks/response_time/run.py --module lexical.learned_keywords --size 10
 ```
 
 Apple Silicon arm64, CPU; один поток OpenMP/OpenBLAS. Загрузка модели и данных
@@ -78,7 +99,7 @@ p95 — линейный percentile NumPy. Выборка: 10 validation-гру�
 
 
 ```bash
-QWEN_DECISION_CACHE=0 OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 uv run python src/subcategory_extraction/benchmarks/response_time/run.py --module qwen_decision --size 10 --append
+QWEN_DECISION_CACHE=0 OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 uv run python src/subcategory_extraction/benchmarks/response_time/run.py --module decisions.qwen_decision --size 10 --append
 ```
 
 Настоящие последовательные `run()` на штатных 10 входах seed=44. Чтение и запись
@@ -104,8 +125,8 @@ F1 здесь не считается. Оба модуля измерены за
 
 
 ```bash
-OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 uv run python src/subcategory_extraction/benchmarks/response_time/run.py --module local_jev --size 10 --append
-OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 uv run python src/subcategory_extraction/benchmarks/response_time/run.py --module learned_keywords --size 10 --append
+OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 uv run python src/subcategory_extraction/benchmarks/response_time/run.py --module decisions.local_jev --size 10 --append
+OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 uv run python src/subcategory_extraction/benchmarks/response_time/run.py --module lexical.learned_keywords --size 10 --append
 ```
 
 Linux x86_64, Intel Core i9-12900H. Jevos: четыре потока OpenVINO;
