@@ -1,0 +1,82 @@
+{
+  "version": 1,
+  "module": "semantic_evidence",
+  "classes": [
+    101,
+    102,
+    103,
+    104,
+    105,
+    106
+  ],
+  "architecture": {
+    "mode": "document",
+    "max_tokens": 512,
+    "stride": 510
+  },
+  "trained_classes": [
+    102,
+    103,
+    104,
+    105,
+    106
+  ],
+  "model_id": "cointegrated/rubert-tiny2",
+  "model_revision": "e8ed3b0c8bbf4fb6984c3de043bf7d2f4e5969ae",
+  "training": {
+    "train_sha256": "be52e41bedc3ffb79229300a68e67e66fc0347fd26925f2aa04a6355cf6a67da",
+    "architecture": {
+      "mode": "document",
+      "max_tokens": 512,
+      "stride": 510
+    },
+    "seed": 42,
+    "epochs": 5,
+    "batch_size": 8,
+    "learning_rate": 5e-05,
+    "model_id": "cointegrated/rubert-tiny2",
+    "model_revision": "e8ed3b0c8bbf4fb6984c3de043bf7d2f4e5969ae",
+    "weights_sha256": "1aa7524ad307d1abf987dba71987f29dd67db02150698eb6bb0d54b6acde0e69",
+    "teacher_sha256": null,
+    "alpha": 0.0,
+    "provenance": {
+      "protocol_sha256": "16d466e72189a655ce4136bc3b0280c4653cf1e3a8b4f2a09627a1d0f3e9bc43",
+      "scope": "development_only"
+    },
+    "rows": 4239,
+    "device": "mps",
+    "checkpoint_selection": "last fixed epoch; no external fold labels",
+    "history": [
+      {
+        "epoch": 1,
+        "loss": 0.36796421159913895,
+        "seconds": 48.254442416997335
+      },
+      {
+        "epoch": 2,
+        "loss": 0.18605136893835517,
+        "seconds": 47.59430716600036
+      },
+      {
+        "epoch": 3,
+        "loss": 0.14389691057000473,
+        "seconds": 47.73523979199672
+      },
+      {
+        "epoch": 4,
+        "loss": 0.1114980486604115,
+        "seconds": 47.81703037499392
+      },
+      {
+        "epoch": 5,
+        "loss": 0.09271499407013004,
+        "seconds": 47.45024166700023
+      }
+    ]
+  },
+  "provenance": {
+    "protocol_sha256": "16d466e72189a655ce4136bc3b0280c4653cf1e3a8b4f2a09627a1d0f3e9bc43",
+    "scope": "development_only"
+  },
+  "created_at_utc": "2026-11-14T15:21:57.532351+00:00"
+}

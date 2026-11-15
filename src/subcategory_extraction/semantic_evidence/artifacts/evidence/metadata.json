@@ -1,0 +1,82 @@
+{
+  "version": 1,
+  "module": "semantic_evidence",
+  "classes": [
+    101,
+    102,
+    103,
+    104,
+    105,
+    106
+  ],
+  "architecture": {
+    "mode": "evidence",
+    "max_tokens": 256,
+    "stride": 192
+  },
+  "trained_classes": [
+    102,
+    103,
+    104,
+    105,
+    106
+  ],
+  "model_id": "cointegrated/rubert-tiny2",
+  "model_revision": "e8ed3b0c8bbf4fb6984c3de043bf7d2f4e5969ae",
+  "training": {
+    "train_sha256": "be52e41bedc3ffb79229300a68e67e66fc0347fd26925f2aa04a6355cf6a67da",
+    "architecture": {
+      "mode": "evidence",
+      "max_tokens": 256,
+      "stride": 192
+    },
+    "seed": 42,
+    "epochs": 5,
+    "batch_size": 8,
+    "learning_rate": 5e-05,
+    "model_id": "cointegrated/rubert-tiny2",
+    "model_revision": "e8ed3b0c8bbf4fb6984c3de043bf7d2f4e5969ae",
+    "weights_sha256": "1aa7524ad307d1abf987dba71987f29dd67db02150698eb6bb0d54b6acde0e69",
+    "teacher_sha256": null,
+    "alpha": 0.0,
+    "provenance": {
+      "protocol_sha256": "16d466e72189a655ce4136bc3b0280c4653cf1e3a8b4f2a09627a1d0f3e9bc43",
+      "scope": "development_only"
+    },
+    "rows": 4239,
+    "device": "mps",
+    "checkpoint_selection": "last fixed epoch; no external fold labels",
+    "history": [
+      {
+        "epoch": 1,
+        "loss": 0.3427888150765216,
+        "seconds": 37.87612691700633
+      },
+      {
+        "epoch": 2,
+        "loss": 0.17379823375575018,
+        "seconds": 36.309307791998435
+      },
+      {
+        "epoch": 3,
+        "loss": 0.13043050187802252,
+        "seconds": 36.122999125000206
+      },
+      {
+        "epoch": 4,
+        "loss": 0.1060550129056455,
+        "seconds": 35.970065916997555
+      },
+      {
+        "epoch": 5,
+        "loss": 0.08981620570797211,
+        "seconds": 37.80179266699997
+      }
+    ]
+  },
+  "provenance": {
+    "protocol_sha256": "16d466e72189a655ce4136bc3b0280c4653cf1e3a8b4f2a09627a1d0f3e9bc43",
+    "scope": "development_only"
+  },
+  "created_at_utc": "2026-11-14T15:25:05.877093+00:00"
+}
