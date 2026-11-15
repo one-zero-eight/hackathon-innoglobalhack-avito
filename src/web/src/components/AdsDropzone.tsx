@@ -5,6 +5,7 @@ import {
   Button,
   Group,
   ScrollArea,
+  Select,
   Stack,
   Table,
   Text,
@@ -14,10 +15,19 @@ import { parseAdsFile, type ImportedAd } from '../adsParser'
 import { AlertIcon } from './icons'
 
 const MAX_FILE_SIZE = 10 * 1024 * 1024
+const DEFAULT_CONCURRENCY = 4
+const CONCURRENCY_OPTIONS = Array.from({ length: 8 }, (_, index) => ({
+  value: String(index + 1),
+  label: String(index + 1),
+}))
 
 interface AdsDropzoneProps {
   microcategories: Microcategory[]
   onSelect: (ad: ImportedAd) => void
+  /** Запуск пакетной обработки импортированного массива объявлений. */
+  onProcessAll: (ads: ImportedAd[], concurrency: number) => void
+  /** Пакетная обработка уже идёт — кнопка запуска блокируется. */
+  bulkRunning: boolean
 }
 
 function errorMessage(error: unknown): string {
@@ -27,12 +37,18 @@ function errorMessage(error: unknown): string {
 }
 
 /** Загрузка объявлений из таблицы и выбор строки для исходной формы. */
-export function AdsDropzone({ microcategories, onSelect }: AdsDropzoneProps) {
+export function AdsDropzone({
+  microcategories,
+  onSelect,
+  onProcessAll,
+  bulkRunning,
+}: AdsDropzoneProps) {
   const [ads, setAds] = useState<ImportedAd[]>([])
   const [fileName, setFileName] = useState<string | null>(null)
   const [error, setError] = useState<string | null>(null)
   const [loading, setLoading] = useState(false)
   const [dragging, setDragging] = useState(false)
+  const [concurrency, setConcurrency] = useState<string | null>(String(DEFAULT_CONCURRENCY))
   const inputRef = useRef<HTMLInputElement>(null)
   const dragDepth = useRef(0)
   const requestId = useRef(0)
@@ -158,6 +174,33 @@ export function AdsDropzone({ microcategories, onSelect }: AdsDropzoneProps) {
             <Text size="xs" c="dimmed" className="break-words">
               {fileName}
             </Text>
+          </Group>
+
+          <Group justify="space-between" align="flex-end" gap="md">
+            <Button
+              type="button"
+              loading={bulkRunning}
+              disabled={bulkRunning}
+              onClick={() =>
+                onProcessAll(
+                  ads.map((ad) => ({ ...ad })),
+                  Number(concurrency ?? DEFAULT_CONCURRENCY),
+                )
+              }
+            >
+              Обработать все
+            </Button>
+            <Select
+              label="Параллелизм"
+              description="Сколько объявлений обрабатывать одновременно (1–8)"
+              data={CONCURRENCY_OPTIONS}
+              value={concurrency}
+              onChange={setConcurrency}
+              allowDeselect={false}
+              disabled={bulkRunning}
+              maw={240}
+              size="sm"
+            />
           </Group>
 
           <ScrollArea.Autosize
