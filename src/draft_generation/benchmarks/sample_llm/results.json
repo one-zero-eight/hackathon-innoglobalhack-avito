@@ -1,13 +1,13 @@
 {
-  "date": "2026-11-15T15:34:33+03:00",
-  "commit": "fb4ee41e4868424b568654797c0ce18fda253931",
-  "code_sha256": "1a9eaa86a997ec8231aab4ae28d30159b94680dabdbd8516a5928366f337be3a",
+  "date": "2026-11-16T01:31:48+03:00",
+  "commit": "5c7bcdf5b1b9dd72c48323e7e65dff8bd7c4df39",
+  "code_sha256": "05aeb3462b6ef861376a5cf26bbafaa345cf42b926340d85037fa58dc8fc7d63",
   "working_tree": true,
-  "machine": "Linux-7.0.0-43-generic-x86_64-with-glibc2.43",
+  "machine": "macOS-26.5.2-arm64-arm-64bit-Mach-O",
   "environment": {
-    "OMP_NUM_THREADS": "1",
-    "OPENBLAS_NUM_THREADS": "1",
-    "MKL_NUM_THREADS": "1",
+    "OMP_NUM_THREADS": null,
+    "OPENBLAS_NUM_THREADS": null,
+    "MKL_NUM_THREADS": null,
     "TOKENIZERS_PARALLELISM": null
   },
   "scenario": "offline_contract",
@@ -17,6 +17,20 @@
     "drafts": 2,
     "full_pipeline": 1
   },
+  "local_checks": {
+    "drafts": 2,
+    "invalid_responses_rejected": 12,
+    "invalid_styles_rejected": 8,
+    "full_pipeline": 1
+  },
+  "local_transport_checks": {
+    "invalid_responses_rejected": 6,
+    "remote_hosts_rejected": 3
+  },
+  "seo_checks": {
+    "cleaning_cases": 8,
+    "seo_only_drafts": 0
+  },
   "status": "complete",
-  "elapsed_seconds": 0.019699196996953106
+  "elapsed_seconds": 0.15256012500321958
 }

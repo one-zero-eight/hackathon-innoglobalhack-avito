@@ -12,10 +12,18 @@ npm run dev          # http://localhost:5173
 ```
 
 Dev-сервер проксирует `/api/*` на `http://localhost:8000` (см. `vite.config.ts`),
-поэтому для работы нужен запущенный бэкенд пайплайна (WP2/WP3). Адрес
-бэкенда переопределяется переменной окружения `VITE_BACKEND_ORIGIN`
+поэтому для работы нужен запущенный бэкенд пайплайна (WP2/WP3):
+`uv run uvicorn api.app:app --app-dir src --port 8000`, PostgreSQL и
+`SELECTEL_API_KEY` для классификатора Jev. Адрес бэкенда переопределяется
+переменной окружения `VITE_BACKEND_ORIGIN`
 (например, `VITE_BACKEND_ORIGIN=http://127.0.0.1:8787 npm run dev` —
 для проверки на мок-SSE).
+`python -m src` запускает универсальный HTTP API (`/drafts`), не React-бэкенд.
+Генератор один с CLI: `config.json.draft_generation=local_llm`.
+Runtime и веса Qwen3.5-9B устанавливаются и запускаются отдельно
+([инструкция](../../README.md#веб-сервис)); для dev endpoint
+`http://127.0.0.1:8080/v1/chat/completions`, `LOCAL_LLM_MODEL_ID=default_model`.
+Compose использует `host.docker.internal:8080`. Модель в образы не входит.
 
 ## Команды
 
@@ -31,8 +39,8 @@ Dev-сервер проксирует `/api/*` на `http://localhost:8000` (с�
 - `GET /api/microcategories` → `[{ "mcId": 101, "title": "Ремонт под ключ" }, …]`
 - `POST /api/drafts` с телом `{ "description": "…", "mcId": 101 }` →
   `{ "drafts": [{ "mcId": 104, "title": "…", "text": "…" }] }`
-  (у черновика `title`/`text` могут быть `null` — UI показывает плашку
-  «Текст не сгенерирован»).
+  Генератор возвращает вступление, пункты `•` и исходные эмодзи.
+  При сбое генерации сервер отвечает HTTP 502, а не черновиком с `null`.
 - Ответ с HTTP-ошибкой: `{ "detail": "…" }` — текст показывается в `Alert`.
 - `POST /api/drafts/batch` с телом `{ "ads": [{ "description", "mcId" }], "concurrency": 4 | null }`
   → поток `text/event-stream` (SSE), кадры `event: <type>\ndata: <json>\n\n`:

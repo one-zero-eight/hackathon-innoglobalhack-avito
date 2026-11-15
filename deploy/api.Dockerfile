@@ -13,6 +13,8 @@ RUN uv sync --frozen --no-dev
 
 # Затем код проекта (src/api появится внутри src/)
 COPY src ./src
+COPY config.json ./
+COPY docs/innoglobalhack_avito/microcategories-guide.md ./docs/innoglobalhack_avito/microcategories-guide.md
 
 # Корень проекта в контейнере: load_config() ищет config.json относительно src/main.py
 COPY config.json ./

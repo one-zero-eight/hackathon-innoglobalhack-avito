@@ -17,10 +17,12 @@ import json
 import logging
 import math
 import os
+import re
 import sys
 from abc import ABC, abstractmethod
 from contextlib import contextmanager
 from contextvars import ContextVar
+from dataclasses import dataclass
 from decimal import Decimal, InvalidOperation
 from importlib import import_module
 from pathlib import Path
@@ -59,6 +61,110 @@ def is_valid_mcid(mcid: int) -> bool:
 def mcid_name(mcid: int) -> str | None:
     """Название микрокатегории по mcId или None, если такой категории нет."""
     return MICROCATEGORIES.get(mcid)
+
+
+# Общие правила SEO из офлайн-разметки: генератор и аудит используют одни границы.
+SEO_MARKERS = re.compile(
+    r"\b(?:"
+    r"для\s+поиска|слов\w*\s+для\s+поиска|маячки\s+для\s+поиска|"
+    r"ключи\s+для\s+поиска|нас\s+можно\s+найти|"
+    r"(?:нас|меня|команду)\s+(?:также\s+)?находят\s+по\s+запросам|"
+    r"нас\s+ищут\s+по\s+запросам|также\s+ищут|"
+    r"поисков\w*\s+(?:слов\w*|запрос\w*|систем\w*)|"
+    r"ключев\w*\s+(?:слов\w*|запрос\w*)|"
+    r"нас\s+находят|"
+    r"нас\s+(?:также|тоже)\s+ищут|так\s+же\s+нас\s+ищут|"
+    r"также\s+нас\s+ищут|ищут\s+нас|ищут\s+также|"
+    r"ищите\s+(?:меня|нас)|ищите\s+нас|также\s+ищите|"
+    r"возможно\s*,?\s*(?:вы\s+|нас\s+)?(?:ищ|иска)\w*|"
+    r"вы\s+могли\s+искать|по\s+каким\s+запросам|"
+    r"запросы\s+для\s+поиска|популярные\s+запросы|"
+    r"часто\s+ищут|теги\s+для\s+поиска|теги|tags|keywords"
+    r")\s*[:：]?",
+    re.I,
+)
+ACTION = re.compile(
+    r"(?:выполня|дела|оказы|занима|предлага|бер[её]м|берем|беру|"
+    r"монтир|монтаж|установ|уклад|облицов|поклей|оклей|наклей|"
+    r"покрас|окрас|штукатур|шпакл|шпатл|развод|замен|подключ|"
+    r"проклад|сборк|нанесен|выравн|ремонт|отдел|работ|услуг)",
+    re.I,
+)
+
+
+@dataclass(frozen=True)
+class SeoSpan:
+    """Точные границы поискового фрагмента для очистки и аудита."""
+
+    start: int
+    end: int
+    text: str
+    marker: str
+    kind: str
+
+
+def find_seo_spans(text: str, *, normalized_text: str | None = None) -> list[SeoSpan]:
+    """Найти поисковые секции; нормализованный текст аудита сохраняет позиции."""
+    normalized = text if normalized_text is None else normalized_text
+    spans: list[SeoSpan] = []
+
+    def add(start: int, end: int, marker: str, kind: str) -> None:
+        start = max(0, start)
+        end = min(len(text), end)
+        if start < end:
+            spans.append(SeoSpan(start, end, text[start:end], marker, kind))
+
+    for match in SEO_MARKERS.finditer(normalized):
+        tail = text[match.end():match.end() + 45]
+        line_start = text.rfind("\n", 0, match.start()) + 1
+        prefix = text[line_start:match.start()]
+        at_line_start = len(prefix.strip(" \t•·-–—*✅✔️🔎🔍➡️")) <= 3
+        if (not at_line_start and ":" not in match.group(0)
+                and "：" not in match.group(0) and ":" not in tail and "：" not in tail):
+            continue
+        start = line_start if at_line_start else match.start()
+        add(start, len(text), match.group(0), "explicit_marker")
+
+    offset = 0
+    for line in text.splitlines(keepends=True):
+        stripped = line.strip()
+        start = offset
+        offset += len(line)
+        if not stripped or any(span.start <= start < span.end for span in spans):
+            continue
+        low = normalized[start:offset].strip().lower()
+        if len(low) < 160 or re.search(r"[.!?]", low):
+            continue
+        cue_count = sum(low.count(stem) for stem in (
+            "плитк", "кафел", "керамогранит", "мозаик", "сантех", "труб",
+            "отоплен", "канализац", "электр", "проводк", "розет", "освещ",
+            "штукатур", "шпакл", "шпатл", "обои", "покрас", "маляр",
+            "отделк", "ремонт",
+        ))
+        repeat_repair = len(re.findall(r"ремонт", low))
+        actions = len(ACTION.findall(low))
+        queries = [query.strip() for query in re.split(r"[,;/]", low) if query.strip()]
+        repeated_queries = len(queries) - len(set(queries))
+        if cue_count >= 6 and actions <= 1 and (
+            repeat_repair >= 3 or len(low) >= 260 or repeated_queries >= 3
+        ):
+            add(start, start + len(line), stripped[:80], "keyword_tail")
+    return sorted(spans, key=lambda span: (span.start, span.end))
+
+
+def strip_seo_sections(text: str) -> str:
+    """Убрать SEO из входа модели, не изменяя оставшиеся формулировки."""
+    spans = find_seo_spans(text)
+    if not spans:
+        return text
+    parts = []
+    end = 0
+    for span in spans:
+        if span.start > end:
+            parts.append(text[end:span.start])
+        end = max(end, span.end)
+    parts.append(text[end:])
+    return "".join(parts).strip()
 
 
 # --- Контракт входа/выхода ---
@@ -526,8 +632,8 @@ class PipelineRuntime:
             except ValidationError as exc:
                 raise PipelineOutputError("Некорректные черновики") from exc
             ids = [draft.mc_id for draft in validated]
-            if len(ids) != len(targets) or set(ids) != set(targets):
-                raise PipelineOutputError("Нужен ровно один черновик для каждой целевой категории")
+            if len(ids) != len(set(ids)) or not set(ids).issubset(targets):
+                raise PipelineOutputError("Черновики должны иметь уникальные целевые категории")
             return PipelineOutput(drafts=validated)
 
 
