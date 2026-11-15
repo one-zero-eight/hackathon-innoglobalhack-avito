@@ -11,6 +11,9 @@
 | `lexical.tfidf` | Словарь, IDF, коэффициенты и intercept логистических голов | `out/tfidf.json`; матрица бенчмарков также использует `out/classifier-methods/tfidf.json` |
 | `lexical.learned_keywords` | TF-IDF, выученные фразы и коэффициенты классификаторов | `src/subcategory_extraction/lexical/learned_keywords/artifacts/learned-keywords.json` |
 | `lexical.snippet_logistic_regression` | Словарь ключей, признаки и коэффициенты оконного классификатора | `src/subcategory_extraction/lexical/snippet_logistic_regression/artifacts/model.json.gz` |
+| `lexical.morphology_logistic_regression` | Индекс словоформ, признаки и коэффициенты для двух источников обучения | `src/subcategory_extraction/lexical/morphology_logistic_regression/artifacts/` |
+| `lexical.order_format_logistic_regression`, `lexical.order_format_phrase_logreg` | Веса бинарного и фразового детекторов | `artifacts/model.json.gz` рядом с каждым модулем |
+| `lexical.order_format_joint` | По умолчанию веса snippet-логрега. Варианты на дедупе Avito и на Яндексе и Юле | `src/subcategory_extraction/lexical/order_format_joint/artifacts/` |
 | `semantic.semantic_encoder` | Дообученный RuBERT, классификационная голова, токенизатор и метаданные | `out/semantic-encoder/` |
 | `semantic.semantic_encoder_calibrated` | RuBERT, голова, токенизатор и калибровка порогов | `out/rubert-thresholds/encoder/` |
 | `semantic.semantic_encoder_f1` | Дообученный/дистиллированный encoder, голова, токенизатор, метаданные и пороги | `src/subcategory_extraction/semantic/semantic_encoder_f1/artifacts/` |

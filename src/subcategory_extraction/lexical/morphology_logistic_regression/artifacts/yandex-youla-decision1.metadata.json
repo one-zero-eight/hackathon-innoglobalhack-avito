@@ -1,0 +1,35 @@
+{
+  "model": "yandex-youla-decision1",
+  "date": "2026-11-15T04:28:46+03:00",
+  "training_source": "provider_train",
+  "unlabeled_by_source": {
+    "yandex": 0,
+    "youla": 1
+  },
+  "code_sha256": {
+    "train.py": "bff319f9e77ee44ee4a5d188eb1d7027b62edfd82a4093bc2de91c577b059a85",
+    "pipeline.py": "3daa05df591ea09f34f32d5d664062e04c83fce9f42261f6d7998e016bd43c24"
+  },
+  "fit": 2516,
+  "tune": 439,
+  "excluded_train": 5,
+  "grouping": {
+    "similarity_threshold": 0.85,
+    "groups": 5838
+  },
+  "thresholds": [
+    0.1,
+    0.1,
+    0.5999999999999999,
+    0.3999999999999999,
+    0.1
+  ],
+  "features": 87051,
+  "input_sha256": {
+    "yandex": "13fa5fd3a2c6d29d927c59562b56c1f7aafa2d535b5986f92e20133ce50d1f57",
+    "youla": "129b7491bdd2441070fba20a37c82e074ba56589239b65146702805d1b8758d8",
+    "local_dedup": "22f5cb2968ec59568aa3afaf0881e0bb2684dc505e2164404fb04d80a15e11d6",
+    "index": "39db0982e8c9ffa3b3dbe47a58dac2755eaf6b0f3292d5538b2e0e1e510bf2a9"
+  },
+  "artifact_sha256": "837d7348e8a8dddb41aeb70f27556c61f05f6d0223fb65799ccd0a88a794f542"
+}

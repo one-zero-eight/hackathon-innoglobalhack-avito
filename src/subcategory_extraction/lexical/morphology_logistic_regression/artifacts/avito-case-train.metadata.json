@@ -1,0 +1,31 @@
+{
+  "fit": 7128,
+  "tune": 1331,
+  "excluded_train": 333,
+  "grouping": {
+    "similarity_threshold": 0.85,
+    "groups": 3028
+  },
+  "thresholds": [
+    0.125,
+    0.5999999999999999,
+    0.3999999999999999,
+    0.5249999999999999,
+    0.15
+  ],
+  "features": 126568,
+  "input_sha256": {
+    "case_train": "4ed42d7531c93a9afbfa351badf6bad2b758bba4f5b2f9b669caa24933f5c060",
+    "case_test": "c4b927d08a8509f6a88d288450b8bc075e765ec4892111b2cee308324e596bd5",
+    "manual_test": "4798fa452704fc85ce05095a1e07d47bf41e7103f40b8eced1124ac4778a8631",
+    "local_dedup": "22f5cb2968ec59568aa3afaf0881e0bb2684dc505e2164404fb04d80a15e11d6",
+    "index": "39db0982e8c9ffa3b3dbe47a58dac2755eaf6b0f3292d5538b2e0e1e510bf2a9"
+  },
+  "artifact_sha256": "254a7a53f8eb7a992c5372e2f06d6102626944bdfdf36cdc4daa2e5b90a627a2",
+  "date": "2026-11-15T04:19:27+03:00",
+  "code_sha256": {
+    "train.py": "810e10bd9d8ee64884a63771dc88e5fc0d36278b1577398331159cbcd512f357",
+    "pipeline.py": "1a5ca6ad01eeaa7bbf8e01791818291e89e8b437fe6fe114f5dd6b5a91bdf6ce"
+  },
+  "base_commit": "c8bcdb094e7cc022ae3b0bdf2de248a8f260a712"
+}

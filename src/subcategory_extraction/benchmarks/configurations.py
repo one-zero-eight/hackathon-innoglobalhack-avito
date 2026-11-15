@@ -13,6 +13,12 @@ from main import LLMClient
 ROOT = Path(__file__).resolve().parents[3]
 GUIDED = "src/subcategory_extraction/decisions/jev/prompts/guided.md"
 BASELINE = "src/subcategory_extraction/decisions/jev/prompts/baseline.md"
+MORPHOLOGY_LOGREG = "lexical.morphology_logistic_regression"
+ORDER_FORMAT_JOINT = "lexical.order_format_joint"
+ORDER_FORMAT_WEIGHTS = "src/subcategory_extraction/lexical/order_format_joint/artifacts"
+SNIPPET_WEIGHTS = {
+    "SNIPPET_LOGISTIC_ARTIFACT": "src/subcategory_extraction/lexical/snippet_logistic_regression/artifacts/model.json.gz",
+}
 
 
 @dataclass(frozen=True)
@@ -39,6 +45,23 @@ CONFIGURATIONS = (
     }, "manual_train"),
     Configuration("semantic_encoder_f1", "semantic.semantic_encoder_f1", training_table="manual_train"),
     Configuration("snippet_logistic_regression", "lexical.snippet_logistic_regression"),
+    Configuration("morphology_logistic_regression", MORPHOLOGY_LOGREG, {
+        "MORPH_LOGREG_MODEL": "avito-case-train",
+    }),
+    Configuration("morphology_logistic_regression::yandex-youla-decision1", MORPHOLOGY_LOGREG, {
+        "MORPH_LOGREG_MODEL": "yandex-youla-decision1",
+    }),
+    Configuration("order_format_logistic_regression", "lexical.order_format_logistic_regression", SNIPPET_WEIGHTS),
+    Configuration("order_format_phrase_logreg", "lexical.order_format_phrase_logreg", SNIPPET_WEIGHTS),
+    Configuration("order_format_scope", "lexical.order_format_scope", SNIPPET_WEIGHTS),
+    Configuration("order_format_veto", "lexical.order_format_veto", SNIPPET_WEIGHTS),
+    Configuration("order_format_joint", ORDER_FORMAT_JOINT, SNIPPET_WEIGHTS),
+    Configuration("order_format_joint::dedup", ORDER_FORMAT_JOINT, {
+        "SNIPPET_LOGISTIC_ARTIFACT": f"{ORDER_FORMAT_WEIGHTS}/dedup.json.gz",
+    }),
+    Configuration("order_format_joint::yandex_youla", ORDER_FORMAT_JOINT, {
+        "SNIPPET_LOGISTIC_ARTIFACT": f"{ORDER_FORMAT_WEIGHTS}/yandex_youla.json.gz",
+    }),
     Configuration("semantic_evidence", "semantic.semantic_evidence"),
     Configuration("local_jev", "decisions.local_jev", {"LOCAL_JEV_PROMPT": "english"}),
     Configuration("local_jev (guided_ru, threshold=0.5)", "decisions.local_jev", {"LOCAL_JEV_PROMPT": "guided_ru"}),
@@ -62,7 +85,9 @@ CONFIGURATIONS = (
 BY_KEY = {config.key: config for config in CONFIGURATIONS}
 LOCAL_METHODS = {"lexical.regex", "lexical.tfidf", "lexical.learned_keywords", "semantic.semantic_encoder",
                  "semantic.semantic_encoder_calibrated", "semantic.semantic_encoder_f1", "decisions.local_jev",
-                 "lexical.snippet_logistic_regression", "semantic.semantic_evidence"}
+                 "lexical.snippet_logistic_regression", "semantic.semantic_evidence", MORPHOLOGY_LOGREG,
+                 "lexical.order_format_logistic_regression", "lexical.order_format_phrase_logreg",
+                 "lexical.order_format_scope", "lexical.order_format_veto", ORDER_FORMAT_JOINT}
 
 # Значения фиксируются до оценки; .env не определяет скрытые варианты матрицы.
 FIXED_ENVIRONMENT = {

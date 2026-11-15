@@ -26,6 +26,7 @@ SHA-256 содержимого таблицы: `fae05cba56fdf57a15aa3979afd828b7
 | semantic_encoder_f1 | локальный прогон из БД / 2026-11-15 | — | 139 | 0.770093 | локальные run(), источник — БД |
 | regex | правила / 2026-11-15 | — | 139 | 0.768362 | локальные run(), источник — БД |
 | snippet_logistic_regression | model.json.gz / 2026-11-15 | — | 139 | 0.759295 | локальные run(), источник — БД |
+| morphology_logistic_regression | avito-case-train / 2026-11-15 | — | 139 | 0.723849 | сохранённый снимок БД, прогнозы сверены после переноса; группы test исключены из fit/tune |
 | semantic_encoder::threshold-encoder | out/rubert-thresholds/encoder / 2026-11-15 | — | 139 | 0.756856 | локальные run(), источник — БД |
 | semantic_encoder_calibrated | локальный прогон из БД / 2026-11-15 | — | 139 | 0.751852 | локальные run(), источник — БД |
 | google_decision::baseline | gemini-decision-1 / 2026-11-15 | baseline | 139 | 0.787671 | локальные run(), источник — БД |
