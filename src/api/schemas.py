@@ -1,4 +1,4 @@
-"""Схемы веб-сервиса: контракт кейса из main.py, валидация ответов LLM и датасет.
+"""Схемы веб-сервиса: контракт кейса из main.py и схемы датасета.
 
 Контракт входа/выхода (`PipelineInput` / `Draft` / `PipelineOutput`) и таблица
 микрокатегорий не дублируются — реэкспортируются из CLI-ядро `src/main.py`.
@@ -6,38 +6,9 @@
 
 from typing import Literal
 
-from pydantic import BaseModel, ConfigDict, Field, field_validator
+from pydantic import BaseModel, ConfigDict, Field
 
-from main import MICROCATEGORIES, Draft, McId, PipelineInput, PipelineOutput
-
-
-class ClassifierItem(BaseModel):
-    """Оценка одной микрокатегории в ответе классификатора: {"mcId": 101, "p": 0.93}."""
-
-    model_config = ConfigDict(populate_by_name=True)
-
-    mc_id: McId = Field(alias="mcId")
-    p: float
-
-    @field_validator("p", mode="before")
-    @classmethod
-    def _clamp_p(cls, value: object) -> float:
-        """Число вне [0, 1] (или строка "0.95") приводим к p в диапазоне [0, 1]."""
-        try:
-            p = float(value)  # type: ignore[arg-type]
-        except (TypeError, ValueError) as exc:
-            raise ValueError(f"p не является числом: {value!r}") from exc
-        return min(max(p, 0.0), 1.0)
-
-
-class GeneratedText(BaseModel):
-    """Ответ генератора черновика: {"title": "...", "text": "..."}, обе строки непустые."""
-
-    model_config = ConfigDict(str_strip_whitespace=True)
-
-    title: str = Field(min_length=1)
-    text: str = Field(min_length=1)
-
+from main import MICROCATEGORIES, Draft, PipelineInput, PipelineOutput
 
 DatasetSplit = Literal["train", "test"]
 
@@ -66,12 +37,10 @@ class DatasetStats(BaseModel):
 
 __all__ = [
     "MICROCATEGORIES",
-    "ClassifierItem",
     "DatasetSample",
     "DatasetSplit",
     "DatasetStats",
     "Draft",
-    "GeneratedText",
     "PipelineInput",
     "PipelineOutput",
 ]
