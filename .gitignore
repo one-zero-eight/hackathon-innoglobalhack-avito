@@ -579,3 +579,9 @@ untitled.md
 
 # Официальные файлы local_jev загружаются при первом запуске.
 src/subcategory_extraction/decisions/local_jev/artifacts/
+
+# data
+data/example-*
+data/mcId_*
+data/private-test-dataset.csv
+.~*
