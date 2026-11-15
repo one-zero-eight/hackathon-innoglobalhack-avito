@@ -15,6 +15,9 @@
   `semantic_encoder_calibrated` (validation-пороги),
   `semantic_encoder_f1` (выбор checkpoint, окна/attention и дистилляция; CPU),
   `jev_boundaries` (точные границы категорий),
+  `snippet_logistic_regression` (бинарные n-граммы в окнах вокруг ключей),
+  `semantic_evidence` (композиция локальных document/evidence-моделей),
+  `tinybert` (локальный TinyBERT; обученные веса воспроизводятся `tinybert/train.py`),
   [qwen_decision](qwen_decision/README.md) (Qwen Token Plan System One,
   выбор промпта и порогов только по train).
 - Выбор: ключ `subcategory_extraction` в корневом `config.json`

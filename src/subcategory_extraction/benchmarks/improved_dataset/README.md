@@ -22,8 +22,10 @@ SHA-256 содержимого таблицы: `fae05cba56fdf57a15aa3979afd828b7
 
 | Модуль | Версия / дата измерения | Промпт | N | micro-F1 | Происхождение |
 | --- | --- | --- | ---: | ---: | --- |
+| semantic_evidence | selection.json / 2026-11-15 | — | 139 | 0.774674 | локальные run(), источник — БД |
 | semantic_encoder_f1 | локальный прогон из БД / 2026-11-15 | — | 139 | 0.770093 | локальные run(), источник — БД |
 | regex | правила / 2026-11-15 | — | 139 | 0.768362 | локальные run(), источник — БД |
+| snippet_logistic_regression | model.json.gz / 2026-11-15 | — | 139 | 0.759295 | локальные run(), источник — БД |
 | semantic_encoder::threshold-encoder | out/rubert-thresholds/encoder / 2026-11-15 | — | 139 | 0.756856 | локальные run(), источник — БД |
 | semantic_encoder_calibrated | локальный прогон из БД / 2026-11-15 | — | 139 | 0.751852 | локальные run(), источник — БД |
 | google_decision::baseline | gemini-decision-1 / 2026-11-15 | baseline | 139 | 0.787671 | локальные run(), источник — БД |
@@ -36,6 +38,7 @@ SHA-256 содержимого таблицы: `fae05cba56fdf57a15aa3979afd828b7
 | qwen_decision | не прогоняется | boundaries | — | — | по решению команды Qwen не запускаем |
 | local_jev / jevos-v5 | требуется пересчёт | english / 0.5 | — | — | runtime только для Linux x86_64 |
 | local_jev / jevos-v5 | требуется пересчёт | guided_ru / 0.5 | — | — | runtime только для Linux x86_64 |
+| tinybert | не обучен | — | — | — | веса отсутствуют; обучение не запускалось в этой среде |
 
 Недоступны в этом окружении: `jev::baseline`, `jev_boundaries`,
 `jev_tfidf`(+baseline), `jev_retrieval`(+baseline), `evidence_jev`,

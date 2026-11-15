@@ -1,7 +1,7 @@
 {
-  "date": "2026-11-15T02:49:26+03:00",
-  "commit": "e64668f0ca0f35e226f7cfa09a8649a443f46a07",
-  "code_sha256": "48e1ea81665df382f49ca38826623eeaafe3281476ed6203e19e08a7ed2918d1",
+  "date": "2026-11-15T04:42:36+03:00",
+  "commit": "534e7abcf5530570d797c178afaa2429b405013b",
+  "code_sha256": "fc8fbd0b2ff19b17081ff2df5e6bae90b9236f37be14db6dcd0dd95c0232dccf",
   "working_tree": true,
   "machine": "macOS-27.0.1-arm64-arm-64bit-Mach-O",
   "environment": {
@@ -1150,9 +1150,9 @@
       },
       "error": "ValueError: Нет локального артефакта semantic_encoder: /Users/arsenijsekin/Documents/Codex/2026-11-13/https-github-com-one-zero-eight/hackathon-innoglobalhack-avito/out/semantic-encoder/metadata.json. Обучение: PYTHONPATH=src uv run python -m subcategory_extraction.semantic_encoder.train --dataset out/hybrid-training.jsonl --device auto",
       "measurement_metadata": {
-        "date": "2026-11-15T01:49:00+03:00",
-        "commit": "e64668f0ca0f35e226f7cfa09a8649a443f46a07",
-        "code_sha256": "8e6e8dffeaa671f133facde4f76ffdd133c5f64009404b2747a9d2d4f5c4d7b9",
+        "date": "2026-11-15T04:38:56+03:00",
+        "commit": "534e7abcf5530570d797c178afaa2429b405013b",
+        "code_sha256": "fc8fbd0b2ff19b17081ff2df5e6bae90b9236f37be14db6dcd0dd95c0232dccf",
         "mode": "pipeline_run",
         "protocol": {
           "dataset_table": "manual_test",
@@ -1187,21 +1187,75 @@
       }
     },
     "jev": {
-      "status": "requires_rerun",
-      "reason": "Прежний результат измерен на reviewed_test (119 строк). Сценарий переведён на ручную разметку manual_test (139 строк) из PostgreSQL; требуется пересчёт.",
+      "status": "failed",
+      "predicted": [],
+      "inference": [],
+      "workers": 1,
+      "configuration": {
+        "key": "jev",
+        "module": "jev",
+        "environment": {
+          "JEV_MODEL": "jev-1.13.0",
+          "LLM_MODEL_ID": "gemini-decision-1",
+          "QWEN_DECISION_MODEL": "decision-model-preview",
+          "STRUCTURED_LLM_MODEL": "gpt-6.1-terra",
+          "JEV_THRESHOLD": "0.5",
+          "GOOGLE_DECISION_THRESHOLD": "0.5",
+          "JEV_TFIDF_WEIGHT": "0.5",
+          "JEV_TFIDF_THRESHOLD": "0.5",
+          "LOCAL_JEV_MODEL": "jevos-v5",
+          "LOCAL_JEV_THRESHOLD": "0.5",
+          "SEMANTIC_ENCODER_DEVICE": "cpu",
+          "RUBERT_F1_DEVICE": "cpu",
+          "TFIDF_ARTIFACT_PATH": "out/classifier-methods/tfidf.json",
+          "LEARNED_KEYWORDS_ARTIFACT": "src/subcategory_extraction/learned_keywords/artifacts/learned-keywords.json",
+          "SEMANTIC_ENCODER_ARTIFACT_PATH": "out/semantic-encoder",
+          "RUBERT_F1_ARTIFACT_PATH": "src/subcategory_extraction/semantic_encoder_f1/artifacts",
+          "JEV_REFERENCE_DATASET": "out/hybrid-training.jsonl",
+          "JEV_REFERENCE_MAX_CHARS": "1800",
+          "JEV_PROMPT_PATH": "src/subcategory_extraction/google_decision/prompts/google_decision_guided.md"
+        },
+        "artifact_sha256": {
+          "out/classifier-methods/tfidf.json": "2ef7ed22c74a13820b1b06d53b5a84d6c8555b082f4bcab5b6e0408164acf62b",
+          "src/subcategory_extraction/learned_keywords/artifacts/learned-keywords.json": "d06457a8c082171a096da05d18812528247c8c90e3c06157dc93e5ea6b65f3fa",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/calibration.json": "08810b988729fc370d1c03677c38430a27da8a9501d9d6edc5d9532bd0e1dee4",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/encoder/config.json": "5d75152afedf12d8b30edf67fc9fdd0eedf9578a70679373db46ba94256335a0",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/encoder/model.safetensors": "9fc639dd6813e8481b7d21577924df1973636e38e5992bba20f06700b2d0ada1",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/head.safetensors": "81f56fffeaf4a5460e36b362b3e7d3e804a1579a9f8b7ae6adeb357d3da4772b",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/metadata.json": "d523ce9fd906ede91463053c94d664c5ae04b40b1588ce2802e5be0eb2d330f9",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/tokenizer/special_tokens_map.json": "5d5b662e421ea9fac075174bb0688ee0d9431699900b90662acd44b2a350503a",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/tokenizer/tokenizer.json": "b6a9f282c732603652189b1fc2f32a2e2578b43927c5cf44a2e3585631419bb0",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/tokenizer/tokenizer_config.json": "71b22b163773e6d2a3bc53236a6dca9245f2e0422b09e2d9597dbf02825c7135",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/tokenizer/vocab.txt": "f056a69b097422652053bf87565c35543e5d81540ca4b7dddd28de4157a969e0",
+          "src/subcategory_extraction/google_decision/prompts/google_decision_guided.md": "f05534059aa8ab3e29a281d39d65bfc3e5cbc887330787aba267abd8891728b7"
+        },
+        "training_table": null,
+        "selection": "existing configurations fixed before test; no threshold search"
+      },
+      "execution": "pipeline_run",
+      "reused_predictions": 0,
+      "model_provenance": {
+        "provider": "selectel",
+        "endpoint": "https://api.selectel.ru/aig/v1/decisions",
+        "model": "jev-1.13.0",
+        "threshold": 0.5,
+        "prompt_sha256": "f05534059aa8ab3e29a281d39d65bfc3e5cbc887330787aba267abd8891728b7",
+        "cache_enabled": true
+      },
+      "error": "ValueError: Укажите SELECTEL_API_KEY в .env для запросов Jev",
       "measurement_metadata": {
-        "date": "2026-11-14T18:56:29+03:00",
-        "commit": "45ff38d1c5b65ae90654b53261aa377cc96f13a3",
-        "code_sha256": "3946999259f93a4db45e354a06a12e6cbff64778b66253c27da547e540e90c0f",
-        "mode": "database_run",
+        "date": "2026-11-15T04:09:27+03:00",
+        "commit": "534e7abcf5530570d797c178afaa2429b405013b",
+        "code_sha256": "fc8fbd0b2ff19b17081ff2df5e6bae90b9236f37be14db6dcd0dd95c0232dccf",
+        "mode": "pipeline_run",
         "protocol": {
           "dataset_table": "manual_test",
           "training_table": "manual_train",
-          "dataset_sha256": "11a849f044d7166f5ad515b26db24c6b56f88240589371f01a76396049cbbed1",
-          "training_sha256": "11a849f044d7166f5ad515b26db24c6b56f88240589371f01a76396049cbbed1",
+          "dataset_sha256": "fae05cba56fdf57a15aa3979afd828b73928efcca64694be5d805d34e002b99d",
+          "table_sha256": "fae05cba56fdf57a15aa3979afd828b73928efcca64694be5d805d34e002b99d",
+          "training_sha256": "6e53aa521160a02e8dcbfdd89281a16c07e817454910765bb0c67168a7ffcb27",
           "rows": 139,
-          "source_mc_id_assumption": 101,
-          "table_sha256": "fae05cba56fdf57a15aa3979afd828b73928efcca64694be5d805d34e002b99d"
+          "source_mc_id_assumption": 101
         },
         "overlap": {
           "checked": true,
@@ -1227,21 +1281,88 @@
       }
     },
     "jev_tfidf": {
-      "status": "requires_rerun",
-      "reason": "Прежний результат измерен на reviewed_test (119 строк). Сценарий переведён на ручную разметку manual_test (139 строк) из PostgreSQL; требуется пересчёт.",
+      "status": "failed",
+      "predicted": [],
+      "inference": [],
+      "workers": 1,
+      "configuration": {
+        "key": "jev_tfidf",
+        "module": "jev_tfidf",
+        "environment": {
+          "JEV_MODEL": "jev-1.13.0",
+          "LLM_MODEL_ID": "gemini-decision-1",
+          "QWEN_DECISION_MODEL": "decision-model-preview",
+          "STRUCTURED_LLM_MODEL": "gpt-6.1-terra",
+          "JEV_THRESHOLD": "0.5",
+          "GOOGLE_DECISION_THRESHOLD": "0.5",
+          "JEV_TFIDF_WEIGHT": "0.5",
+          "JEV_TFIDF_THRESHOLD": "0.5",
+          "LOCAL_JEV_MODEL": "jevos-v5",
+          "LOCAL_JEV_THRESHOLD": "0.5",
+          "SEMANTIC_ENCODER_DEVICE": "cpu",
+          "RUBERT_F1_DEVICE": "cpu",
+          "TFIDF_ARTIFACT_PATH": "out/classifier-methods/tfidf.json",
+          "LEARNED_KEYWORDS_ARTIFACT": "src/subcategory_extraction/learned_keywords/artifacts/learned-keywords.json",
+          "SEMANTIC_ENCODER_ARTIFACT_PATH": "out/semantic-encoder",
+          "RUBERT_F1_ARTIFACT_PATH": "src/subcategory_extraction/semantic_encoder_f1/artifacts",
+          "JEV_REFERENCE_DATASET": "out/hybrid-training.jsonl",
+          "JEV_REFERENCE_MAX_CHARS": "1800",
+          "JEV_PROMPT_PATH": "src/subcategory_extraction/google_decision/prompts/google_decision_guided.md"
+        },
+        "artifact_sha256": {
+          "out/classifier-methods/tfidf.json": "2ef7ed22c74a13820b1b06d53b5a84d6c8555b082f4bcab5b6e0408164acf62b",
+          "src/subcategory_extraction/learned_keywords/artifacts/learned-keywords.json": "d06457a8c082171a096da05d18812528247c8c90e3c06157dc93e5ea6b65f3fa",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/calibration.json": "08810b988729fc370d1c03677c38430a27da8a9501d9d6edc5d9532bd0e1dee4",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/encoder/config.json": "5d75152afedf12d8b30edf67fc9fdd0eedf9578a70679373db46ba94256335a0",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/encoder/model.safetensors": "9fc639dd6813e8481b7d21577924df1973636e38e5992bba20f06700b2d0ada1",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/head.safetensors": "81f56fffeaf4a5460e36b362b3e7d3e804a1579a9f8b7ae6adeb357d3da4772b",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/metadata.json": "d523ce9fd906ede91463053c94d664c5ae04b40b1588ce2802e5be0eb2d330f9",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/tokenizer/special_tokens_map.json": "5d5b662e421ea9fac075174bb0688ee0d9431699900b90662acd44b2a350503a",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/tokenizer/tokenizer.json": "b6a9f282c732603652189b1fc2f32a2e2578b43927c5cf44a2e3585631419bb0",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/tokenizer/tokenizer_config.json": "71b22b163773e6d2a3bc53236a6dca9245f2e0422b09e2d9597dbf02825c7135",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/tokenizer/vocab.txt": "f056a69b097422652053bf87565c35543e5d81540ca4b7dddd28de4157a969e0",
+          "src/subcategory_extraction/google_decision/prompts/google_decision_guided.md": "f05534059aa8ab3e29a281d39d65bfc3e5cbc887330787aba267abd8891728b7"
+        },
+        "training_table": "case_train",
+        "selection": "existing configurations fixed before test; no threshold search"
+      },
+      "model_training_overlap": {
+        "checked": true,
+        "method": "normalized_exact_description",
+        "training_dataset": "case_train",
+        "overlapping_rows": 13,
+        "row_numbers": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13
+        ]
+      },
+      "execution": "pipeline_run",
+      "reused_predictions": 0,
+      "error": "ValueError: Укажите SELECTEL_API_KEY в .env для запросов Jev",
       "measurement_metadata": {
-        "date": "2026-11-14T18:56:29+03:00",
-        "commit": "45ff38d1c5b65ae90654b53261aa377cc96f13a3",
-        "code_sha256": "3946999259f93a4db45e354a06a12e6cbff64778b66253c27da547e540e90c0f",
-        "mode": "database_run",
+        "date": "2026-11-15T04:12:26+03:00",
+        "commit": "534e7abcf5530570d797c178afaa2429b405013b",
+        "code_sha256": "fc8fbd0b2ff19b17081ff2df5e6bae90b9236f37be14db6dcd0dd95c0232dccf",
+        "mode": "pipeline_run",
         "protocol": {
           "dataset_table": "manual_test",
           "training_table": "manual_train",
-          "dataset_sha256": "11a849f044d7166f5ad515b26db24c6b56f88240589371f01a76396049cbbed1",
-          "training_sha256": "11a849f044d7166f5ad515b26db24c6b56f88240589371f01a76396049cbbed1",
+          "dataset_sha256": "fae05cba56fdf57a15aa3979afd828b73928efcca64694be5d805d34e002b99d",
+          "table_sha256": "fae05cba56fdf57a15aa3979afd828b73928efcca64694be5d805d34e002b99d",
+          "training_sha256": "6e53aa521160a02e8dcbfdd89281a16c07e817454910765bb0c67168a7ffcb27",
           "rows": 139,
-          "source_mc_id_assumption": 101,
-          "table_sha256": "fae05cba56fdf57a15aa3979afd828b73928efcca64694be5d805d34e002b99d"
+          "source_mc_id_assumption": 101
         },
         "overlap": {
           "checked": true,
@@ -1267,21 +1388,103 @@
       }
     },
     "qwen_decision": {
-      "status": "requires_rerun",
-      "reason": "Прежний результат измерен на reviewed_test (119 строк). Сценарий переведён на ручную разметку manual_test (139 строк) из PostgreSQL; требуется пересчёт.",
+      "status": "failed",
+      "predicted": [],
+      "inference": [],
+      "workers": 1,
+      "configuration": {
+        "key": "qwen_decision",
+        "module": "qwen_decision",
+        "environment": {
+          "JEV_MODEL": "jev-1.13.0",
+          "LLM_MODEL_ID": "gemini-decision-1",
+          "QWEN_DECISION_MODEL": "decision-model-preview",
+          "STRUCTURED_LLM_MODEL": "gpt-6.1-terra",
+          "JEV_THRESHOLD": "0.5",
+          "GOOGLE_DECISION_THRESHOLD": "0.5",
+          "JEV_TFIDF_WEIGHT": "0.5",
+          "JEV_TFIDF_THRESHOLD": "0.5",
+          "LOCAL_JEV_MODEL": "jevos-v5",
+          "LOCAL_JEV_THRESHOLD": "0.5",
+          "SEMANTIC_ENCODER_DEVICE": "cpu",
+          "RUBERT_F1_DEVICE": "cpu",
+          "TFIDF_ARTIFACT_PATH": "out/classifier-methods/tfidf.json",
+          "LEARNED_KEYWORDS_ARTIFACT": "src/subcategory_extraction/learned_keywords/artifacts/learned-keywords.json",
+          "SEMANTIC_ENCODER_ARTIFACT_PATH": "out/semantic-encoder",
+          "RUBERT_F1_ARTIFACT_PATH": "src/subcategory_extraction/semantic_encoder_f1/artifacts",
+          "JEV_REFERENCE_DATASET": "out/hybrid-training.jsonl",
+          "JEV_REFERENCE_MAX_CHARS": "1800",
+          "QWEN_DECISION_PROMPT": "auto"
+        },
+        "artifact_sha256": {
+          "out/classifier-methods/tfidf.json": "2ef7ed22c74a13820b1b06d53b5a84d6c8555b082f4bcab5b6e0408164acf62b",
+          "src/subcategory_extraction/learned_keywords/artifacts/learned-keywords.json": "d06457a8c082171a096da05d18812528247c8c90e3c06157dc93e5ea6b65f3fa",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/calibration.json": "08810b988729fc370d1c03677c38430a27da8a9501d9d6edc5d9532bd0e1dee4",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/encoder/config.json": "5d75152afedf12d8b30edf67fc9fdd0eedf9578a70679373db46ba94256335a0",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/encoder/model.safetensors": "9fc639dd6813e8481b7d21577924df1973636e38e5992bba20f06700b2d0ada1",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/head.safetensors": "81f56fffeaf4a5460e36b362b3e7d3e804a1579a9f8b7ae6adeb357d3da4772b",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/metadata.json": "d523ce9fd906ede91463053c94d664c5ae04b40b1588ce2802e5be0eb2d330f9",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/tokenizer/special_tokens_map.json": "5d5b662e421ea9fac075174bb0688ee0d9431699900b90662acd44b2a350503a",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/tokenizer/tokenizer.json": "b6a9f282c732603652189b1fc2f32a2e2578b43927c5cf44a2e3585631419bb0",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/tokenizer/tokenizer_config.json": "71b22b163773e6d2a3bc53236a6dca9245f2e0422b09e2d9597dbf02825c7135",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/tokenizer/vocab.txt": "f056a69b097422652053bf87565c35543e5d81540ca4b7dddd28de4157a969e0"
+        },
+        "training_table": "manual_train",
+        "selection": "existing configurations fixed before test; no threshold search"
+      },
+      "model_training_overlap": {
+        "checked": true,
+        "method": "normalized_exact_description",
+        "training_dataset": "manual_train",
+        "overlapping_rows": 13,
+        "row_numbers": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13
+        ]
+      },
+      "execution": "pipeline_run",
+      "reused_predictions": 0,
+      "model_provenance": {
+        "model": "decision-model-preview",
+        "endpoint": "https://token-plan.maas.qianwenaiapi.com/compatible-mode/v1/systemone",
+        "prompt": "boundaries",
+        "prompt_sha256": "e2f2644d4b671352aff8f19728efe63ae31b3534c135cd6054fd6a8a56fd7bc2",
+        "thresholds": {
+          "101": 0.5,
+          "102": 0.21999999999999997,
+          "103": 0.64,
+          "104": 0.55,
+          "105": 0.5,
+          "106": 0.66
+        },
+        "calibration_sha256": "93b7828d87663965313dc05a1d6003f0bd2083d38bfe43d038da016f5c68bfe6",
+        "training_dataset": "manual_train"
+      },
+      "error": "ValueError: Задайте QIANWEN_TOKEN_PLAN_API_KEY в .env",
       "measurement_metadata": {
-        "date": "2026-11-14T18:56:29+03:00",
-        "commit": "45ff38d1c5b65ae90654b53261aa377cc96f13a3",
-        "code_sha256": "3946999259f93a4db45e354a06a12e6cbff64778b66253c27da547e540e90c0f",
-        "mode": "database_run",
+        "date": "2026-11-15T04:11:02+03:00",
+        "commit": "534e7abcf5530570d797c178afaa2429b405013b",
+        "code_sha256": "fc8fbd0b2ff19b17081ff2df5e6bae90b9236f37be14db6dcd0dd95c0232dccf",
+        "mode": "pipeline_run",
         "protocol": {
           "dataset_table": "manual_test",
           "training_table": "manual_train",
-          "dataset_sha256": "11a849f044d7166f5ad515b26db24c6b56f88240589371f01a76396049cbbed1",
-          "training_sha256": "11a849f044d7166f5ad515b26db24c6b56f88240589371f01a76396049cbbed1",
+          "dataset_sha256": "fae05cba56fdf57a15aa3979afd828b73928efcca64694be5d805d34e002b99d",
+          "table_sha256": "fae05cba56fdf57a15aa3979afd828b73928efcca64694be5d805d34e002b99d",
+          "training_sha256": "6e53aa521160a02e8dcbfdd89281a16c07e817454910765bb0c67168a7ffcb27",
           "rows": 139,
-          "source_mc_id_assumption": 101,
-          "table_sha256": "fae05cba56fdf57a15aa3979afd828b73928efcca64694be5d805d34e002b99d"
+          "source_mc_id_assumption": 101
         },
         "overlap": {
           "checked": true,
@@ -1353,9 +1556,9 @@
       },
       "error": "RuntimeError: Автозагрузка runtime local_jev поддерживает Linux x86_64; на другой ОС запустите официальный сервер отдельно",
       "measurement_metadata": {
-        "date": "2026-11-15T01:49:00+03:00",
-        "commit": "e64668f0ca0f35e226f7cfa09a8649a443f46a07",
-        "code_sha256": "8e6e8dffeaa671f133facde4f76ffdd133c5f64009404b2747a9d2d4f5c4d7b9",
+        "date": "2026-11-15T04:36:26+03:00",
+        "commit": "534e7abcf5530570d797c178afaa2429b405013b",
+        "code_sha256": "fc8fbd0b2ff19b17081ff2df5e6bae90b9236f37be14db6dcd0dd95c0232dccf",
         "mode": "pipeline_run",
         "protocol": {
           "dataset_table": "manual_test",
@@ -1436,9 +1639,9 @@
       },
       "error": "RuntimeError: Автозагрузка runtime local_jev поддерживает Linux x86_64; на другой ОС запустите официальный сервер отдельно",
       "measurement_metadata": {
-        "date": "2026-11-15T01:49:00+03:00",
-        "commit": "e64668f0ca0f35e226f7cfa09a8649a443f46a07",
-        "code_sha256": "8e6e8dffeaa671f133facde4f76ffdd133c5f64009404b2747a9d2d4f5c4d7b9",
+        "date": "2026-11-15T04:34:49+03:00",
+        "commit": "534e7abcf5530570d797c178afaa2429b405013b",
+        "code_sha256": "fc8fbd0b2ff19b17081ff2df5e6bae90b9236f37be14db6dcd0dd95c0232dccf",
         "mode": "pipeline_run",
         "protocol": {
           "dataset_table": "manual_test",
@@ -23121,6 +23324,4254 @@
         "date": "2026-11-15T02:49:26+03:00",
         "commit": "e64668f0ca0f35e226f7cfa09a8649a443f46a07",
         "code_sha256": "48e1ea81665df382f49ca38826623eeaafe3281476ed6203e19e08a7ed2918d1",
+        "mode": "pipeline_run",
+        "protocol": {
+          "dataset_table": "manual_test",
+          "training_table": "manual_train",
+          "dataset_sha256": "fae05cba56fdf57a15aa3979afd828b73928efcca64694be5d805d34e002b99d",
+          "table_sha256": "fae05cba56fdf57a15aa3979afd828b73928efcca64694be5d805d34e002b99d",
+          "training_sha256": "6e53aa521160a02e8dcbfdd89281a16c07e817454910765bb0c67168a7ffcb27",
+          "rows": 139,
+          "source_mc_id_assumption": 101
+        },
+        "overlap": {
+          "checked": true,
+          "method": "normalized_exact_description",
+          "training_dataset": "manual_train",
+          "overlapping_rows": 13,
+          "row_numbers": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13
+          ]
+        }
+      }
+    },
+    "snippet_logistic_regression": {
+      "status": "completed",
+      "predicted": [
+        [
+          102,
+          105,
+          106
+        ],
+        [
+          102,
+          104,
+          105,
+          106
+        ],
+        [
+          102,
+          104,
+          105
+        ],
+        [],
+        [
+          102
+        ],
+        [],
+        [
+          102,
+          104,
+          105
+        ],
+        [],
+        [],
+        [
+          102,
+          104,
+          105,
+          106
+        ],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        [],
+        [],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        [],
+        [
+          102,
+          103,
+          104
+        ],
+        [
+          102,
+          104,
+          105,
+          106
+        ],
+        [
+          102
+        ],
+        [
+          104,
+          105
+        ],
+        [],
+        [
+          105,
+          106
+        ],
+        [
+          102,
+          104,
+          105
+        ],
+        [],
+        [
+          102,
+          103,
+          104,
+          105
+        ],
+        [],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        [
+          102
+        ],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        [
+          102,
+          103,
+          104,
+          105
+        ],
+        [
+          102,
+          103,
+          106
+        ],
+        [
+          102
+        ],
+        [],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        [
+          105
+        ],
+        [
+          102
+        ],
+        [
+          102,
+          104,
+          105
+        ],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        [],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        [
+          102,
+          103,
+          104,
+          105
+        ],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        [
+          102
+        ],
+        [
+          102,
+          106
+        ],
+        [],
+        [
+          102,
+          103,
+          104,
+          106
+        ],
+        [
+          105
+        ],
+        [
+          102,
+          104,
+          105
+        ],
+        [
+          102,
+          106
+        ],
+        [],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        [
+          102
+        ],
+        [
+          102
+        ],
+        [],
+        [],
+        [
+          102,
+          104,
+          105
+        ],
+        [
+          102,
+          106
+        ],
+        [],
+        [
+          102
+        ],
+        [
+          102
+        ],
+        [],
+        [
+          102
+        ],
+        [],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        [
+          102
+        ],
+        [],
+        [
+          102
+        ],
+        [
+          104,
+          105
+        ],
+        [],
+        [],
+        [
+          102
+        ],
+        [],
+        [
+          102,
+          103,
+          104,
+          105
+        ],
+        [
+          102
+        ],
+        [
+          102,
+          104,
+          105
+        ],
+        [
+          102,
+          104,
+          105
+        ],
+        [
+          102,
+          104,
+          105
+        ],
+        [],
+        [
+          102
+        ],
+        [
+          102,
+          106
+        ],
+        [
+          102
+        ],
+        [],
+        [],
+        [
+          102,
+          104,
+          105
+        ],
+        [],
+        [],
+        [
+          102
+        ],
+        [
+          102,
+          103
+        ],
+        [],
+        [
+          102,
+          103,
+          106
+        ],
+        [
+          105
+        ],
+        [],
+        [],
+        [
+          102,
+          105
+        ],
+        [
+          102
+        ],
+        [
+          102
+        ],
+        [],
+        [
+          102,
+          104,
+          105
+        ],
+        [],
+        [],
+        [],
+        [
+          103,
+          104,
+          105,
+          106
+        ],
+        [],
+        [
+          103
+        ],
+        [],
+        [
+          102
+        ],
+        [
+          102,
+          104,
+          105
+        ],
+        [],
+        [
+          105
+        ],
+        [
+          102,
+          104,
+          105
+        ],
+        [],
+        [
+          102,
+          103
+        ],
+        [],
+        [
+          102
+        ],
+        [
+          102,
+          103,
+          106
+        ],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        [
+          106
+        ],
+        [],
+        [],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        [
+          102
+        ],
+        [],
+        [],
+        [],
+        [
+          103
+        ],
+        [],
+        [
+          102
+        ],
+        [
+          102,
+          103,
+          106
+        ],
+        [
+          102,
+          106
+        ],
+        [],
+        [],
+        [
+          104,
+          105
+        ],
+        [],
+        [],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        []
+      ],
+      "inference": [
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        }
+      ],
+      "workers": 4,
+      "configuration": {
+        "key": "snippet_logistic_regression",
+        "module": "snippet_logistic_regression",
+        "environment": {
+          "JEV_MODEL": "jev-1.13.0",
+          "LLM_MODEL_ID": "gemini-decision-1",
+          "QWEN_DECISION_MODEL": "decision-model-preview",
+          "STRUCTURED_LLM_MODEL": "gpt-6.1-terra",
+          "JEV_THRESHOLD": "0.5",
+          "GOOGLE_DECISION_THRESHOLD": "0.5",
+          "JEV_TFIDF_WEIGHT": "0.5",
+          "JEV_TFIDF_THRESHOLD": "0.5",
+          "LOCAL_JEV_MODEL": "jevos-v5",
+          "LOCAL_JEV_THRESHOLD": "0.5",
+          "SEMANTIC_ENCODER_DEVICE": "cpu",
+          "RUBERT_F1_DEVICE": "cpu",
+          "TFIDF_ARTIFACT_PATH": "out/classifier-methods/tfidf.json",
+          "LEARNED_KEYWORDS_ARTIFACT": "src/subcategory_extraction/learned_keywords/artifacts/learned-keywords.json",
+          "SEMANTIC_ENCODER_ARTIFACT_PATH": "out/semantic-encoder",
+          "RUBERT_F1_ARTIFACT_PATH": "src/subcategory_extraction/semantic_encoder_f1/artifacts",
+          "JEV_REFERENCE_DATASET": "out/hybrid-training.jsonl",
+          "JEV_REFERENCE_MAX_CHARS": "1800"
+        },
+        "artifact_sha256": {
+          "out/classifier-methods/tfidf.json": "2ef7ed22c74a13820b1b06d53b5a84d6c8555b082f4bcab5b6e0408164acf62b",
+          "src/subcategory_extraction/learned_keywords/artifacts/learned-keywords.json": "d06457a8c082171a096da05d18812528247c8c90e3c06157dc93e5ea6b65f3fa",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/calibration.json": "08810b988729fc370d1c03677c38430a27da8a9501d9d6edc5d9532bd0e1dee4",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/encoder/config.json": "5d75152afedf12d8b30edf67fc9fdd0eedf9578a70679373db46ba94256335a0",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/encoder/model.safetensors": "9fc639dd6813e8481b7d21577924df1973636e38e5992bba20f06700b2d0ada1",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/head.safetensors": "81f56fffeaf4a5460e36b362b3e7d3e804a1579a9f8b7ae6adeb357d3da4772b",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/metadata.json": "d523ce9fd906ede91463053c94d664c5ae04b40b1588ce2802e5be0eb2d330f9",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/tokenizer/special_tokens_map.json": "5d5b662e421ea9fac075174bb0688ee0d9431699900b90662acd44b2a350503a",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/tokenizer/tokenizer.json": "b6a9f282c732603652189b1fc2f32a2e2578b43927c5cf44a2e3585631419bb0",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/tokenizer/tokenizer_config.json": "71b22b163773e6d2a3bc53236a6dca9245f2e0422b09e2d9597dbf02825c7135",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/tokenizer/vocab.txt": "f056a69b097422652053bf87565c35543e5d81540ca4b7dddd28de4157a969e0"
+        },
+        "training_table": null,
+        "selection": "existing configurations fixed before test; no threshold search"
+      },
+      "execution": "pipeline_run",
+      "reused_predictions": 0,
+      "metrics": {
+        "micro_f1": 0.7592954990215264,
+        "classification_points": 45.55772994129158,
+        "tp": 194,
+        "fp": 39,
+        "fn": 84
+      },
+      "measurement_metadata": {
+        "date": "2026-11-15T03:59:38+03:00",
+        "commit": "534e7abcf5530570d797c178afaa2429b405013b",
+        "code_sha256": "fc8fbd0b2ff19b17081ff2df5e6bae90b9236f37be14db6dcd0dd95c0232dccf",
+        "mode": "pipeline_run",
+        "protocol": {
+          "dataset_table": "manual_test",
+          "training_table": "manual_train",
+          "dataset_sha256": "fae05cba56fdf57a15aa3979afd828b73928efcca64694be5d805d34e002b99d",
+          "table_sha256": "fae05cba56fdf57a15aa3979afd828b73928efcca64694be5d805d34e002b99d",
+          "training_sha256": "6e53aa521160a02e8dcbfdd89281a16c07e817454910765bb0c67168a7ffcb27",
+          "rows": 139,
+          "source_mc_id_assumption": 101
+        },
+        "overlap": {
+          "checked": true,
+          "method": "normalized_exact_description",
+          "training_dataset": "manual_train",
+          "overlapping_rows": 13,
+          "row_numbers": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13
+          ]
+        }
+      }
+    },
+    "semantic_evidence": {
+      "status": "completed",
+      "predicted": [
+        [
+          102,
+          105,
+          106
+        ],
+        [
+          102,
+          104,
+          105,
+          106
+        ],
+        [
+          102,
+          104,
+          105
+        ],
+        [],
+        [
+          102
+        ],
+        [],
+        [
+          102,
+          104,
+          105
+        ],
+        [],
+        [],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        [],
+        [],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        [],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        [
+          102,
+          106
+        ],
+        [
+          105
+        ],
+        [],
+        [
+          105,
+          106
+        ],
+        [
+          102,
+          104,
+          105,
+          106
+        ],
+        [],
+        [
+          102,
+          103,
+          104,
+          105
+        ],
+        [],
+        [
+          102,
+          104,
+          105,
+          106
+        ],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        [
+          102
+        ],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        [
+          102,
+          103,
+          104,
+          106
+        ],
+        [],
+        [],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        [],
+        [
+          102,
+          103,
+          105
+        ],
+        [
+          102,
+          104,
+          105
+        ],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        [],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        [
+          102,
+          103,
+          104,
+          105
+        ],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        [
+          102
+        ],
+        [
+          102,
+          106
+        ],
+        [],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        [
+          103
+        ],
+        [
+          102,
+          104,
+          105
+        ],
+        [
+          102,
+          106
+        ],
+        [],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        [
+          102
+        ],
+        [
+          102
+        ],
+        [
+          102
+        ],
+        [],
+        [
+          102,
+          104,
+          105
+        ],
+        [
+          102,
+          106
+        ],
+        [
+          102,
+          103
+        ],
+        [
+          102
+        ],
+        [
+          102
+        ],
+        [],
+        [
+          102,
+          105,
+          106
+        ],
+        [
+          102,
+          106
+        ],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        [
+          102
+        ],
+        [],
+        [
+          102
+        ],
+        [
+          104,
+          105
+        ],
+        [],
+        [],
+        [],
+        [],
+        [
+          102,
+          103,
+          104,
+          105
+        ],
+        [
+          102
+        ],
+        [
+          102
+        ],
+        [
+          102,
+          104,
+          105
+        ],
+        [
+          102,
+          104,
+          105
+        ],
+        [],
+        [
+          102,
+          103
+        ],
+        [
+          102,
+          106
+        ],
+        [
+          102
+        ],
+        [
+          102
+        ],
+        [],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        [
+          102
+        ],
+        [],
+        [
+          102
+        ],
+        [
+          102,
+          106
+        ],
+        [],
+        [
+          102,
+          103,
+          106
+        ],
+        [],
+        [
+          102,
+          106
+        ],
+        [],
+        [
+          102,
+          105
+        ],
+        [
+          102
+        ],
+        [],
+        [],
+        [
+          102,
+          104,
+          105
+        ],
+        [
+          103
+        ],
+        [],
+        [
+          102
+        ],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        [],
+        [
+          103
+        ],
+        [],
+        [
+          102,
+          106
+        ],
+        [
+          102,
+          104,
+          105
+        ],
+        [
+          102
+        ],
+        [],
+        [
+          102,
+          104,
+          105
+        ],
+        [],
+        [
+          102
+        ],
+        [],
+        [
+          102
+        ],
+        [
+          102,
+          103,
+          104,
+          106
+        ],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        [
+          102,
+          106
+        ],
+        [],
+        [],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        [
+          102
+        ],
+        [],
+        [],
+        [
+          102,
+          103
+        ],
+        [
+          103
+        ],
+        [],
+        [
+          102
+        ],
+        [
+          102,
+          103,
+          104,
+          106
+        ],
+        [
+          102,
+          106
+        ],
+        [],
+        [],
+        [
+          103,
+          104,
+          105
+        ],
+        [],
+        [
+          102
+        ],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        []
+      ],
+      "inference": [
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        }
+      ],
+      "workers": 1,
+      "configuration": {
+        "key": "semantic_evidence",
+        "module": "semantic_evidence",
+        "environment": {
+          "JEV_MODEL": "jev-1.13.0",
+          "LLM_MODEL_ID": "gemini-decision-1",
+          "QWEN_DECISION_MODEL": "decision-model-preview",
+          "STRUCTURED_LLM_MODEL": "gpt-6.1-terra",
+          "JEV_THRESHOLD": "0.5",
+          "GOOGLE_DECISION_THRESHOLD": "0.5",
+          "JEV_TFIDF_WEIGHT": "0.5",
+          "JEV_TFIDF_THRESHOLD": "0.5",
+          "LOCAL_JEV_MODEL": "jevos-v5",
+          "LOCAL_JEV_THRESHOLD": "0.5",
+          "SEMANTIC_ENCODER_DEVICE": "cpu",
+          "RUBERT_F1_DEVICE": "cpu",
+          "TFIDF_ARTIFACT_PATH": "out/classifier-methods/tfidf.json",
+          "LEARNED_KEYWORDS_ARTIFACT": "src/subcategory_extraction/learned_keywords/artifacts/learned-keywords.json",
+          "SEMANTIC_ENCODER_ARTIFACT_PATH": "out/semantic-encoder",
+          "RUBERT_F1_ARTIFACT_PATH": "src/subcategory_extraction/semantic_encoder_f1/artifacts",
+          "JEV_REFERENCE_DATASET": "out/hybrid-training.jsonl",
+          "JEV_REFERENCE_MAX_CHARS": "1800"
+        },
+        "artifact_sha256": {
+          "out/classifier-methods/tfidf.json": "2ef7ed22c74a13820b1b06d53b5a84d6c8555b082f4bcab5b6e0408164acf62b",
+          "src/subcategory_extraction/learned_keywords/artifacts/learned-keywords.json": "d06457a8c082171a096da05d18812528247c8c90e3c06157dc93e5ea6b65f3fa",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/calibration.json": "08810b988729fc370d1c03677c38430a27da8a9501d9d6edc5d9532bd0e1dee4",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/encoder/config.json": "5d75152afedf12d8b30edf67fc9fdd0eedf9578a70679373db46ba94256335a0",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/encoder/model.safetensors": "9fc639dd6813e8481b7d21577924df1973636e38e5992bba20f06700b2d0ada1",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/head.safetensors": "81f56fffeaf4a5460e36b362b3e7d3e804a1579a9f8b7ae6adeb357d3da4772b",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/metadata.json": "d523ce9fd906ede91463053c94d664c5ae04b40b1588ce2802e5be0eb2d330f9",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/tokenizer/special_tokens_map.json": "5d5b662e421ea9fac075174bb0688ee0d9431699900b90662acd44b2a350503a",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/tokenizer/tokenizer.json": "b6a9f282c732603652189b1fc2f32a2e2578b43927c5cf44a2e3585631419bb0",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/tokenizer/tokenizer_config.json": "71b22b163773e6d2a3bc53236a6dca9245f2e0422b09e2d9597dbf02825c7135",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/tokenizer/vocab.txt": "f056a69b097422652053bf87565c35543e5d81540ca4b7dddd28de4157a969e0"
+        },
+        "training_table": null,
+        "selection": "existing configurations fixed before test; no threshold search"
+      },
+      "execution": "pipeline_run",
+      "reused_predictions": 0,
+      "metrics": {
+        "micro_f1": 0.7746741154562383,
+        "classification_points": 46.4804469273743,
+        "tp": 208,
+        "fp": 51,
+        "fn": 70
+      },
+      "measurement_metadata": {
+        "date": "2026-11-15T04:00:43+03:00",
+        "commit": "534e7abcf5530570d797c178afaa2429b405013b",
+        "code_sha256": "fc8fbd0b2ff19b17081ff2df5e6bae90b9236f37be14db6dcd0dd95c0232dccf",
+        "mode": "pipeline_run",
+        "protocol": {
+          "dataset_table": "manual_test",
+          "training_table": "manual_train",
+          "dataset_sha256": "fae05cba56fdf57a15aa3979afd828b73928efcca64694be5d805d34e002b99d",
+          "table_sha256": "fae05cba56fdf57a15aa3979afd828b73928efcca64694be5d805d34e002b99d",
+          "training_sha256": "6e53aa521160a02e8dcbfdd89281a16c07e817454910765bb0c67168a7ffcb27",
+          "rows": 139,
+          "source_mc_id_assumption": 101
+        },
+        "overlap": {
+          "checked": true,
+          "method": "normalized_exact_description",
+          "training_dataset": "manual_train",
+          "overlapping_rows": 13,
+          "row_numbers": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13
+          ]
+        }
+      }
+    },
+    "jev_calibrated": {
+      "status": "failed",
+      "predicted": [],
+      "inference": [],
+      "workers": 1,
+      "configuration": {
+        "key": "jev_calibrated",
+        "module": "jev_calibrated",
+        "environment": {
+          "JEV_MODEL": "jev-1.13.0",
+          "LLM_MODEL_ID": "gemini-decision-1",
+          "QWEN_DECISION_MODEL": "decision-model-preview",
+          "STRUCTURED_LLM_MODEL": "gpt-6.1-terra",
+          "JEV_THRESHOLD": "0.5",
+          "GOOGLE_DECISION_THRESHOLD": "0.5",
+          "JEV_TFIDF_WEIGHT": "0.5",
+          "JEV_TFIDF_THRESHOLD": "0.5",
+          "LOCAL_JEV_MODEL": "jevos-v5",
+          "LOCAL_JEV_THRESHOLD": "0.5",
+          "SEMANTIC_ENCODER_DEVICE": "cpu",
+          "RUBERT_F1_DEVICE": "cpu",
+          "TFIDF_ARTIFACT_PATH": "out/classifier-methods/tfidf.json",
+          "LEARNED_KEYWORDS_ARTIFACT": "src/subcategory_extraction/learned_keywords/artifacts/learned-keywords.json",
+          "SEMANTIC_ENCODER_ARTIFACT_PATH": "out/semantic-encoder",
+          "RUBERT_F1_ARTIFACT_PATH": "src/subcategory_extraction/semantic_encoder_f1/artifacts",
+          "JEV_REFERENCE_DATASET": "out/hybrid-training.jsonl",
+          "JEV_REFERENCE_MAX_CHARS": "1800"
+        },
+        "artifact_sha256": {
+          "out/classifier-methods/tfidf.json": "2ef7ed22c74a13820b1b06d53b5a84d6c8555b082f4bcab5b6e0408164acf62b",
+          "src/subcategory_extraction/learned_keywords/artifacts/learned-keywords.json": "d06457a8c082171a096da05d18812528247c8c90e3c06157dc93e5ea6b65f3fa",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/calibration.json": "08810b988729fc370d1c03677c38430a27da8a9501d9d6edc5d9532bd0e1dee4",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/encoder/config.json": "5d75152afedf12d8b30edf67fc9fdd0eedf9578a70679373db46ba94256335a0",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/encoder/model.safetensors": "9fc639dd6813e8481b7d21577924df1973636e38e5992bba20f06700b2d0ada1",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/head.safetensors": "81f56fffeaf4a5460e36b362b3e7d3e804a1579a9f8b7ae6adeb357d3da4772b",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/metadata.json": "d523ce9fd906ede91463053c94d664c5ae04b40b1588ce2802e5be0eb2d330f9",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/tokenizer/special_tokens_map.json": "5d5b662e421ea9fac075174bb0688ee0d9431699900b90662acd44b2a350503a",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/tokenizer/tokenizer.json": "b6a9f282c732603652189b1fc2f32a2e2578b43927c5cf44a2e3585631419bb0",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/tokenizer/tokenizer_config.json": "71b22b163773e6d2a3bc53236a6dca9245f2e0422b09e2d9597dbf02825c7135",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/tokenizer/vocab.txt": "f056a69b097422652053bf87565c35543e5d81540ca4b7dddd28de4157a969e0"
+        },
+        "training_table": null,
+        "selection": "existing configurations fixed before test; no threshold search"
+      },
+      "error": "ValueError: Калибровка Jev относится к другой модели или провайдеру",
+      "measurement_metadata": {
+        "date": "2026-11-15T04:13:28+03:00",
+        "commit": "534e7abcf5530570d797c178afaa2429b405013b",
+        "code_sha256": "fc8fbd0b2ff19b17081ff2df5e6bae90b9236f37be14db6dcd0dd95c0232dccf",
+        "mode": "pipeline_run",
+        "protocol": {
+          "dataset_table": "manual_test",
+          "training_table": "manual_train",
+          "dataset_sha256": "fae05cba56fdf57a15aa3979afd828b73928efcca64694be5d805d34e002b99d",
+          "table_sha256": "fae05cba56fdf57a15aa3979afd828b73928efcca64694be5d805d34e002b99d",
+          "training_sha256": "6e53aa521160a02e8dcbfdd89281a16c07e817454910765bb0c67168a7ffcb27",
+          "rows": 139,
+          "source_mc_id_assumption": 101
+        },
+        "overlap": {
+          "checked": true,
+          "method": "normalized_exact_description",
+          "training_dataset": "manual_train",
+          "overlapping_rows": 13,
+          "row_numbers": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13
+          ]
+        }
+      }
+    },
+    "jev::baseline": {
+      "status": "failed",
+      "predicted": [],
+      "inference": [],
+      "workers": 1,
+      "configuration": {
+        "key": "jev::baseline",
+        "module": "jev",
+        "environment": {
+          "JEV_MODEL": "jev-1.13.0",
+          "LLM_MODEL_ID": "gemini-decision-1",
+          "QWEN_DECISION_MODEL": "decision-model-preview",
+          "STRUCTURED_LLM_MODEL": "gpt-6.1-terra",
+          "JEV_THRESHOLD": "0.5",
+          "GOOGLE_DECISION_THRESHOLD": "0.5",
+          "JEV_TFIDF_WEIGHT": "0.5",
+          "JEV_TFIDF_THRESHOLD": "0.5",
+          "LOCAL_JEV_MODEL": "jevos-v5",
+          "LOCAL_JEV_THRESHOLD": "0.5",
+          "SEMANTIC_ENCODER_DEVICE": "cpu",
+          "RUBERT_F1_DEVICE": "cpu",
+          "TFIDF_ARTIFACT_PATH": "out/classifier-methods/tfidf.json",
+          "LEARNED_KEYWORDS_ARTIFACT": "src/subcategory_extraction/learned_keywords/artifacts/learned-keywords.json",
+          "SEMANTIC_ENCODER_ARTIFACT_PATH": "out/semantic-encoder",
+          "RUBERT_F1_ARTIFACT_PATH": "src/subcategory_extraction/semantic_encoder_f1/artifacts",
+          "JEV_REFERENCE_DATASET": "out/hybrid-training.jsonl",
+          "JEV_REFERENCE_MAX_CHARS": "1800",
+          "JEV_PROMPT_PATH": "src/subcategory_extraction/google_decision/prompts/google_decision_baseline.md"
+        },
+        "artifact_sha256": {
+          "out/classifier-methods/tfidf.json": "2ef7ed22c74a13820b1b06d53b5a84d6c8555b082f4bcab5b6e0408164acf62b",
+          "src/subcategory_extraction/learned_keywords/artifacts/learned-keywords.json": "d06457a8c082171a096da05d18812528247c8c90e3c06157dc93e5ea6b65f3fa",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/calibration.json": "08810b988729fc370d1c03677c38430a27da8a9501d9d6edc5d9532bd0e1dee4",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/encoder/config.json": "5d75152afedf12d8b30edf67fc9fdd0eedf9578a70679373db46ba94256335a0",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/encoder/model.safetensors": "9fc639dd6813e8481b7d21577924df1973636e38e5992bba20f06700b2d0ada1",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/head.safetensors": "81f56fffeaf4a5460e36b362b3e7d3e804a1579a9f8b7ae6adeb357d3da4772b",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/metadata.json": "d523ce9fd906ede91463053c94d664c5ae04b40b1588ce2802e5be0eb2d330f9",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/tokenizer/special_tokens_map.json": "5d5b662e421ea9fac075174bb0688ee0d9431699900b90662acd44b2a350503a",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/tokenizer/tokenizer.json": "b6a9f282c732603652189b1fc2f32a2e2578b43927c5cf44a2e3585631419bb0",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/tokenizer/tokenizer_config.json": "71b22b163773e6d2a3bc53236a6dca9245f2e0422b09e2d9597dbf02825c7135",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/tokenizer/vocab.txt": "f056a69b097422652053bf87565c35543e5d81540ca4b7dddd28de4157a969e0",
+          "src/subcategory_extraction/google_decision/prompts/google_decision_baseline.md": "0ca8e0a727cb333e1036a70fae258c207dce8e51494b652ac2c8f0aa5fc81715"
+        },
+        "training_table": null,
+        "selection": "existing configurations fixed before test; no threshold search"
+      },
+      "execution": "pipeline_run",
+      "reused_predictions": 0,
+      "model_provenance": {
+        "provider": "selectel",
+        "endpoint": "https://api.selectel.ru/aig/v1/decisions",
+        "model": "jev-1.13.0",
+        "threshold": 0.5,
+        "prompt_sha256": "0ca8e0a727cb333e1036a70fae258c207dce8e51494b652ac2c8f0aa5fc81715",
+        "cache_enabled": true
+      },
+      "error": "ValueError: Укажите SELECTEL_API_KEY в .env для запросов Jev",
+      "measurement_metadata": {
+        "date": "2026-11-15T04:15:35+03:00",
+        "commit": "534e7abcf5530570d797c178afaa2429b405013b",
+        "code_sha256": "fc8fbd0b2ff19b17081ff2df5e6bae90b9236f37be14db6dcd0dd95c0232dccf",
+        "mode": "pipeline_run",
+        "protocol": {
+          "dataset_table": "manual_test",
+          "training_table": "manual_train",
+          "dataset_sha256": "fae05cba56fdf57a15aa3979afd828b73928efcca64694be5d805d34e002b99d",
+          "table_sha256": "fae05cba56fdf57a15aa3979afd828b73928efcca64694be5d805d34e002b99d",
+          "training_sha256": "6e53aa521160a02e8dcbfdd89281a16c07e817454910765bb0c67168a7ffcb27",
+          "rows": 139,
+          "source_mc_id_assumption": 101
+        },
+        "overlap": {
+          "checked": true,
+          "method": "normalized_exact_description",
+          "training_dataset": "manual_train",
+          "overlapping_rows": 13,
+          "row_numbers": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13
+          ]
+        }
+      }
+    },
+    "jev_boundaries": {
+      "status": "failed",
+      "predicted": [],
+      "inference": [],
+      "workers": 1,
+      "configuration": {
+        "key": "jev_boundaries",
+        "module": "jev_boundaries",
+        "environment": {
+          "JEV_MODEL": "jev-1.13.0",
+          "LLM_MODEL_ID": "gemini-decision-1",
+          "QWEN_DECISION_MODEL": "decision-model-preview",
+          "STRUCTURED_LLM_MODEL": "gpt-6.1-terra",
+          "JEV_THRESHOLD": "0.5",
+          "GOOGLE_DECISION_THRESHOLD": "0.5",
+          "JEV_TFIDF_WEIGHT": "0.5",
+          "JEV_TFIDF_THRESHOLD": "0.5",
+          "LOCAL_JEV_MODEL": "jevos-v5",
+          "LOCAL_JEV_THRESHOLD": "0.5",
+          "SEMANTIC_ENCODER_DEVICE": "cpu",
+          "RUBERT_F1_DEVICE": "cpu",
+          "TFIDF_ARTIFACT_PATH": "out/classifier-methods/tfidf.json",
+          "LEARNED_KEYWORDS_ARTIFACT": "src/subcategory_extraction/learned_keywords/artifacts/learned-keywords.json",
+          "SEMANTIC_ENCODER_ARTIFACT_PATH": "out/semantic-encoder",
+          "RUBERT_F1_ARTIFACT_PATH": "src/subcategory_extraction/semantic_encoder_f1/artifacts",
+          "JEV_REFERENCE_DATASET": "out/hybrid-training.jsonl",
+          "JEV_REFERENCE_MAX_CHARS": "1800"
+        },
+        "artifact_sha256": {
+          "out/classifier-methods/tfidf.json": "2ef7ed22c74a13820b1b06d53b5a84d6c8555b082f4bcab5b6e0408164acf62b",
+          "src/subcategory_extraction/learned_keywords/artifacts/learned-keywords.json": "d06457a8c082171a096da05d18812528247c8c90e3c06157dc93e5ea6b65f3fa",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/calibration.json": "08810b988729fc370d1c03677c38430a27da8a9501d9d6edc5d9532bd0e1dee4",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/encoder/config.json": "5d75152afedf12d8b30edf67fc9fdd0eedf9578a70679373db46ba94256335a0",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/encoder/model.safetensors": "9fc639dd6813e8481b7d21577924df1973636e38e5992bba20f06700b2d0ada1",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/head.safetensors": "81f56fffeaf4a5460e36b362b3e7d3e804a1579a9f8b7ae6adeb357d3da4772b",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/metadata.json": "d523ce9fd906ede91463053c94d664c5ae04b40b1588ce2802e5be0eb2d330f9",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/tokenizer/special_tokens_map.json": "5d5b662e421ea9fac075174bb0688ee0d9431699900b90662acd44b2a350503a",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/tokenizer/tokenizer.json": "b6a9f282c732603652189b1fc2f32a2e2578b43927c5cf44a2e3585631419bb0",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/tokenizer/tokenizer_config.json": "71b22b163773e6d2a3bc53236a6dca9245f2e0422b09e2d9597dbf02825c7135",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/tokenizer/vocab.txt": "f056a69b097422652053bf87565c35543e5d81540ca4b7dddd28de4157a969e0"
+        },
+        "training_table": null,
+        "selection": "existing configurations fixed before test; no threshold search"
+      },
+      "execution": "pipeline_run",
+      "reused_predictions": 0,
+      "model_provenance": {
+        "provider": "selectel",
+        "endpoint": "https://api.selectel.ru/aig/v1/decisions",
+        "model": "jev-1.13.0",
+        "threshold": 0.5,
+        "prompt_sha256": "0eb3d2059a4d1d796ed1df675f1d5c291807a3d41969f0f46d57637a06ab224d",
+        "cache_enabled": true
+      },
+      "error": "ValueError: Укажите SELECTEL_API_KEY в .env для запросов Jev",
+      "measurement_metadata": {
+        "date": "2026-11-15T04:18:21+03:00",
+        "commit": "534e7abcf5530570d797c178afaa2429b405013b",
+        "code_sha256": "fc8fbd0b2ff19b17081ff2df5e6bae90b9236f37be14db6dcd0dd95c0232dccf",
+        "mode": "pipeline_run",
+        "protocol": {
+          "dataset_table": "manual_test",
+          "training_table": "manual_train",
+          "dataset_sha256": "fae05cba56fdf57a15aa3979afd828b73928efcca64694be5d805d34e002b99d",
+          "table_sha256": "fae05cba56fdf57a15aa3979afd828b73928efcca64694be5d805d34e002b99d",
+          "training_sha256": "6e53aa521160a02e8dcbfdd89281a16c07e817454910765bb0c67168a7ffcb27",
+          "rows": 139,
+          "source_mc_id_assumption": 101
+        },
+        "overlap": {
+          "checked": true,
+          "method": "normalized_exact_description",
+          "training_dataset": "manual_train",
+          "overlapping_rows": 13,
+          "row_numbers": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13
+          ]
+        }
+      }
+    },
+    "jev_tfidf::baseline": {
+      "status": "failed",
+      "predicted": [],
+      "inference": [],
+      "workers": 1,
+      "configuration": {
+        "key": "jev_tfidf::baseline",
+        "module": "jev_tfidf",
+        "environment": {
+          "JEV_MODEL": "jev-1.13.0",
+          "LLM_MODEL_ID": "gemini-decision-1",
+          "QWEN_DECISION_MODEL": "decision-model-preview",
+          "STRUCTURED_LLM_MODEL": "gpt-6.1-terra",
+          "JEV_THRESHOLD": "0.5",
+          "GOOGLE_DECISION_THRESHOLD": "0.5",
+          "JEV_TFIDF_WEIGHT": "0.5",
+          "JEV_TFIDF_THRESHOLD": "0.5",
+          "LOCAL_JEV_MODEL": "jevos-v5",
+          "LOCAL_JEV_THRESHOLD": "0.5",
+          "SEMANTIC_ENCODER_DEVICE": "cpu",
+          "RUBERT_F1_DEVICE": "cpu",
+          "TFIDF_ARTIFACT_PATH": "out/classifier-methods/tfidf.json",
+          "LEARNED_KEYWORDS_ARTIFACT": "src/subcategory_extraction/learned_keywords/artifacts/learned-keywords.json",
+          "SEMANTIC_ENCODER_ARTIFACT_PATH": "out/semantic-encoder",
+          "RUBERT_F1_ARTIFACT_PATH": "src/subcategory_extraction/semantic_encoder_f1/artifacts",
+          "JEV_REFERENCE_DATASET": "out/hybrid-training.jsonl",
+          "JEV_REFERENCE_MAX_CHARS": "1800",
+          "JEV_PROMPT_PATH": "src/subcategory_extraction/google_decision/prompts/google_decision_baseline.md"
+        },
+        "artifact_sha256": {
+          "out/classifier-methods/tfidf.json": "2ef7ed22c74a13820b1b06d53b5a84d6c8555b082f4bcab5b6e0408164acf62b",
+          "src/subcategory_extraction/learned_keywords/artifacts/learned-keywords.json": "d06457a8c082171a096da05d18812528247c8c90e3c06157dc93e5ea6b65f3fa",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/calibration.json": "08810b988729fc370d1c03677c38430a27da8a9501d9d6edc5d9532bd0e1dee4",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/encoder/config.json": "5d75152afedf12d8b30edf67fc9fdd0eedf9578a70679373db46ba94256335a0",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/encoder/model.safetensors": "9fc639dd6813e8481b7d21577924df1973636e38e5992bba20f06700b2d0ada1",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/head.safetensors": "81f56fffeaf4a5460e36b362b3e7d3e804a1579a9f8b7ae6adeb357d3da4772b",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/metadata.json": "d523ce9fd906ede91463053c94d664c5ae04b40b1588ce2802e5be0eb2d330f9",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/tokenizer/special_tokens_map.json": "5d5b662e421ea9fac075174bb0688ee0d9431699900b90662acd44b2a350503a",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/tokenizer/tokenizer.json": "b6a9f282c732603652189b1fc2f32a2e2578b43927c5cf44a2e3585631419bb0",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/tokenizer/tokenizer_config.json": "71b22b163773e6d2a3bc53236a6dca9245f2e0422b09e2d9597dbf02825c7135",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/tokenizer/vocab.txt": "f056a69b097422652053bf87565c35543e5d81540ca4b7dddd28de4157a969e0",
+          "src/subcategory_extraction/google_decision/prompts/google_decision_baseline.md": "0ca8e0a727cb333e1036a70fae258c207dce8e51494b652ac2c8f0aa5fc81715"
+        },
+        "training_table": "case_train",
+        "selection": "existing configurations fixed before test; no threshold search"
+      },
+      "model_training_overlap": {
+        "checked": true,
+        "method": "normalized_exact_description",
+        "training_dataset": "case_train",
+        "overlapping_rows": 13,
+        "row_numbers": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13
+        ]
+      },
+      "execution": "pipeline_run",
+      "reused_predictions": 0,
+      "error": "ValueError: Укажите SELECTEL_API_KEY в .env для запросов Jev",
+      "measurement_metadata": {
+        "date": "2026-11-15T04:19:31+03:00",
+        "commit": "534e7abcf5530570d797c178afaa2429b405013b",
+        "code_sha256": "fc8fbd0b2ff19b17081ff2df5e6bae90b9236f37be14db6dcd0dd95c0232dccf",
+        "mode": "pipeline_run",
+        "protocol": {
+          "dataset_table": "manual_test",
+          "training_table": "manual_train",
+          "dataset_sha256": "fae05cba56fdf57a15aa3979afd828b73928efcca64694be5d805d34e002b99d",
+          "table_sha256": "fae05cba56fdf57a15aa3979afd828b73928efcca64694be5d805d34e002b99d",
+          "training_sha256": "6e53aa521160a02e8dcbfdd89281a16c07e817454910765bb0c67168a7ffcb27",
+          "rows": 139,
+          "source_mc_id_assumption": 101
+        },
+        "overlap": {
+          "checked": true,
+          "method": "normalized_exact_description",
+          "training_dataset": "manual_train",
+          "overlapping_rows": 13,
+          "row_numbers": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13
+          ]
+        }
+      }
+    },
+    "jev_retrieval": {
+      "status": "failed",
+      "predicted": [],
+      "inference": [],
+      "workers": 1,
+      "configuration": {
+        "key": "jev_retrieval",
+        "module": "jev_retrieval",
+        "environment": {
+          "JEV_MODEL": "jev-1.13.0",
+          "LLM_MODEL_ID": "gemini-decision-1",
+          "QWEN_DECISION_MODEL": "decision-model-preview",
+          "STRUCTURED_LLM_MODEL": "gpt-6.1-terra",
+          "JEV_THRESHOLD": "0.5",
+          "GOOGLE_DECISION_THRESHOLD": "0.5",
+          "JEV_TFIDF_WEIGHT": "0.5",
+          "JEV_TFIDF_THRESHOLD": "0.5",
+          "LOCAL_JEV_MODEL": "jevos-v5",
+          "LOCAL_JEV_THRESHOLD": "0.5",
+          "SEMANTIC_ENCODER_DEVICE": "cpu",
+          "RUBERT_F1_DEVICE": "cpu",
+          "TFIDF_ARTIFACT_PATH": "out/classifier-methods/tfidf.json",
+          "LEARNED_KEYWORDS_ARTIFACT": "src/subcategory_extraction/learned_keywords/artifacts/learned-keywords.json",
+          "SEMANTIC_ENCODER_ARTIFACT_PATH": "out/semantic-encoder",
+          "RUBERT_F1_ARTIFACT_PATH": "src/subcategory_extraction/semantic_encoder_f1/artifacts",
+          "JEV_REFERENCE_DATASET": "out/hybrid-training.jsonl",
+          "JEV_REFERENCE_MAX_CHARS": "1800",
+          "JEV_PROMPT_PATH": "src/subcategory_extraction/google_decision/prompts/google_decision_guided.md"
+        },
+        "artifact_sha256": {
+          "out/classifier-methods/tfidf.json": "2ef7ed22c74a13820b1b06d53b5a84d6c8555b082f4bcab5b6e0408164acf62b",
+          "src/subcategory_extraction/learned_keywords/artifacts/learned-keywords.json": "d06457a8c082171a096da05d18812528247c8c90e3c06157dc93e5ea6b65f3fa",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/calibration.json": "08810b988729fc370d1c03677c38430a27da8a9501d9d6edc5d9532bd0e1dee4",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/encoder/config.json": "5d75152afedf12d8b30edf67fc9fdd0eedf9578a70679373db46ba94256335a0",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/encoder/model.safetensors": "9fc639dd6813e8481b7d21577924df1973636e38e5992bba20f06700b2d0ada1",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/head.safetensors": "81f56fffeaf4a5460e36b362b3e7d3e804a1579a9f8b7ae6adeb357d3da4772b",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/metadata.json": "d523ce9fd906ede91463053c94d664c5ae04b40b1588ce2802e5be0eb2d330f9",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/tokenizer/special_tokens_map.json": "5d5b662e421ea9fac075174bb0688ee0d9431699900b90662acd44b2a350503a",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/tokenizer/tokenizer.json": "b6a9f282c732603652189b1fc2f32a2e2578b43927c5cf44a2e3585631419bb0",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/tokenizer/tokenizer_config.json": "71b22b163773e6d2a3bc53236a6dca9245f2e0422b09e2d9597dbf02825c7135",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/tokenizer/vocab.txt": "f056a69b097422652053bf87565c35543e5d81540ca4b7dddd28de4157a969e0",
+          "src/subcategory_extraction/google_decision/prompts/google_decision_guided.md": "f05534059aa8ab3e29a281d39d65bfc3e5cbc887330787aba267abd8891728b7"
+        },
+        "training_table": "case_train",
+        "selection": "existing configurations fixed before test; no threshold search"
+      },
+      "model_training_overlap": {
+        "checked": true,
+        "method": "normalized_exact_description",
+        "training_dataset": "case_train",
+        "overlapping_rows": 13,
+        "row_numbers": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13
+        ]
+      },
+      "error": "FileNotFoundError: [Errno 2] No such file or directory: '/Users/arsenijsekin/Documents/Codex/2026-11-13/https-github-com-one-zero-eight/hackathon-innoglobalhack-avito/out/hybrid-training.jsonl'",
+      "measurement_metadata": {
+        "date": "2026-11-15T04:21:37+03:00",
+        "commit": "534e7abcf5530570d797c178afaa2429b405013b",
+        "code_sha256": "fc8fbd0b2ff19b17081ff2df5e6bae90b9236f37be14db6dcd0dd95c0232dccf",
+        "mode": "pipeline_run",
+        "protocol": {
+          "dataset_table": "manual_test",
+          "training_table": "manual_train",
+          "dataset_sha256": "fae05cba56fdf57a15aa3979afd828b73928efcca64694be5d805d34e002b99d",
+          "table_sha256": "fae05cba56fdf57a15aa3979afd828b73928efcca64694be5d805d34e002b99d",
+          "training_sha256": "6e53aa521160a02e8dcbfdd89281a16c07e817454910765bb0c67168a7ffcb27",
+          "rows": 139,
+          "source_mc_id_assumption": 101
+        },
+        "overlap": {
+          "checked": true,
+          "method": "normalized_exact_description",
+          "training_dataset": "manual_train",
+          "overlapping_rows": 13,
+          "row_numbers": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13
+          ]
+        }
+      }
+    },
+    "jev_retrieval::baseline": {
+      "status": "failed",
+      "predicted": [],
+      "inference": [],
+      "workers": 1,
+      "configuration": {
+        "key": "jev_retrieval::baseline",
+        "module": "jev_retrieval",
+        "environment": {
+          "JEV_MODEL": "jev-1.13.0",
+          "LLM_MODEL_ID": "gemini-decision-1",
+          "QWEN_DECISION_MODEL": "decision-model-preview",
+          "STRUCTURED_LLM_MODEL": "gpt-6.1-terra",
+          "JEV_THRESHOLD": "0.5",
+          "GOOGLE_DECISION_THRESHOLD": "0.5",
+          "JEV_TFIDF_WEIGHT": "0.5",
+          "JEV_TFIDF_THRESHOLD": "0.5",
+          "LOCAL_JEV_MODEL": "jevos-v5",
+          "LOCAL_JEV_THRESHOLD": "0.5",
+          "SEMANTIC_ENCODER_DEVICE": "cpu",
+          "RUBERT_F1_DEVICE": "cpu",
+          "TFIDF_ARTIFACT_PATH": "out/classifier-methods/tfidf.json",
+          "LEARNED_KEYWORDS_ARTIFACT": "src/subcategory_extraction/learned_keywords/artifacts/learned-keywords.json",
+          "SEMANTIC_ENCODER_ARTIFACT_PATH": "out/semantic-encoder",
+          "RUBERT_F1_ARTIFACT_PATH": "src/subcategory_extraction/semantic_encoder_f1/artifacts",
+          "JEV_REFERENCE_DATASET": "out/hybrid-training.jsonl",
+          "JEV_REFERENCE_MAX_CHARS": "1800",
+          "JEV_PROMPT_PATH": "src/subcategory_extraction/google_decision/prompts/google_decision_baseline.md"
+        },
+        "artifact_sha256": {
+          "out/classifier-methods/tfidf.json": "2ef7ed22c74a13820b1b06d53b5a84d6c8555b082f4bcab5b6e0408164acf62b",
+          "src/subcategory_extraction/learned_keywords/artifacts/learned-keywords.json": "d06457a8c082171a096da05d18812528247c8c90e3c06157dc93e5ea6b65f3fa",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/calibration.json": "08810b988729fc370d1c03677c38430a27da8a9501d9d6edc5d9532bd0e1dee4",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/encoder/config.json": "5d75152afedf12d8b30edf67fc9fdd0eedf9578a70679373db46ba94256335a0",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/encoder/model.safetensors": "9fc639dd6813e8481b7d21577924df1973636e38e5992bba20f06700b2d0ada1",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/head.safetensors": "81f56fffeaf4a5460e36b362b3e7d3e804a1579a9f8b7ae6adeb357d3da4772b",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/metadata.json": "d523ce9fd906ede91463053c94d664c5ae04b40b1588ce2802e5be0eb2d330f9",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/tokenizer/special_tokens_map.json": "5d5b662e421ea9fac075174bb0688ee0d9431699900b90662acd44b2a350503a",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/tokenizer/tokenizer.json": "b6a9f282c732603652189b1fc2f32a2e2578b43927c5cf44a2e3585631419bb0",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/tokenizer/tokenizer_config.json": "71b22b163773e6d2a3bc53236a6dca9245f2e0422b09e2d9597dbf02825c7135",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/tokenizer/vocab.txt": "f056a69b097422652053bf87565c35543e5d81540ca4b7dddd28de4157a969e0",
+          "src/subcategory_extraction/google_decision/prompts/google_decision_baseline.md": "0ca8e0a727cb333e1036a70fae258c207dce8e51494b652ac2c8f0aa5fc81715"
+        },
+        "training_table": "case_train",
+        "selection": "existing configurations fixed before test; no threshold search"
+      },
+      "model_training_overlap": {
+        "checked": true,
+        "method": "normalized_exact_description",
+        "training_dataset": "case_train",
+        "overlapping_rows": 13,
+        "row_numbers": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13
+        ]
+      },
+      "error": "FileNotFoundError: [Errno 2] No such file or directory: '/Users/arsenijsekin/Documents/Codex/2026-11-13/https-github-com-one-zero-eight/hackathon-innoglobalhack-avito/out/hybrid-training.jsonl'",
+      "measurement_metadata": {
+        "date": "2026-11-15T04:23:27+03:00",
+        "commit": "534e7abcf5530570d797c178afaa2429b405013b",
+        "code_sha256": "fc8fbd0b2ff19b17081ff2df5e6bae90b9236f37be14db6dcd0dd95c0232dccf",
+        "mode": "pipeline_run",
+        "protocol": {
+          "dataset_table": "manual_test",
+          "training_table": "manual_train",
+          "dataset_sha256": "fae05cba56fdf57a15aa3979afd828b73928efcca64694be5d805d34e002b99d",
+          "table_sha256": "fae05cba56fdf57a15aa3979afd828b73928efcca64694be5d805d34e002b99d",
+          "training_sha256": "6e53aa521160a02e8dcbfdd89281a16c07e817454910765bb0c67168a7ffcb27",
+          "rows": 139,
+          "source_mc_id_assumption": 101
+        },
+        "overlap": {
+          "checked": true,
+          "method": "normalized_exact_description",
+          "training_dataset": "manual_train",
+          "overlapping_rows": 13,
+          "row_numbers": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13
+          ]
+        }
+      }
+    },
+    "evidence_jev": {
+      "status": "failed",
+      "predicted": [],
+      "inference": [],
+      "workers": 1,
+      "configuration": {
+        "key": "evidence_jev",
+        "module": "evidence_jev",
+        "environment": {
+          "JEV_MODEL": "jev-1.13.0",
+          "LLM_MODEL_ID": "gemini-decision-1",
+          "QWEN_DECISION_MODEL": "decision-model-preview",
+          "STRUCTURED_LLM_MODEL": "gpt-6.1-terra",
+          "JEV_THRESHOLD": "0.5",
+          "GOOGLE_DECISION_THRESHOLD": "0.5",
+          "JEV_TFIDF_WEIGHT": "0.5",
+          "JEV_TFIDF_THRESHOLD": "0.5",
+          "LOCAL_JEV_MODEL": "jevos-v5",
+          "LOCAL_JEV_THRESHOLD": "0.5",
+          "SEMANTIC_ENCODER_DEVICE": "cpu",
+          "RUBERT_F1_DEVICE": "cpu",
+          "TFIDF_ARTIFACT_PATH": "out/classifier-methods/tfidf.json",
+          "LEARNED_KEYWORDS_ARTIFACT": "src/subcategory_extraction/learned_keywords/artifacts/learned-keywords.json",
+          "SEMANTIC_ENCODER_ARTIFACT_PATH": "out/semantic-encoder",
+          "RUBERT_F1_ARTIFACT_PATH": "src/subcategory_extraction/semantic_encoder_f1/artifacts",
+          "JEV_REFERENCE_DATASET": "out/hybrid-training.jsonl",
+          "JEV_REFERENCE_MAX_CHARS": "1800"
+        },
+        "artifact_sha256": {
+          "out/classifier-methods/tfidf.json": "2ef7ed22c74a13820b1b06d53b5a84d6c8555b082f4bcab5b6e0408164acf62b",
+          "src/subcategory_extraction/learned_keywords/artifacts/learned-keywords.json": "d06457a8c082171a096da05d18812528247c8c90e3c06157dc93e5ea6b65f3fa",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/calibration.json": "08810b988729fc370d1c03677c38430a27da8a9501d9d6edc5d9532bd0e1dee4",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/encoder/config.json": "5d75152afedf12d8b30edf67fc9fdd0eedf9578a70679373db46ba94256335a0",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/encoder/model.safetensors": "9fc639dd6813e8481b7d21577924df1973636e38e5992bba20f06700b2d0ada1",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/head.safetensors": "81f56fffeaf4a5460e36b362b3e7d3e804a1579a9f8b7ae6adeb357d3da4772b",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/metadata.json": "d523ce9fd906ede91463053c94d664c5ae04b40b1588ce2802e5be0eb2d330f9",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/tokenizer/special_tokens_map.json": "5d5b662e421ea9fac075174bb0688ee0d9431699900b90662acd44b2a350503a",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/tokenizer/tokenizer.json": "b6a9f282c732603652189b1fc2f32a2e2578b43927c5cf44a2e3585631419bb0",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/tokenizer/tokenizer_config.json": "71b22b163773e6d2a3bc53236a6dca9245f2e0422b09e2d9597dbf02825c7135",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/tokenizer/vocab.txt": "f056a69b097422652053bf87565c35543e5d81540ca4b7dddd28de4157a969e0"
+        },
+        "training_table": null,
+        "selection": "existing configurations fixed before test; no threshold search"
+      },
+      "execution": "pipeline_run",
+      "reused_predictions": 0,
+      "error": "HTTPError: HTTP Error 401: Unauthorized",
+      "measurement_metadata": {
+        "date": "2026-11-15T04:24:53+03:00",
+        "commit": "534e7abcf5530570d797c178afaa2429b405013b",
+        "code_sha256": "fc8fbd0b2ff19b17081ff2df5e6bae90b9236f37be14db6dcd0dd95c0232dccf",
+        "mode": "pipeline_run",
+        "protocol": {
+          "dataset_table": "manual_test",
+          "training_table": "manual_train",
+          "dataset_sha256": "fae05cba56fdf57a15aa3979afd828b73928efcca64694be5d805d34e002b99d",
+          "table_sha256": "fae05cba56fdf57a15aa3979afd828b73928efcca64694be5d805d34e002b99d",
+          "training_sha256": "6e53aa521160a02e8dcbfdd89281a16c07e817454910765bb0c67168a7ffcb27",
+          "rows": 139,
+          "source_mc_id_assumption": 101
+        },
+        "overlap": {
+          "checked": true,
+          "method": "normalized_exact_description",
+          "training_dataset": "manual_train",
+          "overlapping_rows": 13,
+          "row_numbers": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13
+          ]
+        }
+      }
+    },
+    "jev_arbiter": {
+      "status": "failed",
+      "predicted": [],
+      "inference": [],
+      "workers": 1,
+      "configuration": {
+        "key": "jev_arbiter",
+        "module": "jev_arbiter",
+        "environment": {
+          "JEV_MODEL": "jev-1.13.0",
+          "LLM_MODEL_ID": "gemini-decision-1",
+          "QWEN_DECISION_MODEL": "decision-model-preview",
+          "STRUCTURED_LLM_MODEL": "gpt-6.1-terra",
+          "JEV_THRESHOLD": "0.5",
+          "GOOGLE_DECISION_THRESHOLD": "0.5",
+          "JEV_TFIDF_WEIGHT": "0.5",
+          "JEV_TFIDF_THRESHOLD": "0.5",
+          "LOCAL_JEV_MODEL": "jevos-v5",
+          "LOCAL_JEV_THRESHOLD": "0.5",
+          "SEMANTIC_ENCODER_DEVICE": "cpu",
+          "RUBERT_F1_DEVICE": "cpu",
+          "TFIDF_ARTIFACT_PATH": "out/classifier-methods/tfidf.json",
+          "LEARNED_KEYWORDS_ARTIFACT": "src/subcategory_extraction/learned_keywords/artifacts/learned-keywords.json",
+          "SEMANTIC_ENCODER_ARTIFACT_PATH": "out/semantic-encoder",
+          "RUBERT_F1_ARTIFACT_PATH": "src/subcategory_extraction/semantic_encoder_f1/artifacts",
+          "JEV_REFERENCE_DATASET": "out/hybrid-training.jsonl",
+          "JEV_REFERENCE_MAX_CHARS": "1800",
+          "JEV_PROMPT_PATH": "src/subcategory_extraction/google_decision/prompts/google_decision_guided.md"
+        },
+        "artifact_sha256": {
+          "out/classifier-methods/tfidf.json": "2ef7ed22c74a13820b1b06d53b5a84d6c8555b082f4bcab5b6e0408164acf62b",
+          "src/subcategory_extraction/learned_keywords/artifacts/learned-keywords.json": "d06457a8c082171a096da05d18812528247c8c90e3c06157dc93e5ea6b65f3fa",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/calibration.json": "08810b988729fc370d1c03677c38430a27da8a9501d9d6edc5d9532bd0e1dee4",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/encoder/config.json": "5d75152afedf12d8b30edf67fc9fdd0eedf9578a70679373db46ba94256335a0",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/encoder/model.safetensors": "9fc639dd6813e8481b7d21577924df1973636e38e5992bba20f06700b2d0ada1",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/head.safetensors": "81f56fffeaf4a5460e36b362b3e7d3e804a1579a9f8b7ae6adeb357d3da4772b",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/metadata.json": "d523ce9fd906ede91463053c94d664c5ae04b40b1588ce2802e5be0eb2d330f9",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/tokenizer/special_tokens_map.json": "5d5b662e421ea9fac075174bb0688ee0d9431699900b90662acd44b2a350503a",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/tokenizer/tokenizer.json": "b6a9f282c732603652189b1fc2f32a2e2578b43927c5cf44a2e3585631419bb0",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/tokenizer/tokenizer_config.json": "71b22b163773e6d2a3bc53236a6dca9245f2e0422b09e2d9597dbf02825c7135",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/tokenizer/vocab.txt": "f056a69b097422652053bf87565c35543e5d81540ca4b7dddd28de4157a969e0",
+          "src/subcategory_extraction/google_decision/prompts/google_decision_guided.md": "f05534059aa8ab3e29a281d39d65bfc3e5cbc887330787aba267abd8891728b7"
+        },
+        "training_table": "case_train",
+        "selection": "existing configurations fixed before test; no threshold search"
+      },
+      "model_training_overlap": {
+        "checked": true,
+        "method": "normalized_exact_description",
+        "training_dataset": "case_train",
+        "overlapping_rows": 13,
+        "row_numbers": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13
+        ]
+      },
+      "execution": "pipeline_run",
+      "reused_predictions": 0,
+      "error": "ValueError: Укажите SELECTEL_API_KEY в .env для запросов Jev",
+      "measurement_metadata": {
+        "date": "2026-11-15T04:26:56+03:00",
+        "commit": "534e7abcf5530570d797c178afaa2429b405013b",
+        "code_sha256": "fc8fbd0b2ff19b17081ff2df5e6bae90b9236f37be14db6dcd0dd95c0232dccf",
+        "mode": "pipeline_run",
+        "protocol": {
+          "dataset_table": "manual_test",
+          "training_table": "manual_train",
+          "dataset_sha256": "fae05cba56fdf57a15aa3979afd828b73928efcca64694be5d805d34e002b99d",
+          "table_sha256": "fae05cba56fdf57a15aa3979afd828b73928efcca64694be5d805d34e002b99d",
+          "training_sha256": "6e53aa521160a02e8dcbfdd89281a16c07e817454910765bb0c67168a7ffcb27",
+          "rows": 139,
+          "source_mc_id_assumption": 101
+        },
+        "overlap": {
+          "checked": true,
+          "method": "normalized_exact_description",
+          "training_dataset": "manual_train",
+          "overlapping_rows": 13,
+          "row_numbers": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13
+          ]
+        }
+      }
+    },
+    "jev_arbiter::baseline": {
+      "status": "failed",
+      "predicted": [],
+      "inference": [],
+      "workers": 1,
+      "configuration": {
+        "key": "jev_arbiter::baseline",
+        "module": "jev_arbiter",
+        "environment": {
+          "JEV_MODEL": "jev-1.13.0",
+          "LLM_MODEL_ID": "gemini-decision-1",
+          "QWEN_DECISION_MODEL": "decision-model-preview",
+          "STRUCTURED_LLM_MODEL": "gpt-6.1-terra",
+          "JEV_THRESHOLD": "0.5",
+          "GOOGLE_DECISION_THRESHOLD": "0.5",
+          "JEV_TFIDF_WEIGHT": "0.5",
+          "JEV_TFIDF_THRESHOLD": "0.5",
+          "LOCAL_JEV_MODEL": "jevos-v5",
+          "LOCAL_JEV_THRESHOLD": "0.5",
+          "SEMANTIC_ENCODER_DEVICE": "cpu",
+          "RUBERT_F1_DEVICE": "cpu",
+          "TFIDF_ARTIFACT_PATH": "out/classifier-methods/tfidf.json",
+          "LEARNED_KEYWORDS_ARTIFACT": "src/subcategory_extraction/learned_keywords/artifacts/learned-keywords.json",
+          "SEMANTIC_ENCODER_ARTIFACT_PATH": "out/semantic-encoder",
+          "RUBERT_F1_ARTIFACT_PATH": "src/subcategory_extraction/semantic_encoder_f1/artifacts",
+          "JEV_REFERENCE_DATASET": "out/hybrid-training.jsonl",
+          "JEV_REFERENCE_MAX_CHARS": "1800",
+          "JEV_PROMPT_PATH": "src/subcategory_extraction/google_decision/prompts/google_decision_baseline.md"
+        },
+        "artifact_sha256": {
+          "out/classifier-methods/tfidf.json": "2ef7ed22c74a13820b1b06d53b5a84d6c8555b082f4bcab5b6e0408164acf62b",
+          "src/subcategory_extraction/learned_keywords/artifacts/learned-keywords.json": "d06457a8c082171a096da05d18812528247c8c90e3c06157dc93e5ea6b65f3fa",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/calibration.json": "08810b988729fc370d1c03677c38430a27da8a9501d9d6edc5d9532bd0e1dee4",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/encoder/config.json": "5d75152afedf12d8b30edf67fc9fdd0eedf9578a70679373db46ba94256335a0",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/encoder/model.safetensors": "9fc639dd6813e8481b7d21577924df1973636e38e5992bba20f06700b2d0ada1",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/head.safetensors": "81f56fffeaf4a5460e36b362b3e7d3e804a1579a9f8b7ae6adeb357d3da4772b",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/metadata.json": "d523ce9fd906ede91463053c94d664c5ae04b40b1588ce2802e5be0eb2d330f9",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/tokenizer/special_tokens_map.json": "5d5b662e421ea9fac075174bb0688ee0d9431699900b90662acd44b2a350503a",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/tokenizer/tokenizer.json": "b6a9f282c732603652189b1fc2f32a2e2578b43927c5cf44a2e3585631419bb0",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/tokenizer/tokenizer_config.json": "71b22b163773e6d2a3bc53236a6dca9245f2e0422b09e2d9597dbf02825c7135",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/tokenizer/vocab.txt": "f056a69b097422652053bf87565c35543e5d81540ca4b7dddd28de4157a969e0",
+          "src/subcategory_extraction/google_decision/prompts/google_decision_baseline.md": "0ca8e0a727cb333e1036a70fae258c207dce8e51494b652ac2c8f0aa5fc81715"
+        },
+        "training_table": "case_train",
+        "selection": "existing configurations fixed before test; no threshold search"
+      },
+      "model_training_overlap": {
+        "checked": true,
+        "method": "normalized_exact_description",
+        "training_dataset": "case_train",
+        "overlapping_rows": 13,
+        "row_numbers": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13
+        ]
+      },
+      "execution": "pipeline_run",
+      "reused_predictions": 0,
+      "error": "ValueError: Укажите SELECTEL_API_KEY в .env для запросов Jev",
+      "measurement_metadata": {
+        "date": "2026-11-15T04:29:01+03:00",
+        "commit": "534e7abcf5530570d797c178afaa2429b405013b",
+        "code_sha256": "fc8fbd0b2ff19b17081ff2df5e6bae90b9236f37be14db6dcd0dd95c0232dccf",
+        "mode": "pipeline_run",
+        "protocol": {
+          "dataset_table": "manual_test",
+          "training_table": "manual_train",
+          "dataset_sha256": "fae05cba56fdf57a15aa3979afd828b73928efcca64694be5d805d34e002b99d",
+          "table_sha256": "fae05cba56fdf57a15aa3979afd828b73928efcca64694be5d805d34e002b99d",
+          "training_sha256": "6e53aa521160a02e8dcbfdd89281a16c07e817454910765bb0c67168a7ffcb27",
+          "rows": 139,
+          "source_mc_id_assumption": 101
+        },
+        "overlap": {
+          "checked": true,
+          "method": "normalized_exact_description",
+          "training_dataset": "manual_train",
+          "overlapping_rows": 13,
+          "row_numbers": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13
+          ]
+        }
+      }
+    },
+    "qwen_decision::guided": {
+      "status": "failed",
+      "predicted": [],
+      "inference": [],
+      "workers": 1,
+      "configuration": {
+        "key": "qwen_decision::guided",
+        "module": "qwen_decision",
+        "environment": {
+          "JEV_MODEL": "jev-1.13.0",
+          "LLM_MODEL_ID": "gemini-decision-1",
+          "QWEN_DECISION_MODEL": "decision-model-preview",
+          "STRUCTURED_LLM_MODEL": "gpt-6.1-terra",
+          "JEV_THRESHOLD": "0.5",
+          "GOOGLE_DECISION_THRESHOLD": "0.5",
+          "JEV_TFIDF_WEIGHT": "0.5",
+          "JEV_TFIDF_THRESHOLD": "0.5",
+          "LOCAL_JEV_MODEL": "jevos-v5",
+          "LOCAL_JEV_THRESHOLD": "0.5",
+          "SEMANTIC_ENCODER_DEVICE": "cpu",
+          "RUBERT_F1_DEVICE": "cpu",
+          "TFIDF_ARTIFACT_PATH": "out/classifier-methods/tfidf.json",
+          "LEARNED_KEYWORDS_ARTIFACT": "src/subcategory_extraction/learned_keywords/artifacts/learned-keywords.json",
+          "SEMANTIC_ENCODER_ARTIFACT_PATH": "out/semantic-encoder",
+          "RUBERT_F1_ARTIFACT_PATH": "src/subcategory_extraction/semantic_encoder_f1/artifacts",
+          "JEV_REFERENCE_DATASET": "out/hybrid-training.jsonl",
+          "JEV_REFERENCE_MAX_CHARS": "1800",
+          "QWEN_DECISION_PROMPT": "guided"
+        },
+        "artifact_sha256": {
+          "out/classifier-methods/tfidf.json": "2ef7ed22c74a13820b1b06d53b5a84d6c8555b082f4bcab5b6e0408164acf62b",
+          "src/subcategory_extraction/learned_keywords/artifacts/learned-keywords.json": "d06457a8c082171a096da05d18812528247c8c90e3c06157dc93e5ea6b65f3fa",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/calibration.json": "08810b988729fc370d1c03677c38430a27da8a9501d9d6edc5d9532bd0e1dee4",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/encoder/config.json": "5d75152afedf12d8b30edf67fc9fdd0eedf9578a70679373db46ba94256335a0",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/encoder/model.safetensors": "9fc639dd6813e8481b7d21577924df1973636e38e5992bba20f06700b2d0ada1",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/head.safetensors": "81f56fffeaf4a5460e36b362b3e7d3e804a1579a9f8b7ae6adeb357d3da4772b",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/metadata.json": "d523ce9fd906ede91463053c94d664c5ae04b40b1588ce2802e5be0eb2d330f9",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/tokenizer/special_tokens_map.json": "5d5b662e421ea9fac075174bb0688ee0d9431699900b90662acd44b2a350503a",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/tokenizer/tokenizer.json": "b6a9f282c732603652189b1fc2f32a2e2578b43927c5cf44a2e3585631419bb0",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/tokenizer/tokenizer_config.json": "71b22b163773e6d2a3bc53236a6dca9245f2e0422b09e2d9597dbf02825c7135",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/tokenizer/vocab.txt": "f056a69b097422652053bf87565c35543e5d81540ca4b7dddd28de4157a969e0"
+        },
+        "training_table": null,
+        "selection": "existing configurations fixed before test; no threshold search"
+      },
+      "execution": "pipeline_run",
+      "reused_predictions": 0,
+      "model_provenance": {
+        "model": "decision-model-preview",
+        "endpoint": "https://token-plan.maas.qianwenaiapi.com/compatible-mode/v1/systemone",
+        "prompt": "guided",
+        "prompt_sha256": "abc86fcf6dd063064dbc19abe808c6f9733f3fda913ab6ee91211f24573a8cc0",
+        "thresholds": {
+          "101": 0.5,
+          "102": 0.5,
+          "103": 0.5,
+          "104": 0.5,
+          "105": 0.5,
+          "106": 0.5
+        },
+        "calibration_sha256": null,
+        "training_dataset": null
+      },
+      "error": "ValueError: Задайте QIANWEN_TOKEN_PLAN_API_KEY в .env",
+      "measurement_metadata": {
+        "date": "2026-11-15T04:30:59+03:00",
+        "commit": "534e7abcf5530570d797c178afaa2429b405013b",
+        "code_sha256": "fc8fbd0b2ff19b17081ff2df5e6bae90b9236f37be14db6dcd0dd95c0232dccf",
+        "mode": "pipeline_run",
+        "protocol": {
+          "dataset_table": "manual_test",
+          "training_table": "manual_train",
+          "dataset_sha256": "fae05cba56fdf57a15aa3979afd828b73928efcca64694be5d805d34e002b99d",
+          "table_sha256": "fae05cba56fdf57a15aa3979afd828b73928efcca64694be5d805d34e002b99d",
+          "training_sha256": "6e53aa521160a02e8dcbfdd89281a16c07e817454910765bb0c67168a7ffcb27",
+          "rows": 139,
+          "source_mc_id_assumption": 101
+        },
+        "overlap": {
+          "checked": true,
+          "method": "normalized_exact_description",
+          "training_dataset": "manual_train",
+          "overlapping_rows": 13,
+          "row_numbers": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13
+          ]
+        }
+      }
+    },
+    "qwen_decision::boundaries": {
+      "status": "failed",
+      "predicted": [],
+      "inference": [],
+      "workers": 1,
+      "configuration": {
+        "key": "qwen_decision::boundaries",
+        "module": "qwen_decision",
+        "environment": {
+          "JEV_MODEL": "jev-1.13.0",
+          "LLM_MODEL_ID": "gemini-decision-1",
+          "QWEN_DECISION_MODEL": "decision-model-preview",
+          "STRUCTURED_LLM_MODEL": "gpt-6.1-terra",
+          "JEV_THRESHOLD": "0.5",
+          "GOOGLE_DECISION_THRESHOLD": "0.5",
+          "JEV_TFIDF_WEIGHT": "0.5",
+          "JEV_TFIDF_THRESHOLD": "0.5",
+          "LOCAL_JEV_MODEL": "jevos-v5",
+          "LOCAL_JEV_THRESHOLD": "0.5",
+          "SEMANTIC_ENCODER_DEVICE": "cpu",
+          "RUBERT_F1_DEVICE": "cpu",
+          "TFIDF_ARTIFACT_PATH": "out/classifier-methods/tfidf.json",
+          "LEARNED_KEYWORDS_ARTIFACT": "src/subcategory_extraction/learned_keywords/artifacts/learned-keywords.json",
+          "SEMANTIC_ENCODER_ARTIFACT_PATH": "out/semantic-encoder",
+          "RUBERT_F1_ARTIFACT_PATH": "src/subcategory_extraction/semantic_encoder_f1/artifacts",
+          "JEV_REFERENCE_DATASET": "out/hybrid-training.jsonl",
+          "JEV_REFERENCE_MAX_CHARS": "1800",
+          "QWEN_DECISION_PROMPT": "boundaries"
+        },
+        "artifact_sha256": {
+          "out/classifier-methods/tfidf.json": "2ef7ed22c74a13820b1b06d53b5a84d6c8555b082f4bcab5b6e0408164acf62b",
+          "src/subcategory_extraction/learned_keywords/artifacts/learned-keywords.json": "d06457a8c082171a096da05d18812528247c8c90e3c06157dc93e5ea6b65f3fa",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/calibration.json": "08810b988729fc370d1c03677c38430a27da8a9501d9d6edc5d9532bd0e1dee4",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/encoder/config.json": "5d75152afedf12d8b30edf67fc9fdd0eedf9578a70679373db46ba94256335a0",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/encoder/model.safetensors": "9fc639dd6813e8481b7d21577924df1973636e38e5992bba20f06700b2d0ada1",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/head.safetensors": "81f56fffeaf4a5460e36b362b3e7d3e804a1579a9f8b7ae6adeb357d3da4772b",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/metadata.json": "d523ce9fd906ede91463053c94d664c5ae04b40b1588ce2802e5be0eb2d330f9",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/tokenizer/special_tokens_map.json": "5d5b662e421ea9fac075174bb0688ee0d9431699900b90662acd44b2a350503a",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/tokenizer/tokenizer.json": "b6a9f282c732603652189b1fc2f32a2e2578b43927c5cf44a2e3585631419bb0",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/tokenizer/tokenizer_config.json": "71b22b163773e6d2a3bc53236a6dca9245f2e0422b09e2d9597dbf02825c7135",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/tokenizer/vocab.txt": "f056a69b097422652053bf87565c35543e5d81540ca4b7dddd28de4157a969e0"
+        },
+        "training_table": null,
+        "selection": "existing configurations fixed before test; no threshold search"
+      },
+      "execution": "pipeline_run",
+      "reused_predictions": 0,
+      "model_provenance": {
+        "model": "decision-model-preview",
+        "endpoint": "https://token-plan.maas.qianwenaiapi.com/compatible-mode/v1/systemone",
+        "prompt": "boundaries",
+        "prompt_sha256": "e2f2644d4b671352aff8f19728efe63ae31b3534c135cd6054fd6a8a56fd7bc2",
+        "thresholds": {
+          "101": 0.5,
+          "102": 0.5,
+          "103": 0.5,
+          "104": 0.5,
+          "105": 0.5,
+          "106": 0.5
+        },
+        "calibration_sha256": null,
+        "training_dataset": null
+      },
+      "error": "ValueError: Задайте QIANWEN_TOKEN_PLAN_API_KEY в .env",
+      "measurement_metadata": {
+        "date": "2026-11-15T04:33:01+03:00",
+        "commit": "534e7abcf5530570d797c178afaa2429b405013b",
+        "code_sha256": "fc8fbd0b2ff19b17081ff2df5e6bae90b9236f37be14db6dcd0dd95c0232dccf",
+        "mode": "pipeline_run",
+        "protocol": {
+          "dataset_table": "manual_test",
+          "training_table": "manual_train",
+          "dataset_sha256": "fae05cba56fdf57a15aa3979afd828b73928efcca64694be5d805d34e002b99d",
+          "table_sha256": "fae05cba56fdf57a15aa3979afd828b73928efcca64694be5d805d34e002b99d",
+          "training_sha256": "6e53aa521160a02e8dcbfdd89281a16c07e817454910765bb0c67168a7ffcb27",
+          "rows": 139,
+          "source_mc_id_assumption": 101
+        },
+        "overlap": {
+          "checked": true,
+          "method": "normalized_exact_description",
+          "training_dataset": "manual_train",
+          "overlapping_rows": 13,
+          "row_numbers": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13
+          ]
+        }
+      }
+    },
+    "tinybert": {
+      "status": "failed",
+      "predicted": [],
+      "inference": [],
+      "workers": 1,
+      "configuration": {
+        "key": "tinybert",
+        "module": "tinybert",
+        "environment": {
+          "JEV_MODEL": "jev-1.13.0",
+          "LLM_MODEL_ID": "gemini-decision-1",
+          "QWEN_DECISION_MODEL": "decision-model-preview",
+          "STRUCTURED_LLM_MODEL": "gpt-6.1-terra",
+          "JEV_THRESHOLD": "0.5",
+          "GOOGLE_DECISION_THRESHOLD": "0.5",
+          "JEV_TFIDF_WEIGHT": "0.5",
+          "JEV_TFIDF_THRESHOLD": "0.5",
+          "LOCAL_JEV_MODEL": "jevos-v5",
+          "LOCAL_JEV_THRESHOLD": "0.5",
+          "SEMANTIC_ENCODER_DEVICE": "cpu",
+          "RUBERT_F1_DEVICE": "cpu",
+          "TFIDF_ARTIFACT_PATH": "out/classifier-methods/tfidf.json",
+          "LEARNED_KEYWORDS_ARTIFACT": "src/subcategory_extraction/learned_keywords/artifacts/learned-keywords.json",
+          "SEMANTIC_ENCODER_ARTIFACT_PATH": "out/semantic-encoder",
+          "RUBERT_F1_ARTIFACT_PATH": "src/subcategory_extraction/semantic_encoder_f1/artifacts",
+          "JEV_REFERENCE_DATASET": "out/hybrid-training.jsonl",
+          "JEV_REFERENCE_MAX_CHARS": "1800"
+        },
+        "artifact_sha256": {
+          "out/classifier-methods/tfidf.json": "2ef7ed22c74a13820b1b06d53b5a84d6c8555b082f4bcab5b6e0408164acf62b",
+          "src/subcategory_extraction/learned_keywords/artifacts/learned-keywords.json": "d06457a8c082171a096da05d18812528247c8c90e3c06157dc93e5ea6b65f3fa",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/calibration.json": "08810b988729fc370d1c03677c38430a27da8a9501d9d6edc5d9532bd0e1dee4",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/encoder/config.json": "5d75152afedf12d8b30edf67fc9fdd0eedf9578a70679373db46ba94256335a0",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/encoder/model.safetensors": "9fc639dd6813e8481b7d21577924df1973636e38e5992bba20f06700b2d0ada1",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/head.safetensors": "81f56fffeaf4a5460e36b362b3e7d3e804a1579a9f8b7ae6adeb357d3da4772b",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/metadata.json": "d523ce9fd906ede91463053c94d664c5ae04b40b1588ce2802e5be0eb2d330f9",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/tokenizer/special_tokens_map.json": "5d5b662e421ea9fac075174bb0688ee0d9431699900b90662acd44b2a350503a",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/tokenizer/tokenizer.json": "b6a9f282c732603652189b1fc2f32a2e2578b43927c5cf44a2e3585631419bb0",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/tokenizer/tokenizer_config.json": "71b22b163773e6d2a3bc53236a6dca9245f2e0422b09e2d9597dbf02825c7135",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/tokenizer/vocab.txt": "f056a69b097422652053bf87565c35543e5d81540ca4b7dddd28de4157a969e0"
+        },
+        "training_table": null,
+        "selection": "existing configurations fixed before test; no threshold search"
+      },
+      "error": "ValueError: Нет полного локального артефакта TinyBERT: /Users/arsenijsekin/Documents/Codex/2026-11-13/https-github-com-one-zero-eight/hackathon-innoglobalhack-avito/out/tinybert; отсутствуют ['metadata.json', 'train-report.json', 'head.safetensors', 'encoder/config.json', 'encoder/model.safetensors', 'tokenizer/tokenizer.json', 'tokenizer/tokenizer_config.json']. Сначала запустите python -m subcategory_extraction.tinybert.train",
+      "measurement_metadata": {
+        "date": "2026-11-15T04:42:36+03:00",
+        "commit": "534e7abcf5530570d797c178afaa2429b405013b",
+        "code_sha256": "fc8fbd0b2ff19b17081ff2df5e6bae90b9236f37be14db6dcd0dd95c0232dccf",
         "mode": "pipeline_run",
         "protocol": {
           "dataset_table": "manual_test",

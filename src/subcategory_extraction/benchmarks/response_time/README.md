@@ -21,12 +21,14 @@ train, seed=44. SHA-256 train:
 | semantic_encoder_calibrated | out/rubert-thresholds/encoder / 2026-11-15 | 10 | 0.011291 | 0.008832 | 0.023364 | локальный CPU run() |
 | semantic_encoder::threshold-encoder | out/rubert-thresholds/encoder / 2026-11-15 | 10 | 0.012444 | 0.009354 | 0.025328 | локальный CPU run() |
 | semantic_encoder_f1 | веса 1c2a6f5 / 2026-11-15 | 10 | 0.013947 | 0.010074 | 0.027228 | локальный CPU run() |
+| snippet_logistic_regression | model.json.gz / 2026-11-15 | 10 | 0.008473 | 0.006652 | 0.021653 | локальный run() |
+| semantic_evidence | selection.json / 2026-11-15 | 10 | 0.032729 | 0.024371 | 0.098837 | локальный CPU run() |
 | google_decision | gemini-decision-1 / 2026-11-15 | 10 | 0.801300 | — | — | сетевой API run(), свежий |
 | google_decision::baseline | gemini-decision-1 / 2026-11-15 | 10 | 0.821800 | — | — | сетевой API run(), свежий |
 | qwen_decision | preview / 2026-11-14 | 10 | 14.309403 | 2.499930 | 62.312641 | сохранённый сетевой API-замер (не тот же прогон, что выше) |
 | local_jev / jevos-v5 | OpenVINO INT8 / 2026-11-14 | 10 | 1.199780 | 1.126392 | 2.275740 | сохранённый замер готового сервера (Linux), english / 0.5 |
 
-Свежие 7 строк перемерены на этой машине в одном протоколе (seed=44, size=10).
+Свежие 9 строк перемерены на этой машине в одном протоколе (seed=44, size=10).
 Строки `qwen_decision` и `local_jev` — исторические замеры других орудий
 (внешний API / Linux-сервер), сохранены с исходной датой и происхождением,
 их не сравниваем напрямую с локальными CPU-строками.

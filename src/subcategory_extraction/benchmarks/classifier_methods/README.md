@@ -29,12 +29,15 @@ PostgreSQL), SHA-256 исходного файла —
 | semantic_encoder (базовый) | rubert-tiny2 / сохранённые ответы | — | 208 | 0.786704 | сохранённые ответы, без новых вызовов |
 | tfidf | веса 2ef7ed22c74a / 2026-11-15 | — | 208 | 0.778462 | локальные run() |
 | semantic_encoder_f1 | веса 1c2a6f5 / 2026-11-15 | — | 208 | 0.769433 | локальные run() |
+| semantic_evidence | веса selection.json / 2026-11-15 | — | 208 | 0.764314 | локальные run() |
+| snippet_logistic_regression | model.json.gz / 2026-11-15 | — | 208 | 0.763194 | локальные run() |
 | regex | правила annotate_dataset / 2026-11-15 | — | 208 | 0.751979 | локальные run() |
 | learned_keywords | веса d06457a8c082 / 2026-11-15 | — | 208 | 0.745358 | локальные run() |
 | google_decision::baseline | gemini-decision-1 / 2026-11-15 | baseline | 208 | 0.738462 | локальные run() |
 | semantic_encoder::threshold-encoder | out/rubert-thresholds/encoder / 2026-11-15 | — | 208 | 0.728411 | локальные run() |
 | semantic_encoder_calibrated | out/rubert-thresholds/encoder / 2026-11-15 | — | 208 | 0.727273 | локальные run() |
 | qwen_decision | decision-model-preview / сохранённые ответы | boundaries | 208 | 0.629674 | сохранённые ответы, без новых вызовов |
+| tinybert | — | — | 208 | — | обучение не выполнено в этой среде |
 | local_jev / jevos-v5 | jevos-v5 / сохранённые предсказания | english / 0.5 | 208 | 0.399050 | сохранённые CPU-предсказания |
 | local_jev / jevos-v5 | jevos-v5 / сохранённые предсказания | guided_ru / 0.5 | 208 | 0.000000 | сохранённые CPU-предсказания; на macOS runtime недоступен, результат невалиден |
 
@@ -51,15 +54,18 @@ API, runtime `local_jev` поддерживает только Linux x86_64, л�
 артефакт. Фиктивные значения не подставляются:
 
 - `jev`, `jev::baseline`, `jev_boundaries`, `jev_tfidf`(+baseline),
-  `jev_retrieval`(+baseline), `evidence_jev`, `jev_arbiter`(+baseline) —
-  с текущим `BESTAPI_API_KEY` API `bestapi.fugue.pro` отвечает HTTP 401
-  (ключ не авторизует сервис); новых вызовов нет, остаются исторические
+  `jev_retrieval`(+baseline), `evidence_jev`, `jev_arbiter`(+baseline),
+  `jev_calibrated` — в `.env` нет ключа, авторизующего выбранного провайдера
+  (`SELECTEL_API_KEY` отсутствует; `BESTAPI_API_KEY` отвечает HTTP 401);
+  новых вызовов нет, для `jev`/`jev_tfidf` остаются исторические
   сохранённые ответы (выше отмечены как «сохранённые»);
 - `qwen_decision`, `qwen_decision::guided`, `qwen_decision::boundaries` —
   не прогоняются по решению команды (Qwen не запускаем);
 - `local_jev` (+ guided_ru) — runtime только для Linux x86_64;
 - `semantic_encoder` (базовая) — артефакт `out/semantic-encoder/metadata.json`
-  не загружен (известен исторический результат 0.786704 по сохранённым ответам).
+  не загружен (известен исторический результат 0.786704 по сохранённым ответам);
+- `tinybert` — обученные веса отсутствуют; обучение запускается
+  `python -m subcategory_extraction.tinybert.train`.
 
 ## Карта результатов
 

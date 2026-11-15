@@ -1,7 +1,7 @@
 {
-  "date": "2026-11-15T02:53:51+03:00",
-  "commit": "e64668f0ca0f35e226f7cfa09a8649a443f46a07",
-  "code_sha256": "48e1ea81665df382f49ca38826623eeaafe3281476ed6203e19e08a7ed2918d1",
+  "date": "2026-11-15T04:08:39+03:00",
+  "commit": "534e7abcf5530570d797c178afaa2429b405013b",
+  "code_sha256": "fc8fbd0b2ff19b17081ff2df5e6bae90b9236f37be14db6dcd0dd95c0232dccf",
   "working_tree": true,
   "machine": "macOS-27.0.1-arm64-arm-64bit-Mach-O",
   "environment": {
@@ -2984,7 +2984,506 @@
         "min_seconds": 0.637121332809329,
         "max_seconds": 1.2996414580848068
       }
+    },
+    "snippet_logistic_regression": {
+      "status": "complete",
+      "model": "snippet_logistic_regression",
+      "rows": [
+        {
+          "group_id": "1755d70b12029ca196b7b0db67ab296db96a38e58bfa37db4f9eddc1e435d87e",
+          "seconds": 0.020533292088657618,
+          "predicted": [
+            102,
+            103,
+            104,
+            105,
+            106
+          ],
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "api_clients": []
+        },
+        {
+          "group_id": "df3453fa719bcc9c4120f73540192a23c48886d1d05117214da3af68fdc290c9",
+          "seconds": 0.008264750009402633,
+          "predicted": [
+            102,
+            103,
+            104,
+            105,
+            106
+          ],
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "api_clients": []
+        },
+        {
+          "group_id": "270d30c0fee5b8ec5ce8309bc25a5dec6f0a874bdf86a75c9e6c29d1a30c80b1",
+          "seconds": 0.022569417022168636,
+          "predicted": [
+            102,
+            103,
+            104,
+            105,
+            106
+          ],
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "api_clients": []
+        },
+        {
+          "group_id": "716b71093f6ffcb8457d664a34eaeafd6b20130cfc8a637d2324960aea030387",
+          "seconds": 0.002331875031813979,
+          "predicted": [
+            102,
+            103,
+            104,
+            105,
+            106
+          ],
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "api_clients": []
+        },
+        {
+          "group_id": "8d8689783ae7b2d19ae5d3e5a199cea32bf1458a91a5936230bdc502c4051cdf",
+          "seconds": 0.0023225839249789715,
+          "predicted": [
+            102,
+            103,
+            104,
+            105,
+            106
+          ],
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "api_clients": []
+        },
+        {
+          "group_id": "bdcf8534a4ad2c0f2d370814f3b22e61e250e397c60d1c1dc45b54364947a03d",
+          "seconds": 0.00510183279402554,
+          "predicted": [
+            102,
+            103,
+            104,
+            105,
+            106
+          ],
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "api_clients": []
+        },
+        {
+          "group_id": "5524cc0b4bc58d27f2d87abc371da359477b802a890b3d21bc34fc51e0214caa",
+          "seconds": 0.0033513749949634075,
+          "predicted": [
+            102,
+            103,
+            104,
+            105,
+            106
+          ],
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "api_clients": []
+        },
+        {
+          "group_id": "01feb66f2e21c5fb187fedd281f87e93c750cae9f62dd731f95d32ec0e2c0807",
+          "seconds": 0.008201417047530413,
+          "predicted": [
+            102,
+            103,
+            104,
+            105,
+            106
+          ],
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "api_clients": []
+        },
+        {
+          "group_id": "1f07801ecf1efcabe5f51f854601df2993b41894476fb12115c72242d382ab08",
+          "seconds": 0.00384729215875268,
+          "predicted": [
+            102,
+            104,
+            105
+          ],
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "api_clients": []
+        },
+        {
+          "group_id": "b06fa5d52b80f154594a544c282106fb90f32dccc057b670b9ad89a60e27d185",
+          "seconds": 0.008208333980292082,
+          "predicted": [
+            102,
+            106
+          ],
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "api_clients": []
+        }
+      ],
+      "configuration": {
+        "key": "snippet_logistic_regression",
+        "module": "snippet_logistic_regression",
+        "environment": {
+          "JEV_MODEL": "jev-1.13.0",
+          "LLM_MODEL_ID": "gemini-decision-1",
+          "QWEN_DECISION_MODEL": "decision-model-preview",
+          "STRUCTURED_LLM_MODEL": "gpt-6.1-terra",
+          "JEV_THRESHOLD": "0.5",
+          "GOOGLE_DECISION_THRESHOLD": "0.5",
+          "JEV_TFIDF_WEIGHT": "0.5",
+          "JEV_TFIDF_THRESHOLD": "0.5",
+          "LOCAL_JEV_MODEL": "jevos-v5",
+          "LOCAL_JEV_THRESHOLD": "0.5",
+          "SEMANTIC_ENCODER_DEVICE": "cpu",
+          "RUBERT_F1_DEVICE": "cpu",
+          "TFIDF_ARTIFACT_PATH": "out/classifier-methods/tfidf.json",
+          "LEARNED_KEYWORDS_ARTIFACT": "src/subcategory_extraction/learned_keywords/artifacts/learned-keywords.json",
+          "SEMANTIC_ENCODER_ARTIFACT_PATH": "out/semantic-encoder",
+          "RUBERT_F1_ARTIFACT_PATH": "src/subcategory_extraction/semantic_encoder_f1/artifacts",
+          "JEV_REFERENCE_DATASET": "out/hybrid-training.jsonl",
+          "JEV_REFERENCE_MAX_CHARS": "1800"
+        },
+        "artifact_sha256": {
+          "out/classifier-methods/tfidf.json": "2ef7ed22c74a13820b1b06d53b5a84d6c8555b082f4bcab5b6e0408164acf62b",
+          "src/subcategory_extraction/learned_keywords/artifacts/learned-keywords.json": "d06457a8c082171a096da05d18812528247c8c90e3c06157dc93e5ea6b65f3fa",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/calibration.json": "08810b988729fc370d1c03677c38430a27da8a9501d9d6edc5d9532bd0e1dee4",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/encoder/config.json": "5d75152afedf12d8b30edf67fc9fdd0eedf9578a70679373db46ba94256335a0",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/encoder/model.safetensors": "9fc639dd6813e8481b7d21577924df1973636e38e5992bba20f06700b2d0ada1",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/head.safetensors": "81f56fffeaf4a5460e36b362b3e7d3e804a1579a9f8b7ae6adeb357d3da4772b",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/metadata.json": "d523ce9fd906ede91463053c94d664c5ae04b40b1588ce2802e5be0eb2d330f9",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/tokenizer/special_tokens_map.json": "5d5b662e421ea9fac075174bb0688ee0d9431699900b90662acd44b2a350503a",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/tokenizer/tokenizer.json": "b6a9f282c732603652189b1fc2f32a2e2578b43927c5cf44a2e3585631419bb0",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/tokenizer/tokenizer_config.json": "71b22b163773e6d2a3bc53236a6dca9245f2e0422b09e2d9597dbf02825c7135",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/tokenizer/vocab.txt": "f056a69b097422652053bf87565c35543e5d81540ca4b7dddd28de4157a969e0"
+        },
+        "training_table": null,
+        "selection": "existing configurations fixed before test; no threshold search"
+      },
+      "measurement_metadata": {
+        "date": "2026-11-15T04:03:07+03:00",
+        "commit": "534e7abcf5530570d797c178afaa2429b405013b",
+        "code_sha256": "fc8fbd0b2ff19b17081ff2df5e6bae90b9236f37be14db6dcd0dd95c0232dccf",
+        "machine": "macOS-27.0.1-arm64-arm-64bit-Mach-O",
+        "environment": {
+          "OMP_NUM_THREADS": null,
+          "OPENBLAS_NUM_THREADS": null,
+          "MKL_NUM_THREADS": null,
+          "TOKENIZERS_PARALLELISM": null
+        }
+      },
+      "timing_scope": {
+        "loading_included": false,
+        "first_call_included": true,
+        "cache_enabled": null,
+        "quota_wait_and_retries_included_if_any": true,
+        "warmup": false,
+        "fresh_client_caches": true,
+        "p95_method": "numpy.percentile linear interpolation"
+      },
+      "response_time": {
+        "calls": 10,
+        "total_seconds": 0.08473216905258596,
+        "mean_seconds": 0.008473216905258596,
+        "median_seconds": 0.0066516249207779765,
+        "p95_seconds": 0.021653160802088674,
+        "min_seconds": 0.0023225839249789715,
+        "max_seconds": 0.022569417022168636
+      }
+    },
+    "semantic_evidence": {
+      "status": "complete",
+      "model": "semantic_evidence",
+      "rows": [
+        {
+          "group_id": "1755d70b12029ca196b7b0db67ab296db96a38e58bfa37db4f9eddc1e435d87e",
+          "seconds": 0.02760695805773139,
+          "predicted": [
+            102,
+            103,
+            104,
+            105,
+            106
+          ],
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "api_clients": []
+        },
+        {
+          "group_id": "df3453fa719bcc9c4120f73540192a23c48886d1d05117214da3af68fdc290c9",
+          "seconds": 0.030649499967694283,
+          "predicted": [
+            102,
+            103,
+            104,
+            105,
+            106
+          ],
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "api_clients": []
+        },
+        {
+          "group_id": "270d30c0fee5b8ec5ce8309bc25a5dec6f0a874bdf86a75c9e6c29d1a30c80b1",
+          "seconds": 0.15462658391334116,
+          "predicted": [
+            102,
+            103,
+            104,
+            105,
+            106
+          ],
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "api_clients": []
+        },
+        {
+          "group_id": "716b71093f6ffcb8457d664a34eaeafd6b20130cfc8a637d2324960aea030387",
+          "seconds": 0.007189332973212004,
+          "predicted": [
+            102,
+            103,
+            104,
+            105,
+            106
+          ],
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "api_clients": []
+        },
+        {
+          "group_id": "8d8689783ae7b2d19ae5d3e5a199cea32bf1458a91a5936230bdc502c4051cdf",
+          "seconds": 0.0040471251122653484,
+          "predicted": [
+            102,
+            103,
+            104,
+            105,
+            106
+          ],
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "api_clients": []
+        },
+        {
+          "group_id": "bdcf8534a4ad2c0f2d370814f3b22e61e250e397c60d1c1dc45b54364947a03d",
+          "seconds": 0.02930362499319017,
+          "predicted": [
+            102,
+            103,
+            104,
+            105,
+            106
+          ],
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "api_clients": []
+        },
+        {
+          "group_id": "5524cc0b4bc58d27f2d87abc371da359477b802a890b3d21bc34fc51e0214caa",
+          "seconds": 0.009598792064934969,
+          "predicted": [
+            102,
+            104,
+            105,
+            106
+          ],
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "api_clients": []
+        },
+        {
+          "group_id": "01feb66f2e21c5fb187fedd281f87e93c750cae9f62dd731f95d32ec0e2c0807",
+          "seconds": 0.021135875023901463,
+          "predicted": [
+            102,
+            103,
+            104,
+            105,
+            106
+          ],
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "api_clients": []
+        },
+        {
+          "group_id": "1f07801ecf1efcabe5f51f854601df2993b41894476fb12115c72242d382ab08",
+          "seconds": 0.02897225017659366,
+          "predicted": [
+            102,
+            104,
+            105
+          ],
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "api_clients": []
+        },
+        {
+          "group_id": "b06fa5d52b80f154594a544c282106fb90f32dccc057b670b9ad89a60e27d185",
+          "seconds": 0.014164499938488007,
+          "predicted": [
+            102,
+            106
+          ],
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "api_clients": []
+        }
+      ],
+      "configuration": {
+        "key": "semantic_evidence",
+        "module": "semantic_evidence",
+        "environment": {
+          "JEV_MODEL": "jev-1.13.0",
+          "LLM_MODEL_ID": "gemini-decision-1",
+          "QWEN_DECISION_MODEL": "decision-model-preview",
+          "STRUCTURED_LLM_MODEL": "gpt-6.1-terra",
+          "JEV_THRESHOLD": "0.5",
+          "GOOGLE_DECISION_THRESHOLD": "0.5",
+          "JEV_TFIDF_WEIGHT": "0.5",
+          "JEV_TFIDF_THRESHOLD": "0.5",
+          "LOCAL_JEV_MODEL": "jevos-v5",
+          "LOCAL_JEV_THRESHOLD": "0.5",
+          "SEMANTIC_ENCODER_DEVICE": "cpu",
+          "RUBERT_F1_DEVICE": "cpu",
+          "TFIDF_ARTIFACT_PATH": "out/classifier-methods/tfidf.json",
+          "LEARNED_KEYWORDS_ARTIFACT": "src/subcategory_extraction/learned_keywords/artifacts/learned-keywords.json",
+          "SEMANTIC_ENCODER_ARTIFACT_PATH": "out/semantic-encoder",
+          "RUBERT_F1_ARTIFACT_PATH": "src/subcategory_extraction/semantic_encoder_f1/artifacts",
+          "JEV_REFERENCE_DATASET": "out/hybrid-training.jsonl",
+          "JEV_REFERENCE_MAX_CHARS": "1800"
+        },
+        "artifact_sha256": {
+          "out/classifier-methods/tfidf.json": "2ef7ed22c74a13820b1b06d53b5a84d6c8555b082f4bcab5b6e0408164acf62b",
+          "src/subcategory_extraction/learned_keywords/artifacts/learned-keywords.json": "d06457a8c082171a096da05d18812528247c8c90e3c06157dc93e5ea6b65f3fa",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/calibration.json": "08810b988729fc370d1c03677c38430a27da8a9501d9d6edc5d9532bd0e1dee4",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/encoder/config.json": "5d75152afedf12d8b30edf67fc9fdd0eedf9578a70679373db46ba94256335a0",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/encoder/model.safetensors": "9fc639dd6813e8481b7d21577924df1973636e38e5992bba20f06700b2d0ada1",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/head.safetensors": "81f56fffeaf4a5460e36b362b3e7d3e804a1579a9f8b7ae6adeb357d3da4772b",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/metadata.json": "d523ce9fd906ede91463053c94d664c5ae04b40b1588ce2802e5be0eb2d330f9",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/tokenizer/special_tokens_map.json": "5d5b662e421ea9fac075174bb0688ee0d9431699900b90662acd44b2a350503a",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/tokenizer/tokenizer.json": "b6a9f282c732603652189b1fc2f32a2e2578b43927c5cf44a2e3585631419bb0",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/tokenizer/tokenizer_config.json": "71b22b163773e6d2a3bc53236a6dca9245f2e0422b09e2d9597dbf02825c7135",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/tokenizer/vocab.txt": "f056a69b097422652053bf87565c35543e5d81540ca4b7dddd28de4157a969e0"
+        },
+        "training_table": null,
+        "selection": "existing configurations fixed before test; no threshold search"
+      },
+      "measurement_metadata": {
+        "date": "2026-11-15T04:03:31+03:00",
+        "commit": "534e7abcf5530570d797c178afaa2429b405013b",
+        "code_sha256": "fc8fbd0b2ff19b17081ff2df5e6bae90b9236f37be14db6dcd0dd95c0232dccf",
+        "machine": "macOS-27.0.1-arm64-arm-64bit-Mach-O",
+        "environment": {
+          "OMP_NUM_THREADS": null,
+          "OPENBLAS_NUM_THREADS": null,
+          "MKL_NUM_THREADS": null,
+          "TOKENIZERS_PARALLELISM": null
+        }
+      },
+      "timing_scope": {
+        "loading_included": false,
+        "first_call_included": true,
+        "cache_enabled": null,
+        "quota_wait_and_retries_included_if_any": true,
+        "warmup": false,
+        "fresh_client_caches": true,
+        "p95_method": "numpy.percentile linear interpolation"
+      },
+      "response_time": {
+        "calls": 10,
+        "total_seconds": 0.32729454222135246,
+        "mean_seconds": 0.032729454222135246,
+        "median_seconds": 0.024371416540816426,
+        "p95_seconds": 0.09883689613779995,
+        "min_seconds": 0.0040471251122653484,
+        "max_seconds": 0.15462658391334116
+      }
+    },
+    "semantic_encoder": {
+      "status": "failed",
+      "model": "semantic_encoder",
+      "rows": [],
+      "configuration": {
+        "key": "semantic_encoder",
+        "module": "semantic_encoder",
+        "environment": {
+          "JEV_MODEL": "jev-1.13.0",
+          "LLM_MODEL_ID": "gemini-decision-1",
+          "QWEN_DECISION_MODEL": "decision-model-preview",
+          "STRUCTURED_LLM_MODEL": "gpt-6.1-terra",
+          "JEV_THRESHOLD": "0.5",
+          "GOOGLE_DECISION_THRESHOLD": "0.5",
+          "JEV_TFIDF_WEIGHT": "0.5",
+          "JEV_TFIDF_THRESHOLD": "0.5",
+          "LOCAL_JEV_MODEL": "jevos-v5",
+          "LOCAL_JEV_THRESHOLD": "0.5",
+          "SEMANTIC_ENCODER_DEVICE": "cpu",
+          "RUBERT_F1_DEVICE": "cpu",
+          "TFIDF_ARTIFACT_PATH": "out/classifier-methods/tfidf.json",
+          "LEARNED_KEYWORDS_ARTIFACT": "src/subcategory_extraction/learned_keywords/artifacts/learned-keywords.json",
+          "SEMANTIC_ENCODER_ARTIFACT_PATH": "out/semantic-encoder",
+          "RUBERT_F1_ARTIFACT_PATH": "src/subcategory_extraction/semantic_encoder_f1/artifacts",
+          "JEV_REFERENCE_DATASET": "out/hybrid-training.jsonl",
+          "JEV_REFERENCE_MAX_CHARS": "1800"
+        },
+        "artifact_sha256": {
+          "out/classifier-methods/tfidf.json": "2ef7ed22c74a13820b1b06d53b5a84d6c8555b082f4bcab5b6e0408164acf62b",
+          "src/subcategory_extraction/learned_keywords/artifacts/learned-keywords.json": "d06457a8c082171a096da05d18812528247c8c90e3c06157dc93e5ea6b65f3fa",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/calibration.json": "08810b988729fc370d1c03677c38430a27da8a9501d9d6edc5d9532bd0e1dee4",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/encoder/config.json": "5d75152afedf12d8b30edf67fc9fdd0eedf9578a70679373db46ba94256335a0",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/encoder/model.safetensors": "9fc639dd6813e8481b7d21577924df1973636e38e5992bba20f06700b2d0ada1",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/head.safetensors": "81f56fffeaf4a5460e36b362b3e7d3e804a1579a9f8b7ae6adeb357d3da4772b",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/metadata.json": "d523ce9fd906ede91463053c94d664c5ae04b40b1588ce2802e5be0eb2d330f9",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/tokenizer/special_tokens_map.json": "5d5b662e421ea9fac075174bb0688ee0d9431699900b90662acd44b2a350503a",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/tokenizer/tokenizer.json": "b6a9f282c732603652189b1fc2f32a2e2578b43927c5cf44a2e3585631419bb0",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/tokenizer/tokenizer_config.json": "71b22b163773e6d2a3bc53236a6dca9245f2e0422b09e2d9597dbf02825c7135",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/tokenizer/vocab.txt": "f056a69b097422652053bf87565c35543e5d81540ca4b7dddd28de4157a969e0"
+        },
+        "training_table": null,
+        "selection": "existing configurations fixed before test; no threshold search"
+      },
+      "measurement_metadata": {
+        "date": "2026-11-15T04:08:39+03:00",
+        "commit": "534e7abcf5530570d797c178afaa2429b405013b",
+        "code_sha256": "fc8fbd0b2ff19b17081ff2df5e6bae90b9236f37be14db6dcd0dd95c0232dccf",
+        "machine": "macOS-27.0.1-arm64-arm-64bit-Mach-O",
+        "environment": {
+          "OMP_NUM_THREADS": null,
+          "OPENBLAS_NUM_THREADS": null,
+          "MKL_NUM_THREADS": null,
+          "TOKENIZERS_PARALLELISM": null
+        }
+      },
+      "error": "ValueError: Нет локального артефакта semantic_encoder: /Users/arsenijsekin/Documents/Codex/2026-11-13/https-github-com-one-zero-eight/hackathon-innoglobalhack-avito/out/semantic-encoder/metadata.json. Обучение: PYTHONPATH=src uv run python -m subcategory_extraction.semantic_encoder.train --dataset out/hybrid-training.jsonl --device auto",
+      "response_time": {
+        "calls": 0
+      }
     }
   },
-  "status": "complete"
+  "status": "failed"
 }

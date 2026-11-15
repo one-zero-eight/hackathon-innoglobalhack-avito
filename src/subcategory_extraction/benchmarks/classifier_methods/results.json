@@ -1,7 +1,7 @@
 {
-  "date": "2026-11-15T02:37:40+03:00",
-  "commit": "e64668f0ca0f35e226f7cfa09a8649a443f46a07",
-  "code_sha256": "48e1ea81665df382f49ca38826623eeaafe3281476ed6203e19e08a7ed2918d1",
+  "date": "2026-11-15T03:57:04+03:00",
+  "commit": "534e7abcf5530570d797c178afaa2429b405013b",
+  "code_sha256": "fc8fbd0b2ff19b17081ff2df5e6bae90b9236f37be14db6dcd0dd95c0232dccf",
   "working_tree": true,
   "machine": "macOS-27.0.1-arm64-arm-64bit-Mach-O",
   "environment": {
@@ -1496,318 +1496,148 @@
   ],
   "results": {
     "jev": {
-      "status": "failed",
-      "predicted": [],
-      "inference": [],
-      "workers": 1,
-      "configuration": {
-        "key": "jev",
-        "module": "jev",
-        "environment": {
-          "JEV_MODEL": "jev-1.13.0",
-          "LLM_MODEL_ID": "gemini-decision-1",
-          "QWEN_DECISION_MODEL": "decision-model-preview",
-          "STRUCTURED_LLM_MODEL": "gpt-6.1-terra",
-          "JEV_THRESHOLD": "0.5",
-          "GOOGLE_DECISION_THRESHOLD": "0.5",
-          "JEV_TFIDF_WEIGHT": "0.5",
-          "JEV_TFIDF_THRESHOLD": "0.5",
-          "LOCAL_JEV_MODEL": "jevos-v5",
-          "LOCAL_JEV_THRESHOLD": "0.5",
-          "SEMANTIC_ENCODER_DEVICE": "cpu",
-          "RUBERT_F1_DEVICE": "cpu",
-          "TFIDF_ARTIFACT_PATH": "out/classifier-methods/tfidf.json",
-          "LEARNED_KEYWORDS_ARTIFACT": "src/subcategory_extraction/learned_keywords/artifacts/learned-keywords.json",
-          "SEMANTIC_ENCODER_ARTIFACT_PATH": "out/semantic-encoder",
-          "RUBERT_F1_ARTIFACT_PATH": "src/subcategory_extraction/semantic_encoder_f1/artifacts",
-          "JEV_REFERENCE_DATASET": "out/hybrid-training.jsonl",
-          "JEV_REFERENCE_MAX_CHARS": "1800",
-          "JEV_PROMPT_PATH": "src/subcategory_extraction/google_decision/prompts/google_decision_guided.md"
-        },
-        "artifact_sha256": {
-          "out/classifier-methods/tfidf.json": "2ef7ed22c74a13820b1b06d53b5a84d6c8555b082f4bcab5b6e0408164acf62b",
-          "src/subcategory_extraction/learned_keywords/artifacts/learned-keywords.json": "d06457a8c082171a096da05d18812528247c8c90e3c06157dc93e5ea6b65f3fa",
-          "src/subcategory_extraction/semantic_encoder_f1/artifacts/calibration.json": "08810b988729fc370d1c03677c38430a27da8a9501d9d6edc5d9532bd0e1dee4",
-          "src/subcategory_extraction/semantic_encoder_f1/artifacts/encoder/config.json": "5d75152afedf12d8b30edf67fc9fdd0eedf9578a70679373db46ba94256335a0",
-          "src/subcategory_extraction/semantic_encoder_f1/artifacts/encoder/model.safetensors": "9fc639dd6813e8481b7d21577924df1973636e38e5992bba20f06700b2d0ada1",
-          "src/subcategory_extraction/semantic_encoder_f1/artifacts/head.safetensors": "81f56fffeaf4a5460e36b362b3e7d3e804a1579a9f8b7ae6adeb357d3da4772b",
-          "src/subcategory_extraction/semantic_encoder_f1/artifacts/metadata.json": "d523ce9fd906ede91463053c94d664c5ae04b40b1588ce2802e5be0eb2d330f9",
-          "src/subcategory_extraction/semantic_encoder_f1/artifacts/tokenizer/special_tokens_map.json": "5d5b662e421ea9fac075174bb0688ee0d9431699900b90662acd44b2a350503a",
-          "src/subcategory_extraction/semantic_encoder_f1/artifacts/tokenizer/tokenizer.json": "b6a9f282c732603652189b1fc2f32a2e2578b43927c5cf44a2e3585631419bb0",
-          "src/subcategory_extraction/semantic_encoder_f1/artifacts/tokenizer/tokenizer_config.json": "71b22b163773e6d2a3bc53236a6dca9245f2e0422b09e2d9597dbf02825c7135",
-          "src/subcategory_extraction/semantic_encoder_f1/artifacts/tokenizer/vocab.txt": "f056a69b097422652053bf87565c35543e5d81540ca4b7dddd28de4157a969e0",
-          "src/subcategory_extraction/google_decision/prompts/google_decision_guided.md": "f05534059aa8ab3e29a281d39d65bfc3e5cbc887330787aba267abd8891728b7"
-        },
-        "training_table": null,
-        "selection": "existing configurations fixed before test; no threshold search"
+      "status": "complete",
+      "rows": 208,
+      "metrics": {
+        "micro_f1": 0.8461538461538461,
+        "classification_points": 50.76923076923077,
+        "tp": 286,
+        "fp": 95,
+        "fn": 9
       },
-      "error": "ValueError: Укажите BESTAPI_API_KEY в .env для запросов Jev",
-      "measurement_metadata": {
-        "date": "2026-11-15T01:47:08+03:00",
-        "commit": "e64668f0ca0f35e226f7cfa09a8649a443f46a07",
-        "code_sha256": "44bba24891f24f9afa12a32329489c4e1483884daf8254dee689125bd6c8f794",
-        "mode": "pipeline_run",
-        "protocol": {
-          "dataset_table": "case_test",
-          "training_table": "case_train",
-          "dataset_sha256": "cd6f432e3841e842d04bb07827b92f9b644c56b2b528cb36098433168890ae15",
-          "table_sha256": "cd6f432e3841e842d04bb07827b92f9b644c56b2b528cb36098433168890ae15",
-          "training_sha256": "da9895e47d4ae91c292e246ab5eef530da4cc1c4e47ee490f101412fda9f9272",
-          "rows": 208,
-          "source_mc_id_assumption": 101
-        },
-        "overlap": {
-          "checked": true,
-          "method": "normalized_exact_description",
-          "training_dataset": "case_train",
-          "overlapping_rows": 24,
-          "row_numbers": [
-            2,
-            10,
-            20,
-            46,
-            62,
-            65,
-            68,
-            77,
-            78,
-            79,
-            84,
-            88,
-            106,
-            108,
-            129,
-            142,
-            147,
-            154,
-            174,
-            179,
-            187,
-            191,
-            198,
-            203
-          ]
+      "execution": "offline_recalculation_of_recorded_predictions",
+      "recorded_metadata": {
+        "threshold": 0.5,
+        "client": {
+          "model": "jev-1.13.0",
+          "endpoint": "https://bestapi.fugue.pro/v1/systemone"
         }
+      },
+      "measurement_metadata": {
+        "date": "2026-11-15T04:04:45+03:00",
+        "commit": "534e7abcf5530570d797c178afaa2429b405013b",
+        "code_sha256": "fc8fbd0b2ff19b17081ff2df5e6bae90b9236f37be14db6dcd0dd95c0232dccf",
+        "mode": "offline_recalculation_of_recorded_predictions",
+        "record_sha256": "ca0ba9feeb9b131e0558216740a77a879aaa6237928d8fec47b36486fe2e69b4",
+        "note": "Исторические сохранённые ответы, пересчитанные офлайн; не новые вызовы"
       }
     },
     "jev_tfidf": {
-      "status": "failed",
-      "predicted": [],
-      "inference": [],
-      "workers": 1,
-      "configuration": {
-        "key": "jev_tfidf",
-        "module": "jev_tfidf",
-        "environment": {
-          "JEV_MODEL": "jev-1.13.0",
-          "LLM_MODEL_ID": "gemini-decision-1",
-          "QWEN_DECISION_MODEL": "decision-model-preview",
-          "STRUCTURED_LLM_MODEL": "gpt-6.1-terra",
-          "JEV_THRESHOLD": "0.5",
-          "GOOGLE_DECISION_THRESHOLD": "0.5",
-          "JEV_TFIDF_WEIGHT": "0.5",
-          "JEV_TFIDF_THRESHOLD": "0.5",
-          "LOCAL_JEV_MODEL": "jevos-v5",
-          "LOCAL_JEV_THRESHOLD": "0.5",
-          "SEMANTIC_ENCODER_DEVICE": "cpu",
-          "RUBERT_F1_DEVICE": "cpu",
-          "TFIDF_ARTIFACT_PATH": "out/classifier-methods/tfidf.json",
-          "LEARNED_KEYWORDS_ARTIFACT": "src/subcategory_extraction/learned_keywords/artifacts/learned-keywords.json",
-          "SEMANTIC_ENCODER_ARTIFACT_PATH": "out/semantic-encoder",
-          "RUBERT_F1_ARTIFACT_PATH": "src/subcategory_extraction/semantic_encoder_f1/artifacts",
-          "JEV_REFERENCE_DATASET": "out/hybrid-training.jsonl",
-          "JEV_REFERENCE_MAX_CHARS": "1800",
-          "JEV_PROMPT_PATH": "src/subcategory_extraction/google_decision/prompts/google_decision_guided.md"
-        },
-        "artifact_sha256": {
-          "out/classifier-methods/tfidf.json": "2ef7ed22c74a13820b1b06d53b5a84d6c8555b082f4bcab5b6e0408164acf62b",
-          "src/subcategory_extraction/learned_keywords/artifacts/learned-keywords.json": "d06457a8c082171a096da05d18812528247c8c90e3c06157dc93e5ea6b65f3fa",
-          "src/subcategory_extraction/semantic_encoder_f1/artifacts/calibration.json": "08810b988729fc370d1c03677c38430a27da8a9501d9d6edc5d9532bd0e1dee4",
-          "src/subcategory_extraction/semantic_encoder_f1/artifacts/encoder/config.json": "5d75152afedf12d8b30edf67fc9fdd0eedf9578a70679373db46ba94256335a0",
-          "src/subcategory_extraction/semantic_encoder_f1/artifacts/encoder/model.safetensors": "9fc639dd6813e8481b7d21577924df1973636e38e5992bba20f06700b2d0ada1",
-          "src/subcategory_extraction/semantic_encoder_f1/artifacts/head.safetensors": "81f56fffeaf4a5460e36b362b3e7d3e804a1579a9f8b7ae6adeb357d3da4772b",
-          "src/subcategory_extraction/semantic_encoder_f1/artifacts/metadata.json": "d523ce9fd906ede91463053c94d664c5ae04b40b1588ce2802e5be0eb2d330f9",
-          "src/subcategory_extraction/semantic_encoder_f1/artifacts/tokenizer/special_tokens_map.json": "5d5b662e421ea9fac075174bb0688ee0d9431699900b90662acd44b2a350503a",
-          "src/subcategory_extraction/semantic_encoder_f1/artifacts/tokenizer/tokenizer.json": "b6a9f282c732603652189b1fc2f32a2e2578b43927c5cf44a2e3585631419bb0",
-          "src/subcategory_extraction/semantic_encoder_f1/artifacts/tokenizer/tokenizer_config.json": "71b22b163773e6d2a3bc53236a6dca9245f2e0422b09e2d9597dbf02825c7135",
-          "src/subcategory_extraction/semantic_encoder_f1/artifacts/tokenizer/vocab.txt": "f056a69b097422652053bf87565c35543e5d81540ca4b7dddd28de4157a969e0",
-          "src/subcategory_extraction/google_decision/prompts/google_decision_guided.md": "f05534059aa8ab3e29a281d39d65bfc3e5cbc887330787aba267abd8891728b7"
-        },
-        "training_table": "case_train",
-        "selection": "existing configurations fixed before test; no threshold search"
+      "status": "complete",
+      "rows": 208,
+      "metrics": {
+        "micro_f1": 0.8422619047619048,
+        "classification_points": 50.535714285714285,
+        "tp": 283,
+        "fp": 94,
+        "fn": 12
       },
-      "model_training_overlap": {
-        "checked": true,
-        "method": "normalized_exact_description",
-        "training_dataset": "case_train",
-        "overlapping_rows": 24,
-        "row_numbers": [
-          2,
-          10,
-          20,
-          46,
-          62,
-          65,
-          68,
-          77,
-          78,
-          79,
-          84,
-          88,
-          106,
-          108,
-          129,
-          142,
-          147,
-          154,
-          174,
-          179,
-          187,
-          191,
-          198,
-          203
-        ]
+      "execution": "offline_recalculation_of_recorded_predictions",
+      "recorded_metadata": {
+        "threshold": 0.5,
+        "weight": 0.5
       },
-      "error": "ValueError: Укажите BESTAPI_API_KEY в .env для запросов Jev",
       "measurement_metadata": {
-        "date": "2026-11-15T01:47:08+03:00",
-        "commit": "e64668f0ca0f35e226f7cfa09a8649a443f46a07",
-        "code_sha256": "44bba24891f24f9afa12a32329489c4e1483884daf8254dee689125bd6c8f794",
-        "mode": "pipeline_run",
-        "protocol": {
-          "dataset_table": "case_test",
-          "training_table": "case_train",
-          "dataset_sha256": "cd6f432e3841e842d04bb07827b92f9b644c56b2b528cb36098433168890ae15",
-          "table_sha256": "cd6f432e3841e842d04bb07827b92f9b644c56b2b528cb36098433168890ae15",
-          "training_sha256": "da9895e47d4ae91c292e246ab5eef530da4cc1c4e47ee490f101412fda9f9272",
-          "rows": 208,
-          "source_mc_id_assumption": 101
-        },
-        "overlap": {
-          "checked": true,
-          "method": "normalized_exact_description",
-          "training_dataset": "case_train",
-          "overlapping_rows": 24,
-          "row_numbers": [
-            2,
-            10,
-            20,
-            46,
-            62,
-            65,
-            68,
-            77,
-            78,
-            79,
-            84,
-            88,
-            106,
-            108,
-            129,
-            142,
-            147,
-            154,
-            174,
-            179,
-            187,
-            191,
-            198,
-            203
-          ]
-        }
+        "date": "2026-11-15T04:04:45+03:00",
+        "commit": "534e7abcf5530570d797c178afaa2429b405013b",
+        "code_sha256": "fc8fbd0b2ff19b17081ff2df5e6bae90b9236f37be14db6dcd0dd95c0232dccf",
+        "mode": "offline_recalculation_of_recorded_predictions",
+        "record_sha256": "ca0ba9feeb9b131e0558216740a77a879aaa6237928d8fec47b36486fe2e69b4",
+        "note": "Исторические сохранённые ответы, пересчитанные офлайн; не новые вызовы"
       }
     },
     "semantic_encoder": {
-      "status": "failed",
-      "predicted": [],
-      "inference": [],
-      "workers": 1,
-      "configuration": {
-        "key": "semantic_encoder",
-        "module": "semantic_encoder",
-        "environment": {
-          "JEV_MODEL": "jev-1.13.0",
-          "LLM_MODEL_ID": "gemini-decision-1",
-          "QWEN_DECISION_MODEL": "decision-model-preview",
-          "STRUCTURED_LLM_MODEL": "gpt-6.1-terra",
-          "JEV_THRESHOLD": "0.5",
-          "GOOGLE_DECISION_THRESHOLD": "0.5",
-          "JEV_TFIDF_WEIGHT": "0.5",
-          "JEV_TFIDF_THRESHOLD": "0.5",
-          "LOCAL_JEV_MODEL": "jevos-v5",
-          "LOCAL_JEV_THRESHOLD": "0.5",
-          "SEMANTIC_ENCODER_DEVICE": "cpu",
-          "RUBERT_F1_DEVICE": "cpu",
-          "TFIDF_ARTIFACT_PATH": "out/classifier-methods/tfidf.json",
-          "LEARNED_KEYWORDS_ARTIFACT": "src/subcategory_extraction/learned_keywords/artifacts/learned-keywords.json",
-          "SEMANTIC_ENCODER_ARTIFACT_PATH": "out/semantic-encoder",
-          "RUBERT_F1_ARTIFACT_PATH": "src/subcategory_extraction/semantic_encoder_f1/artifacts",
-          "JEV_REFERENCE_DATASET": "out/hybrid-training.jsonl",
-          "JEV_REFERENCE_MAX_CHARS": "1800"
-        },
-        "artifact_sha256": {
-          "out/classifier-methods/tfidf.json": "2ef7ed22c74a13820b1b06d53b5a84d6c8555b082f4bcab5b6e0408164acf62b",
-          "src/subcategory_extraction/learned_keywords/artifacts/learned-keywords.json": "d06457a8c082171a096da05d18812528247c8c90e3c06157dc93e5ea6b65f3fa",
-          "src/subcategory_extraction/semantic_encoder_f1/artifacts/calibration.json": "08810b988729fc370d1c03677c38430a27da8a9501d9d6edc5d9532bd0e1dee4",
-          "src/subcategory_extraction/semantic_encoder_f1/artifacts/encoder/config.json": "5d75152afedf12d8b30edf67fc9fdd0eedf9578a70679373db46ba94256335a0",
-          "src/subcategory_extraction/semantic_encoder_f1/artifacts/encoder/model.safetensors": "9fc639dd6813e8481b7d21577924df1973636e38e5992bba20f06700b2d0ada1",
-          "src/subcategory_extraction/semantic_encoder_f1/artifacts/head.safetensors": "81f56fffeaf4a5460e36b362b3e7d3e804a1579a9f8b7ae6adeb357d3da4772b",
-          "src/subcategory_extraction/semantic_encoder_f1/artifacts/metadata.json": "d523ce9fd906ede91463053c94d664c5ae04b40b1588ce2802e5be0eb2d330f9",
-          "src/subcategory_extraction/semantic_encoder_f1/artifacts/tokenizer/special_tokens_map.json": "5d5b662e421ea9fac075174bb0688ee0d9431699900b90662acd44b2a350503a",
-          "src/subcategory_extraction/semantic_encoder_f1/artifacts/tokenizer/tokenizer.json": "b6a9f282c732603652189b1fc2f32a2e2578b43927c5cf44a2e3585631419bb0",
-          "src/subcategory_extraction/semantic_encoder_f1/artifacts/tokenizer/tokenizer_config.json": "71b22b163773e6d2a3bc53236a6dca9245f2e0422b09e2d9597dbf02825c7135",
-          "src/subcategory_extraction/semantic_encoder_f1/artifacts/tokenizer/vocab.txt": "f056a69b097422652053bf87565c35543e5d81540ca4b7dddd28de4157a969e0"
-        },
-        "training_table": null,
-        "selection": "existing configurations fixed before test; no threshold search"
+      "status": "complete",
+      "rows": 208,
+      "metrics": {
+        "micro_f1": 0.7867036011080333,
+        "classification_points": 47.202216066481995,
+        "tp": 284,
+        "fp": 143,
+        "fn": 11
       },
-      "error": "ValueError: Нет локального артефакта semantic_encoder: /Users/arsenijsekin/Documents/Codex/2026-11-13/https-github-com-one-zero-eight/hackathon-innoglobalhack-avito/out/semantic-encoder/metadata.json. Обучение: PYTHONPATH=src uv run python -m subcategory_extraction.semantic_encoder.train --dataset out/hybrid-training.jsonl --device auto",
-      "measurement_metadata": {
-        "date": "2026-11-15T01:47:08+03:00",
-        "commit": "e64668f0ca0f35e226f7cfa09a8649a443f46a07",
-        "code_sha256": "44bba24891f24f9afa12a32329489c4e1483884daf8254dee689125bd6c8f794",
-        "mode": "pipeline_run",
-        "protocol": {
-          "dataset_table": "case_test",
-          "training_table": "case_train",
-          "dataset_sha256": "cd6f432e3841e842d04bb07827b92f9b644c56b2b528cb36098433168890ae15",
-          "table_sha256": "cd6f432e3841e842d04bb07827b92f9b644c56b2b528cb36098433168890ae15",
-          "training_sha256": "da9895e47d4ae91c292e246ab5eef530da4cc1c4e47ee490f101412fda9f9272",
-          "rows": 208,
-          "source_mc_id_assumption": 101
+      "execution": "offline_recalculation_of_recorded_predictions",
+      "recorded_metadata": {
+        "threshold": 0.5,
+        "model_metadata": {
+          "version": 1,
+          "model_id": "cointegrated/rubert-tiny2",
+          "model_revision": "e8ed3b0c8bbf4fb6984c3de043bf7d2f4e5969ae",
+          "classes": [
+            101,
+            102,
+            103,
+            104,
+            105,
+            106
+          ],
+          "threshold": 0.5,
+          "tokenization": {
+            "normalization": "NFKC; collapse whitespace; preserve case and ё",
+            "max_tokens": 512,
+            "max_windows": 3,
+            "window_selection": "first/middle/last; deduplicate positions",
+            "pooling": "mean over all attention-masked tokens of real windows, including special tokens",
+            "padding": "longest real window in document batch"
+          },
+          "training": {
+            "epochs": 3,
+            "seed": 42,
+            "learning_rate": 3e-05,
+            "weight_decay": 0.01,
+            "batch_size": 16,
+            "optimizer": "AdamW",
+            "loss": "BCEWithLogitsLoss; unweighted mean over documents and classes",
+            "fine_tune_encoder": true,
+            "validation": null,
+            "threshold_selection": null
+          },
+          "trained_classes": [
+            102,
+            103,
+            104,
+            105,
+            106
+          ],
+          "unsupported_classes": [
+            101
+          ],
+          "positive_counts": {
+            "101": 0,
+            "102": 2481,
+            "103": 2355,
+            "104": 2311,
+            "105": 2292,
+            "106": 2651
+          },
+          "source_category": 101,
+          "train_path": "repo://out/hybrid-training.jsonl",
+          "train_sha256": "c1443632946d88618d2d9cd925258374e87152ab44b2fb45d628923242e4971b",
+          "train_rows": 4821,
+          "training_device": "mps",
+          "created_at": "2026-11-13T23:02:13.167361+00:00",
+          "torch_version": "2.15.0",
+          "transformers_version": "4.57.6"
         },
-        "overlap": {
-          "checked": true,
-          "method": "normalized_exact_description",
-          "training_dataset": "case_train",
-          "overlapping_rows": 24,
-          "row_numbers": [
-            2,
-            10,
-            20,
-            46,
-            62,
-            65,
-            68,
-            77,
-            78,
-            79,
-            84,
-            88,
-            106,
-            108,
-            129,
-            142,
-            147,
-            154,
-            174,
-            179,
-            187,
-            191,
-            198,
-            203
-          ]
-        }
+        "trained_categories": [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        "unsupported_categories": [
+          101
+        ],
+        "device": "cpu"
+      },
+      "measurement_metadata": {
+        "date": "2026-11-15T04:04:45+03:00",
+        "commit": "534e7abcf5530570d797c178afaa2429b405013b",
+        "code_sha256": "fc8fbd0b2ff19b17081ff2df5e6bae90b9236f37be14db6dcd0dd95c0232dccf",
+        "mode": "offline_recalculation_of_recorded_predictions",
+        "record_sha256": "ca0ba9feeb9b131e0558216740a77a879aaa6237928d8fec47b36486fe2e69b4",
+        "note": "Исторические сохранённые ответы, пересчитанные офлайн; не новые вызовы"
       }
     },
     "qwen_decision": {
@@ -39591,6 +39421,4748 @@
         "date": "2026-11-15T02:37:40+03:00",
         "commit": "e64668f0ca0f35e226f7cfa09a8649a443f46a07",
         "code_sha256": "48e1ea81665df382f49ca38826623eeaafe3281476ed6203e19e08a7ed2918d1",
+        "mode": "pipeline_run",
+        "protocol": {
+          "dataset_table": "case_test",
+          "training_table": "case_train",
+          "dataset_sha256": "cd6f432e3841e842d04bb07827b92f9b644c56b2b528cb36098433168890ae15",
+          "table_sha256": "cd6f432e3841e842d04bb07827b92f9b644c56b2b528cb36098433168890ae15",
+          "training_sha256": "da9895e47d4ae91c292e246ab5eef530da4cc1c4e47ee490f101412fda9f9272",
+          "rows": 208,
+          "source_mc_id_assumption": 101
+        },
+        "overlap": {
+          "checked": true,
+          "method": "normalized_exact_description",
+          "training_dataset": "case_train",
+          "overlapping_rows": 24,
+          "row_numbers": [
+            2,
+            10,
+            20,
+            46,
+            62,
+            65,
+            68,
+            77,
+            78,
+            79,
+            84,
+            88,
+            106,
+            108,
+            129,
+            142,
+            147,
+            154,
+            174,
+            179,
+            187,
+            191,
+            198,
+            203
+          ]
+        }
+      }
+    },
+    "snippet_logistic_regression": {
+      "status": "completed",
+      "predicted": [
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        [],
+        [],
+        [
+          102,
+          103,
+          104
+        ],
+        [
+          102,
+          104,
+          105,
+          106
+        ],
+        [],
+        [
+          102
+        ],
+        [
+          104,
+          105
+        ],
+        [],
+        [
+          102
+        ],
+        [
+          105,
+          106
+        ],
+        [
+          102,
+          104,
+          105
+        ],
+        [],
+        [
+          102,
+          103,
+          104,
+          105
+        ],
+        [],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        [
+          102
+        ],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        [
+          102
+        ],
+        [
+          102,
+          103,
+          104,
+          105
+        ],
+        [
+          102,
+          103,
+          106
+        ],
+        [
+          102
+        ],
+        [],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        [
+          105
+        ],
+        [
+          102
+        ],
+        [
+          102,
+          104,
+          105
+        ],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        [],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        [
+          102,
+          103,
+          104,
+          105
+        ],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        [
+          102
+        ],
+        [
+          102,
+          106
+        ],
+        [],
+        [
+          102,
+          103,
+          104,
+          106
+        ],
+        [
+          105
+        ],
+        [
+          102,
+          104,
+          105
+        ],
+        [
+          102,
+          106
+        ],
+        [],
+        [
+          102,
+          104,
+          105
+        ],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        [
+          102,
+          106
+        ],
+        [],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        [
+          105
+        ],
+        [
+          102
+        ],
+        [
+          102
+        ],
+        [],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        [],
+        [
+          102,
+          104,
+          105
+        ],
+        [
+          102,
+          106
+        ],
+        [
+          102,
+          103,
+          104,
+          105
+        ],
+        [],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        [
+          102,
+          104,
+          105
+        ],
+        [
+          102
+        ],
+        [
+          102
+        ],
+        [
+          102
+        ],
+        [],
+        [
+          102
+        ],
+        [
+          102,
+          104,
+          105,
+          106
+        ],
+        [],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        [
+          102
+        ],
+        [],
+        [
+          102
+        ],
+        [
+          104,
+          105
+        ],
+        [
+          102,
+          104,
+          105,
+          106
+        ],
+        [
+          102
+        ],
+        [],
+        [],
+        [
+          104,
+          105
+        ],
+        [
+          105
+        ],
+        [],
+        [],
+        [
+          102
+        ],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        [],
+        [],
+        [
+          102,
+          103,
+          104,
+          105
+        ],
+        [
+          102
+        ],
+        [
+          102,
+          104,
+          105
+        ],
+        [
+          102,
+          104,
+          105
+        ],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        [
+          105
+        ],
+        [
+          102,
+          104,
+          105
+        ],
+        [],
+        [
+          102
+        ],
+        [
+          102,
+          106
+        ],
+        [
+          102,
+          106
+        ],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        [
+          102
+        ],
+        [],
+        [],
+        [
+          102,
+          104,
+          105
+        ],
+        [],
+        [
+          102,
+          104,
+          105,
+          106
+        ],
+        [
+          102
+        ],
+        [
+          102,
+          104,
+          105
+        ],
+        [],
+        [
+          102
+        ],
+        [
+          102,
+          103
+        ],
+        [],
+        [
+          102,
+          103,
+          106
+        ],
+        [
+          105
+        ],
+        [],
+        [
+          105
+        ],
+        [
+          102,
+          106
+        ],
+        [],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        [
+          102,
+          105
+        ],
+        [
+          102
+        ],
+        [
+          102
+        ],
+        [],
+        [
+          102,
+          104,
+          105
+        ],
+        [],
+        [],
+        [],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        [
+          103,
+          104,
+          105,
+          106
+        ],
+        [],
+        [
+          103
+        ],
+        [],
+        [
+          102
+        ],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        [
+          102,
+          104,
+          105
+        ],
+        [],
+        [
+          105
+        ],
+        [
+          102,
+          104,
+          105
+        ],
+        [],
+        [
+          102
+        ],
+        [
+          104,
+          105
+        ],
+        [
+          102
+        ],
+        [
+          102,
+          103
+        ],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        [
+          102,
+          106
+        ],
+        [],
+        [
+          102
+        ],
+        [
+          102,
+          103,
+          106
+        ],
+        [
+          102,
+          104,
+          105
+        ],
+        [
+          102,
+          104,
+          105
+        ],
+        [],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        [],
+        [
+          102,
+          104,
+          105
+        ],
+        [
+          106
+        ],
+        [
+          102,
+          103,
+          104,
+          106
+        ],
+        [
+          102,
+          104,
+          105
+        ],
+        [
+          102,
+          104,
+          105
+        ],
+        [
+          104,
+          105
+        ],
+        [],
+        [
+          102,
+          104,
+          105
+        ],
+        [],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        [
+          102,
+          106
+        ],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        [
+          102
+        ],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        [
+          102,
+          105,
+          106
+        ],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        [
+          104,
+          105
+        ],
+        [
+          102
+        ],
+        [
+          102,
+          106
+        ],
+        [
+          102,
+          104,
+          105
+        ],
+        [],
+        [],
+        [],
+        [
+          105
+        ],
+        [
+          103
+        ],
+        [],
+        [
+          102
+        ],
+        [],
+        [
+          102,
+          106
+        ],
+        [
+          102,
+          103,
+          106
+        ],
+        [
+          102,
+          106
+        ],
+        [
+          102,
+          105,
+          106
+        ],
+        [
+          104,
+          105
+        ],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        [],
+        [
+          102
+        ],
+        [],
+        [
+          104,
+          105
+        ],
+        [
+          102
+        ],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        [],
+        [
+          102,
+          104,
+          105
+        ],
+        [],
+        [
+          102,
+          104,
+          105
+        ],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        [
+          102,
+          104,
+          105
+        ],
+        [],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ]
+      ],
+      "inference": [
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        }
+      ],
+      "workers": 4,
+      "configuration": {
+        "key": "snippet_logistic_regression",
+        "module": "snippet_logistic_regression",
+        "environment": {
+          "JEV_MODEL": "jev-1.13.0",
+          "LLM_MODEL_ID": "gemini-decision-1",
+          "QWEN_DECISION_MODEL": "decision-model-preview",
+          "STRUCTURED_LLM_MODEL": "gpt-6.1-terra",
+          "JEV_THRESHOLD": "0.5",
+          "GOOGLE_DECISION_THRESHOLD": "0.5",
+          "JEV_TFIDF_WEIGHT": "0.5",
+          "JEV_TFIDF_THRESHOLD": "0.5",
+          "LOCAL_JEV_MODEL": "jevos-v5",
+          "LOCAL_JEV_THRESHOLD": "0.5",
+          "SEMANTIC_ENCODER_DEVICE": "cpu",
+          "RUBERT_F1_DEVICE": "cpu",
+          "TFIDF_ARTIFACT_PATH": "out/classifier-methods/tfidf.json",
+          "LEARNED_KEYWORDS_ARTIFACT": "src/subcategory_extraction/learned_keywords/artifacts/learned-keywords.json",
+          "SEMANTIC_ENCODER_ARTIFACT_PATH": "out/semantic-encoder",
+          "RUBERT_F1_ARTIFACT_PATH": "src/subcategory_extraction/semantic_encoder_f1/artifacts",
+          "JEV_REFERENCE_DATASET": "out/hybrid-training.jsonl",
+          "JEV_REFERENCE_MAX_CHARS": "1800"
+        },
+        "artifact_sha256": {
+          "out/classifier-methods/tfidf.json": "2ef7ed22c74a13820b1b06d53b5a84d6c8555b082f4bcab5b6e0408164acf62b",
+          "src/subcategory_extraction/learned_keywords/artifacts/learned-keywords.json": "d06457a8c082171a096da05d18812528247c8c90e3c06157dc93e5ea6b65f3fa",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/calibration.json": "08810b988729fc370d1c03677c38430a27da8a9501d9d6edc5d9532bd0e1dee4",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/encoder/config.json": "5d75152afedf12d8b30edf67fc9fdd0eedf9578a70679373db46ba94256335a0",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/encoder/model.safetensors": "9fc639dd6813e8481b7d21577924df1973636e38e5992bba20f06700b2d0ada1",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/head.safetensors": "81f56fffeaf4a5460e36b362b3e7d3e804a1579a9f8b7ae6adeb357d3da4772b",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/metadata.json": "d523ce9fd906ede91463053c94d664c5ae04b40b1588ce2802e5be0eb2d330f9",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/tokenizer/special_tokens_map.json": "5d5b662e421ea9fac075174bb0688ee0d9431699900b90662acd44b2a350503a",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/tokenizer/tokenizer.json": "b6a9f282c732603652189b1fc2f32a2e2578b43927c5cf44a2e3585631419bb0",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/tokenizer/tokenizer_config.json": "71b22b163773e6d2a3bc53236a6dca9245f2e0422b09e2d9597dbf02825c7135",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/tokenizer/vocab.txt": "f056a69b097422652053bf87565c35543e5d81540ca4b7dddd28de4157a969e0"
+        },
+        "training_table": null,
+        "selection": "existing configurations fixed before test; no threshold search"
+      },
+      "execution": "pipeline_run",
+      "reused_predictions": 0,
+      "metrics": {
+        "micro_f1": 0.7631935047361299,
+        "classification_points": 45.791610284167795,
+        "tp": 282,
+        "fp": 162,
+        "fn": 13
+      },
+      "measurement_metadata": {
+        "date": "2026-11-15T03:32:14+03:00",
+        "commit": "534e7abcf5530570d797c178afaa2429b405013b",
+        "code_sha256": "fc8fbd0b2ff19b17081ff2df5e6bae90b9236f37be14db6dcd0dd95c0232dccf",
+        "mode": "pipeline_run",
+        "protocol": {
+          "dataset_table": "case_test",
+          "training_table": "case_train",
+          "dataset_sha256": "cd6f432e3841e842d04bb07827b92f9b644c56b2b528cb36098433168890ae15",
+          "table_sha256": "cd6f432e3841e842d04bb07827b92f9b644c56b2b528cb36098433168890ae15",
+          "training_sha256": "da9895e47d4ae91c292e246ab5eef530da4cc1c4e47ee490f101412fda9f9272",
+          "rows": 208,
+          "source_mc_id_assumption": 101
+        },
+        "overlap": {
+          "checked": true,
+          "method": "normalized_exact_description",
+          "training_dataset": "case_train",
+          "overlapping_rows": 24,
+          "row_numbers": [
+            2,
+            10,
+            20,
+            46,
+            62,
+            65,
+            68,
+            77,
+            78,
+            79,
+            84,
+            88,
+            106,
+            108,
+            129,
+            142,
+            147,
+            154,
+            174,
+            179,
+            187,
+            191,
+            198,
+            203
+          ]
+        }
+      }
+    },
+    "semantic_evidence": {
+      "status": "completed",
+      "predicted": [
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        [],
+        [],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        [],
+        [
+          102,
+          106
+        ],
+        [
+          105
+        ],
+        [],
+        [
+          102
+        ],
+        [
+          105,
+          106
+        ],
+        [
+          102,
+          104,
+          105,
+          106
+        ],
+        [],
+        [
+          102,
+          103,
+          104,
+          105
+        ],
+        [],
+        [
+          102,
+          104,
+          105,
+          106
+        ],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        [
+          102
+        ],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        [
+          102
+        ],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        [
+          102,
+          103,
+          104,
+          106
+        ],
+        [],
+        [],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        [],
+        [
+          102,
+          103,
+          105
+        ],
+        [
+          102,
+          104,
+          105
+        ],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        [
+          102,
+          104,
+          105,
+          106
+        ],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        [],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        [
+          102,
+          104,
+          105,
+          106
+        ],
+        [
+          102,
+          103,
+          104,
+          105
+        ],
+        [
+          102,
+          104,
+          105,
+          106
+        ],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        [
+          102
+        ],
+        [
+          102,
+          106
+        ],
+        [],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        [
+          103
+        ],
+        [
+          102,
+          104,
+          105
+        ],
+        [
+          102,
+          106
+        ],
+        [],
+        [
+          102,
+          104,
+          105
+        ],
+        [
+          102,
+          104,
+          105,
+          106
+        ],
+        [
+          102,
+          106
+        ],
+        [],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        [],
+        [
+          102
+        ],
+        [
+          102
+        ],
+        [
+          102
+        ],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        [],
+        [
+          102,
+          104,
+          105
+        ],
+        [
+          102,
+          106
+        ],
+        [
+          102,
+          103,
+          104,
+          105
+        ],
+        [
+          102,
+          103
+        ],
+        [
+          102,
+          104,
+          105,
+          106
+        ],
+        [
+          102,
+          104,
+          105
+        ],
+        [
+          102
+        ],
+        [
+          102
+        ],
+        [
+          102
+        ],
+        [],
+        [
+          102,
+          105,
+          106
+        ],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        [
+          102,
+          106
+        ],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        [
+          102,
+          104,
+          105,
+          106
+        ],
+        [
+          102
+        ],
+        [],
+        [
+          102
+        ],
+        [
+          104,
+          105
+        ],
+        [
+          102,
+          104,
+          105,
+          106
+        ],
+        [
+          102
+        ],
+        [],
+        [],
+        [
+          105
+        ],
+        [],
+        [],
+        [],
+        [],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        [],
+        [],
+        [
+          102,
+          103,
+          104,
+          105
+        ],
+        [
+          102
+        ],
+        [
+          102
+        ],
+        [
+          102,
+          104,
+          105
+        ],
+        [
+          102,
+          104,
+          105,
+          106
+        ],
+        [],
+        [
+          102,
+          104,
+          105
+        ],
+        [],
+        [
+          102,
+          103
+        ],
+        [
+          102,
+          106
+        ],
+        [
+          102,
+          106
+        ],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        [
+          102
+        ],
+        [
+          102
+        ],
+        [],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        [
+          102
+        ],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        [
+          102,
+          105,
+          106
+        ],
+        [
+          102,
+          104,
+          105
+        ],
+        [],
+        [
+          102
+        ],
+        [
+          102,
+          106
+        ],
+        [],
+        [
+          102,
+          103,
+          106
+        ],
+        [],
+        [
+          102,
+          106
+        ],
+        [],
+        [
+          102,
+          106
+        ],
+        [],
+        [
+          102,
+          104,
+          105,
+          106
+        ],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        [
+          102,
+          105
+        ],
+        [
+          102
+        ],
+        [],
+        [],
+        [
+          102,
+          104,
+          105
+        ],
+        [
+          103
+        ],
+        [],
+        [
+          102
+        ],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        [],
+        [
+          103
+        ],
+        [],
+        [
+          102,
+          106
+        ],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        [
+          102,
+          104,
+          105
+        ],
+        [
+          102
+        ],
+        [],
+        [
+          102,
+          104,
+          105
+        ],
+        [],
+        [
+          102
+        ],
+        [
+          105
+        ],
+        [
+          102,
+          105,
+          106
+        ],
+        [
+          102
+        ],
+        [
+          102,
+          104,
+          105,
+          106
+        ],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        [
+          102,
+          106
+        ],
+        [],
+        [
+          102
+        ],
+        [
+          102,
+          103,
+          104,
+          106
+        ],
+        [
+          102,
+          104,
+          105
+        ],
+        [
+          102,
+          104,
+          105
+        ],
+        [],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        [
+          102,
+          104,
+          105,
+          106
+        ],
+        [
+          102,
+          104,
+          105,
+          106
+        ],
+        [],
+        [
+          102,
+          104,
+          105
+        ],
+        [
+          102,
+          106
+        ],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        [
+          102,
+          104,
+          105
+        ],
+        [
+          102,
+          104,
+          105
+        ],
+        [
+          105
+        ],
+        [],
+        [
+          102
+        ],
+        [],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        [
+          102,
+          106
+        ],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        [
+          102,
+          105,
+          106
+        ],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        [
+          102,
+          105,
+          106
+        ],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        [
+          105
+        ],
+        [
+          102
+        ],
+        [
+          102,
+          106
+        ],
+        [
+          102,
+          104,
+          105
+        ],
+        [],
+        [],
+        [
+          102,
+          103
+        ],
+        [],
+        [
+          103
+        ],
+        [],
+        [
+          102
+        ],
+        [],
+        [
+          102,
+          106
+        ],
+        [
+          102,
+          103,
+          104,
+          106
+        ],
+        [
+          102,
+          106
+        ],
+        [
+          102,
+          105,
+          106
+        ],
+        [
+          105
+        ],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        [],
+        [
+          102,
+          105,
+          106
+        ],
+        [],
+        [
+          103,
+          104,
+          105
+        ],
+        [
+          102
+        ],
+        [
+          102,
+          104,
+          105,
+          106
+        ],
+        [],
+        [
+          102,
+          104,
+          105
+        ],
+        [
+          102
+        ],
+        [
+          102,
+          104,
+          105
+        ],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ],
+        [
+          102,
+          104,
+          105
+        ],
+        [],
+        [
+          102,
+          103,
+          104,
+          105,
+          106
+        ]
+      ],
+      "inference": [
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        },
+        {
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "probabilities": null,
+          "api_clients": []
+        }
+      ],
+      "workers": 1,
+      "configuration": {
+        "key": "semantic_evidence",
+        "module": "semantic_evidence",
+        "environment": {
+          "JEV_MODEL": "jev-1.13.0",
+          "LLM_MODEL_ID": "gemini-decision-1",
+          "QWEN_DECISION_MODEL": "decision-model-preview",
+          "STRUCTURED_LLM_MODEL": "gpt-6.1-terra",
+          "JEV_THRESHOLD": "0.5",
+          "GOOGLE_DECISION_THRESHOLD": "0.5",
+          "JEV_TFIDF_WEIGHT": "0.5",
+          "JEV_TFIDF_THRESHOLD": "0.5",
+          "LOCAL_JEV_MODEL": "jevos-v5",
+          "LOCAL_JEV_THRESHOLD": "0.5",
+          "SEMANTIC_ENCODER_DEVICE": "cpu",
+          "RUBERT_F1_DEVICE": "cpu",
+          "TFIDF_ARTIFACT_PATH": "out/classifier-methods/tfidf.json",
+          "LEARNED_KEYWORDS_ARTIFACT": "src/subcategory_extraction/learned_keywords/artifacts/learned-keywords.json",
+          "SEMANTIC_ENCODER_ARTIFACT_PATH": "out/semantic-encoder",
+          "RUBERT_F1_ARTIFACT_PATH": "src/subcategory_extraction/semantic_encoder_f1/artifacts",
+          "JEV_REFERENCE_DATASET": "out/hybrid-training.jsonl",
+          "JEV_REFERENCE_MAX_CHARS": "1800"
+        },
+        "artifact_sha256": {
+          "out/classifier-methods/tfidf.json": "2ef7ed22c74a13820b1b06d53b5a84d6c8555b082f4bcab5b6e0408164acf62b",
+          "src/subcategory_extraction/learned_keywords/artifacts/learned-keywords.json": "d06457a8c082171a096da05d18812528247c8c90e3c06157dc93e5ea6b65f3fa",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/calibration.json": "08810b988729fc370d1c03677c38430a27da8a9501d9d6edc5d9532bd0e1dee4",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/encoder/config.json": "5d75152afedf12d8b30edf67fc9fdd0eedf9578a70679373db46ba94256335a0",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/encoder/model.safetensors": "9fc639dd6813e8481b7d21577924df1973636e38e5992bba20f06700b2d0ada1",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/head.safetensors": "81f56fffeaf4a5460e36b362b3e7d3e804a1579a9f8b7ae6adeb357d3da4772b",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/metadata.json": "d523ce9fd906ede91463053c94d664c5ae04b40b1588ce2802e5be0eb2d330f9",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/tokenizer/special_tokens_map.json": "5d5b662e421ea9fac075174bb0688ee0d9431699900b90662acd44b2a350503a",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/tokenizer/tokenizer.json": "b6a9f282c732603652189b1fc2f32a2e2578b43927c5cf44a2e3585631419bb0",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/tokenizer/tokenizer_config.json": "71b22b163773e6d2a3bc53236a6dca9245f2e0422b09e2d9597dbf02825c7135",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/tokenizer/vocab.txt": "f056a69b097422652053bf87565c35543e5d81540ca4b7dddd28de4157a969e0"
+        },
+        "training_table": null,
+        "selection": "existing configurations fixed before test; no threshold search"
+      },
+      "execution": "pipeline_run",
+      "reused_predictions": 0,
+      "metrics": {
+        "micro_f1": 0.7643142476697736,
+        "classification_points": 45.85885486018642,
+        "tp": 287,
+        "fp": 169,
+        "fn": 8
+      },
+      "measurement_metadata": {
+        "date": "2026-11-15T03:57:04+03:00",
+        "commit": "534e7abcf5530570d797c178afaa2429b405013b",
+        "code_sha256": "fc8fbd0b2ff19b17081ff2df5e6bae90b9236f37be14db6dcd0dd95c0232dccf",
         "mode": "pipeline_run",
         "protocol": {
           "dataset_table": "case_test",
