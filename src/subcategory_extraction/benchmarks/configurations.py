@@ -69,6 +69,14 @@ CONFIGURATIONS = (
     Configuration("google_decision::baseline", "decisions.google_decision", {"GOOGLE_DECISION_PROMPT": "baseline"}),
     Configuration("jev", "decisions.jev", {"JEV_PROMPT_PATH": GUIDED}),
     Configuration("jev_calibrated", "decisions.jev_calibrated"),
+    Configuration("jev_semantic", "decisions.jev_semantic", {
+        "JEV_PROVIDER": "selectel", "JEV_MODEL": "typesafe/jev-1.13",
+        "JEV_ENDPOINT": "https://api.selectel.ru/aig/v1/decisions", "JEV_SEMANTIC_PROMPT": "auto",
+    }, "manual_train"),
+    Configuration("jev_semantic_arbiter", "hybrid.jev_semantic_arbiter", {
+        "JEV_PROVIDER": "selectel", "JEV_MODEL": "typesafe/jev-1.13",
+        "JEV_ENDPOINT": "https://api.selectel.ru/aig/v1/decisions", "JEV_SEMANTIC_PROMPT": "auto",
+    }, "manual_train"),
     Configuration("jev::baseline", "decisions.jev", {"JEV_PROMPT_PATH": BASELINE}),
     Configuration("jev_boundaries", "decisions.jev_boundaries"),
     Configuration("jev_tfidf", "hybrid.jev_tfidf", {"JEV_PROMPT_PATH": GUIDED}, "case_train"),

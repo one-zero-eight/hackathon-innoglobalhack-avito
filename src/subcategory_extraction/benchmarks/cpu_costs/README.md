@@ -30,6 +30,8 @@
 | order_format_joint | опубликованные веса / 2026-11-15 | 208 +139 +4966 +300 provider +40 latency; 300 IGH sample пересчитаны без новых F1-вызовов; 0 API-токенов | бесплатно | локальный CPU, API отсутствует |
 | order_format_joint::dedup | опубликованные веса / 2026-11-15 | 208 +139 +4966 +300 provider +40 latency; 300 IGH sample пересчитаны без новых F1-вызовов; 0 API-токенов | бесплатно | локальный CPU, API отсутствует |
 | order_format_joint::yandex_youla | опубликованные веса / 2026-11-15 | 208 +139 +4966 +300 provider +40 latency; 300 IGH sample пересчитаны без новых F1-вызовов; 0 API-токенов | бесплатно | локальный CPU, API отсутствует |
+| jev_semantic / Selectel | train-only calibration / 2026-11-15 | 240 fit/control semantic responses +211 development +208 official +139 manual +10 latency; cache/retries in usage | неизвестно | фактические usage в jev-semantic-training-results.json и строках results.json, без расчёта тарифа |
+| jev_semantic_arbiter / Selectel + BestAPI | frozen semantic adjudication / 2026-11-15 | 48 control +262 private +208 official +139 manual +10 latency unique evaluations; nested clients/caches tracked | неизвестно | два API-этапа; usage сохранён, итоговый счёт/тариф не подтверждён |
 
 ## Обновление
 

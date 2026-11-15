@@ -30,6 +30,7 @@
 | --- | --- |
 | `hybrid.jev_tfidf` | TF-IDF-модель из `lexical.tfidf`; собственной нейросети нет |
 | `hybrid.jev_arbiter` | TF-IDF-модель для маршрутизации спорных категорий; арбитр — внешняя LLM |
+| `hybrid.jev_semantic_arbiter` | Калибровка `decisions.jev_semantic` и два API-клиента; собственных нейросетевых весов нет |
 
 ## Другие заранее подготовленные артефакты
 
@@ -37,6 +38,7 @@
 | --- | --- | --- |
 | `decisions.local_jev` | Upstream pretrained jevos-v5: OpenVINO INT8 веса, токенизатор и runtime; скачиваются при первом запуске | Нет, готовая внешняя модель без нашего дообучения |
 | `decisions.jev_calibrated` | `artifacts/calibration.json`: выбранный промпт и пороги по категориям, привязанные к провайдеру/модели/endpoint | Нет, калибровка |
+| `decisions.jev_semantic` | `artifacts/calibration.json`: task prompt и group-crossfit пороги на manual_train, без private-label fitting | Нет, калибровка; файл включён в модуль |
 | `decisions.qwen_decision` | `artifacts/calibration.json` для auto; явные guided/boundaries работают без калибровки с порогом 0.5 | Нет, калибровка |
 | `decisions.jev_retrieval` | Размеченная train-коллекция `out/hybrid-training.jsonl`; TF-IDF-индекс соседей строится при загрузке | Нет, справочная коллекция и индекс |
 

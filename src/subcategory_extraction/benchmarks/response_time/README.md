@@ -41,6 +41,8 @@ p95: линейный percentile NumPy. N=10 не задаёт SLA. Собств
 | order_format_joint | 2026-11-15T14:17:23+03:00 | 10 | 0.007634 | 0.006158 | 0.018676 | новый локальный run(); без кэша ответов |
 | order_format_joint::dedup | 2026-11-15T14:17:25+03:00 | 10 | 0.005774 | 0.004420 | 0.014275 | новый локальный run(); без кэша ответов |
 | order_format_joint::yandex_youla | 2026-11-15T14:17:27+03:00 | 10 | 0.004832 | 0.004690 | 0.009675 | новый локальный run(); без кэша ответов |
+| jev_semantic | 2026-11-15T20:33:28+03:00 | 10 | 1.140226 | 1.119354 | 1.433347 | fresh run(); loading excluded; response-cache hits0 |
+| jev_semantic_arbiter | 2026-11-15T20:33:41+03:00 | 10 | 5.320647 | 5.683063 | 5.893055 | fresh run(); loading excluded; response-cache hits0 |
 
 ## Воспроизведение
 

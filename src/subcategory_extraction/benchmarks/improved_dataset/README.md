@@ -47,6 +47,8 @@ SHA-256 таблицы: `fae05cba56fdf57a15aa3979afd828b73928efcca64694be5d805d3
 | order_format_joint | 2026-11-15T14:17:00+03:00 | 139/139 | 0.668203 | новый локальный run(); опубликованные веса |
 | order_format_joint::dedup | 2026-11-15T14:17:03+03:00 | 139/139 | 0.671171 | новый локальный run(); опубликованные веса |
 | order_format_joint::yandex_youla | 2026-11-15T14:17:05+03:00 | 139/139 | 0.669725 | новый локальный run(); опубликованные веса |
+| jev_semantic | 2026-11-15T20:29:51+03:00 | 139/139 | 0.790698 | frozen semantic candidate; private confirmation not used for selection; provenance in JSON |
+| jev_semantic_arbiter | 2026-11-15T20:29:51+03:00 | 139/139 | 0.715556 | frozen semantic candidate; private confirmation not used for selection; provenance in JSON |
 
 ## Протокол и воспроизведение
 

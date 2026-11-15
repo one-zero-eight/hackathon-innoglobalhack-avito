@@ -7,9 +7,12 @@
     uv run python src/database_load.py              # наполнить все таблицы
     uv run python src/database_load.py --tables case_train case_test
     uv run python src/database_load.py --tables igh_deduped_no_conflict
+    uv run python src/database_load.py --tables private_test
 
 Локальный db_export/igh_deduped_no_conflict.jsonl импортируется только при
 явном выборе его таблицы; запуск без --tables заполняет прежние пять таблиц.
+private_test объединяет db_export/private-test-dataset.csv и data/responce.csv
+по testcase; source mc_id=NULL, метки включают 101 и загружаются только явно.
 """
 
 from __future__ import annotations
@@ -26,7 +29,7 @@ def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(
         "--tables", nargs="+", choices=DATABASE_TABLES,
-        help="таблицы для наполнения (по умолчанию — все)",
+        help="таблицы для наполнения (по умолчанию — пять основных, без локальных диагностических)",
     )
     args = parser.parse_args()
     try:

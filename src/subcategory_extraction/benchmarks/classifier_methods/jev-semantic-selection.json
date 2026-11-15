@@ -1,0 +1,68 @@
+{
+  "frozen_at": "2026-11-15T20:28:06",
+  "selected_module": "hybrid.jev_semantic_arbiter",
+  "selection_basis": "highest development F1 with control no worse than prior baseline minus0.01; no confirmation scores used",
+  "split_sha256": "aada4288fdb1f59cb466ee68b28b584f99326cec8459880bdd9caca28209a5f5",
+  "development": {
+    "rows": 211,
+    "baseline": {
+      "micro_f1": 0.944153577661431,
+      "classification_points": 56.64921465968586,
+      "tp": 541,
+      "fp": 53,
+      "fn": 11
+    },
+    "jev_semantic": {
+      "micro_f1": 0.9352640545144804,
+      "classification_points": 56.11584327086882,
+      "tp": 549,
+      "fp": 73,
+      "fn": 3
+    },
+    "jev_semantic_arbiter": {
+      "micro_f1": 0.9802513464991023,
+      "classification_points": 58.81508078994614,
+      "tp": 546,
+      "fp": 16,
+      "fn": 6
+    }
+  },
+  "control": {
+    "rows": 48,
+    "baseline": {
+      "micro_f1": 0.8767123287671232,
+      "classification_points": 52.602739726027394,
+      "tp": 128,
+      "fp": 5,
+      "fn": 31
+    },
+    "jev_semantic": {
+      "micro_f1": 0.9102564102564102,
+      "classification_points": 54.61538461538461,
+      "tp": 142,
+      "fp": 11,
+      "fn": 17
+    },
+    "jev_semantic_arbiter": {
+      "micro_f1": 0.8780487804878049,
+      "classification_points": 52.68292682926829,
+      "tp": 126,
+      "fp": 2,
+      "fn": 33
+    }
+  },
+  "inference_files": {
+    "src/subcategory_extraction/decisions/jev_semantic/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "src/subcategory_extraction/decisions/jev_semantic/artifacts/calibration.json": "5dc7d9d28be8f0b3dd4319507b5dc62a2b17224cf90841228bc6c2db3dd09119",
+    "src/subcategory_extraction/decisions/jev_semantic/pipeline.py": "f5d2c3002f74a7f420bf9b1cebd4f5d3e014d23120e8ddfcd0cb63c820d9c062",
+    "src/subcategory_extraction/decisions/jev_semantic/prompts/strict.md": "5126dd4da6399499fef96e4fb38dbdd7591be596618d6686ca305a6f3c20a181",
+    "src/subcategory_extraction/decisions/jev_semantic/prompts/task.md": "45615ae198f74b874053b15bcf42ca6b549a053925dd54f274dcca8f23fbd553",
+    "src/subcategory_extraction/decisions/jev_semantic/train.py": "e80b43eaccdb098a9f2847cfc6d2cae8b4633ec99a41b326f54981f8ee7715e5",
+    "src/subcategory_extraction/hybrid/jev_semantic_arbiter/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "src/subcategory_extraction/hybrid/jev_semantic_arbiter/pipeline.py": "bbd2274179ac201d53315ce5810da0108c44028089191c14c7e455d6a7f02de6",
+    "src/subcategory_extraction/hybrid/jev_semantic_arbiter/prompts/adjudicate.md": "7ddde1b7d3ab1688e6dc57852c58c29a7149a5cb4aedeb8428f24ea7ce3c94c5"
+  },
+  "confirmation_used_for_selection": false,
+  "private_threshold_fitting": false,
+  "private_case_lookups": false
+}

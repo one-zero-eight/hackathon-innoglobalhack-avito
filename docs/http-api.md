@@ -16,7 +16,7 @@ Host/port задаются через `UVICORN_HOST` и `UVICORN_PORT` в окр
 `GET /modules` возвращает `extractors`, `generators` и `defaults.extractor/generator`.
 Оба списка строятся одинаково: папки модулей с `pipeline.py` и `__init__.py`,
 прошедшие существующую проверку имени. Импорт и конструкторы моделей не вызываются.
-Сейчас доступны 24 extractor-модуля и один generator — `sample_llm`.
+Сейчас доступны 26 extractor-модулей и один generator — `sample_llm`.
 
 В `POST /drafts` Swagger показывает оба списка как dropdown. Эквивалентный HTTP-вызов:
 

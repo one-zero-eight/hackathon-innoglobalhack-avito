@@ -1,0 +1,48 @@
+{
+  "date": "2026-11-15T20:20:23+03:00",
+  "commit": "3d8892ed861cfedada61c5180ad8e5bebbb9cbdb",
+  "code_sha256": "188d4c001b67c0e92df751a090170c00aa290ab0feeb6c37b098010af295ceaf",
+  "working_tree": true,
+  "machine": "Linux-7.0.0-43-generic-x86_64-with-glibc2.43",
+  "environment": {
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1",
+    "TOKENIZERS_PARALLELISM": null
+  },
+  "provider": "selectel",
+  "model": "typesafe/jev-1.13",
+  "endpoint": "https://api.selectel.ru/aig/v1/decisions",
+  "prompt": "task",
+  "prompt_sha256": "f87247407f3cd387c615dcaddd8500eea1d5c06df511634b3374f7e317b6a901",
+  "thresholds": {
+    "101": 0.5,
+    "102": 0.27,
+    "103": 0.48,
+    "104": 0.20999999999999996,
+    "105": 0.3,
+    "106": 0.51
+  },
+  "training_table": "manual_train",
+  "fit_rows": 96,
+  "control_rows": 48,
+  "split_sha256": "aada4288fdb1f59cb466ee68b28b584f99326cec8459880bdd9caca28209a5f5",
+  "selection": "per_category_shrink_100",
+  "private_labels_used_for_selection": false,
+  "category_101": "fixed0.5; no positive train labels available",
+  "control_confirmed": true,
+  "control_metrics": {
+    "micro_f1": 0.9102564102564102,
+    "classification_points": 54.61538461538461,
+    "tp": 142,
+    "fp": 11,
+    "fn": 17
+  },
+  "control_baseline_metrics": {
+    "micro_f1": 0.8767123287671232,
+    "classification_points": 52.602739726027394,
+    "tp": 128,
+    "fp": 5,
+    "fn": 31
+  }
+}

@@ -19,6 +19,9 @@
   (docs/provider_collections/*), объединённые в один формат.
 - ``igh_deduped_no_conflict`` — опциональный локальный объединённый JSONL;
   диагностический корпус с пересечением с train, не независимый test.
+- ``private_test`` — опциональное объединение private-test-dataset.csv и responce.csv
+  по testcase. Исходная mc_id=NULL, mc_ids содержит все категории 101–106,
+  а не дополнительные услуги относительно неизвестной исходной категории.
 
 Чтение из БД возвращает строки в виде, совместимом с существующими
 функциями ``run.prepare_rows``/``read_records``: каждая строка —
@@ -30,6 +33,8 @@ dict с ключами ``description``, ``mcId`` и ``found_microcategories``
 from __future__ import annotations
 
 import hashlib
+import csv
+from io import StringIO
 import json
 import logging
 import time
@@ -55,8 +60,10 @@ DEFAULT_LOAD_TABLES: tuple[str, ...] = (
     "manual_test",
     "yandex_yoola",
 )
-DATABASE_TABLES: tuple[str, ...] = (*DEFAULT_LOAD_TABLES, "igh_deduped_no_conflict")
+DATABASE_TABLES: tuple[str, ...] = (*DEFAULT_LOAD_TABLES, "igh_deduped_no_conflict", "private_test")
 IGH_DEDUPED_SOURCE = ROOT / "db_export/igh_deduped_no_conflict.jsonl"
+PRIVATE_TEST_SOURCE = ROOT / "db_export/private-test-dataset.csv"
+PRIVATE_TEST_LABELS = ROOT / "data/responce.csv"
 
 CONNECT_ATTEMPTS = 16
 CONNECT_RETRY_DELAY_SECONDS = 0.4
@@ -300,7 +307,7 @@ def _source_digest(files: Iterable[Path]) -> str:
     return digest.hexdigest()
 
 
-def _insert_many(table: str, rows: list[tuple[int, str, str | None, int, list[int], str, str | None, dict[str, Any]]]) -> None:
+def _insert_many(table: str, rows: list[tuple[int, str, str | None, int | None, list[int], str, str | None, dict[str, Any]]]) -> None:
     """Очистить таблицу и вставить строки (идемпотентно, устойчиво к обрывам).
 
     Балансировщик иногда рвёт соединение посреди вставки, поэтому каждая
@@ -620,6 +627,45 @@ def load_igh_deduped() -> int:
     return len(rows)
 
 
+def load_private_test(source_path: Path = PRIVATE_TEST_SOURCE, labels_path: Path = PRIVATE_TEST_LABELS) -> int:
+    """Объединить CSV по testcase, сохранив все шесть меток и неизвестную mc_id=NULL."""
+    def read_csv(path: Path, required: set[str]) -> tuple[list[dict[str, str]], str]:
+        """Проверить заголовок, уникальность ключа и не изменять переводы строк текста."""
+        content = path.read_bytes()
+        with StringIO(content.decode("utf-8-sig"), newline="") as stream:
+            reader = csv.DictReader(stream)
+            if not required <= set(reader.fieldnames or []):
+                raise DatabaseError(f"Нет обязательных CSV-колонок в {path.name}")
+            records = list(reader)
+        keys = [row["testcase"] for row in records]
+        if not records or any(not isinstance(key, str) or not key.strip() for key in keys) or len(keys) != len(set(keys)):
+            raise DatabaseError(f"Пустые или повторяющиеся testcase в {path.name}")
+        return records, hashlib.sha256(content).hexdigest()
+
+    ads, ads_sha = read_csv(source_path, {"testcase", "description"})
+    label_rows, labels_sha = read_csv(labels_path, {"testcase", "microcats"})
+    labels = {row["testcase"]: row for row in label_rows}
+    if {row["testcase"] for row in ads} != labels.keys():
+        raise DatabaseError("Наборы testcase входов и меток не совпали")
+    source_hashes = {"descriptions": ads_sha, "labels": labels_sha}
+    combined = hashlib.sha256(json.dumps(source_hashes, sort_keys=True).encode()).hexdigest()
+    rows = []
+    for row_id, ad in enumerate(ads, 1):
+        try:
+            categories = json.loads(labels[ad["testcase"]]["microcats"])
+        except (json.JSONDecodeError, TypeError) as exc:
+            raise DatabaseError(f"Некорректные метки testcase={ad['testcase']}") from exc
+        if (not isinstance(categories, list) or any(type(cid) is not int or cid not in MICROCATEGORIES for cid in categories)
+                or len(categories) != len(set(categories))):
+            raise DatabaseError(f"Недопустимые микрокатегории testcase={ad['testcase']}")
+        # Здесь метки — все категории объявления, а не дополнительные: 101 не удаляется.
+        rows.append((row_id, ad["description"], None, None, sorted(categories), "private_test", combined,
+                     {"testcase": ad["testcase"], "source_sha256": source_hashes,
+                      "label_source": str(labels_path.relative_to(ROOT) if labels_path.is_relative_to(ROOT) else labels_path)}))
+    _insert_many("private_test", rows)
+    return len(rows)
+
+
 LOADERS: dict[str, Any] = {
     "case_train": load_case_train,
     "case_test": load_case_test,
@@ -627,6 +673,7 @@ LOADERS: dict[str, Any] = {
     "manual_test": load_manual_test,
     "yandex_yoola": load_yandex_yoola,
     "igh_deduped_no_conflict": load_igh_deduped,
+    "private_test": load_private_test,
 }
 
 
@@ -640,7 +687,7 @@ def create_schema() -> None:
         row_id BIGINT PRIMARY KEY,
         description TEXT NOT NULL,
         title TEXT,
-        mc_id INTEGER NOT NULL,
+        mc_id INTEGER {source_nullability},
         mc_ids INTEGER[] NOT NULL,
         source TEXT NOT NULL,
         source_sha256 TEXT,
@@ -649,7 +696,7 @@ def create_schema() -> None:
     """
     with _connect() as connection:
         for table in DATABASE_TABLES:
-            connection.execute(create.format(table=table))
+            connection.execute(create.format(table=table, source_nullability="" if table == "private_test" else "NOT NULL"))
             connection.execute(
                 f"ALTER TABLE {table} ADD COLUMN IF NOT EXISTS source_sha256 TEXT"
             )
@@ -657,7 +704,7 @@ def create_schema() -> None:
 
 
 def load_all(tables: Iterable[str] | None = None) -> dict[str, int]:
-    """Наполнить выбранные таблицы; локальный IGH-экспорт загружать только явно."""
+    """Наполнить таблицы; IGH и private_test загружать только при явном выборе."""
     create_schema()
     selected = list(tables) if tables is not None else list(DEFAULT_LOAD_TABLES)
     unknown = [table for table in selected if table not in DATABASE_TABLES]

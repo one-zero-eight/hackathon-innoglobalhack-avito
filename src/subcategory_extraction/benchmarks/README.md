@@ -31,3 +31,15 @@ uv run --with matplotlib python src/subcategory_extraction/benchmarks/response_t
 команды и протоколы приведены в README соответствующих сценариев.
 Канонические JSON и recorded-results.json сохранены; лишние дубли изображений,
 CSV и отдельных диагностических Markdown удалены. Новых benchmark-папок нет.
+
+
+Private-test: [все шесть категорий без исходной mcId](response_time/benchmark-report.html#private).
+262 строки и отдельный frozen shortlist; детали/команды в classifier_methods/README.md.
+Пересечение с train 40 строк; F1 также пересчитана на 222 строках без точного совпадения.
+Опциональная таблица private_test не входит в default loader-набор пяти датасетов.
+
+
+Новые semantic selectors: `decisions.jev_semantic` и `hybrid.jev_semantic_arbiter`.
+Private improvement study (211 development /51 grouped confirmation) и ограничения
+включены в ту же HTML-таблицу private. Arbiter full0.978947, confirmation0.972222;
+на официальном/manual tests есть регрессии, поэтому default config сохранён.

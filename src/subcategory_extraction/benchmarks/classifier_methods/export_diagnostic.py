@@ -15,12 +15,13 @@ from threading import local
 from time import perf_counter, sleep
 from typing import Any, Iterator
 from urllib.error import HTTPError, URLError
+from pydantic import Field
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[3]))
 
 from benchmark_support import metadata, save_report, setup, timing
 from database import read_records, table_sha256
-from main import BasePipeline, MICROCATEGORIES, PipelineConfig, load_pipeline
+from main import BasePipeline, MICROCATEGORIES, PipelineConfig, PipelineInput, load_pipeline
 from run import EvaluationRow, audit_overlap, calculate_metrics, prepare_rows
 from subcategory_extraction.benchmarks.classifier_methods.run import METHODS
 from subcategory_extraction.benchmarks.configurations import BY_KEY, client_observations, configuration_metadata, configured
@@ -34,6 +35,16 @@ SCORED_CATEGORIES = set(MICROCATEGORIES) - {101}
 logger = logging.getLogger(__name__)
 
 
+class NoSourceClassificationInput(PipelineInput):
+    """Только для диагностики без source mcId: не исключать ни одну категорию.
+
+    Production PipelineInput и HTTP/CLI-контракт не меняются. Все выбранные модули
+    используют mc_id для исключения исходной категории; None сохраняет все шесть.
+    """
+
+    mc_id: None = Field(default=None, alias="mcId")
+
+
 def sample_records(table: str = TABLE, size: int = SIZE, seed: int = SEED) -> tuple[list[dict[str, Any]], list[int]]:
     """Отличить отсутствие разметки от размеченного пустого списка услуг."""
     eligible, excluded = [], []
@@ -43,6 +54,8 @@ def sample_records(table: str = TABLE, size: int = SIZE, seed: int = SEED) -> tu
             eligible.append(record)
         else:
             excluded.append(record["_row_id"])
+    if not eligible:
+        raise ValueError(f"Таблица {table} не содержит размеченных строк")
     if size < 0 or size > len(eligible):
         raise ValueError(f"Размер выборки должен быть 0 (все строки) или 1–{len(eligible)}")
     return (Random(seed).sample(eligible, size) if size else eligible), excluded
@@ -153,7 +166,8 @@ def measure_latency(method: str, rows: list[EvaluationRow]) -> dict[str, Any]:
 
 
 def evaluate_method(method: str, rows: list[EvaluationRow], report: dict[str, Any], path: Path, workers: int,
-                    reuse: dict[str, Any] | None = None, configuration: dict[str, Any] | None = None) -> None:
+                    reuse: dict[str, Any] | None = None, configuration: dict[str, Any] | None = None,
+                    latency: bool = True) -> None:
     """Сохранять каждый успешный ответ и продолжать только недостающие строки."""
     key = configuration["key"] if configuration else "tfidf::legacy" if method == "lexical.tfidf" else method.rsplit(".", 1)[-1]
     result = report["results"].setdefault(key, {
@@ -188,6 +202,13 @@ def evaluate_method(method: str, rows: list[EvaluationRow], report: dict[str, An
         describe = getattr(pipeline, "benchmark_metadata", None)
         if callable(describe):
             result["model_provenance"] = describe()
+        if pipeline is not None and report["scenario"] == "private_test_all_categories":
+            if hasattr(pipeline, "categories"):
+                result["model_categories"] = list(pipeline.categories)
+            if hasattr(pipeline, "trained_categories"):
+                result["trained_categories"] = sorted(pipeline.trained_categories)
+            if hasattr(pipeline, "model_metadata"):
+                result["model_metadata"] = pipeline.model_metadata
         state = local()
 
         def predict(index: int) -> tuple[int, list[int] | None, dict[str, Any]]:
@@ -244,9 +265,57 @@ def evaluate_method(method: str, rows: list[EvaluationRow], report: dict[str, An
         result.pop("metrics", None)
         logger.exception("%s: недоступен", method)
     save_report(path, report)
-    if result.get("latency", {}).get("status") != "complete":
+    if latency and result.get("latency", {}).get("status") != "complete":
         result["latency"] = measure_latency(method, rows)
         save_report(path, report)
+
+
+def summarize_private(report: dict[str, Any], records: list[dict[str, Any]]) -> None:
+    """Пересчитать подмножества и поклассовые F1 только по сохранённым ответам."""
+    expected = [set(row["expected"]) for row in report["rows"]]
+    overlap = set().union(*(set(item["row_numbers"]) for item in report["overlap"].values()))
+    no_train = [index for index in range(len(records)) if index + 1 not in overlap]
+    common = [index for index in range(len(records))
+              if all(result["predicted"][index] is not None for result in report["results"].values())]
+
+    def metrics(result: dict[str, Any], indices: list[int], categories: set[int]) -> dict[str, Any] | None:
+        """Не давать метрику подмножеству с отсутствующими ответами."""
+        if not indices or any(result["predicted"][index] is None for index in indices):
+            return None
+        return calculate_metrics([expected[index] & categories for index in indices],
+                                 [set(result["predicted"][index]) & categories for index in indices])
+
+    for result in report["results"].values():
+        score = metrics(result, no_train, set(MICROCATEGORIES))
+        result["rows_without_exact_train_match"] = {"rows": len(no_train), "metrics": score,
+                                                    "mode": "same saved predictions; normalized exact overlap only"}
+        if result["status"] == "completed":
+            result["metrics_102_106"] = metrics(result, list(range(len(records))), SCORED_CATEGORIES)
+            per_class = {}
+            for cid in MICROCATEGORIES:
+                score = metrics(result, list(range(len(records))), {cid})
+                tp, fp, fn = (score[key] for key in ("tp", "fp", "fn"))
+                per_class[str(cid)] = {"f1": score["micro_f1"], "tp": tp, "fp": fp, "fn": fn, "support": tp + fn,
+                                       "precision": tp / (tp + fp) if tp + fp else 0,
+                                       "recall": tp / (tp + fn) if tp + fn else 0}
+            result["per_class_metrics"] = per_class
+    report["common_completed_subset"] = {
+        "rows": len(common), "testcases": [records[index]["_extra"]["testcase"] for index in common],
+        "metrics_by_method": {name: metrics(result, common, set(MICROCATEGORIES)) for name, result in report["results"].items()},
+        "note": "same rows completed by every shortlisted method; failures excluded, not a full-set score",
+    }
+    report["private_audit"] = {
+        "testcases": [record["_extra"]["testcase"] for record in records],
+        "source_sha256": records[0]["_extra"]["source_sha256"],
+        "label_snapshot": records[0]["_extra"]["label_source"],
+        "source_category": None, "no_exact_train_match_rows": len(no_train),
+        "positive_counts": {str(cid): sum(cid in row for row in expected) for cid in MICROCATEGORIES},
+        "empty_label_rows": sum(not row for row in expected),
+        "description_characters": {"mean": sum(len(row["description"]) for row in records) / len(records),
+                                   "max": max(len(row["description"]) for row in records)},
+        "long_inputs": [{"testcase": row["_extra"]["testcase"], "characters": len(row["description"])}
+                        for row in records if len(row["description"]) > 10000],
+    }
 
 
 def main() -> int:
@@ -255,19 +324,38 @@ def main() -> int:
     selection = parser.add_mutually_exclusive_group()
     selection.add_argument("--methods", nargs="+", choices=METHODS)
     selection.add_argument("--configurations", nargs="+", choices=BY_KEY)
+    selection.add_argument("--merge-reports", nargs="+", type=Path, help="Объединить проверенные отчёты без вызовов моделей")
     parser.add_argument("--workers", type=int, choices=range(1, 9), default=1)
     parser.add_argument("--report", type=Path, default=HERE / "export-diagnostic-results.json")
-    parser.add_argument("--dataset", choices=(TABLE, "igh_deduped_no_conflict"), default=TABLE)
+    parser.add_argument("--dataset", choices=(TABLE, "igh_deduped_no_conflict", "private_test", "manual_train"), default=TABLE)
     parser.add_argument("--size", type=int, default=SIZE, help="0 — весь датасет; иначе фиксированная выборка")
     parser.add_argument("--seed", type=int, default=SEED)
     parser.add_argument("--reuse-report", type=Path, help="Переиспользовать совпадающие входы той же модели из полного набора")
+    parser.add_argument("--skip-latency", action="store_true", help="Только F1, без дополнительных latency-вызовов")
+    parser.add_argument("--selection-manifest", type=Path, help="Замороженный групповой split")
+    parser.add_argument("--partition", choices=("development", "confirmation", "fit", "control"))
     args = parser.parse_args()
     setup()
     if args.dataset != TABLE and args.report.resolve() == (HERE / "export-diagnostic-results.json").resolve():
         parser.error("Для другого датасета нужен отдельный --report")
     records, excluded = sample_records(args.dataset, args.size, args.seed)
+    if bool(args.selection_manifest) != bool(args.partition):
+        parser.error("--partition и --selection-manifest используются вместе")
+    if args.selection_manifest:
+        manifest = json.loads(args.selection_manifest.read_text())
+        if args.size or manifest["table_sha256"][args.dataset] != table_sha256(args.dataset):
+            raise ValueError("Split требует --size 0 и неизменную таблицу")
+        entries = ([entry for entry in manifest["private"] if entry["split"] == args.partition]
+                   if args.dataset == "private_test" else manifest["training"][args.partition])
+        selection = {entry["row_id"]: entry for entry in entries}
+        records = [record for record in records if record["_row_id"] in selection]
+        if not records or any(hashlib.sha256(record["description"].encode()).hexdigest() != selection[record["_row_id"]]["description_sha256"] for record in records):
+            raise ValueError("Входы группового split изменились")
     scored_categories = SCORED_CATEGORIES if args.dataset == TABLE else set(MICROCATEGORIES)
-    rows = prepare_rows(records, 101)
+    private = args.dataset == "private_test"
+    rows = ([EvaluationRow(inp=NoSourceClassificationInput(description=record["description"]),
+                           expected={label["mcId"] for label in record["found_microcategories"]})
+             for record in records] if private else prepare_rows(records, 101))
     identities = [{"row_id": record["_row_id"], "source": record["_source"],
                    "description_sha256": hashlib.sha256(row.inp.description.encode()).hexdigest(),
                    "source_mc_id": row.inp.mc_id, "expected": sorted(row.expected & scored_categories)}
@@ -279,7 +367,15 @@ def main() -> int:
                 "label_interpretation": ("agreement with automatic labels; not independent human ground truth" if args.dataset == TABLE else "supplied combined corpus labels; predominantly overlaps training data"),
                 "category_101": "unscored: table loader drops 101 from target labels" if args.dataset == TABLE else "source mcId=101 assumed because the JSONL has no source category",
                 "source_category": "excluded from expected and predicted sets by contract"}
-    report = {**metadata(), "scenario": "export_diagnostic" if args.dataset == TABLE else "igh_deduped_diagnostic", "storage": "postgresql",
+    if private:
+        protocol.update(source_mc_id=None, category_101="scored; source category is absent",
+                        source_category="none; all six categories retained using benchmark-only NoSourceClassificationInput",
+                        label_interpretation="supplied private labels joined by testcase; no training or tuning on this set")
+    if args.skip_latency:
+        protocol["latency_measurement"] = "not requested; F1 only"
+    if args.selection_manifest:
+        protocol.update(partition=args.partition, split_sha256=hashlib.sha256(args.selection_manifest.read_bytes()).hexdigest())
+    report = {**metadata(), "scenario": "private_test_all_categories" if private else "semantic_train_control" if args.dataset == "manual_train" else "export_diagnostic" if args.dataset == TABLE else "igh_deduped_diagnostic", "storage": "postgresql",
               "inference_fingerprint": inference_fingerprint(),
               "protocol": protocol, "rows": identities, "results": {},
               "overlap": {table: audit_overlap(rows, table) for table in ("case_train", "manual_train")}}
@@ -296,16 +392,29 @@ def main() -> int:
                 or any(reuse["protocol"][key] != protocol[key] for key in ("dataset_table", "table_sha256", "scored_categories"))):
             raise ValueError("Нельзя переносить ответы другой модели, разметки или таблицы")
         report["reuse_report"] = str(args.reuse_report)
-    if args.configurations:
+    if args.merge_reports:
+        seen = set()
+        for path in args.merge_reports:
+            source = json.loads(path.read_text())
+            if source["protocol"] != protocol or source["rows"] != identities or source["inference_fingerprint"] != report["inference_fingerprint"]:
+                raise ValueError("Нельзя объединить другие данные, source-policy или веса")
+            if seen & source["results"].keys():
+                raise ValueError("В объединяемых отчётах повторяются решения")
+            seen.update(source["results"])
+            report["results"].update(source["results"])
+        report["comparison_sources"] = {str(path): hashlib.sha256(path.read_bytes()).hexdigest() for path in args.merge_reports}
+    elif args.configurations:
         for key in args.configurations:
             configuration = BY_KEY[key]
             with configured(configuration):
                 evaluate_method(configuration.module, rows, report, args.report, args.workers, reuse,
-                                configuration_metadata(configuration))
+                                configuration_metadata(configuration), latency=not args.skip_latency)
     else:
         for method in args.methods or METHODS:
-            evaluate_method(method, rows, report, args.report, args.workers, reuse)
+            evaluate_method(method, rows, report, args.report, args.workers, reuse, latency=not args.skip_latency)
     report["status"] = "complete" if all(r["status"] == "completed" for r in report["results"].values()) else "failed"
+    if private:
+        summarize_private(report, records)
     save_report(args.report, report)
     return 0 if report["status"] == "complete" else 1
 
