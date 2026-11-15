@@ -16,7 +16,7 @@ from collections import Counter, defaultdict
 from dataclasses import dataclass
 from pathlib import Path
 
-from main import MICROCATEGORIES
+from main import ACTION, MICROCATEGORIES, SeoSpan, find_seo_spans
 from dataset_annotation.audit_dataset import ROOT, WORK, normalize
 from dataset_annotation.build_improved_dataset import (
     AUDIT, DECISIONS, DESTINATION, load_records, test_overlap_reasons,
@@ -34,32 +34,6 @@ LOCKED_METHOD = "user_locked_review_decision_preserved"
 
 # Границы слов и фраз подобраны по реальным описаниям. Это не обученная модель,
 # поэтому ниже сохраняются следы правил и неоднозначности.
-SEO_MARKERS = re.compile(
-    r"\b(?:"
-    r"для\s+поиска|слов\w*\s+для\s+поиска|маячки\s+для\s+поиска|"
-    r"ключи\s+для\s+поиска|нас\s+можно\s+найти|"
-    r"(?:нас|меня|команду)\s+(?:также\s+)?находят\s+по\s+запросам|"
-    r"нас\s+ищут\s+по\s+запросам|также\s+ищут|"
-    r"поисков\w*\s+(?:слов\w*|запрос\w*|систем\w*)|"
-    r"ключев\w*\s+(?:слов\w*|запрос\w*)|"
-    r"нас\s+находят|"
-    r"нас\s+(?:также|тоже)\s+ищут|так\s+же\s+нас\s+ищут|"
-    r"также\s+нас\s+ищут|ищут\s+нас|ищут\s+также|"
-    r"ищите\s+(?:меня|нас)|ищите\s+нас|также\s+ищите|"
-    r"возможно\s*,?\s*(?:вы\s+|нас\s+)?(?:ищ|иска)\w*|"
-    r"вы\s+могли\s+искать|по\s+каким\s+запросам|"
-    r"запросы\s+для\s+поиска|популярные\s+запросы|"
-    r"часто\s+ищут|теги\s+для\s+поиска|теги|tags|keywords"
-    r")\s*[:：]?",
-    re.I,
-)
-ACTION = re.compile(
-    r"(?:выполня|дела|оказы|занима|предлага|бер[её]м|берем|беру|"
-    r"монтир|монтаж|установ|уклад|облицов|поклей|оклей|наклей|"
-    r"покрас|окрас|штукатур|шпакл|шпатл|развод|замен|подключ|"
-    r"проклад|сборк|нанесен|выравн|ремонт|отдел|работ|услуг)",
-    re.I,
-)
 INSTALL_ACTION = re.compile(
     r"(?:монтир|монтаж|установ|уклад|облицов|поклей|оклей|наклей|"
     r"покрас|окрас|штукатур|шпакл|шпатл|развод|замен|подключ|"
@@ -313,17 +287,6 @@ TYPO_ALIASES = {
 
 
 @dataclass(frozen=True)
-class SeoSpan:
-    """Хранить точный вырезанный поисковый фрагмент для аудита."""
-
-    start: int
-    end: int
-    text: str
-    marker: str
-    kind: str
-
-
-@dataclass(frozen=True)
 class Occurrence:
     """Одно упоминание категории в тексте без SEO."""
 
@@ -399,54 +362,6 @@ def _term_match(token: str) -> tuple[int, str, str, str] | None:
         return fuzzy[0], fuzzy[1], "strong", "typo_tolerant"
     return None
 
-
-def _find_seo_spans(text: str) -> list[SeoSpan]:
-    """Найти явные поисковые секции и длинные keyword-хвосты."""
-    spans: list[SeoSpan] = []
-
-    def add(start: int, end: int, marker: str, kind: str) -> None:
-        start = max(0, start)
-        end = min(len(text), end)
-        if start < end:
-            spans.append(SeoSpan(start, end, text[start:end], marker, kind))
-
-    for match in SEO_MARKERS.finditer(_normalized(text)):
-        tail = text[match.end():match.end() + 45]
-        line_start = text.rfind("\n", 0, match.start()) + 1
-        prefix = text[line_start:match.start()]
-        at_line_start = len(prefix.strip(" \t•·-–—*✅✔️🔎🔍➡️")) <= 3
-        if (not at_line_start and ":" not in match.group(0)
-                and "：" not in match.group(0) and ":" not in tail and "：" not in tail):
-            continue
-        start = line_start if at_line_start else match.start()
-        add(start, len(text), match.group(0), "explicit_marker")
-
-    # Keyword-хвосты без маркера: длинная строка, мало глаголов, много повторов
-    # «ремонт/отделка». Не трогаем короткие перечни реальных услуг.
-    offset = 0
-    for line in text.splitlines(keepends=True):
-        stripped = line.strip()
-        start = offset
-        offset += len(line)
-        if not stripped or any(span.start <= start < span.end for span in spans):
-            continue
-        low = _normalized(stripped)
-        if len(low) < 160 or re.search(r"[.!?]", low):
-            continue
-        cue_count = sum(low.count(stem) for stem in (
-            "плитк", "кафел", "керамогранит", "мозаик", "сантех", "труб",
-            "отоплен", "канализац", "электр", "проводк", "розет", "освещ",
-            "штукатур", "шпакл", "шпатл", "обои", "покрас", "маляр",
-            "отделк", "ремонт",
-        ))
-        repeat_repair = len(re.findall(r"ремонт", low))
-        actions = len(ACTION.findall(low))
-        if cue_count >= 6 and actions <= 1 and (
-            repeat_repair >= 3 or len(low) >= 260
-        ):
-            add(start, start + len(line), stripped[:80], "keyword_tail")
-
-    return sorted(spans, key=lambda span: (span.start, span.end))
 
 
 def _masked_text(text: str, spans: list[SeoSpan]) -> str:
@@ -710,7 +625,7 @@ def propose(description: str) -> dict:
     """Предложить метки и объяснения только по description, без title."""
     if not isinstance(description, str):
         raise ValueError("description должен быть строкой")
-    seo_spans = _find_seo_spans(description)
+    seo_spans = find_seo_spans(description, normalized_text=_normalized(description))
     masked = _normalized(_masked_text(description, seo_spans))
     core = " ".join(masked.split())
     ignored_seo = [span.text.strip() for span in seo_spans if span.text.strip()]

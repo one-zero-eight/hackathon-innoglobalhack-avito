@@ -21,15 +21,15 @@
       "elapsed_seconds": 33.97800820902921
     },
     "http_api": {
-      "date": "2026-11-15T20:48:22+03:00",
-      "commit": "3d8892ed861cfedada61c5180ad8e5bebbb9cbdb",
-      "code_sha256": "6caf70da5a8f57a4cee7af927c4cb81e0681911551fb19a1e46b3c3a01e1fd69",
+      "date": "2026-11-16T01:35:02+03:00",
+      "commit": "5c7bcdf5b1b9dd72c48323e7e65dff8bd7c4df39",
+      "code_sha256": "bf9b3865a0d94d8ada316fd1cd21406fb7c08b0c7a19840440789f68b5a8f60d",
       "working_tree": true,
-      "machine": "Linux-7.0.0-43-generic-x86_64-with-glibc2.43",
+      "machine": "macOS-26.5.2-arm64-arm-64bit-Mach-O",
       "environment": {
-        "OMP_NUM_THREADS": "1",
-        "OPENBLAS_NUM_THREADS": "1",
-        "MKL_NUM_THREADS": "1",
+        "OMP_NUM_THREADS": null,
+        "OPENBLAS_NUM_THREADS": null,
+        "MKL_NUM_THREADS": null,
         "TOKENIZERS_PARALLELISM": null
       },
       "status": "complete",
@@ -64,7 +64,6 @@
         "reject_extractor_output_[None]",
         "reject_extractor_output_{104}",
         "reject_extractor_output_None",
-        "reject_generator_output_[]",
         "reject_generator_output_[{'mcId': 105}]",
         "reject_generator_output_[{'mcId': 104}, {'mcId': 104}]",
         "reject_generator_output_[{'mcId': 101}]",
@@ -72,6 +71,8 @@
         "reject_generator_output_[{'mcId': 104, 'title': []}]",
         "reject_generator_output_[Draft(mc_id=104, title=[], text=None)]",
         "reject_generator_output_None",
+        "generator_can_abstain_without_fake_drafts_0",
+        "generator_can_abstain_without_fake_drafts_1",
         "sanitize_load_FileNotFoundError",
         "health_after_unavailable_FileNotFoundError",
         "sanitize_load_ImportError",
@@ -97,13 +98,48 @@
         "concurrent_requests_keep_selection_and_serialize",
         "replaced_instance_is_released",
         "cli_contract_and_other_working_directory",
+        "web_full_abstention",
+        "web_partial_abstention_and_unicode",
+        "web_duplicate_category_rejected",
+        "web_unrequested_category_rejected",
+        "web_empty_text_rejected",
+        "web_generation_error_not_fake_draft",
         "module_startup_from_other_directory",
         "real_http_health_catalog_openapi",
         "real_http_empty_drafts",
         "real_http_validation"
       ],
-      "checks_passed": 65,
-      "elapsed_seconds": 1.524205873000028
+      "checks_passed": 72,
+      "elapsed_seconds": 1.4607413329940755
+    },
+    "local_http_smoke": {
+      "status": "complete",
+      "scenario": "live_http_smoke",
+      "date": "2026-11-16",
+      "commit": "5c7bcdf5b1b9dd72c48323e7e65dff8bd7c4df39",
+      "working_tree": true,
+      "extractor": "lexical.regex",
+      "generator": "local_llm",
+      "elapsed_seconds": 8.251164291999885,
+      "rows": 1,
+      "model": "Qwen3.5-9B 4-bit / local MLX",
+      "input": {
+        "description": "🔧 Выполняю сантехнические работы: устанавливаю смесители, раковины и унитазы, заменяю трубы водоснабжения. Работаю в Казани. 📞 Звоните!",
+        "mcId": 101
+      },
+      "output": {
+        "drafts": [
+          {
+            "mcId": 104,
+            "title": "Сантехнические работы в Казани",
+            "text": "🔧 Выполняю установку смесителей, раковин и унитазов, а также замену труб водоснабжения. Работаю в городе Казань.\n\n• 🔧 Установка смесителей\n• 🔧 Установка раковин\n• 🔧 Установка унитазов\n• 🔧 Замена труб водоснабжения\n\nДополнительная информация:\n• Работаю в Казани\n• 📞 Звоните для заказа"
+          }
+        ]
+      },
+      "checks": ["one_draft_per_category", "bullet_points", "source_emojis"],
+      "web_health": {"status": "ok", "db": true, "classifier_model": "typesafe/jev-1.13"},
+      "web_microcategories": 6,
+      "web_classification_limit": "SELECTEL_API_KEY is not configured; live Jev classification was not verified"
     }
   }
 }

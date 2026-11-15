@@ -21,7 +21,7 @@ import weakref
 
 from fastapi.testclient import TestClient
 
-from api import create_app
+from http_api import create_app
 from main import BasePipeline, Draft, MissingCredentialsError, PipelineConfig, PipelineInput, PipelineRuntime, discover_modules
 
 ROOT = Path(__file__).resolve().parents[4]
@@ -64,7 +64,7 @@ def check_api() -> list[str]:
         config_path = directory / "config.json"
         config_path.write_text(json.dumps({"subcategory_extraction": "lexical.regex", "draft_generation": "sample_llm"}))
         with patch("main.load_pipeline", side_effect=AssertionError("Загрузка модели при импорте/старте")):
-            importlib.reload(importlib.import_module("api"))
+            importlib.reload(importlib.import_module("http_api"))
             app = create_app(config_path)
             with TestClient(app) as client:
                 verify(client.get("/health").json() == {"status": "ok"}, "health_without_models")
@@ -91,7 +91,7 @@ def check_api() -> list[str]:
             verify(second.json()["drafts"][0]["mcId"] == 105 and len(created) == 3, "override_replaces_only_extractor")
             verify(client.post("/drafts", json=inp).json() == first.json() and len(created) == 4, "override_does_not_change_defaults")
         # Эмулируем второй generator для проверки общей механики выбора без добавления модуля.
-        with patch("api.discover_modules", side_effect=lambda service: tuple(targets) if service == "subcategory_extraction" else ("sample_llm", "other")):
+        with patch("http_api.discover_modules", side_effect=lambda service: tuple(targets) if service == "subcategory_extraction" else ("sample_llm", "other")):
             two_generators = create_app(config_path)
         created.clear()
         with patch("main.load_pipeline", side_effect=factory), TestClient(two_generators) as client:
@@ -114,7 +114,7 @@ def check_api() -> list[str]:
         for output in ([101], [999], [True], ["104"], [104, 104], [None], {104}, None):
             with patch("main.load_pipeline", return_value=StubPipeline(lambda data: output)), TestClient(create_app(config_path)) as client:
                 verify(client.post("/drafts", json=inp).status_code == 502, "reject_extractor_output_" + repr(output))
-        for output in ([], [{"mcId": 105}], [{"mcId": 104}, {"mcId": 104}], [{"mcId": 101}], [{"mcId": "104"}],
+        for output in ([{"mcId": 105}], [{"mcId": 104}, {"mcId": 104}], [{"mcId": 101}], [{"mcId": "104"}],
                        [{"mcId": 104, "title": []}], [Draft.model_construct(mc_id=104, title=[])], None):
             def malformed(service: str, config: PipelineConfig) -> BasePipeline:
                 """Вернуть правильные цели и намеренно некорректный ответ generator."""
@@ -123,6 +123,15 @@ def check_api() -> list[str]:
             with patch("main.load_pipeline", side_effect=malformed), TestClient(create_app(config_path)) as client:
                 response = client.post("/drafts", json=inp)
                 verify(response.status_code == 502 and "drafts" not in response.json(), "reject_generator_output_" + repr(output))
+        # Неподтверждённая генератором услуга не превращается в фиктивный черновик.
+        for output in ([], [{"mcId": 104, "title": "Сантехника", "text": "Установка смесителей."}]):
+            def abstaining(service: str, config: PipelineConfig) -> BasePipeline:
+                return StubPipeline(lambda *args: [104, 105] if service == "subcategory_extraction" else output)
+
+            with patch("main.load_pipeline", side_effect=abstaining), TestClient(create_app(config_path)) as client:
+                response = client.post("/drafts", json=inp)
+                verify(response.status_code == 200 and response.json() == {"drafts": output},
+                       "generator_can_abstain_without_fake_drafts_" + str(len(output)))
         for error, expected in ((FileNotFoundError("private/path"), 503), (ImportError("private dependency"), 503), (ValueError("private settings"), 503)):
             with patch("main.load_pipeline", side_effect=error), TestClient(create_app(config_path)) as client:
                 response = client.post("/drafts", json=inp)
@@ -286,3 +295,50 @@ def check_server_startup() -> list[str]:
                     process.kill()
                     process.wait(timeout=5)
     return ["module_startup_from_other_directory", "real_http_health_catalog_openapi", "real_http_empty_drafts", "real_http_validation"]
+
+
+def check_web_generation() -> list[str]:
+    """Не выдавать фиктивные черновики и сохранять Unicode на веб-маршруте."""
+    from unittest.mock import AsyncMock
+
+    from api.app import app as web_app
+    from api.service import DraftsService
+    from main import MICROCATEGORIES
+
+    source = {"description": "🔧 Устанавливаю смесители!", "mcId": 101}
+    draft = {"mcId": 104, "title": "Сантехника", "text": "🔧 Установка смесителей!\n\n• Монтаж смесителей"}
+    cases = (
+        ("web_full_abstention", [], 200),
+        ("web_partial_abstention_and_unicode", [draft], 200),
+        ("web_duplicate_category_rejected", [draft, draft], 502),
+        ("web_unrequested_category_rejected", [{**draft, "mcId": 106}], 502),
+        ("web_empty_text_rejected", [{**draft, "text": ""}], 502),
+        ("web_generation_error_not_fake_draft", ValueError("private provider data"), 502),
+    )
+    checks = []
+    for name, output, status in cases:
+        service = DraftsService(classifier=None, pool=None, threshold=0.85)
+
+        def produce(*args: Any) -> Any:
+            if isinstance(output, Exception):
+                raise output
+            return output
+
+        service._generator = StubPipeline(produce)
+        with (
+            patch("api.service.get_catalog", new=AsyncMock(return_value=MICROCATEGORIES)),
+            patch.object(service, "_classify", new=AsyncMock(return_value=[104, 105])),
+            patch.object(web_app.state, "service", service, create=True),
+        ):
+            client = TestClient(web_app)
+            try:
+                response = client.post("/api/drafts", json=source)
+            finally:
+                client.close()
+        assert response.status_code == status, response.text
+        if status == 200:
+            assert response.json() == {"drafts": output}
+        else:
+            assert "drafts" not in response.json() and "private" not in response.text
+        checks.append(name)
+    return checks

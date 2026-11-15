@@ -13,7 +13,7 @@ def main() -> None:
     """Запустить один процесс сервера с настройками host/port из окружения."""
     load_dotenv(SOURCE_DIR.parent / ".env")
     uvicorn.run(
-        "api:create_app", factory=True, app_dir=str(SOURCE_DIR), workers=1,
+        "http_api:create_app", factory=True, app_dir=str(SOURCE_DIR), workers=1,
         host=os.getenv("UVICORN_HOST", "127.0.0.1"), port=int(os.getenv("UVICORN_PORT", "8000")),
     )
 

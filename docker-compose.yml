@@ -30,6 +30,13 @@ services:
     environment:
       # Внутри сети compose база доступна по сервисному имени db
       DATABASE_URL: postgresql://avito:avito@db:5432/avito
+      # Модель работает отдельно на хосте, не внутри контейнера API.
+      LOCAL_LLM_API_URL: ${LOCAL_LLM_API_URL:-http://host.docker.internal:8080/v1/chat/completions}
+      LOCAL_LLM_MODEL_ID: ${LOCAL_LLM_MODEL_ID:-default_model}
+      LOCAL_LLM_TIMEOUT: ${LOCAL_LLM_TIMEOUT:-180}
+      LOCAL_LLM_MAX_TOKENS: ${LOCAL_LLM_MAX_TOKENS:-4096}
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     depends_on:
       db:
         condition: service_healthy

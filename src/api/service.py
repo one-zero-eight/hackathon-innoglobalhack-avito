@@ -1,29 +1,25 @@
 """Логика веб-сервиса черновиков: классификация услуг и генерация черновиков.
 
-Клиенты LLM (классификатор — Selectel Decisions API с вопросами типа noul,
-генератор — Selectel chat/completions) и пул БД инжектируются из ``api.app``;
-модуль не читает окружение сам.
+Классификатор Selectel Decisions API и пул БД инжектируются из ``api.app``.
+Генератор лениво загружается из общей конфигурации CLI и HTTP API.
 """
 
 import asyncio
-import json
 import logging
 import re
 from functools import lru_cache
 from pathlib import Path
 
 import asyncpg
-from pydantic import ValidationError
 
 from api.clients.decisions import DecisionsClient
-from api.clients.openai_compat import OpenAIChatClient
+from main import BasePipeline, load_config, load_pipeline
 from api.db import get_catalog
 from api.errors import LLMGatewayError
 from api.schemas import (
     MICROCATEGORIES,
     ClassifierItem,
     Draft,
-    GeneratedText,
     PipelineInput,
     PipelineOutput,
 )
@@ -31,8 +27,6 @@ from api.schemas import (
 logger = logging.getLogger(__name__)
 
 PROMPTS_DIR = Path(__file__).resolve().parent / "prompts"
-# Данные промпта идут в user-сообщение: всё от заголовка «## Данные...» до конца.
-_DATA_HEADING_RE = re.compile(r"^##\s*Данные.*$", re.MULTILINE)
 # Первая строка prompt-файла — HTML-комментарий для разработчиков, модели не нужен.
 _HTML_COMMENT_RE = re.compile(r"<!--.*?-->", re.DOTALL)
 
@@ -57,9 +51,6 @@ CATEGORY_EXAMPLES: dict[int, str] = {
     "и замена обоев, покраска стен и потолков, шпаклёвка, грунтование, шлифовка, "
     "стеклохолст, снятие старых обоев",
 }
-GENERATOR_FALLBACK_USER = (
-    "Составь черновик объявления и верни JSON-объект с ключами title и text."
-)
 
 
 @lru_cache(maxsize=None)
@@ -77,29 +68,21 @@ def _render(template: str, values: dict[str, str]) -> str:
     return rendered
 
 
-def _split_prompt(rendered: str, fallback_user: str) -> tuple[str, str]:
-    """Разметить готовый промпт на system-инструкции и user-данные."""
-    match = _DATA_HEADING_RE.search(rendered)
-    if not match:
-        logger.warning("В промпте нет секции «## Данные», отправляю его целиком в system")
-        return rendered, fallback_user
-    return rendered[: match.start()].strip(), rendered[match.start():].strip()
-
-
 class DraftsService:
     """Дополнительные черновики: классификация mcId -> генерация по целевым категориям."""
 
     def __init__(
         self,
         classifier: DecisionsClient,
-        generator: OpenAIChatClient,
         pool: asyncpg.Pool,
         threshold: float,
     ) -> None:
         self._classifier = classifier
-        self._generator = generator
         self._pool = pool
         self._threshold = threshold
+
+        self._generator: BasePipeline | None = None
+        self._generation_lock = asyncio.Lock()
 
     async def run(self, inp: PipelineInput) -> PipelineOutput:
         """Полный цикл для одного объявления: классификатор -> генераторы."""
@@ -113,10 +96,15 @@ class DraftsService:
         if not target_mc_ids:
             return PipelineOutput(drafts=[])
 
-        drafts = await asyncio.gather(
-            *(self._generate_draft(mc_id, inp, catalog) for mc_id in target_mc_ids)
-        )
-        return PipelineOutput(drafts=list(drafts))
+        async with self._generation_lock:
+            try:
+                drafts = await asyncio.to_thread(self._generate_drafts, inp, target_mc_ids)
+            except Exception as exc:
+                logger.error("Ошибка общего генератора: %s", type(exc).__name__)
+                raise LLMGatewayError(
+                    "Генератор черновиков недоступен или вернул некорректный результат"
+                ) from exc
+        return PipelineOutput(drafts=drafts)
 
     def _check_catalog(self, catalog: dict[int, str]) -> None:
         """Сверить справочник из БД с MICROCATEGORIES из main; расхождение — только лог."""
@@ -185,44 +173,17 @@ class DraftsService:
             if item.p >= self._threshold and item.mc_id != inp.mc_id
         ]
 
-    async def _generate_draft(
-        self, mc_id: int, inp: PipelineInput, catalog: dict[int, str]
-    ) -> Draft:
-        """Черновик для одной целевой категории; mcId берём из нашего списка целей."""
-        title = catalog.get(mc_id) or MICROCATEGORIES.get(mc_id) or str(mc_id)
-        system, user = _split_prompt(
-            _render(
-                _load_prompt("generator"),
-                {"category_title": title, "description": inp.description},
-            ),
-            GENERATOR_FALLBACK_USER,
-        )
-        messages = [
-            {"role": "system", "content": system},
-            {"role": "user", "content": user},
-        ]
-        result = await self._generate(messages, mc_id)
-        if result is None:
-            return Draft(mc_id=mc_id)
-        return Draft(mc_id=mc_id, title=result.title, text=result.text)
-
-    async def _generate(
-        self, messages: list[dict[str, str]], mc_id: int
-    ) -> GeneratedText | None:
-        """Генерация с повторами: после generation_retries неудач — None (пустой черновик)."""
-        attempts = self._generator.retries + 1
-        for attempt in range(1, attempts + 1):
-            try:
-                raw = await self._generator.chat(messages)
-                data = json.loads(OpenAIChatClient.extract_json(raw))
-                return GeneratedText.model_validate(data)
-            except (LLMGatewayError, ValueError, ValidationError) as exc:
-                logger.warning(
-                    "Генерация для mcId %s не удалась (попытка %d/%d): %s",
-                    mc_id,
-                    attempt,
-                    attempts,
-                    exc,
-                )
-        logger.error("Генерация для mcId %s не удалась после %d попыток", mc_id, attempts)
-        return None
+    def _generate_drafts(self, inp: PipelineInput, target_mc_ids: list[int]) -> list[Draft]:
+        """Один блокирующий вызов общего генератора для всех целевых категорий."""
+        if self._generator is None:
+            self._generator = load_pipeline("draft_generation", load_config())
+        result = self._generator.run(inp, target_mc_ids)
+        drafts = [Draft.model_validate(item) for item in result]
+        ids = [draft.mc_id for draft in drafts]
+        if (
+            len(ids) != len(set(ids))
+            or not set(ids).issubset(target_mc_ids)
+            or any(not draft.title or not draft.text for draft in drafts)
+        ):
+            raise ValueError("Генератор нарушил контракт целевых черновиков")
+        return drafts

@@ -12,21 +12,19 @@ from typing import Any
 
 import httpx
 
-from api.clients.openai_compat import (
-    RETRY_BACKOFF_BASE_SECONDS,
-    RETRY_BACKOFF_MAX_SECONDS,
-    _is_retryable_status,
-)
 from api.errors import LLMGatewayError
 
 logger = logging.getLogger(__name__)
+
+RETRY_BACKOFF_BASE_SECONDS = 1.0
+RETRY_BACKOFF_MAX_SECONDS = 30.0
 
 
 class DecisionsClient:
     """Асинхронный клиент decisions-шлюза с ретраями и валидацией ответа.
 
-    Повторяет запрос на HTTP 429 и 5xx с экспоненциальной паузой — так же,
-    как ``OpenAIChatClient``. Успешный ответ обязан быть JSON-объектом
+    Повторяет запрос на HTTP 429 и 5xx с экспоненциальной паузой.
+    Успешный ответ обязан быть JSON-объектом
     со словарём ``answers``, набор ключей которого совпадает с вопросами,
     и числовым полем ``noul`` в [0, 1] у каждого ответа; HTML-заглушка или
     любое другое нарушение схемы — LLMGatewayError с обрезком тела.
@@ -54,8 +52,7 @@ class DecisionsClient:
 
         Тело запроса: ``{"model", "state": {"text": text}, "questions"}``;
         вопросы — словарь вида ``{"mc104": {"type": "noul", "instructions": ...}}``.
-        Сетевые сбои не повторяются и сразу превращаются в LLMGatewayError,
-        как и в ``OpenAIChatClient``.
+        Сетевые сбои не повторяются и сразу превращаются в LLMGatewayError.
         """
         if not questions:
             raise ValueError("Нужен непустой словарь questions")
@@ -105,7 +102,7 @@ class DecisionsClient:
                     f"Decisions-шлюз вернул HTTP {response.status_code}",
                     response.text,
                 )
-                if _is_retryable_status(response.status_code):
+                if response.status_code == 429 or 500 <= response.status_code <= 599:
                     if attempt + 1 < attempts:
                         logger.warning(
                             "Decisions-шлюз: HTTP %d, осталось повторов %d",

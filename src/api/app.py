@@ -13,13 +13,13 @@ from contextlib import asynccontextmanager
 from typing import Any
 
 import asyncpg
+from dotenv import load_dotenv
 from fastapi import FastAPI, HTTPException, Query, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 
 from api.clients.decisions import DecisionsClient
-from api.clients.openai_compat import OpenAIChatClient
-from api.config import Settings
+from api.config import ENV_FILE, Settings
 from api.db import (
     close_pool,
     fetch_dataset_samples,
@@ -49,6 +49,7 @@ HEALTH_DB_TIMEOUT_S = 2.0
 @asynccontextmanager
 async def lifespan(app: FastAPI) -> AsyncIterator[None]:
     """Собрать сервис при старте и закрыть пул при выключении."""
+    load_dotenv(ENV_FILE)
     settings = Settings()
     app.state.settings = settings
     app.state.pool = await init_pool(settings.database_url)
@@ -59,20 +60,12 @@ async def lifespan(app: FastAPI) -> AsyncIterator[None]:
         timeout=settings.classifier_timeout,
         retries=settings.classifier_retries,
     )
-    generator = OpenAIChatClient(
-        settings.selectel_api_url,
-        settings.selectel_api_key,
-        settings.selectel_model,
-        timeout=settings.generation_timeout,
-        retries=settings.generation_retries,
-    )
     app.state.service = DraftsService(
-        classifier, generator, app.state.pool, settings.classifier_threshold
+        classifier, app.state.pool, settings.classifier_threshold
     )
     logger.info(
-        "Сервис черновиков готов: классификатор %s (Decisions API), генератор %s",
+        "Сервис черновиков готов: классификатор %s (Decisions API), генератор из config.json",
         settings.selectel_decisions_model,
-        settings.selectel_model,
     )
     try:
         yield

@@ -30,14 +30,6 @@ class ClassifierItem(BaseModel):
         return min(max(p, 0.0), 1.0)
 
 
-class GeneratedText(BaseModel):
-    """Ответ генератора черновика: {"title": "...", "text": "..."}, обе строки непустые."""
-
-    model_config = ConfigDict(str_strip_whitespace=True)
-
-    title: str = Field(min_length=1)
-    text: str = Field(min_length=1)
-
 
 DatasetSplit = Literal["train", "test"]
 
@@ -71,7 +63,6 @@ __all__ = [
     "DatasetSplit",
     "DatasetStats",
     "Draft",
-    "GeneratedText",
     "PipelineInput",
     "PipelineOutput",
 ]

@@ -22,23 +22,18 @@ class Settings(BaseSettings):
     database_url: str = "postgresql://avito:avito@localhost:5432/avito"
 
     # Selectel Decisions API: классификатор микрокатегорий (модель jev,
-    # вопросы типа noul). Ключ общий с генерацией — selectel_api_key.
+    # вопросы типа noul).
     selectel_decisions_url: str = "https://api.selectel.ru/aig/v1/decisions"
     selectel_decisions_model: str = "typesafe/jev-1.13"
 
     # Порог отнесения услуги к микрокатегории: p ниже порога не черновим.
     classifier_threshold: float = 0.85
 
-    # Selectel: генерация черновиков.
-    selectel_api_url: str = "https://api.selectel.ru/aig/v1/chat/completions"
     selectel_api_key: str = ""
-    selectel_model: str = "meta-llama/llama-3.2-3b-instruct"
 
-    # Таймауты HTTP-запросов (сек) и число повторов к LLM-шлюзам.
+    # Таймаут и число повторов классификатора.
     classifier_timeout: float = 60.0
     classifier_retries: int = 2
-    generation_timeout: float = 120.0
-    generation_retries: int = 2
 
     # Порт FastAPI-приложения.
     api_port: int = 8000
