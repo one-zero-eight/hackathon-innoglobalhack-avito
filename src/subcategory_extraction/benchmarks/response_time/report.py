@@ -269,6 +269,46 @@ def section(scope: dict[str, Any], first: bool) -> str:
     )
 
 
+def study_summary(scopes: list[dict[str, Any]]) -> str:
+    """Показать итог подтверждённого улучшения сразу при открытии отчёта."""
+    private = next((scope for scope in scopes if scope["id"] == "private"), None)
+    if not private or not private.get("generalization_study"):
+        return ""
+    study = private["generalization_study"]
+    key = study["selected_module"].rsplit(".", 1)[-1]
+    winner = next(row for row in private["rows"] if row["method"] == key)
+    baseline = next(row for row in private["rows"] if row["method"] == "jev_calibrated")
+    no_train = winner["without_exact_train_match"]
+    interval = study["confirmation_group_bootstrap_95_interval"]
+    timing = study["timing"][key]
+    official = study["regressions"]["official"][key]["micro_f1"]
+    manual = study["regressions"]["manual"][key]["micro_f1"]
+    cards = (
+        ("Full private set", f"{winner['f1']:.4f}", f"micro-F1 · {private['n']} ads · all six categories"),
+        ("Reserved confirmation", f"{winner['confirmation_metrics']['micro_f1']:.4f}",
+         f"micro-F1 · {study['confirmation_rows']} grouped ads"),
+        ("No exact training matches", f"{no_train['metrics']['micro_f1']:.4f}", f"micro-F1 · {no_train['rows']} ads"),
+        ("Improvement over calibrated Jev", f"+{100 * (winner['f1'] - baseline['f1']):.2f} pp",
+         f"{baseline['f1']:.4f} → {winner['f1']:.4f} on the same private set"),
+    )
+    metrics = "".join(f'<div class="result-card"><span>{html.escape(label)}</span><strong>{value}</strong>'
+                      f'<small>{html.escape(note)}</small></div>' for label, value, note in cards)
+    return (
+        '<aside class="result-summary" aria-label="Confirmed semantic classifier results">'
+        '<div class="eyebrow">Confirmed private-set improvement</div>'
+        f'<h2><code>{html.escape(study["selected_module"])}</code></h2>'
+        f'<div class="result-grid">{metrics}</div>'
+        f'<p>The winner was frozen after {study["development_rows"]} development ads, before confirmation. '
+        'Threshold selection used training data only; the model has no ad-specific answer lookups. '
+        f'The {study["confirmation_rows"]}-ad confirmation remains small: its 95% group-bootstrap interval is '
+        f'{interval[0]:.3f}–{interval[1]:.3f}. Baseline full-set aggregates were already known.</p>'
+        f'<p class="muted">Trade-offs: {timing["mean_seconds"]:.2f} s/ad mean on {timing["calls"]} uncached public validation inputs; '
+        f'official/manual-test F1 {official:.4f}/{manual:.4f}, slightly below calibrated Jev. '
+        'The default configuration is unchanged.</p>'
+        '<button id="open-private" type="button">View private chart and full comparison</button></aside>'
+    )
+
+
 def build(output: Path) -> None:
     """Объединить графики, таблицы, ограничения и аудит в один файл без внешних ресурсов."""
     scopes = collect()
@@ -285,6 +325,7 @@ def build(output: Path) -> None:
 :root{font-family:system-ui,sans-serif;color:#172b43;background:#f3f5f8;font-size:15px}*{box-sizing:border-box}
 body{margin:0}main{max-width:1450px;margin:auto;padding:34px 26px}header{padding:22px 0}h1{font-size:36px;letter-spacing:-1px;margin:5px 0 14px}h2{font-size:23px}
 .eyebrow{font-size:12px;text-transform:uppercase;letter-spacing:2px;color:#526780}.lead{max-width:1000px;line-height:1.65}
+.result-summary{background:#fff;border:1px solid #cbdcd6;border-top:4px solid #168573;border-radius:10px;padding:22px;margin:22px 0}.result-summary h2{font-size:20px;overflow-wrap:anywhere}.result-summary p{line-height:1.6}.result-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px}.result-card{padding:16px;background:#f0f7f4;border-radius:7px}.result-card span,.result-card small{display:block}.result-card span{font-size:12px;color:#526780}.result-card strong{display:block;font-size:32px;margin:7px 0;color:#11634e}.result-card small{line-height:1.5}
 nav,.controls{display:flex;gap:8px;flex-wrap:wrap;margin:16px 0}button,input{font:inherit;padding:10px 13px;border:1px solid #b8c5d4;border-radius:7px;background:white;color:inherit}
 button{cursor:pointer}button[aria-pressed=true]{background:#172b43;color:#fff;border-color:#172b43}input[type=search]{min-width:280px}.controls{align-items:center}.controls label{margin:0 10px;font-size:13px}
 .scope{background:white;border-radius:12px;padding:22px;margin:18px 0;border:1px solid #dce3eb}.notice{padding:12px 15px;background:#fff7e6;border-left:3px solid #c57818;line-height:1.6}
@@ -298,9 +339,10 @@ td:nth-child(2){min-width:265px}td:nth-child(9){max-width:235px}summary{cursor:p
 <h1>Speed and micro-F1</h1><p class="lead">Extraction methods and published logistic regression configurations. The private test evaluates a frozen shortlist on all six labels without a source category.
 The original runs and their dates are retained. Each dataset has its own chart and table; scores from different datasets are not pooled.</p>
 <p class="muted">Measured 15 November 2026 · Intel Core i9-12900H · Linux x86_64 · OpenMP / OpenBLAS / MKL: one thread · local Jev: four OpenVINO threads.
-Local logistic models use no external API. No weights, prompts or thresholds were fitted during this evaluation.</p>
+Local logistic models use no external API. Model weights were fixed; the new semantic prompt and threshold selection used manual_train only.</p>
 <p class="notice">Interpretation: IGH includes training data; provider labels are machine generated. The joint module's author reports using official-test examples during development.
-Provider-trained variants are not independently evaluated on the provider corpus. These qualifications remain attached to the affected results.</p></header>
+Provider-trained variants are not independently evaluated on the provider corpus. These qualifications remain attached to the affected results.</p>
+__STUDY_SUMMARY__</header>
 <nav aria-label="Dataset">__TABS__</nav><div class="controls"><input id="search" type="search" placeholder="Filter table methods" aria-label="Filter methods">
 <label><input id="preserved" type="checkbox"> Show preserved configurations</label><button id="download">Download summary JSON</button><button id="svg-download">Download visible plot SVG</button></div>
 <div class="legend"><span style="--color:#2864b4">Lexical / logistic</span><span style="--color:#7953aa">Semantic</span><span style="--color:#c57818">Decisions</span><span style="--color:#168573">Hybrid</span></div>
@@ -327,9 +369,10 @@ function download(text,type,name){const url=URL.createObjectURL(new Blob([text],
 document.querySelector('#download').onclick=()=>download(document.querySelector('#data').textContent,'application/json','extraction-benchmark-summary.json');
 document.querySelector('#svg-download').onclick=()=>{const scope=document.querySelector('.scope:not([hidden])');download(scope.querySelector('svg').outerHTML,'image/svg+xml',scope.id+'-speed-f1.svg');};filter();
 const selectedTab=[...document.querySelectorAll('nav button')].find(button=>'#'+button.dataset.scope===location.hash);if(selectedTab){selectedTab.click();document.getElementById(selectedTab.dataset.scope).scrollIntoView();}
+const privateButton=document.querySelector('#open-private');if(privateButton)privateButton.addEventListener('click',()=>{document.querySelector('nav button[data-scope="private"]').click();document.querySelector('#private').scrollIntoView();});
 </script></main></body></html>'''
     for key, value in {"TABS": tabs, "SECTIONS": sections, "AUDITS": html.escape(json.dumps(audits, ensure_ascii=False, indent=2)),
-                       "COSTS": costs, "DATA": payload}.items():
+                       "COSTS": costs, "DATA": payload, "STUDY_SUMMARY": study_summary(scopes)}.items():
         page = page.replace(f"__{key}__", value)
     output.write_text(page, encoding="utf-8")
     logging.info("HTML: %s (%d scopes)", output, len(scopes))
