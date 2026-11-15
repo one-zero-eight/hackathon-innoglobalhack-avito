@@ -38,6 +38,7 @@ services:
     volumes:
       # Датасет кейса для эндпоинтов /api/dataset/* и лоадера (см. README).
       - ./data:/app/data:ro
+      - ./config.json:/app/config.json:ro
 
   web:
     build:

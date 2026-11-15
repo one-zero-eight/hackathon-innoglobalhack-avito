@@ -1,8 +1,6 @@
 """Логика веб-сервиса черновиков: классификация услуг и генерация черновиков.
 
-Клиенты LLM (классификатор — Selectel Decisions API с вопросами типа noul,
-генератор — Selectel chat/completions) и пул БД инжектируются из ``api.app``;
-модуль не читает окружение сам.
+Классификатор выбирается через config.json; генератор и пул БД инжектируются из api.app.
 """
 
 import asyncio
@@ -15,13 +13,12 @@ from pathlib import Path
 import asyncpg
 from pydantic import ValidationError
 
-from api.clients.decisions import DecisionsClient
+from main import PipelineConfig, PipelineOutputError, PipelineRuntime, PipelineUnavailableError
 from api.clients.openai_compat import OpenAIChatClient
 from api.db import get_catalog
 from api.errors import LLMGatewayError
 from api.schemas import (
     MICROCATEGORIES,
-    ClassifierItem,
     Draft,
     GeneratedText,
     PipelineInput,
@@ -36,27 +33,6 @@ _DATA_HEADING_RE = re.compile(r"^##\s*Данные.*$", re.MULTILINE)
 # Первая строка prompt-файла — HTML-комментарий для разработчиков, модели не нужен.
 _HTML_COMMENT_RE = re.compile(r"<!--.*?-->", re.DOTALL)
 
-# Определения и примеры услуг каждой микрокатегории для instructions-вопросов
-# классификатора: docs/innoglobalhack_avito/microcategories-guide.md и
-# CATEGORY_EXAMPLES из subcategory_extraction/google_decision/pipeline.py.
-CATEGORY_EXAMPLES: dict[int, str] = {
-    101: "комплексный ремонт квартиры, дома или помещения в несколько этапов "
-    "и сдачей готового результата: косметический, капитальный, дизайнерский ремонт, "
-    "полный цикл отделки, ремонт ванной и санузла",
-    102: "штукатурка и выравнивание поверхностей штукатурными составами: "
-    "штукатурка по маякам и без, механизированная штукатурка, углы и откосы",
-    103: "укладка и облицовка плиткой, керамогранитом и мозаикой: стены и пол, "
-    "кухонные фартуки, душевые зоны из плитки, затирка швов, запил под 45 градусов",
-    104: "монтаж, замена, подключение и ремонт сантехники и трубопроводов: "
-    "разводка водоснабжения и канализации, унитазы, раковины, ванны, инсталляции, "
-    "смесители, радиаторы, фильтры, водонагреватели, стиральные и посудомоечные машины",
-    105: "работы с электропроводкой, электроточками, освещением и распределительным "
-    "оборудованием: замена проводки, розетки и выключатели, щиты и автоматы, "
-    "светильники, штробление стен, электрический тёплый пол",
-    106: "финишная отделка обоями или краской и подготовка к покрытию: поклейка "
-    "и замена обоев, покраска стен и потолков, шпаклёвка, грунтование, шлифовка, "
-    "стеклохолст, снятие старых обоев",
-}
 GENERATOR_FALLBACK_USER = (
     "Составь черновик объявления и верни JSON-объект с ключами title и text."
 )
@@ -91,22 +67,21 @@ class DraftsService:
 
     def __init__(
         self,
-        classifier: DecisionsClient,
+        config: PipelineConfig,
         generator: OpenAIChatClient,
         pool: asyncpg.Pool,
-        threshold: float,
     ) -> None:
-        self._classifier = classifier
+        self._config = config
+        self._runtime = PipelineRuntime()
         self._generator = generator
         self._pool = pool
-        self._threshold = threshold
 
     async def run(self, inp: PipelineInput) -> PipelineOutput:
         """Полный цикл для одного объявления: классификатор -> генераторы."""
         catalog = await get_catalog(self._pool)
         self._check_catalog(catalog)
 
-        target_mc_ids = await self._classify(inp, catalog)
+        target_mc_ids = await self._classify(inp)
         logger.info(
             "Классификатор: исходная mcId=%s, целевые %s", inp.mc_id, target_mc_ids or "—"
         )
@@ -145,45 +120,15 @@ class DraftsService:
             ", ".join(details),
         )
 
-    async def _classify(self, inp: PipelineInput, catalog: dict[int, str]) -> list[int]:
-        """Целевые mcId: p >= порога и не исходная категория объявления.
-
-        Для каждой категории, кроме исходной, ставится вопрос типа noul
-        с instructions из prompts/classifier.md; текст объявления уходит
-        в state.text. Сбой или невалидный ответ шлюза пробрасываются
-        как LLMGatewayError (→ HTTP 502), ретраи делает DecisionsClient.
-        """
-        instructions = _load_prompt("classifier")
-        # Оцениваем контрактные микрокатегории 101..106, кроме исходной:
-        # лишние строки справочника в БД не должны уходить в вопросы.
-        candidates = [
-            mc_id for mc_id in sorted(catalog)
-            if mc_id in MICROCATEGORIES and mc_id != inp.mc_id
-        ]
-        questions = {
-            f"mc{mc_id}": {
-                "type": "noul",
-                "instructions": _render(
-                    instructions,
-                    {
-                        "category": catalog[mc_id],
-                        "examples": CATEGORY_EXAMPLES[mc_id],
-                    },
-                ),
-            }
-            for mc_id in candidates
-        }
-        if not questions:
-            return []
-        scores = await self._classifier.score(inp.description, questions)
-        items = [
-            ClassifierItem(mc_id=mc_id, p=scores[f"mc{mc_id}"]) for mc_id in candidates
-        ]
-        return [
-            item.mc_id
-            for item in items
-            if item.p >= self._threshold and item.mc_id != inp.mc_id
-        ]
+    async def _classify(self, inp: PipelineInput) -> list[int]:
+        """Вызвать классификатор из config.json вне event loop."""
+        try:
+            return await asyncio.to_thread(self._runtime.classify, inp, self._config)
+        except (PipelineUnavailableError, PipelineOutputError):
+            raise
+        except Exception as exc:
+            logger.error("Ошибка классификатора: %s", type(exc).__name__)
+            raise LLMGatewayError("Ошибка выполнения классификатора") from exc
 
     async def _generate_draft(
         self, mc_id: int, inp: PipelineInput, catalog: dict[int, str]

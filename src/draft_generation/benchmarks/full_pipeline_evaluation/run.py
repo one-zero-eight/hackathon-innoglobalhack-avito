@@ -148,7 +148,7 @@ def main() -> int:
     if args.resume:
         parser.error("--resume требует --live")
     if args.api_check:
-        from api_checks import check_api, check_server_startup
+        from api_checks import check_api, check_server_startup, check_web_classifier_config
         from unittest.mock import patch
 
         path = Path(__file__).with_name("checks-results.json")
@@ -161,7 +161,7 @@ def main() -> int:
         try:
             with (patch.dict("os.environ", {"LLM_PRICING_FILE": "", "LLM_API_KEY": ""}),
                   patch("main.LLMClient.request_json", side_effect=AssertionError("Внешний API запрещён в offline проверке"))):
-                result["checks"] = check_api() + check_server_startup()
+                result["checks"] = check_api() + check_server_startup() + check_web_classifier_config()
             result.update(status="complete", checks_passed=len(result["checks"]))
         except Exception as exc:
             result.update(status="failed", error=f"{type(exc).__name__}: {exc}")

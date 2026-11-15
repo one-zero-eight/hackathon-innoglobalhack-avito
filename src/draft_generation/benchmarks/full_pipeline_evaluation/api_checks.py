@@ -14,7 +14,7 @@ from tempfile import TemporaryDirectory
 from threading import Event, Lock
 from time import monotonic, sleep
 from typing import Any
-from unittest.mock import patch
+from unittest.mock import AsyncMock, patch
 from urllib.error import HTTPError, URLError
 from urllib.request import Request, urlopen
 import weakref
@@ -91,7 +91,7 @@ def check_api() -> list[str]:
             verify(second.json()["drafts"][0]["mcId"] == 105 and len(created) == 3, "override_replaces_only_extractor")
             verify(client.post("/drafts", json=inp).json() == first.json() and len(created) == 4, "override_does_not_change_defaults")
         # Эмулируем второй generator для проверки общей механики выбора без добавления модуля.
-        with patch("api.discover_modules", side_effect=lambda service: tuple(targets) if service == "subcategory_extraction" else ("sample_llm", "other")):
+        with patch("api.selector.discover_modules", side_effect=lambda service: tuple(targets) if service == "subcategory_extraction" else ("sample_llm", "other")):
             two_generators = create_app(config_path)
         created.clear()
         with patch("main.load_pipeline", side_effect=factory), TestClient(two_generators) as client:
@@ -286,3 +286,38 @@ def check_server_startup() -> list[str]:
                     process.kill()
                     process.wait(timeout=5)
     return ["module_startup_from_other_directory", "real_http_health_catalog_openapi", "real_http_empty_drafts", "real_http_validation"]
+
+
+def check_web_classifier_config() -> list[str]:
+    """Проверить выбор классификатора веб-сервиса без внешней БД и API."""
+    from api.schemas import GeneratedText
+    from main import MICROCATEGORIES
+
+    web = importlib.import_module("api.app")
+    checks = []
+    for name, target in (("lexical.regex", 103), ("lexical.tfidf", 104)):
+        config = PipelineConfig(subcategory_extraction=name, draft_generation="sample_llm")
+        pipeline = StubPipeline(lambda inp: [target])
+        with (patch.object(web, "load_config", return_value=config),
+              patch.object(web, "init_pool", new=AsyncMock(return_value=object())),
+              patch.object(web, "close_pool", new=AsyncMock()),
+              patch("api.service.get_catalog", new=AsyncMock(return_value=MICROCATEGORIES)),
+              patch("api.service.DraftsService._generate", new=AsyncMock(return_value=GeneratedText(title="Монтаж", text="Описание"))),
+              patch("main.load_pipeline", return_value=pipeline) as loader,
+              TestClient(web.app) as client):
+            response = client.post("/api/drafts", json={"description": "Работа", "mcId": 101})
+            assert response.status_code == 200 and response.json()["drafts"][0]["mcId"] == target
+            assert loader.call_args.args[1].subcategory_extraction == name
+            assert client.get("/api/health").json()["classifier_model"] == name
+            checks.append("web_classifier_config_" + name)
+    config = PipelineConfig(subcategory_extraction="lexical.regex", draft_generation="sample_llm")
+    for output in ([101], [999], [103, 103]):
+        with (patch.object(web, "load_config", return_value=config),
+              patch.object(web, "init_pool", new=AsyncMock(return_value=object())),
+              patch.object(web, "close_pool", new=AsyncMock()),
+              patch("api.service.get_catalog", new=AsyncMock(return_value=MICROCATEGORIES)),
+              patch("main.load_pipeline", return_value=StubPipeline(lambda inp: output)),
+              TestClient(web.app) as client):
+            assert client.post("/api/drafts", json={"description": "Работа", "mcId": 101}).status_code == 502
+            checks.append("web_invalid_classifier_output_" + repr(output))
+    return checks

@@ -17,8 +17,8 @@ from fastapi import FastAPI, HTTPException, Query, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 
-from api.clients.decisions import DecisionsClient
 from api.clients.openai_compat import OpenAIChatClient
+from main import PipelineOutputError, PipelineUnavailableError, discover_modules, load_config
 from api.config import Settings
 from api.db import (
     close_pool,
@@ -50,15 +50,12 @@ HEALTH_DB_TIMEOUT_S = 2.0
 async def lifespan(app: FastAPI) -> AsyncIterator[None]:
     """Собрать сервис при старте и закрыть пул при выключении."""
     settings = Settings()
+    config = load_config()
+    if config.subcategory_extraction not in discover_modules("subcategory_extraction"):
+        raise ValueError("В config.json должен быть выбран существующий классификатор")
     app.state.settings = settings
+    app.state.pipeline_config = config
     app.state.pool = await init_pool(settings.database_url)
-    classifier = DecisionsClient(
-        settings.selectel_decisions_url,
-        settings.selectel_api_key,
-        settings.selectel_decisions_model,
-        timeout=settings.classifier_timeout,
-        retries=settings.classifier_retries,
-    )
     generator = OpenAIChatClient(
         settings.selectel_api_url,
         settings.selectel_api_key,
@@ -66,12 +63,10 @@ async def lifespan(app: FastAPI) -> AsyncIterator[None]:
         timeout=settings.generation_timeout,
         retries=settings.generation_retries,
     )
-    app.state.service = DraftsService(
-        classifier, generator, app.state.pool, settings.classifier_threshold
-    )
+    app.state.service = DraftsService(config, generator, app.state.pool)
     logger.info(
-        "Сервис черновиков готов: классификатор %s (Decisions API), генератор %s",
-        settings.selectel_decisions_model,
+        "Сервис черновиков готов: классификатор %s, генератор %s",
+        config.subcategory_extraction,
         settings.selectel_model,
     )
     try:
@@ -102,6 +97,20 @@ async def llm_gateway_error_handler(request: Request, exc: LLMGatewayError) -> J
     """Сбой LLM-шлюза (классификатор/генератор) — 502 с русским сообщением."""
     logger.error("LLM-шлюз: %s", exc)
     return JSONResponse(status_code=502, content={"detail": str(exc)})
+
+
+@app.exception_handler(PipelineUnavailableError)
+async def classifier_unavailable_handler(request: Request, exc: PipelineUnavailableError) -> JSONResponse:
+    """Сообщить о недоступных ресурсах выбранного классификатора."""
+    logger.error("Классификатор недоступен: %s", exc)
+    return JSONResponse(status_code=503, content={"detail": str(exc)})
+
+
+@app.exception_handler(PipelineOutputError)
+async def classifier_output_error_handler(request: Request, exc: PipelineOutputError) -> JSONResponse:
+    """Не возвращать некорректный результат классификатора."""
+    logger.error("Некорректный результат классификатора: %s", exc)
+    return JSONResponse(status_code=502, content={"detail": "Некорректный результат классификатора"})
 
 
 DB_ERROR_EXCEPTIONS: tuple[type[Exception], ...] = (
@@ -173,7 +182,6 @@ async def dataset_stats(request: Request) -> DatasetStats:
 @app.get("/api/health")
 async def health(request: Request) -> dict[str, object]:
     """Живость API и БД; при недоступной базе — degraded, но не 5xx."""
-    settings: Settings = request.app.state.settings
     db_ok = False
     try:
         async with request.app.state.pool.acquire() as conn:
@@ -183,5 +191,5 @@ async def health(request: Request) -> dict[str, object]:
     return {
         "status": "ok" if db_ok else "degraded",
         "db": db_ok,
-        "classifier_model": settings.selectel_decisions_model,
+        "classifier_model": request.app.state.pipeline_config.subcategory_extraction,
     }

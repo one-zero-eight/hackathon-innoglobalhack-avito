@@ -6,7 +6,7 @@
 
 | Группа | Модули |
 | --- | --- |
-| Лексические — `lexical` | `regex`, `tfidf`, `learned_keywords`, [логистические регрессии и фильтры формата заказа](lexical/LOGISTIC_REGRESSION.md) |
+| Лексические — `lexical` | `regex`, `tfidf`, `learned_keywords`, `remont_mc_v04`, [логистические регрессии и фильтры формата заказа](lexical/LOGISTIC_REGRESSION.md) |
 | Семантические — `semantic` | `semantic_encoder`, `semantic_encoder_calibrated`, `semantic_encoder_f1`, `semantic_evidence` |
 | Decision-модели — `decisions` | `google_decision`, `qwen_decision`, `jev`, `local_jev`, `jev_calibrated`, `jev_boundaries`, `jev_retrieval`, [`jev_semantic`](decisions/jev_semantic/README.md) |
 | Гибриды и каскады — `hybrid` | `jev_tfidf`, `evidence_jev`, `jev_arbiter`, [`jev_semantic_arbiter`](hybrid/jev_semantic_arbiter/README.md) |

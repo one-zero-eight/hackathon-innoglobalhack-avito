@@ -8,7 +8,7 @@
 | Путь | Что это |
 | --- | --- |
 | `src/main.py` | CLI + всё общее: контракт, микрокатегории, `BasePipeline`, `LLMClient` |
-| `src/api.py` | HTTP API полного пайплайна и селекторы модулей в Swagger |
+| `src/api/selector.py` | HTTP API полного пайплайна и селекторы модулей в Swagger |
 | `config.json` | выбор реализации каждого шага |
 | `src/subcategory_extraction/` | шаг 1: выделение подкатегорий услуг |
 | `src/draft_generation/` | шаг 2: генерация черновиков |
@@ -297,17 +297,15 @@ Vite проксирует `/api/*` на `http://localhost:8000` (см.
 | Переменная | Назначение |
 | --- | --- |
 | `DATABASE_URL` | подключение к PostgreSQL (compose переопределяет на `db:5432`) |
-| `SELECTEL_DECISIONS_URL`, `SELECTEL_DECISIONS_MODEL` | endpoint и модель классификатора (Selectel Decisions API, `typesafe/jev-1.13`, ключ — тот же `SELECTEL_API_KEY`) |
-| `CLASSIFIER_THRESHOLD` | порог `p`: категории ниже порога не черновим |
 | `SELECTEL_API_URL`, `SELECTEL_API_KEY`, `SELECTEL_MODEL` | генерация черновиков |
-| `CLASSIFIER_TIMEOUT`, `CLASSIFIER_RETRIES` | таймаут и повторы запросов классификатора |
 | `GENERATION_TIMEOUT`, `GENERATION_RETRIES` | таймаут и повторы генерации |
 | `API_PORT`, `WEB_PORT` | хост-порты API и веб-клиента |
 
-> **Примечание.** Классификатор — модель `jev` (`typesafe/jev-1.13`) через
-> Selectel Decisions API (`POST /v1/decisions` с вопросами `noul`): она
-> возвращает вероятности по микрокатегориям напрямую, без chat-формата.
-> Текущая модель видна в `GET /api/health` в поле `classifier_model`.
+> **Примечание.** Классификатор выбирается в `config.json` через
+> `subcategory_extraction`, например `lexical.remont_mc_v04` или `lexical.regex`.
+> После изменения конфига перезапустите API. Выбранный модуль виден в
+> `GET /api/health` в поле `classifier_model`; его ключи и параметры задаются
+> в `.env` согласно документации модуля.
 > Генерация черновиков — `meta-llama/llama-3.2-3b-instruct` через Selectel
 > Chat Completions, ключ используется тот же.
 

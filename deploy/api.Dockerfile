@@ -13,6 +13,7 @@ RUN uv sync --frozen --no-dev
 
 # Затем код проекта (src/api появится внутри src/)
 COPY src ./src
+COPY config.json ./config.json
 
 # Собственное окружение проекта вместо системного Python
 ENV PATH="/app/.venv/bin:$PATH"
