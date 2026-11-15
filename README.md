@@ -8,7 +8,6 @@
 | Путь | Что это |
 | --- | --- |
 | `src/main.py` | CLI + всё общее: контракт, микрокатегории, `BasePipeline`, `LLMClient` |
-| `src/api.py` | HTTP API полного пайплайна и селекторы модулей в Swagger |
 | `config.json` | выбор реализации каждого шага |
 | `src/subcategory_extraction/` | шаг 1: выделение подкатегорий услуг |
 | `src/draft_generation/` | шаг 2: генерация черновиков |
@@ -126,22 +125,27 @@ uv run python src/subcategory_extraction/benchmarks/classifier_methods/run.py --
 
 ```bash
 uv sync
-uv run python -m src
+uv run uvicorn api.app:app --app-dir src --port 8000
 ```
 
-Swagger: http://127.0.0.1:8000/docs. В `POST /drafts` выберите extractor и generator
-из выпадающих списков; без выбора используются значения `config.json`.
-`GET /modules` возвращает все обнаруженные модули и defaults, `GET /health` — состояние HTTP-сервера.
+Swagger: http://127.0.0.1:8000/docs. `POST /api/drafts` принимает
+`{"description": "...", "mcId": 101}` и возвращает `{"drafts": [...]}`;
+выбор extractor и generator — только в `config.json`, query-параметров нет.
+`GET /api/health` — состояние сервера, базы и выбранные модули.
 
 ```bash
-curl -X POST 'http://127.0.0.1:8000/drafts?extractor=lexical.regex&generator=sample_llm' \
+curl -X POST 'http://127.0.0.1:8000/api/drafts' \
   -H 'Content-Type: application/json' \
   -d '{"description":"Устанавливаю розетки и смесители.","mcId":101}'
 ```
 
-Тело и результат соответствуют контракту кейса; имена модулей передаются отдельно в URL.
-Один общий loader обслуживает оба шага. Сервер последовательно выполняет inference и
-переиспользует активные экземпляры. Пустой список целей возвращает `drafts: []` без генерации.
+Пакетная обработка — `POST /api/drafts/batch`: массив объявлений обрабатывается
+параллельно, результат стримится по SSE (события `start`/`result`/`error`/`done`).
+
+Тело и результат соответствуют контракту кейса. Сервер выполняет inference
+последовательно в одиночном запросе и переиспользует активные экземпляры
+модулей; пакетный эндпоинт создаёт независимый пайплайн на каждую строку.
+Пустой список целей возвращает `drafts: []` без генерации.
 API-ключи и веса нужны только при использовании соответствующего модуля.
 Подробности, ошибки и офлайн-проверка: [docs/http-api.md](docs/http-api.md).
 
@@ -314,19 +318,16 @@ Vite проксирует `/api/*` на `http://localhost:8000` (см.
 | Переменная | Назначение |
 | --- | --- |
 | `DATABASE_URL` | подключение к PostgreSQL (compose переопределяет на `db:5432`) |
-| `SELECTEL_DECISIONS_URL`, `SELECTEL_DECISIONS_MODEL` | endpoint и модель классификатора (Selectel Decisions API, `typesafe/jev-1.13`, ключ — тот же `SELECTEL_API_KEY`) |
-| `CLASSIFIER_THRESHOLD` | порог `p`: категории ниже порога не черновим |
-| `SELECTEL_API_URL`, `SELECTEL_API_KEY`, `SELECTEL_MODEL` | генерация черновиков |
-| `CLASSIFIER_TIMEOUT`, `CLASSIFIER_RETRIES` | таймаут и повторы запросов классификатора |
-| `GENERATION_TIMEOUT`, `GENERATION_RETRIES` | таймаут и повторы генерации |
+| `SELECTEL_API_KEY` | ключ Selectel для классификатора `decisions.jev` (endpoint, модель и порог — `JEV_*`) |
+| `LLM_API_KEY`, `LLM_MODEL_ID` | ключ и модель LLM для генератора `sample_llm` (таймаут и повторы — `SAMPLE_LLM_*`) |
+| `BESTAPI_API_KEY` | ключ BestAPI для структурного LLM (`STRUCTURED_LLM_*`) |
+| `LLM_PRICING_FILE` | JSON-тарифы USD для учёта расходов; без файла стоимость неизвестна |
 | `API_PORT`, `WEB_PORT` | хост-порты API и веб-клиента |
 
-> **Примечание.** Классификатор — модель `jev` (`typesafe/jev-1.13`) через
-> Selectel Decisions API (`POST /v1/decisions` с вопросами `noul`): она
-> возвращает вероятности по микрокатегориям напрямую, без chat-формата.
-> Текущая модель видна в `GET /api/health` в поле `classifier_model`.
-> Генерация черновиков — `meta-llama/llama-3.2-3b-instruct` через Selectel
-> Chat Completions, ключ используется тот же.
+> **Примечание.** Модели, пороги, таймауты и повторы — настройки выбранных
+> модулей в `.env` ядра (шаблон — `.env.example`); через HTTP они не
+> принимаются, выбор модулей — только в `config.json`. Текущая пара модулей
+> видна в `GET /api/health` в полях `extractor` и `generator`.
 
 ## Контрибьюшн
 
