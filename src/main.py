@@ -604,6 +604,25 @@ class PipelineRuntime:
         except (MissingCredentialsError, FileNotFoundError, PermissionError, ImportError) as exc:
             raise PipelineUnavailableError(service, getattr(config, service)) from exc
 
+    def _extract(self, inp: PipelineInput, config: PipelineConfig) -> list[int]:
+        """Проверить выбранные классификатором дополнительные категории."""
+        if config.subcategory_extraction is None:
+            raise PipelineUnavailableError("subcategory_extraction", None)
+        active = self._active.get("subcategory_extraction")
+        if active is not None and active[0] != config.subcategory_extraction:
+            del self._active["subcategory_extraction"]
+        targets = self._run("subcategory_extraction", config, inp)
+        if (not isinstance(targets, list) or any(
+            type(cid) is not int or cid not in VALID_MCIDS or cid == inp.mc_id for cid in targets
+        ) or len(targets) != len(set(targets))):
+            raise PipelineOutputError("Некорректные дополнительные микрокатегории")
+        return targets
+
+    def classify(self, inp: PipelineInput, config: PipelineConfig) -> list[int]:
+        """Выполнить только классификацию с тем же кэшем и проверками, что в пайплайне."""
+        with self._lock:
+            return self._extract(inp, config.model_copy(deep=True))
+
     def run(self, inp: PipelineInput, config: PipelineConfig) -> PipelineOutput:
         """Загрузить выбранные шаги и проверить весь результат до возврата клиенту."""
         config = config.model_copy(deep=True)
@@ -615,11 +634,7 @@ class PipelineRuntime:
             for service in PIPELINE_CLASSES:
                 if service in self._active and self._active[service][0] != getattr(config, service):
                     del self._active[service]
-            targets = self._run("subcategory_extraction", config, inp)
-            if (not isinstance(targets, list) or any(
-                type(cid) is not int or cid not in VALID_MCIDS or cid == inp.mc_id for cid in targets
-            ) or len(targets) != len(set(targets))):
-                raise PipelineOutputError("Некорректные дополнительные микрокатегории")
+            targets = self._extract(inp, config)
             if not targets:
                 return PipelineOutput(drafts=[])
             drafts = self._run("draft_generation", config, inp, targets.copy())

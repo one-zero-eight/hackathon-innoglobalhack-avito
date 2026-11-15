@@ -1,0 +1,11 @@
+__pycache__/
+*.pyc
+.venv/
+models/hf_bundle/models/
+experiments/*.npy
+*.tar.gz
+models/student/
+artifacts/*.onnx
+data/synth/gen_s98.jsonl
+experiments/cache/
+data/train/
