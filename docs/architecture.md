@@ -111,7 +111,7 @@ sequenceDiagram
     Service->>Decisions: Текст + noul-вопросы<br/>для всех категорий, кроме исходной
     Decisions-->>Service: Вероятность p для каждой категории
 
-    Service->>Service: Оставить p >= CLASSIFIER_THRESHOLD<br/>по умолчанию 0.85
+    Service->>Service: Оставить p >= порога модуля<br/>(JEV_THRESHOLD, 0.5 по умолчанию)
 
     alt Подходящих категорий нет
         Service-->>Browser: {"drafts": []}

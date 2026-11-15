@@ -1,7 +1,8 @@
 """FastAPI-приложение веб-сервиса черновиков Avito.
 
-Роуты: POST /api/drafts, GET /api/microcategories, GET /api/health и датасет
-кейса: GET /api/dataset/samples, /api/dataset/random, /api/dataset/stats.
+Роуты: POST /api/drafts, POST /api/drafts/batch (SSE-пакет), GET
+/api/microcategories, GET /api/health и датасет кейса: GET
+/api/dataset/samples, /api/dataset/random, /api/dataset/stats.
 Весь пайплайн (извлечение подкатегорий и генерация) делегируется ядру ``main``:
 модули выбираются только в ``config.json`` и выполняются через
 ``main.PipelineRuntime``. На старте читаются ``.env`` и ``config.json``,
@@ -19,8 +20,9 @@ import asyncpg
 from dotenv import load_dotenv
 from fastapi import FastAPI, HTTPException, Query, Request
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import JSONResponse
+from fastapi.responses import JSONResponse, StreamingResponse
 
+from api.bulk import BulkService
 from api.config import Settings
 from api.db import (
     close_pool,
@@ -31,6 +33,7 @@ from api.db import (
     init_pool,
 )
 from api.schemas import (
+    BatchRequest,
     DatasetSample,
     DatasetSplit,
     DatasetStats,
@@ -103,6 +106,8 @@ async def lifespan(app: FastAPI) -> AsyncIterator[None]:
     app.state.runtime = runtime
     app.state.pool = await init_pool(settings.database_url)
     app.state.service = DraftsService(runtime, config, app.state.pool)
+    # Пакетный сервис не переиспользует runtime: у каждой строки свой пайплайн.
+    app.state.bulk = BulkService()
     logger.info(
         "Сервис черновиков готов: extractor %s, generator %s (config.json)",
         config.subcategory_extraction,
@@ -185,6 +190,27 @@ for _db_exc_class in DB_ERROR_EXCEPTIONS:
 async def create_drafts(inp: PipelineInput, request: Request) -> PipelineOutput:
     """Сформировать дополнительные черновики: {"description": ..., "mcId": ...}."""
     return await request.app.state.service.run(inp)
+
+
+@app.post("/api/drafts/batch")
+async def create_drafts_batch(inp: BatchRequest, request: Request) -> StreamingResponse:
+    """Пакетная обработка: SSE-поток start/result/error/done по мере готовности.
+
+    Тело валидируется до старта потока (лимиты и mcId — 422); дальше каждая
+    строка обрабатывается независимым пайплайном в общем пуле потоков под
+    семафором, результат уходит кадром по мере завершения задачи.
+    """
+    stream = request.app.state.bulk.stream(
+        inp.ads,
+        inp.concurrency,
+        request.app.state.config,
+        request.is_disconnected,
+    )
+    return StreamingResponse(
+        stream,
+        media_type="text/event-stream",
+        headers={"Cache-Control": "no-cache", "X-Accel-Buffering": "no"},
+    )
 
 
 @app.get("/api/microcategories")

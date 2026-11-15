@@ -8,12 +8,13 @@
   (dict контракта кейса, валидация — в `main.PipelineOutput`)
 - Доступен `sample_llm`. Варианты добавляются в `<module>/pipeline.py`,
   промпты — в `<module>/prompts/`.
-- Выбор: ключ `draft_generation` в корневом `config.json`; в HTTP — query `generator`
-  для отдельного запроса. Список и defaults: `GET /modules`, Swagger: `/docs`.
+- Выбор: ключ `draft_generation` в корневом `config.json`; через HTTP — только
+  там же (query-селекторов нет), список модулей виден в Swagger: `/docs`.
 - `null` — модуль не выбран.
 - Бенчмарки: `benchmarks/<name>/` с `run.py`, `README.md` и результатами.
 
-Полный HTTP-пайплайн запускается через `uv run python -m src`; [описание API](../../docs/http-api.md).
+Полный HTTP-пайплайн запускается через `uv run uvicorn api.app:app --app-dir src`;
+[описание API](../../docs/http-api.md).
 Оба шага используют общий loader и runtime из main.py. Пустые цели пропускают загрузку
 генератора. Runtime проверяет ровно один черновик на каждую полученную категорию,
 не возвращая частичный результат при ошибке.
