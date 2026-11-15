@@ -6,6 +6,10 @@
 Примеры:
     uv run python src/database_load.py              # наполнить все таблицы
     uv run python src/database_load.py --tables case_train case_test
+    uv run python src/database_load.py --tables igh_deduped_no_conflict
+
+Локальный db_export/igh_deduped_no_conflict.jsonl импортируется только при
+явном выборе его таблицы; запуск без --tables заполняет прежние пять таблиц.
 """
 
 from __future__ import annotations

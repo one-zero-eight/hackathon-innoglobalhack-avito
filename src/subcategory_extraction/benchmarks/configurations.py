@@ -120,6 +120,13 @@ def configuration_metadata(config: Configuration) -> dict:
                 with candidate.open("rb") as stream:
                     digest = hashlib.file_digest(stream, "sha256").hexdigest()
                 files[str(candidate.relative_to(ROOT))] = digest
+    # Штатные веса и словари модуля тоже нужны, даже без *_ARTIFACT в окружении.
+    module = ROOT / "src/subcategory_extraction" / config.module.replace(".", "/")
+    for directory in (module / "artifacts", module / "dictionary"):
+        for candidate in sorted(directory.rglob("*")):
+            if candidate.is_file():
+                with candidate.open("rb") as stream:
+                    files[str(candidate.relative_to(ROOT))] = hashlib.file_digest(stream, "sha256").hexdigest()
     return {"key": config.key, "module": config.module, "environment": environment,
             "artifact_sha256": files, "training_table": config.training_table,
             "selection": "existing configurations fixed before test; no threshold search"}

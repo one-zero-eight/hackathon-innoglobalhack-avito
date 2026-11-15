@@ -17,6 +17,8 @@
   исходному сплиту ``sources[].split``.
 - ``yandex_yoola`` — внешние снимки Яндекса и Юлы
   (docs/provider_collections/*), объединённые в один формат.
+- ``igh_deduped_no_conflict`` — опциональный локальный объединённый JSONL;
+  диагностический корпус с пересечением с train, не независимый test.
 
 Чтение из БД возвращает строки в виде, совместимом с существующими
 функциями ``run.prepare_rows``/``read_records``: каждая строка —
@@ -46,13 +48,15 @@ ROOT = Path(__file__).resolve().parents[1]
 
 # Все таблицы проекта в едином формате.
 # Порядок списка — порядок наполнения (yandex_yoola может ссылаться на общее).
-DATABASE_TABLES: tuple[str, ...] = (
+DEFAULT_LOAD_TABLES: tuple[str, ...] = (
     "case_train",
     "case_test",
     "manual_train",
     "manual_test",
     "yandex_yoola",
 )
+DATABASE_TABLES: tuple[str, ...] = (*DEFAULT_LOAD_TABLES, "igh_deduped_no_conflict")
+IGH_DEDUPED_SOURCE = ROOT / "db_export/igh_deduped_no_conflict.jsonl"
 
 CONNECT_ATTEMPTS = 16
 CONNECT_RETRY_DELAY_SECONDS = 0.4
@@ -595,12 +599,34 @@ def load_yandex_yoola() -> int:
     return len(rows)
 
 
+def load_igh_deduped() -> int:
+    """Импортировать запрошенный объединённый JSONL с явным исходным mcId=101."""
+    source_sha256 = _source_digest([IGH_DEDUPED_SOURCE])
+    rows = []
+    for row_id, line in enumerate(_read_json_lines(IGH_DEDUPED_SOURCE), 1):
+        if not line.strip():
+            continue
+        record = json.loads(line)
+        labels = [label["mcId"] for label in record["found_microcategories"]]
+        if any(type(cid) is not int or cid not in TARGET_CATEGORIES for cid in labels):
+            raise DatabaseError(f"IGH: некорректные метки в строке {row_id}")
+        rows.append(_prepare_row(
+            row_id, record["description"], labels,
+            source="igh_deduped_no_conflict", mc_id=101, title=record.get("title"),
+            source_sha256=source_sha256,
+            extra={"item_id": record.get("item_id"), "source_mc_id_assumption": 101},
+        ))
+    _insert_many("igh_deduped_no_conflict", rows)
+    return len(rows)
+
+
 LOADERS: dict[str, Any] = {
     "case_train": load_case_train,
     "case_test": load_case_test,
     "manual_train": load_manual_train,
     "manual_test": load_manual_test,
     "yandex_yoola": load_yandex_yoola,
+    "igh_deduped_no_conflict": load_igh_deduped,
 }
 
 
@@ -631,9 +657,9 @@ def create_schema() -> None:
 
 
 def load_all(tables: Iterable[str] | None = None) -> dict[str, int]:
-    """Наполнить выбранные таблицы; по умолчанию — все."""
+    """Наполнить выбранные таблицы; локальный IGH-экспорт загружать только явно."""
     create_schema()
-    selected = list(tables) if tables is not None else list(DATABASE_TABLES)
+    selected = list(tables) if tables is not None else list(DEFAULT_LOAD_TABLES)
     unknown = [table for table in selected if table not in DATABASE_TABLES]
     if unknown:
         raise DatabaseError(f"Неизвестные таблицы: {', '.join(unknown)}")

@@ -1,0 +1,1709 @@
+{
+  "mode": "CSV exports imported into isolated PostgreSQL; exact comparison and saved-prediction rescoring",
+  "tables": {
+    "case_train": {
+      "csv": "db_export/case_train.csv",
+      "csv_sha256": "1103a1e1cd5a0e62dad80b4b24e3b1d6d26689eb16440dac0784ff9c02d4d136",
+      "rows": 10000,
+      "table_sha256": "da9895e47d4ae91c292e246ab5eef530da4cc1c4e47ee490f101412fda9f9272",
+      "normalized_unique_descriptions": 4854
+    },
+    "case_test": {
+      "csv": "db_export/case_test.csv",
+      "csv_sha256": "f7c8dea956d02ad52fe2cc5df110f4182d292beecdc02ec13cbea9b5fc88feaa",
+      "rows": 208,
+      "table_sha256": "cd6f432e3841e842d04bb07827b92f9b644c56b2b528cb36098433168890ae15",
+      "normalized_unique_descriptions": 139
+    },
+    "manual_train": {
+      "csv": "db_export/manual_train.csv",
+      "csv_sha256": "f93fbcf83003540885e9f162cce9f716fdabe44658d7dbb08c49fd0b481acb83",
+      "rows": 4854,
+      "table_sha256": "6e53aa521160a02e8dcbfdd89281a16c07e817454910765bb0c67168a7ffcb27",
+      "normalized_unique_descriptions": 4854
+    },
+    "manual_test": {
+      "csv": "db_export/manual_test.csv",
+      "csv_sha256": "897e94a6c1780bc72fe88800731323e10f042bb901dfd58c638d677111d9a10d",
+      "rows": 139,
+      "table_sha256": "fae05cba56fdf57a15aa3979afd828b73928efcca64694be5d805d34e002b99d",
+      "normalized_unique_descriptions": 139
+    },
+    "yandex_yoola": {
+      "csv": "db_export/yandex_yoola.csv",
+      "csv_sha256": "8b8f5bdd8925f11671c9b4228b692a77861fc3e84f67b5db838f58514ee473e3",
+      "rows": 2961,
+      "table_sha256": "088a13cc74ee75fc66647a9aba5c38f441cf656b777581a354456dce67e76753",
+      "normalized_unique_descriptions": 2960
+    }
+  },
+  "official_vs_manual": {
+    "train": {
+      "official_unique_descriptions": 4854,
+      "manual_unique_descriptions": 4854,
+      "shared_normalized_descriptions": 4854,
+      "official_only": 0,
+      "manual_only": 0,
+      "shared_descriptions_with_changed_labels": 1718
+    },
+    "test": {
+      "official_unique_descriptions": 139,
+      "manual_unique_descriptions": 139,
+      "shared_normalized_descriptions": 139,
+      "official_only": 0,
+      "manual_only": 0,
+      "shared_descriptions_with_changed_labels": 63
+    }
+  },
+  "verified_benchmarks": {
+    "case_test": {
+      "rows": 208,
+      "same_table_hash": true,
+      "same_ordered_inputs_and_labels": true,
+      "metrics": {
+        "regex": {
+          "micro_f1": 0.7519788918205804,
+          "source_measurement": {
+            "date": "2026-11-15T10:59:58+03:00",
+            "commit": "1647e3f4a54e6d68026b25694656a21dc8b9659d",
+            "code_sha256": "cbc5cf6e39237f3139fb9f66ab2b5e371b1ae092aefdf8be8985a0a41af83454",
+            "mode": "pipeline_run",
+            "protocol": {
+              "dataset_table": "case_test",
+              "training_table": "case_train",
+              "dataset_sha256": "cd6f432e3841e842d04bb07827b92f9b644c56b2b528cb36098433168890ae15",
+              "table_sha256": "cd6f432e3841e842d04bb07827b92f9b644c56b2b528cb36098433168890ae15",
+              "training_sha256": "da9895e47d4ae91c292e246ab5eef530da4cc1c4e47ee490f101412fda9f9272",
+              "rows": 208,
+              "source_mc_id_assumption": 101
+            },
+            "overlap": {
+              "checked": true,
+              "method": "normalized_exact_description",
+              "training_dataset": "case_train",
+              "overlapping_rows": 24,
+              "row_numbers": [
+                2,
+                10,
+                20,
+                46,
+                62,
+                65,
+                68,
+                77,
+                78,
+                79,
+                84,
+                88,
+                106,
+                108,
+                129,
+                142,
+                147,
+                154,
+                174,
+                179,
+                187,
+                191,
+                198,
+                203
+              ]
+            },
+            "machine": "Linux-7.0.0-43-generic-x86_64-with-glibc2.43",
+            "environment": {
+              "OMP_NUM_THREADS": "1",
+              "OPENBLAS_NUM_THREADS": "1",
+              "MKL_NUM_THREADS": "1",
+              "TOKENIZERS_PARALLELISM": "false"
+            },
+            "run_id": "2026-11-15-extraction-speed-f1",
+            "source_report": "out/extraction-speed-f1-case.json"
+          },
+          "mode": "same inputs and labels; saved predictions rescored, no new inference"
+        },
+        "tfidf::legacy": {
+          "micro_f1": 0.7952167414050823,
+          "source_measurement": {
+            "date": "2026-11-15T10:59:58+03:00",
+            "commit": "1647e3f4a54e6d68026b25694656a21dc8b9659d",
+            "code_sha256": "cbc5cf6e39237f3139fb9f66ab2b5e371b1ae092aefdf8be8985a0a41af83454",
+            "mode": "pipeline_run",
+            "protocol": {
+              "dataset_table": "case_test",
+              "training_table": "case_train",
+              "dataset_sha256": "cd6f432e3841e842d04bb07827b92f9b644c56b2b528cb36098433168890ae15",
+              "table_sha256": "cd6f432e3841e842d04bb07827b92f9b644c56b2b528cb36098433168890ae15",
+              "training_sha256": "da9895e47d4ae91c292e246ab5eef530da4cc1c4e47ee490f101412fda9f9272",
+              "rows": 208,
+              "source_mc_id_assumption": 101
+            },
+            "overlap": {
+              "checked": true,
+              "method": "normalized_exact_description",
+              "training_dataset": "case_train",
+              "overlapping_rows": 24,
+              "row_numbers": [
+                2,
+                10,
+                20,
+                46,
+                62,
+                65,
+                68,
+                77,
+                78,
+                79,
+                84,
+                88,
+                106,
+                108,
+                129,
+                142,
+                147,
+                154,
+                174,
+                179,
+                187,
+                191,
+                198,
+                203
+              ]
+            },
+            "machine": "Linux-7.0.0-43-generic-x86_64-with-glibc2.43",
+            "environment": {
+              "OMP_NUM_THREADS": "1",
+              "OPENBLAS_NUM_THREADS": "1",
+              "MKL_NUM_THREADS": "1",
+              "TOKENIZERS_PARALLELISM": "false"
+            },
+            "run_id": "2026-11-15-extraction-speed-f1",
+            "source_report": "out/extraction-speed-f1-case.json"
+          },
+          "mode": "same inputs and labels; saved predictions rescored, no new inference"
+        },
+        "learned_keywords": {
+          "micro_f1": 0.7453580901856764,
+          "source_measurement": {
+            "date": "2026-11-15T10:59:58+03:00",
+            "commit": "1647e3f4a54e6d68026b25694656a21dc8b9659d",
+            "code_sha256": "cbc5cf6e39237f3139fb9f66ab2b5e371b1ae092aefdf8be8985a0a41af83454",
+            "mode": "pipeline_run",
+            "protocol": {
+              "dataset_table": "case_test",
+              "training_table": "case_train",
+              "dataset_sha256": "cd6f432e3841e842d04bb07827b92f9b644c56b2b528cb36098433168890ae15",
+              "table_sha256": "cd6f432e3841e842d04bb07827b92f9b644c56b2b528cb36098433168890ae15",
+              "training_sha256": "da9895e47d4ae91c292e246ab5eef530da4cc1c4e47ee490f101412fda9f9272",
+              "rows": 208,
+              "source_mc_id_assumption": 101
+            },
+            "overlap": {
+              "checked": true,
+              "method": "normalized_exact_description",
+              "training_dataset": "case_train",
+              "overlapping_rows": 24,
+              "row_numbers": [
+                2,
+                10,
+                20,
+                46,
+                62,
+                65,
+                68,
+                77,
+                78,
+                79,
+                84,
+                88,
+                106,
+                108,
+                129,
+                142,
+                147,
+                154,
+                174,
+                179,
+                187,
+                191,
+                198,
+                203
+              ]
+            },
+            "machine": "Linux-7.0.0-43-generic-x86_64-with-glibc2.43",
+            "environment": {
+              "OMP_NUM_THREADS": "1",
+              "OPENBLAS_NUM_THREADS": "1",
+              "MKL_NUM_THREADS": "1",
+              "TOKENIZERS_PARALLELISM": "false"
+            },
+            "run_id": "2026-11-15-extraction-speed-f1",
+            "source_report": "out/extraction-speed-f1-case.json"
+          },
+          "mode": "same inputs and labels; saved predictions rescored, no new inference"
+        },
+        "snippet_logistic_regression": {
+          "micro_f1": 0.7631935047361299,
+          "source_measurement": {
+            "date": "2026-11-15T10:59:58+03:00",
+            "commit": "1647e3f4a54e6d68026b25694656a21dc8b9659d",
+            "code_sha256": "cbc5cf6e39237f3139fb9f66ab2b5e371b1ae092aefdf8be8985a0a41af83454",
+            "mode": "pipeline_run",
+            "protocol": {
+              "dataset_table": "case_test",
+              "training_table": "case_train",
+              "dataset_sha256": "cd6f432e3841e842d04bb07827b92f9b644c56b2b528cb36098433168890ae15",
+              "table_sha256": "cd6f432e3841e842d04bb07827b92f9b644c56b2b528cb36098433168890ae15",
+              "training_sha256": "da9895e47d4ae91c292e246ab5eef530da4cc1c4e47ee490f101412fda9f9272",
+              "rows": 208,
+              "source_mc_id_assumption": 101
+            },
+            "overlap": {
+              "checked": true,
+              "method": "normalized_exact_description",
+              "training_dataset": "case_train",
+              "overlapping_rows": 24,
+              "row_numbers": [
+                2,
+                10,
+                20,
+                46,
+                62,
+                65,
+                68,
+                77,
+                78,
+                79,
+                84,
+                88,
+                106,
+                108,
+                129,
+                142,
+                147,
+                154,
+                174,
+                179,
+                187,
+                191,
+                198,
+                203
+              ]
+            },
+            "machine": "Linux-7.0.0-43-generic-x86_64-with-glibc2.43",
+            "environment": {
+              "OMP_NUM_THREADS": "1",
+              "OPENBLAS_NUM_THREADS": "1",
+              "MKL_NUM_THREADS": "1",
+              "TOKENIZERS_PARALLELISM": "false"
+            },
+            "run_id": "2026-11-15-extraction-speed-f1",
+            "source_report": "out/extraction-speed-f1-case.json"
+          },
+          "mode": "same inputs and labels; saved predictions rescored, no new inference"
+        },
+        "semantic_encoder_f1": {
+          "micro_f1": 0.769433465085639,
+          "source_measurement": {
+            "date": "2026-11-15T10:59:58+03:00",
+            "commit": "1647e3f4a54e6d68026b25694656a21dc8b9659d",
+            "code_sha256": "cbc5cf6e39237f3139fb9f66ab2b5e371b1ae092aefdf8be8985a0a41af83454",
+            "mode": "pipeline_run",
+            "protocol": {
+              "dataset_table": "case_test",
+              "training_table": "case_train",
+              "dataset_sha256": "cd6f432e3841e842d04bb07827b92f9b644c56b2b528cb36098433168890ae15",
+              "table_sha256": "cd6f432e3841e842d04bb07827b92f9b644c56b2b528cb36098433168890ae15",
+              "training_sha256": "da9895e47d4ae91c292e246ab5eef530da4cc1c4e47ee490f101412fda9f9272",
+              "rows": 208,
+              "source_mc_id_assumption": 101
+            },
+            "overlap": {
+              "checked": true,
+              "method": "normalized_exact_description",
+              "training_dataset": "case_train",
+              "overlapping_rows": 24,
+              "row_numbers": [
+                2,
+                10,
+                20,
+                46,
+                62,
+                65,
+                68,
+                77,
+                78,
+                79,
+                84,
+                88,
+                106,
+                108,
+                129,
+                142,
+                147,
+                154,
+                174,
+                179,
+                187,
+                191,
+                198,
+                203
+              ]
+            },
+            "machine": "Linux-7.0.0-43-generic-x86_64-with-glibc2.43",
+            "environment": {
+              "OMP_NUM_THREADS": "1",
+              "OPENBLAS_NUM_THREADS": "1",
+              "MKL_NUM_THREADS": "1",
+              "TOKENIZERS_PARALLELISM": "false"
+            },
+            "run_id": "2026-11-15-extraction-speed-f1",
+            "source_report": "out/extraction-speed-f1-case.json"
+          },
+          "mode": "same inputs and labels; saved predictions rescored, no new inference"
+        },
+        "semantic_evidence": {
+          "micro_f1": 0.7643142476697736,
+          "source_measurement": {
+            "date": "2026-11-15T10:59:58+03:00",
+            "commit": "1647e3f4a54e6d68026b25694656a21dc8b9659d",
+            "code_sha256": "cbc5cf6e39237f3139fb9f66ab2b5e371b1ae092aefdf8be8985a0a41af83454",
+            "mode": "pipeline_run",
+            "protocol": {
+              "dataset_table": "case_test",
+              "training_table": "case_train",
+              "dataset_sha256": "cd6f432e3841e842d04bb07827b92f9b644c56b2b528cb36098433168890ae15",
+              "table_sha256": "cd6f432e3841e842d04bb07827b92f9b644c56b2b528cb36098433168890ae15",
+              "training_sha256": "da9895e47d4ae91c292e246ab5eef530da4cc1c4e47ee490f101412fda9f9272",
+              "rows": 208,
+              "source_mc_id_assumption": 101
+            },
+            "overlap": {
+              "checked": true,
+              "method": "normalized_exact_description",
+              "training_dataset": "case_train",
+              "overlapping_rows": 24,
+              "row_numbers": [
+                2,
+                10,
+                20,
+                46,
+                62,
+                65,
+                68,
+                77,
+                78,
+                79,
+                84,
+                88,
+                106,
+                108,
+                129,
+                142,
+                147,
+                154,
+                174,
+                179,
+                187,
+                191,
+                198,
+                203
+              ]
+            },
+            "machine": "Linux-7.0.0-43-generic-x86_64-with-glibc2.43",
+            "environment": {
+              "OMP_NUM_THREADS": "1",
+              "OPENBLAS_NUM_THREADS": "1",
+              "MKL_NUM_THREADS": "1",
+              "TOKENIZERS_PARALLELISM": "false"
+            },
+            "run_id": "2026-11-15-extraction-speed-f1",
+            "source_report": "out/extraction-speed-f1-case.json"
+          },
+          "mode": "same inputs and labels; saved predictions rescored, no new inference"
+        },
+        "local_jev": {
+          "micro_f1": 0.3990498812351544,
+          "source_measurement": {
+            "date": "2026-11-15T11:05:52+03:00",
+            "commit": "1647e3f4a54e6d68026b25694656a21dc8b9659d",
+            "code_sha256": "cbc5cf6e39237f3139fb9f66ab2b5e371b1ae092aefdf8be8985a0a41af83454",
+            "mode": "pipeline_run",
+            "protocol": {
+              "dataset_table": "case_test",
+              "training_table": "case_train",
+              "dataset_sha256": "cd6f432e3841e842d04bb07827b92f9b644c56b2b528cb36098433168890ae15",
+              "table_sha256": "cd6f432e3841e842d04bb07827b92f9b644c56b2b528cb36098433168890ae15",
+              "training_sha256": "da9895e47d4ae91c292e246ab5eef530da4cc1c4e47ee490f101412fda9f9272",
+              "rows": 208,
+              "source_mc_id_assumption": 101
+            },
+            "overlap": {
+              "checked": true,
+              "method": "normalized_exact_description",
+              "training_dataset": "case_train",
+              "overlapping_rows": 24,
+              "row_numbers": [
+                2,
+                10,
+                20,
+                46,
+                62,
+                65,
+                68,
+                77,
+                78,
+                79,
+                84,
+                88,
+                106,
+                108,
+                129,
+                142,
+                147,
+                154,
+                174,
+                179,
+                187,
+                191,
+                198,
+                203
+              ]
+            },
+            "machine": "Linux-7.0.0-43-generic-x86_64-with-glibc2.43",
+            "environment": {
+              "OMP_NUM_THREADS": "1",
+              "OPENBLAS_NUM_THREADS": "1",
+              "MKL_NUM_THREADS": "1",
+              "TOKENIZERS_PARALLELISM": "false"
+            },
+            "run_id": "2026-11-15-extraction-speed-f1",
+            "source_report": "out/extraction-speed-f1-local-jev-classifier_methods.json"
+          },
+          "mode": "same inputs and labels; saved predictions rescored, no new inference"
+        },
+        "google_decision": {
+          "micro_f1": 0.8393939393939394,
+          "source_measurement": {
+            "date": "2026-11-15T11:08:58+03:00",
+            "commit": "1647e3f4a54e6d68026b25694656a21dc8b9659d",
+            "code_sha256": "27a9169f196bdf3a22cc3623602755d3d2796076a196febd080ff27fcf1c2e48",
+            "mode": "pipeline_run",
+            "protocol": {
+              "dataset_table": "case_test",
+              "training_table": "case_train",
+              "dataset_sha256": "cd6f432e3841e842d04bb07827b92f9b644c56b2b528cb36098433168890ae15",
+              "table_sha256": "cd6f432e3841e842d04bb07827b92f9b644c56b2b528cb36098433168890ae15",
+              "training_sha256": "da9895e47d4ae91c292e246ab5eef530da4cc1c4e47ee490f101412fda9f9272",
+              "rows": 208,
+              "source_mc_id_assumption": 101
+            },
+            "overlap": {
+              "checked": true,
+              "method": "normalized_exact_description",
+              "training_dataset": "case_train",
+              "overlapping_rows": 24,
+              "row_numbers": [
+                2,
+                10,
+                20,
+                46,
+                62,
+                65,
+                68,
+                77,
+                78,
+                79,
+                84,
+                88,
+                106,
+                108,
+                129,
+                142,
+                147,
+                154,
+                174,
+                179,
+                187,
+                191,
+                198,
+                203
+              ]
+            },
+            "machine": "Linux-7.0.0-43-generic-x86_64-with-glibc2.43",
+            "environment": {
+              "OMP_NUM_THREADS": "1",
+              "OPENBLAS_NUM_THREADS": "1",
+              "MKL_NUM_THREADS": "1",
+              "TOKENIZERS_PARALLELISM": "false"
+            },
+            "run_id": "2026-11-15-extraction-speed-f1",
+            "source_report": "out/extraction-speed-f1-google-case.json"
+          },
+          "mode": "same inputs and labels; saved predictions rescored, no new inference"
+        },
+        "jev": {
+          "micro_f1": 0.8424153166421208,
+          "source_measurement": {
+            "date": "2026-11-15T11:00:21+03:00",
+            "commit": "1647e3f4a54e6d68026b25694656a21dc8b9659d",
+            "code_sha256": "cbc5cf6e39237f3139fb9f66ab2b5e371b1ae092aefdf8be8985a0a41af83454",
+            "mode": "pipeline_run",
+            "protocol": {
+              "dataset_table": "case_test",
+              "training_table": "case_train",
+              "dataset_sha256": "cd6f432e3841e842d04bb07827b92f9b644c56b2b528cb36098433168890ae15",
+              "table_sha256": "cd6f432e3841e842d04bb07827b92f9b644c56b2b528cb36098433168890ae15",
+              "training_sha256": "da9895e47d4ae91c292e246ab5eef530da4cc1c4e47ee490f101412fda9f9272",
+              "rows": 208,
+              "source_mc_id_assumption": 101
+            },
+            "overlap": {
+              "checked": true,
+              "method": "normalized_exact_description",
+              "training_dataset": "case_train",
+              "overlapping_rows": 24,
+              "row_numbers": [
+                2,
+                10,
+                20,
+                46,
+                62,
+                65,
+                68,
+                77,
+                78,
+                79,
+                84,
+                88,
+                106,
+                108,
+                129,
+                142,
+                147,
+                154,
+                174,
+                179,
+                187,
+                191,
+                198,
+                203
+              ]
+            },
+            "machine": "Linux-7.0.0-43-generic-x86_64-with-glibc2.43",
+            "environment": {
+              "OMP_NUM_THREADS": "1",
+              "OPENBLAS_NUM_THREADS": "1",
+              "MKL_NUM_THREADS": "1",
+              "TOKENIZERS_PARALLELISM": "false"
+            },
+            "run_id": "2026-11-15-extraction-speed-f1",
+            "source_report": "out/extraction-speed-f1-case-api.json"
+          },
+          "mode": "same inputs and labels; saved predictions rescored, no new inference"
+        },
+        "jev_calibrated": {
+          "micro_f1": 0.8443759630200308,
+          "source_measurement": {
+            "date": "2026-11-15T11:00:21+03:00",
+            "commit": "1647e3f4a54e6d68026b25694656a21dc8b9659d",
+            "code_sha256": "cbc5cf6e39237f3139fb9f66ab2b5e371b1ae092aefdf8be8985a0a41af83454",
+            "mode": "pipeline_run",
+            "protocol": {
+              "dataset_table": "case_test",
+              "training_table": "case_train",
+              "dataset_sha256": "cd6f432e3841e842d04bb07827b92f9b644c56b2b528cb36098433168890ae15",
+              "table_sha256": "cd6f432e3841e842d04bb07827b92f9b644c56b2b528cb36098433168890ae15",
+              "training_sha256": "da9895e47d4ae91c292e246ab5eef530da4cc1c4e47ee490f101412fda9f9272",
+              "rows": 208,
+              "source_mc_id_assumption": 101
+            },
+            "overlap": {
+              "checked": true,
+              "method": "normalized_exact_description",
+              "training_dataset": "case_train",
+              "overlapping_rows": 24,
+              "row_numbers": [
+                2,
+                10,
+                20,
+                46,
+                62,
+                65,
+                68,
+                77,
+                78,
+                79,
+                84,
+                88,
+                106,
+                108,
+                129,
+                142,
+                147,
+                154,
+                174,
+                179,
+                187,
+                191,
+                198,
+                203
+              ]
+            },
+            "machine": "Linux-7.0.0-43-generic-x86_64-with-glibc2.43",
+            "environment": {
+              "OMP_NUM_THREADS": "1",
+              "OPENBLAS_NUM_THREADS": "1",
+              "MKL_NUM_THREADS": "1",
+              "TOKENIZERS_PARALLELISM": "false"
+            },
+            "run_id": "2026-11-15-extraction-speed-f1",
+            "source_report": "out/extraction-speed-f1-case-api.json"
+          },
+          "mode": "same inputs and labels; saved predictions rescored, no new inference"
+        },
+        "jev_boundaries": {
+          "micro_f1": 0.8361408882082695,
+          "source_measurement": {
+            "date": "2026-11-15T11:00:21+03:00",
+            "commit": "1647e3f4a54e6d68026b25694656a21dc8b9659d",
+            "code_sha256": "cbc5cf6e39237f3139fb9f66ab2b5e371b1ae092aefdf8be8985a0a41af83454",
+            "mode": "pipeline_run",
+            "protocol": {
+              "dataset_table": "case_test",
+              "training_table": "case_train",
+              "dataset_sha256": "cd6f432e3841e842d04bb07827b92f9b644c56b2b528cb36098433168890ae15",
+              "table_sha256": "cd6f432e3841e842d04bb07827b92f9b644c56b2b528cb36098433168890ae15",
+              "training_sha256": "da9895e47d4ae91c292e246ab5eef530da4cc1c4e47ee490f101412fda9f9272",
+              "rows": 208,
+              "source_mc_id_assumption": 101
+            },
+            "overlap": {
+              "checked": true,
+              "method": "normalized_exact_description",
+              "training_dataset": "case_train",
+              "overlapping_rows": 24,
+              "row_numbers": [
+                2,
+                10,
+                20,
+                46,
+                62,
+                65,
+                68,
+                77,
+                78,
+                79,
+                84,
+                88,
+                106,
+                108,
+                129,
+                142,
+                147,
+                154,
+                174,
+                179,
+                187,
+                191,
+                198,
+                203
+              ]
+            },
+            "machine": "Linux-7.0.0-43-generic-x86_64-with-glibc2.43",
+            "environment": {
+              "OMP_NUM_THREADS": "1",
+              "OPENBLAS_NUM_THREADS": "1",
+              "MKL_NUM_THREADS": "1",
+              "TOKENIZERS_PARALLELISM": "false"
+            },
+            "run_id": "2026-11-15-extraction-speed-f1",
+            "source_report": "out/extraction-speed-f1-case-api.json"
+          },
+          "mode": "same inputs and labels; saved predictions rescored, no new inference"
+        },
+        "qwen_decision": {
+          "micro_f1": 0.6296743063932448,
+          "source_measurement": {
+            "date": "2026-11-15T11:00:21+03:00",
+            "commit": "1647e3f4a54e6d68026b25694656a21dc8b9659d",
+            "code_sha256": "cbc5cf6e39237f3139fb9f66ab2b5e371b1ae092aefdf8be8985a0a41af83454",
+            "mode": "pipeline_run",
+            "protocol": {
+              "dataset_table": "case_test",
+              "training_table": "case_train",
+              "dataset_sha256": "cd6f432e3841e842d04bb07827b92f9b644c56b2b528cb36098433168890ae15",
+              "table_sha256": "cd6f432e3841e842d04bb07827b92f9b644c56b2b528cb36098433168890ae15",
+              "training_sha256": "da9895e47d4ae91c292e246ab5eef530da4cc1c4e47ee490f101412fda9f9272",
+              "rows": 208,
+              "source_mc_id_assumption": 101
+            },
+            "overlap": {
+              "checked": true,
+              "method": "normalized_exact_description",
+              "training_dataset": "case_train",
+              "overlapping_rows": 24,
+              "row_numbers": [
+                2,
+                10,
+                20,
+                46,
+                62,
+                65,
+                68,
+                77,
+                78,
+                79,
+                84,
+                88,
+                106,
+                108,
+                129,
+                142,
+                147,
+                154,
+                174,
+                179,
+                187,
+                191,
+                198,
+                203
+              ]
+            },
+            "machine": "Linux-7.0.0-43-generic-x86_64-with-glibc2.43",
+            "environment": {
+              "OMP_NUM_THREADS": "1",
+              "OPENBLAS_NUM_THREADS": "1",
+              "MKL_NUM_THREADS": "1",
+              "TOKENIZERS_PARALLELISM": "false"
+            },
+            "run_id": "2026-11-15-extraction-speed-f1",
+            "source_report": "out/extraction-speed-f1-case-api.json"
+          },
+          "mode": "same inputs and labels; saved predictions rescored, no new inference"
+        },
+        "jev_tfidf": {
+          "micro_f1": 0.8462664714494875,
+          "source_measurement": {
+            "date": "2026-11-15T11:00:21+03:00",
+            "commit": "1647e3f4a54e6d68026b25694656a21dc8b9659d",
+            "code_sha256": "cbc5cf6e39237f3139fb9f66ab2b5e371b1ae092aefdf8be8985a0a41af83454",
+            "mode": "pipeline_run",
+            "protocol": {
+              "dataset_table": "case_test",
+              "training_table": "case_train",
+              "dataset_sha256": "cd6f432e3841e842d04bb07827b92f9b644c56b2b528cb36098433168890ae15",
+              "table_sha256": "cd6f432e3841e842d04bb07827b92f9b644c56b2b528cb36098433168890ae15",
+              "training_sha256": "da9895e47d4ae91c292e246ab5eef530da4cc1c4e47ee490f101412fda9f9272",
+              "rows": 208,
+              "source_mc_id_assumption": 101
+            },
+            "overlap": {
+              "checked": true,
+              "method": "normalized_exact_description",
+              "training_dataset": "case_train",
+              "overlapping_rows": 24,
+              "row_numbers": [
+                2,
+                10,
+                20,
+                46,
+                62,
+                65,
+                68,
+                77,
+                78,
+                79,
+                84,
+                88,
+                106,
+                108,
+                129,
+                142,
+                147,
+                154,
+                174,
+                179,
+                187,
+                191,
+                198,
+                203
+              ]
+            },
+            "machine": "Linux-7.0.0-43-generic-x86_64-with-glibc2.43",
+            "environment": {
+              "OMP_NUM_THREADS": "1",
+              "OPENBLAS_NUM_THREADS": "1",
+              "MKL_NUM_THREADS": "1",
+              "TOKENIZERS_PARALLELISM": "false"
+            },
+            "run_id": "2026-11-15-extraction-speed-f1",
+            "source_report": "out/extraction-speed-f1-case-api.json"
+          },
+          "mode": "same inputs and labels; saved predictions rescored, no new inference"
+        },
+        "jev_arbiter": {
+          "micro_f1": 0.8392036753445635,
+          "source_measurement": {
+            "date": "2026-11-15T11:10:24+03:00",
+            "commit": "1647e3f4a54e6d68026b25694656a21dc8b9659d",
+            "code_sha256": "27a9169f196bdf3a22cc3623602755d3d2796076a196febd080ff27fcf1c2e48",
+            "mode": "pipeline_run",
+            "protocol": {
+              "dataset_table": "case_test",
+              "training_table": "case_train",
+              "dataset_sha256": "cd6f432e3841e842d04bb07827b92f9b644c56b2b528cb36098433168890ae15",
+              "table_sha256": "cd6f432e3841e842d04bb07827b92f9b644c56b2b528cb36098433168890ae15",
+              "training_sha256": "da9895e47d4ae91c292e246ab5eef530da4cc1c4e47ee490f101412fda9f9272",
+              "rows": 208,
+              "source_mc_id_assumption": 101
+            },
+            "overlap": {
+              "checked": true,
+              "method": "normalized_exact_description",
+              "training_dataset": "case_train",
+              "overlapping_rows": 24,
+              "row_numbers": [
+                2,
+                10,
+                20,
+                46,
+                62,
+                65,
+                68,
+                77,
+                78,
+                79,
+                84,
+                88,
+                106,
+                108,
+                129,
+                142,
+                147,
+                154,
+                174,
+                179,
+                187,
+                191,
+                198,
+                203
+              ]
+            },
+            "machine": "Linux-7.0.0-43-generic-x86_64-with-glibc2.43",
+            "environment": {
+              "OMP_NUM_THREADS": "1",
+              "OPENBLAS_NUM_THREADS": "1",
+              "MKL_NUM_THREADS": "1",
+              "TOKENIZERS_PARALLELISM": "false"
+            },
+            "run_id": "2026-11-15-extraction-speed-f1",
+            "source_report": "out/extraction-speed-f1-hybrid-case.json"
+          },
+          "mode": "same inputs and labels; saved predictions rescored, no new inference"
+        },
+        "evidence_jev": {
+          "micro_f1": 0.8407079646017699,
+          "source_measurement": {
+            "date": "2026-11-15T11:00:21+03:00",
+            "commit": "1647e3f4a54e6d68026b25694656a21dc8b9659d",
+            "code_sha256": "cbc5cf6e39237f3139fb9f66ab2b5e371b1ae092aefdf8be8985a0a41af83454",
+            "mode": "pipeline_run",
+            "protocol": {
+              "dataset_table": "case_test",
+              "training_table": "case_train",
+              "dataset_sha256": "cd6f432e3841e842d04bb07827b92f9b644c56b2b528cb36098433168890ae15",
+              "table_sha256": "cd6f432e3841e842d04bb07827b92f9b644c56b2b528cb36098433168890ae15",
+              "training_sha256": "da9895e47d4ae91c292e246ab5eef530da4cc1c4e47ee490f101412fda9f9272",
+              "rows": 208,
+              "source_mc_id_assumption": 101
+            },
+            "overlap": {
+              "checked": true,
+              "method": "normalized_exact_description",
+              "training_dataset": "case_train",
+              "overlapping_rows": 24,
+              "row_numbers": [
+                2,
+                10,
+                20,
+                46,
+                62,
+                65,
+                68,
+                77,
+                78,
+                79,
+                84,
+                88,
+                106,
+                108,
+                129,
+                142,
+                147,
+                154,
+                174,
+                179,
+                187,
+                191,
+                198,
+                203
+              ]
+            },
+            "machine": "Linux-7.0.0-43-generic-x86_64-with-glibc2.43",
+            "environment": {
+              "OMP_NUM_THREADS": "1",
+              "OPENBLAS_NUM_THREADS": "1",
+              "MKL_NUM_THREADS": "1",
+              "TOKENIZERS_PARALLELISM": "false"
+            },
+            "run_id": "2026-11-15-extraction-speed-f1",
+            "source_report": "out/extraction-speed-f1-case-api.json"
+          },
+          "mode": "same inputs and labels; saved predictions rescored, no new inference"
+        }
+      }
+    },
+    "manual_test": {
+      "rows": 139,
+      "same_table_hash": true,
+      "same_ordered_inputs_and_labels": true,
+      "metrics": {
+        "regex": {
+          "micro_f1": 0.768361581920904,
+          "source_measurement": {
+            "date": "2026-11-15T11:00:42+03:00",
+            "commit": "1647e3f4a54e6d68026b25694656a21dc8b9659d",
+            "code_sha256": "cbc5cf6e39237f3139fb9f66ab2b5e371b1ae092aefdf8be8985a0a41af83454",
+            "mode": "pipeline_run",
+            "protocol": {
+              "dataset_table": "manual_test",
+              "training_table": "manual_train",
+              "dataset_sha256": "fae05cba56fdf57a15aa3979afd828b73928efcca64694be5d805d34e002b99d",
+              "table_sha256": "fae05cba56fdf57a15aa3979afd828b73928efcca64694be5d805d34e002b99d",
+              "training_sha256": "6e53aa521160a02e8dcbfdd89281a16c07e817454910765bb0c67168a7ffcb27",
+              "rows": 139,
+              "source_mc_id_assumption": 101
+            },
+            "overlap": {
+              "checked": true,
+              "method": "normalized_exact_description",
+              "training_dataset": "manual_train",
+              "overlapping_rows": 13,
+              "row_numbers": [
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13
+              ]
+            },
+            "machine": "Linux-7.0.0-43-generic-x86_64-with-glibc2.43",
+            "environment": {
+              "OMP_NUM_THREADS": "1",
+              "OPENBLAS_NUM_THREADS": "1",
+              "MKL_NUM_THREADS": "1",
+              "TOKENIZERS_PARALLELISM": "false"
+            },
+            "run_id": "2026-11-15-extraction-speed-f1",
+            "source_report": "out/extraction-speed-f1-manual.json"
+          },
+          "mode": "same inputs and labels; saved predictions rescored, no new inference"
+        },
+        "tfidf::legacy": {
+          "micro_f1": 0.6950959488272921,
+          "source_measurement": {
+            "date": "2026-11-15T11:00:42+03:00",
+            "commit": "1647e3f4a54e6d68026b25694656a21dc8b9659d",
+            "code_sha256": "cbc5cf6e39237f3139fb9f66ab2b5e371b1ae092aefdf8be8985a0a41af83454",
+            "mode": "pipeline_run",
+            "protocol": {
+              "dataset_table": "manual_test",
+              "training_table": "manual_train",
+              "dataset_sha256": "fae05cba56fdf57a15aa3979afd828b73928efcca64694be5d805d34e002b99d",
+              "table_sha256": "fae05cba56fdf57a15aa3979afd828b73928efcca64694be5d805d34e002b99d",
+              "training_sha256": "6e53aa521160a02e8dcbfdd89281a16c07e817454910765bb0c67168a7ffcb27",
+              "rows": 139,
+              "source_mc_id_assumption": 101
+            },
+            "overlap": {
+              "checked": true,
+              "method": "normalized_exact_description",
+              "training_dataset": "manual_train",
+              "overlapping_rows": 13,
+              "row_numbers": [
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13
+              ]
+            },
+            "machine": "Linux-7.0.0-43-generic-x86_64-with-glibc2.43",
+            "environment": {
+              "OMP_NUM_THREADS": "1",
+              "OPENBLAS_NUM_THREADS": "1",
+              "MKL_NUM_THREADS": "1",
+              "TOKENIZERS_PARALLELISM": "false"
+            },
+            "run_id": "2026-11-15-extraction-speed-f1",
+            "source_report": "out/extraction-speed-f1-manual.json"
+          },
+          "mode": "same inputs and labels; saved predictions rescored, no new inference"
+        },
+        "learned_keywords": {
+          "micro_f1": 0.7306967984934086,
+          "source_measurement": {
+            "date": "2026-11-15T11:00:42+03:00",
+            "commit": "1647e3f4a54e6d68026b25694656a21dc8b9659d",
+            "code_sha256": "cbc5cf6e39237f3139fb9f66ab2b5e371b1ae092aefdf8be8985a0a41af83454",
+            "mode": "pipeline_run",
+            "protocol": {
+              "dataset_table": "manual_test",
+              "training_table": "manual_train",
+              "dataset_sha256": "fae05cba56fdf57a15aa3979afd828b73928efcca64694be5d805d34e002b99d",
+              "table_sha256": "fae05cba56fdf57a15aa3979afd828b73928efcca64694be5d805d34e002b99d",
+              "training_sha256": "6e53aa521160a02e8dcbfdd89281a16c07e817454910765bb0c67168a7ffcb27",
+              "rows": 139,
+              "source_mc_id_assumption": 101
+            },
+            "overlap": {
+              "checked": true,
+              "method": "normalized_exact_description",
+              "training_dataset": "manual_train",
+              "overlapping_rows": 13,
+              "row_numbers": [
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13
+              ]
+            },
+            "machine": "Linux-7.0.0-43-generic-x86_64-with-glibc2.43",
+            "environment": {
+              "OMP_NUM_THREADS": "1",
+              "OPENBLAS_NUM_THREADS": "1",
+              "MKL_NUM_THREADS": "1",
+              "TOKENIZERS_PARALLELISM": "false"
+            },
+            "run_id": "2026-11-15-extraction-speed-f1",
+            "source_report": "out/extraction-speed-f1-manual.json"
+          },
+          "mode": "same inputs and labels; saved predictions rescored, no new inference"
+        },
+        "snippet_logistic_regression": {
+          "micro_f1": 0.7592954990215264,
+          "source_measurement": {
+            "date": "2026-11-15T11:00:42+03:00",
+            "commit": "1647e3f4a54e6d68026b25694656a21dc8b9659d",
+            "code_sha256": "cbc5cf6e39237f3139fb9f66ab2b5e371b1ae092aefdf8be8985a0a41af83454",
+            "mode": "pipeline_run",
+            "protocol": {
+              "dataset_table": "manual_test",
+              "training_table": "manual_train",
+              "dataset_sha256": "fae05cba56fdf57a15aa3979afd828b73928efcca64694be5d805d34e002b99d",
+              "table_sha256": "fae05cba56fdf57a15aa3979afd828b73928efcca64694be5d805d34e002b99d",
+              "training_sha256": "6e53aa521160a02e8dcbfdd89281a16c07e817454910765bb0c67168a7ffcb27",
+              "rows": 139,
+              "source_mc_id_assumption": 101
+            },
+            "overlap": {
+              "checked": true,
+              "method": "normalized_exact_description",
+              "training_dataset": "manual_train",
+              "overlapping_rows": 13,
+              "row_numbers": [
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13
+              ]
+            },
+            "machine": "Linux-7.0.0-43-generic-x86_64-with-glibc2.43",
+            "environment": {
+              "OMP_NUM_THREADS": "1",
+              "OPENBLAS_NUM_THREADS": "1",
+              "MKL_NUM_THREADS": "1",
+              "TOKENIZERS_PARALLELISM": "false"
+            },
+            "run_id": "2026-11-15-extraction-speed-f1",
+            "source_report": "out/extraction-speed-f1-manual.json"
+          },
+          "mode": "same inputs and labels; saved predictions rescored, no new inference"
+        },
+        "semantic_encoder_f1": {
+          "micro_f1": 0.7700934579439253,
+          "source_measurement": {
+            "date": "2026-11-15T11:00:42+03:00",
+            "commit": "1647e3f4a54e6d68026b25694656a21dc8b9659d",
+            "code_sha256": "cbc5cf6e39237f3139fb9f66ab2b5e371b1ae092aefdf8be8985a0a41af83454",
+            "mode": "pipeline_run",
+            "protocol": {
+              "dataset_table": "manual_test",
+              "training_table": "manual_train",
+              "dataset_sha256": "fae05cba56fdf57a15aa3979afd828b73928efcca64694be5d805d34e002b99d",
+              "table_sha256": "fae05cba56fdf57a15aa3979afd828b73928efcca64694be5d805d34e002b99d",
+              "training_sha256": "6e53aa521160a02e8dcbfdd89281a16c07e817454910765bb0c67168a7ffcb27",
+              "rows": 139,
+              "source_mc_id_assumption": 101
+            },
+            "overlap": {
+              "checked": true,
+              "method": "normalized_exact_description",
+              "training_dataset": "manual_train",
+              "overlapping_rows": 13,
+              "row_numbers": [
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13
+              ]
+            },
+            "machine": "Linux-7.0.0-43-generic-x86_64-with-glibc2.43",
+            "environment": {
+              "OMP_NUM_THREADS": "1",
+              "OPENBLAS_NUM_THREADS": "1",
+              "MKL_NUM_THREADS": "1",
+              "TOKENIZERS_PARALLELISM": "false"
+            },
+            "run_id": "2026-11-15-extraction-speed-f1",
+            "source_report": "out/extraction-speed-f1-manual.json"
+          },
+          "mode": "same inputs and labels; saved predictions rescored, no new inference"
+        },
+        "semantic_evidence": {
+          "micro_f1": 0.7746741154562383,
+          "source_measurement": {
+            "date": "2026-11-15T11:00:42+03:00",
+            "commit": "1647e3f4a54e6d68026b25694656a21dc8b9659d",
+            "code_sha256": "cbc5cf6e39237f3139fb9f66ab2b5e371b1ae092aefdf8be8985a0a41af83454",
+            "mode": "pipeline_run",
+            "protocol": {
+              "dataset_table": "manual_test",
+              "training_table": "manual_train",
+              "dataset_sha256": "fae05cba56fdf57a15aa3979afd828b73928efcca64694be5d805d34e002b99d",
+              "table_sha256": "fae05cba56fdf57a15aa3979afd828b73928efcca64694be5d805d34e002b99d",
+              "training_sha256": "6e53aa521160a02e8dcbfdd89281a16c07e817454910765bb0c67168a7ffcb27",
+              "rows": 139,
+              "source_mc_id_assumption": 101
+            },
+            "overlap": {
+              "checked": true,
+              "method": "normalized_exact_description",
+              "training_dataset": "manual_train",
+              "overlapping_rows": 13,
+              "row_numbers": [
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13
+              ]
+            },
+            "machine": "Linux-7.0.0-43-generic-x86_64-with-glibc2.43",
+            "environment": {
+              "OMP_NUM_THREADS": "1",
+              "OPENBLAS_NUM_THREADS": "1",
+              "MKL_NUM_THREADS": "1",
+              "TOKENIZERS_PARALLELISM": "false"
+            },
+            "run_id": "2026-11-15-extraction-speed-f1",
+            "source_report": "out/extraction-speed-f1-manual.json"
+          },
+          "mode": "same inputs and labels; saved predictions rescored, no new inference"
+        },
+        "jev": {
+          "micro_f1": 0.757201646090535,
+          "source_measurement": {
+            "date": "2026-11-15T11:02:23+03:00",
+            "commit": "1647e3f4a54e6d68026b25694656a21dc8b9659d",
+            "code_sha256": "cbc5cf6e39237f3139fb9f66ab2b5e371b1ae092aefdf8be8985a0a41af83454",
+            "mode": "pipeline_run",
+            "protocol": {
+              "dataset_table": "manual_test",
+              "training_table": "manual_train",
+              "dataset_sha256": "fae05cba56fdf57a15aa3979afd828b73928efcca64694be5d805d34e002b99d",
+              "table_sha256": "fae05cba56fdf57a15aa3979afd828b73928efcca64694be5d805d34e002b99d",
+              "training_sha256": "6e53aa521160a02e8dcbfdd89281a16c07e817454910765bb0c67168a7ffcb27",
+              "rows": 139,
+              "source_mc_id_assumption": 101
+            },
+            "overlap": {
+              "checked": true,
+              "method": "normalized_exact_description",
+              "training_dataset": "manual_train",
+              "overlapping_rows": 13,
+              "row_numbers": [
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13
+              ]
+            },
+            "machine": "Linux-7.0.0-43-generic-x86_64-with-glibc2.43",
+            "environment": {
+              "OMP_NUM_THREADS": "1",
+              "OPENBLAS_NUM_THREADS": "1",
+              "MKL_NUM_THREADS": "1",
+              "TOKENIZERS_PARALLELISM": "false"
+            },
+            "run_id": "2026-11-15-extraction-speed-f1",
+            "source_report": "out/extraction-speed-f1-manual-api.json"
+          },
+          "mode": "same inputs and labels; saved predictions rescored, no new inference"
+        },
+        "jev_calibrated": {
+          "micro_f1": 0.7237687366167024,
+          "source_measurement": {
+            "date": "2026-11-15T11:02:23+03:00",
+            "commit": "1647e3f4a54e6d68026b25694656a21dc8b9659d",
+            "code_sha256": "cbc5cf6e39237f3139fb9f66ab2b5e371b1ae092aefdf8be8985a0a41af83454",
+            "mode": "pipeline_run",
+            "protocol": {
+              "dataset_table": "manual_test",
+              "training_table": "manual_train",
+              "dataset_sha256": "fae05cba56fdf57a15aa3979afd828b73928efcca64694be5d805d34e002b99d",
+              "table_sha256": "fae05cba56fdf57a15aa3979afd828b73928efcca64694be5d805d34e002b99d",
+              "training_sha256": "6e53aa521160a02e8dcbfdd89281a16c07e817454910765bb0c67168a7ffcb27",
+              "rows": 139,
+              "source_mc_id_assumption": 101
+            },
+            "overlap": {
+              "checked": true,
+              "method": "normalized_exact_description",
+              "training_dataset": "manual_train",
+              "overlapping_rows": 13,
+              "row_numbers": [
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13
+              ]
+            },
+            "machine": "Linux-7.0.0-43-generic-x86_64-with-glibc2.43",
+            "environment": {
+              "OMP_NUM_THREADS": "1",
+              "OPENBLAS_NUM_THREADS": "1",
+              "MKL_NUM_THREADS": "1",
+              "TOKENIZERS_PARALLELISM": "false"
+            },
+            "run_id": "2026-11-15-extraction-speed-f1",
+            "source_report": "out/extraction-speed-f1-manual-api.json"
+          },
+          "mode": "same inputs and labels; saved predictions rescored, no new inference"
+        },
+        "jev_boundaries": {
+          "micro_f1": 0.7264957264957265,
+          "source_measurement": {
+            "date": "2026-11-15T11:02:23+03:00",
+            "commit": "1647e3f4a54e6d68026b25694656a21dc8b9659d",
+            "code_sha256": "cbc5cf6e39237f3139fb9f66ab2b5e371b1ae092aefdf8be8985a0a41af83454",
+            "mode": "pipeline_run",
+            "protocol": {
+              "dataset_table": "manual_test",
+              "training_table": "manual_train",
+              "dataset_sha256": "fae05cba56fdf57a15aa3979afd828b73928efcca64694be5d805d34e002b99d",
+              "table_sha256": "fae05cba56fdf57a15aa3979afd828b73928efcca64694be5d805d34e002b99d",
+              "training_sha256": "6e53aa521160a02e8dcbfdd89281a16c07e817454910765bb0c67168a7ffcb27",
+              "rows": 139,
+              "source_mc_id_assumption": 101
+            },
+            "overlap": {
+              "checked": true,
+              "method": "normalized_exact_description",
+              "training_dataset": "manual_train",
+              "overlapping_rows": 13,
+              "row_numbers": [
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13
+              ]
+            },
+            "machine": "Linux-7.0.0-43-generic-x86_64-with-glibc2.43",
+            "environment": {
+              "OMP_NUM_THREADS": "1",
+              "OPENBLAS_NUM_THREADS": "1",
+              "MKL_NUM_THREADS": "1",
+              "TOKENIZERS_PARALLELISM": "false"
+            },
+            "run_id": "2026-11-15-extraction-speed-f1",
+            "source_report": "out/extraction-speed-f1-manual-api.json"
+          },
+          "mode": "same inputs and labels; saved predictions rescored, no new inference"
+        },
+        "qwen_decision": {
+          "micro_f1": 0.6688102893890675,
+          "source_measurement": {
+            "date": "2026-11-15T11:02:23+03:00",
+            "commit": "1647e3f4a54e6d68026b25694656a21dc8b9659d",
+            "code_sha256": "cbc5cf6e39237f3139fb9f66ab2b5e371b1ae092aefdf8be8985a0a41af83454",
+            "mode": "pipeline_run",
+            "protocol": {
+              "dataset_table": "manual_test",
+              "training_table": "manual_train",
+              "dataset_sha256": "fae05cba56fdf57a15aa3979afd828b73928efcca64694be5d805d34e002b99d",
+              "table_sha256": "fae05cba56fdf57a15aa3979afd828b73928efcca64694be5d805d34e002b99d",
+              "training_sha256": "6e53aa521160a02e8dcbfdd89281a16c07e817454910765bb0c67168a7ffcb27",
+              "rows": 139,
+              "source_mc_id_assumption": 101
+            },
+            "overlap": {
+              "checked": true,
+              "method": "normalized_exact_description",
+              "training_dataset": "manual_train",
+              "overlapping_rows": 13,
+              "row_numbers": [
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13
+              ]
+            },
+            "machine": "Linux-7.0.0-43-generic-x86_64-with-glibc2.43",
+            "environment": {
+              "OMP_NUM_THREADS": "1",
+              "OPENBLAS_NUM_THREADS": "1",
+              "MKL_NUM_THREADS": "1",
+              "TOKENIZERS_PARALLELISM": "false"
+            },
+            "run_id": "2026-11-15-extraction-speed-f1",
+            "source_report": "out/extraction-speed-f1-manual-api.json"
+          },
+          "mode": "same inputs and labels; saved predictions rescored, no new inference"
+        },
+        "jev_tfidf": {
+          "micro_f1": 0.7536231884057971,
+          "source_measurement": {
+            "date": "2026-11-15T11:02:23+03:00",
+            "commit": "1647e3f4a54e6d68026b25694656a21dc8b9659d",
+            "code_sha256": "cbc5cf6e39237f3139fb9f66ab2b5e371b1ae092aefdf8be8985a0a41af83454",
+            "mode": "pipeline_run",
+            "protocol": {
+              "dataset_table": "manual_test",
+              "training_table": "manual_train",
+              "dataset_sha256": "fae05cba56fdf57a15aa3979afd828b73928efcca64694be5d805d34e002b99d",
+              "table_sha256": "fae05cba56fdf57a15aa3979afd828b73928efcca64694be5d805d34e002b99d",
+              "training_sha256": "6e53aa521160a02e8dcbfdd89281a16c07e817454910765bb0c67168a7ffcb27",
+              "rows": 139,
+              "source_mc_id_assumption": 101
+            },
+            "overlap": {
+              "checked": true,
+              "method": "normalized_exact_description",
+              "training_dataset": "manual_train",
+              "overlapping_rows": 13,
+              "row_numbers": [
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13
+              ]
+            },
+            "machine": "Linux-7.0.0-43-generic-x86_64-with-glibc2.43",
+            "environment": {
+              "OMP_NUM_THREADS": "1",
+              "OPENBLAS_NUM_THREADS": "1",
+              "MKL_NUM_THREADS": "1",
+              "TOKENIZERS_PARALLELISM": "false"
+            },
+            "run_id": "2026-11-15-extraction-speed-f1",
+            "source_report": "out/extraction-speed-f1-manual-api.json"
+          },
+          "mode": "same inputs and labels; saved predictions rescored, no new inference"
+        },
+        "jev_arbiter": {
+          "micro_f1": 0.7350427350427351,
+          "source_measurement": {
+            "date": "2026-11-15T11:11:16+03:00",
+            "commit": "1647e3f4a54e6d68026b25694656a21dc8b9659d",
+            "code_sha256": "27a9169f196bdf3a22cc3623602755d3d2796076a196febd080ff27fcf1c2e48",
+            "mode": "pipeline_run",
+            "protocol": {
+              "dataset_table": "manual_test",
+              "training_table": "manual_train",
+              "dataset_sha256": "fae05cba56fdf57a15aa3979afd828b73928efcca64694be5d805d34e002b99d",
+              "table_sha256": "fae05cba56fdf57a15aa3979afd828b73928efcca64694be5d805d34e002b99d",
+              "training_sha256": "6e53aa521160a02e8dcbfdd89281a16c07e817454910765bb0c67168a7ffcb27",
+              "rows": 139,
+              "source_mc_id_assumption": 101
+            },
+            "overlap": {
+              "checked": true,
+              "method": "normalized_exact_description",
+              "training_dataset": "manual_train",
+              "overlapping_rows": 13,
+              "row_numbers": [
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13
+              ]
+            },
+            "machine": "Linux-7.0.0-43-generic-x86_64-with-glibc2.43",
+            "environment": {
+              "OMP_NUM_THREADS": "1",
+              "OPENBLAS_NUM_THREADS": "1",
+              "MKL_NUM_THREADS": "1",
+              "TOKENIZERS_PARALLELISM": "false"
+            },
+            "run_id": "2026-11-15-extraction-speed-f1",
+            "source_report": "out/extraction-speed-f1-hybrid-manual.json"
+          },
+          "mode": "same inputs and labels; saved predictions rescored, no new inference"
+        },
+        "evidence_jev": {
+          "micro_f1": 0.7587628865979381,
+          "source_measurement": {
+            "date": "2026-11-15T11:11:16+03:00",
+            "commit": "1647e3f4a54e6d68026b25694656a21dc8b9659d",
+            "code_sha256": "27a9169f196bdf3a22cc3623602755d3d2796076a196febd080ff27fcf1c2e48",
+            "mode": "pipeline_run",
+            "protocol": {
+              "dataset_table": "manual_test",
+              "training_table": "manual_train",
+              "dataset_sha256": "fae05cba56fdf57a15aa3979afd828b73928efcca64694be5d805d34e002b99d",
+              "table_sha256": "fae05cba56fdf57a15aa3979afd828b73928efcca64694be5d805d34e002b99d",
+              "training_sha256": "6e53aa521160a02e8dcbfdd89281a16c07e817454910765bb0c67168a7ffcb27",
+              "rows": 139,
+              "source_mc_id_assumption": 101
+            },
+            "overlap": {
+              "checked": true,
+              "method": "normalized_exact_description",
+              "training_dataset": "manual_train",
+              "overlapping_rows": 13,
+              "row_numbers": [
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13
+              ]
+            },
+            "machine": "Linux-7.0.0-43-generic-x86_64-with-glibc2.43",
+            "environment": {
+              "OMP_NUM_THREADS": "1",
+              "OPENBLAS_NUM_THREADS": "1",
+              "MKL_NUM_THREADS": "1",
+              "TOKENIZERS_PARALLELISM": "false"
+            },
+            "run_id": "2026-11-15-extraction-speed-f1",
+            "source_report": "out/extraction-speed-f1-hybrid-manual.json"
+          },
+          "mode": "same inputs and labels; saved predictions rescored, no new inference"
+        },
+        "google_decision": {
+          "micro_f1": 0.7379454926624738,
+          "source_measurement": {
+            "date": "2026-11-15T11:11:15+03:00",
+            "commit": "1647e3f4a54e6d68026b25694656a21dc8b9659d",
+            "code_sha256": "27a9169f196bdf3a22cc3623602755d3d2796076a196febd080ff27fcf1c2e48",
+            "mode": "pipeline_run",
+            "protocol": {
+              "dataset_table": "manual_test",
+              "training_table": "manual_train",
+              "dataset_sha256": "fae05cba56fdf57a15aa3979afd828b73928efcca64694be5d805d34e002b99d",
+              "table_sha256": "fae05cba56fdf57a15aa3979afd828b73928efcca64694be5d805d34e002b99d",
+              "training_sha256": "6e53aa521160a02e8dcbfdd89281a16c07e817454910765bb0c67168a7ffcb27",
+              "rows": 139,
+              "source_mc_id_assumption": 101
+            },
+            "overlap": {
+              "checked": true,
+              "method": "normalized_exact_description",
+              "training_dataset": "manual_train",
+              "overlapping_rows": 13,
+              "row_numbers": [
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13
+              ]
+            },
+            "machine": "Linux-7.0.0-43-generic-x86_64-with-glibc2.43",
+            "environment": {
+              "OMP_NUM_THREADS": "1",
+              "OPENBLAS_NUM_THREADS": "1",
+              "MKL_NUM_THREADS": "1",
+              "TOKENIZERS_PARALLELISM": "false"
+            },
+            "run_id": "2026-11-15-extraction-speed-f1",
+            "source_report": "out/extraction-speed-f1-google-manual.json"
+          },
+          "mode": "same inputs and labels; saved predictions rescored, no new inference"
+        },
+        "local_jev": {
+          "micro_f1": 0.23255813953488372,
+          "source_measurement": {
+            "date": "2026-11-15T11:09:41+03:00",
+            "commit": "1647e3f4a54e6d68026b25694656a21dc8b9659d",
+            "code_sha256": "27a9169f196bdf3a22cc3623602755d3d2796076a196febd080ff27fcf1c2e48",
+            "mode": "pipeline_run",
+            "protocol": {
+              "dataset_table": "manual_test",
+              "training_table": "manual_train",
+              "dataset_sha256": "fae05cba56fdf57a15aa3979afd828b73928efcca64694be5d805d34e002b99d",
+              "table_sha256": "fae05cba56fdf57a15aa3979afd828b73928efcca64694be5d805d34e002b99d",
+              "training_sha256": "6e53aa521160a02e8dcbfdd89281a16c07e817454910765bb0c67168a7ffcb27",
+              "rows": 139,
+              "source_mc_id_assumption": 101
+            },
+            "overlap": {
+              "checked": true,
+              "method": "normalized_exact_description",
+              "training_dataset": "manual_train",
+              "overlapping_rows": 13,
+              "row_numbers": [
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13
+              ]
+            },
+            "machine": "Linux-7.0.0-43-generic-x86_64-with-glibc2.43",
+            "environment": {
+              "OMP_NUM_THREADS": "1",
+              "OPENBLAS_NUM_THREADS": "1",
+              "MKL_NUM_THREADS": "1",
+              "TOKENIZERS_PARALLELISM": "false"
+            },
+            "run_id": "2026-11-15-extraction-speed-f1",
+            "source_report": "out/extraction-speed-f1-local-jev-improved_dataset.json"
+          },
+          "mode": "same inputs and labels; saved predictions rescored, no new inference"
+        }
+      }
+    }
+  }
+}
