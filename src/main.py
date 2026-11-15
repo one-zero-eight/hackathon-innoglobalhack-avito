@@ -30,7 +30,7 @@ from typing import Annotated, Any, Callable, Iterator, Literal
 from urllib.request import Request, urlopen
 
 from dotenv import load_dotenv
-from pydantic import AfterValidator, BaseModel, ConfigDict, Field
+from pydantic import AfterValidator, BaseModel, ConfigDict, Field, TypeAdapter, ValidationError
 
 logger = logging.getLogger(__name__)
 
@@ -254,6 +254,10 @@ def track_llm_costs(ledger: LLMCostLedger) -> Iterator[LLMCostLedger]:
         _COST_LEDGER.reset(token)
 
 
+class MissingCredentialsError(ValueError):
+    """Для обращения к выбранному провайдеру не настроен ключ доступа."""
+
+
 class LLMClient(ABC):
     """Интерфейс клиента LLM для конкретных реализаций."""
 
@@ -343,7 +347,7 @@ class StructuredLLMClient(LLMClient):
             self.record_usage(result.get("usage"), cache_hit=True)
         else:
             if not self.api_key:
-                raise ValueError("Укажите BESTAPI_API_KEY")
+                raise MissingCredentialsError("Укажите BESTAPI_API_KEY")
             request = Request(
                 self.endpoint, data=json.dumps(payload, ensure_ascii=False).encode(),
                 headers={"Authorization": f"Bearer {self.api_key}", "Content-Type": "application/json"},
@@ -407,6 +411,25 @@ def load_config(path: Path = DEFAULT_CONFIG_PATH) -> PipelineConfig:
     return PipelineConfig.model_validate_json(path.read_text(encoding="utf-8"))
 
 
+def discover_modules(service: ServiceName) -> tuple[str, ...]:
+    """Найти допустимые модули без импорта, загрузки весов и обращения к API."""
+    if service not in PIPELINE_CLASSES:
+        raise ValueError(f"Неизвестный раздел: {service}")
+    root = Path(__file__).resolve().parent / service
+    extraction = service == "subcategory_extraction"
+    adapter = TypeAdapter(ExtractionModuleName if extraction else ModuleName)
+    names = []
+    for path in root.glob("*/*/pipeline.py" if extraction else "*/pipeline.py"):
+        name = ".".join(path.parent.relative_to(root).parts)
+        try:
+            adapter.validate_python(name)
+        except ValidationError:
+            continue
+        if (path.parent / "__init__.py").is_file():
+            names.append(name)
+    return tuple(sorted(names))
+
+
 def load_pipeline(
     service: ServiceName, config: PipelineConfig | None = None
 ) -> BasePipeline:
@@ -432,17 +455,83 @@ def load_pipeline(
     return pipeline_class()
 
 
+class PipelineUnavailableError(RuntimeError):
+    """Недоступны настройки, зависимости или ресурсы выбранного модуля."""
+
+    def __init__(self, service: ServiceName, module: str | None) -> None:
+        self.service = service
+        self.module = module
+        super().__init__(f"Модуль {service}/{module} недоступен: проверьте ресурсы и настройки")
+
+
+class PipelineOutputError(ValueError):
+    """Модуль нарушил контракт дополнительных категорий или черновиков."""
+
+
+class PipelineRuntime:
+    """Последовательно выполнять запросы, сохраняя только активный модуль каждого шага."""
+
+    def __init__(self) -> None:
+        self._lock = Lock()
+        self._active: dict[ServiceName, tuple[str, BasePipeline]] = {}
+
+    def _load(self, service: ServiceName, config: PipelineConfig) -> BasePipeline:
+        """Создать модуль при первом запросе или после смены выбора."""
+        name = getattr(config, service)
+        if service not in self._active:
+            try:
+                pipeline = load_pipeline(service, config)
+            except (OSError, ImportError, ValueError, RuntimeError) as exc:
+                raise PipelineUnavailableError(service, name) from exc
+            self._active[service] = (name, pipeline)
+        return self._active[service][1]
+
+    def _run(self, service: ServiceName, config: PipelineConfig, *args: Any) -> Any:
+        """Отделить недоступные ресурсы от ошибок ответа модели."""
+        pipeline = self._load(service, config)
+        try:
+            return pipeline.run(*args)
+        except (MissingCredentialsError, FileNotFoundError, PermissionError, ImportError) as exc:
+            raise PipelineUnavailableError(service, getattr(config, service)) from exc
+
+    def run(self, inp: PipelineInput, config: PipelineConfig) -> PipelineOutput:
+        """Загрузить выбранные шаги и проверить весь результат до возврата клиенту."""
+        config = config.model_copy(deep=True)
+        for service in PIPELINE_CLASSES:
+            if getattr(config, service) is None:
+                raise PipelineUnavailableError(service, None)
+        with self._lock:
+            # Сначала освобождаем прежние ссылки: кэш не растёт с числом вариантов.
+            for service in PIPELINE_CLASSES:
+                if service in self._active and self._active[service][0] != getattr(config, service):
+                    del self._active[service]
+            targets = self._run("subcategory_extraction", config, inp)
+            if (not isinstance(targets, list) or any(
+                type(cid) is not int or cid not in VALID_MCIDS or cid == inp.mc_id for cid in targets
+            ) or len(targets) != len(set(targets))):
+                raise PipelineOutputError("Некорректные дополнительные микрокатегории")
+            if not targets:
+                return PipelineOutput(drafts=[])
+            drafts = self._run("draft_generation", config, inp, targets.copy())
+            if not isinstance(drafts, list):
+                raise PipelineOutputError("Генератор должен вернуть список черновиков")
+            try:
+                validated = [Draft.model_validate(
+                    draft.model_dump() if isinstance(draft, Draft) else draft, strict=True,
+                ) for draft in drafts]
+            except ValidationError as exc:
+                raise PipelineOutputError("Некорректные черновики") from exc
+            ids = [draft.mc_id for draft in validated]
+            if len(ids) != len(targets) or set(ids) != set(targets):
+                raise PipelineOutputError("Нужен ровно один черновик для каждой целевой категории")
+            return PipelineOutput(drafts=validated)
+
+
 def run_pipeline(
     inp: PipelineInput, config: PipelineConfig | None = None
 ) -> PipelineOutput:
-    """Прогнать выбранные модули: выделение -> генерация."""
-    config = config if config is not None else load_config()
-    extraction = load_pipeline("subcategory_extraction", config)
-    generation = load_pipeline("draft_generation", config)
-
-    target_mc_ids = extraction.run(inp)
-    drafts = generation.run(inp, target_mc_ids)
-    return PipelineOutput(drafts=drafts)
+    """Выполнить ту же цепочку однократно, сохраняя интерфейс CLI и оценщика."""
+    return PipelineRuntime().run(inp, config if config is not None else load_config())
 
 
 # --- CLI ---
@@ -460,7 +549,7 @@ def build_parser() -> argparse.ArgumentParser:
 def main(argv: list[str] | None = None) -> int:
     """Прочитать входной файл, прогнать пайплайн, записать выходной файл."""
     logging.basicConfig(level=logging.INFO, format="%(levelname)s %(name)s: %(message)s")
-    load_dotenv()  # переменные из .env (LLM_MODEL_ID, LLM_API_KEY)
+    load_dotenv(DEFAULT_CONFIG_PATH.parent / ".env")
     args = build_parser().parse_args(argv)
 
     payload = json.loads(args.input.read_text(encoding="utf-8"))

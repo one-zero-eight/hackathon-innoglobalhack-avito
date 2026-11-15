@@ -7,7 +7,7 @@ from time import sleep
 from urllib.error import HTTPError
 from urllib.request import Request, urlopen
 
-from main import LLMClient
+from main import LLMClient, MissingCredentialsError
 
 DEFAULT_MODEL = "gemini-3.5-flash-lite"
 DEFAULT_API_URL = "https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent"
@@ -33,7 +33,7 @@ class SampleLLMClient(LLMClient):
     def complete(self, prompt: str, **kwargs: object) -> str:
         """Запросить JSON, повторяя только временные ошибки HTTP и таймауты."""
         if not self.api_key:
-            raise ValueError("Укажите LLM_API_KEY в .env")
+            raise MissingCredentialsError("Укажите LLM_API_KEY в .env")
         generation_config: dict[str, object] = {"responseMimeType": "application/json"}
         if "response_schema" in kwargs:
             generation_config["responseJsonSchema"] = kwargs["response_schema"]

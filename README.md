@@ -8,6 +8,7 @@
 | Путь | Что это |
 | --- | --- |
 | `src/main.py` | CLI + всё общее: контракт, микрокатегории, `BasePipeline`, `LLMClient` |
+| `src/api.py` | HTTP API полного пайплайна и селекторы модулей в Swagger |
 | `config.json` | выбор реализации каждого шага |
 | `src/subcategory_extraction/` | шаг 1: выделение подкатегорий услуг |
 | `src/draft_generation/` | шаг 2: генерация черновиков |
@@ -84,8 +85,9 @@ TinyBERT исключён из поддерживаемых модулей.
 Варианты (например, `jev`, `embeddings` или `llm`) добавляются в
 `src/<service>/<module>/`; затем в конфиге указывается имя папки вместо `null`.
 Каждый вариант содержит `__init__.py` и `pipeline.py` с классом и интерфейсом
-своего раздела (см. [AGENTS.md](AGENTS.md)). Переключение — только через конфиг,
-без изменения оркестрации. Несуществующий модуль вызывает ошибку.
+своего раздела (см. [AGENTS.md](AGENTS.md)). В CLI выбор задаётся конфигом,
+в HTTP — query-параметрами extractor/generator с defaults из конфига.
+Несуществующий модуль вызывает ошибку.
 
 Для сравнения вариантов используем общие бенчмарки раздела и фиксируем
 модуль в результатах. Скрипты переноса и обучения описаны в
@@ -116,6 +118,29 @@ uv run python src/subcategory_extraction/benchmarks/classifier_methods/run.py --
 
 Для [dataset_annotation](src/dataset_annotation/rubert_review/README.md) —
 только время применения сохранённых решений и шесть примеров с mcId.
+
+## HTTP API и Swagger
+
+```bash
+uv sync
+uv run python -m src
+```
+
+Swagger: http://127.0.0.1:8000/docs. В `POST /drafts` выберите extractor и generator
+из выпадающих списков; без выбора используются значения `config.json`.
+`GET /modules` возвращает все обнаруженные модули и defaults, `GET /health` — состояние HTTP-сервера.
+
+```bash
+curl -X POST 'http://127.0.0.1:8000/drafts?extractor=lexical.regex&generator=sample_llm' \
+  -H 'Content-Type: application/json' \
+  -d '{"description":"Устанавливаю розетки и смесители.","mcId":101}'
+```
+
+Тело и результат соответствуют контракту кейса; имена модулей передаются отдельно в URL.
+Один общий loader обслуживает оба шага. Сервер последовательно выполняет inference и
+переиспользует активные экземпляры. Пустой список целей возвращает `drafts: []` без генерации.
+API-ключи и веса нужны только при использовании соответствующего модуля.
+Подробности, ошибки и офлайн-проверка: [docs/http-api.md](docs/http-api.md).
 
 ## Пайплайн
 

@@ -7,7 +7,7 @@ from time import monotonic, sleep
 from urllib.error import HTTPError
 from urllib.request import Request, urlopen
 
-from main import LLMClient
+from main import LLMClient, MissingCredentialsError
 
 DEFAULT_MODEL = "gemini-decision-1"
 DEFAULT_ENDPOINT = "https://generativelanguage.googleapis.com/v1beta/decisions"
@@ -55,7 +55,7 @@ class GoogleDecisionClient(LLMClient):
     def complete(self, prompt: str, **kwargs: object) -> str:
         """Отправить описание и вопросы; вернуть JSON без интерпретации."""
         if not self.api_key:
-            raise ValueError("Укажите LLM_API_KEY или GOOGLE_API_KEY в .env")
+            raise MissingCredentialsError("Укажите LLM_API_KEY или GOOGLE_API_KEY в .env")
         questions = kwargs.get("questions")
         if not isinstance(questions, dict) or not questions:
             raise ValueError("Нужен непустой словарь questions")

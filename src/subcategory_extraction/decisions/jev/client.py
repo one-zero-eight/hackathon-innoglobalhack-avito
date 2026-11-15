@@ -9,7 +9,7 @@ from tempfile import NamedTemporaryFile
 from urllib.parse import urlsplit
 from urllib.request import Request, urlopen
 
-from main import LLMClient
+from main import LLMClient, MissingCredentialsError
 
 DEFAULT_PROVIDER = "selectel"
 PROVIDERS = {
@@ -114,7 +114,7 @@ class JevClient(LLMClient):
             self.record_usage(result.get("usage"), cache_hit=True)
         else:
             if not self.api_key:
-                raise ValueError(f"Укажите {PROVIDERS[self.provider]['key']} в .env для запросов Jev")
+                raise MissingCredentialsError(f"Укажите {PROVIDERS[self.provider]['key']} в .env для запросов Jev")
             request = Request(
                 self.endpoint,
                 data=json.dumps(payload, ensure_ascii=False, allow_nan=False).encode("utf-8"),

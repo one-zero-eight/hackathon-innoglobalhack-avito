@@ -6,6 +6,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[3]))
 
 import argparse
+import json
 import logging
 from time import perf_counter
 
@@ -136,7 +137,9 @@ def main() -> int:
 
     setup()
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--live", action="store_true")
+    selection = parser.add_mutually_exclusive_group()
+    selection.add_argument("--live", action="store_true")
+    selection.add_argument("--api-check", action="store_true", help="Проверить HTTP API и runtime офлайн, без БД и моделей")
     parser.add_argument("--config", type=Path, default=DEFAULT_RUN_CONFIG)
     parser.add_argument("--resume", action="store_true", help="Продолжить live из контрольной точки без повторной генерации готовых строк")
     args = parser.parse_args()
@@ -144,10 +147,35 @@ def main() -> int:
         return run_live(args.config, Path(__file__).with_name("live-results.json"), args.resume)
     if args.resume:
         parser.error("--resume требует --live")
+    if args.api_check:
+        from api_checks import check_api, check_server_startup
+        from unittest.mock import patch
+
+        path = Path(__file__).with_name("checks-results.json")
+        report = json.loads(path.read_text()) if path.exists() else {"scenario": "offline"}
+        if "results" not in report:
+            report["results"] = {"evaluator": {key: value for key, value in report.items()}}
+        result = {**metadata(), "status": "running", "api_calls": 0, "database_required": False}
+        report["results"]["http_api"] = result
+        started = perf_counter()
+        try:
+            with (patch.dict("os.environ", {"LLM_PRICING_FILE": "", "LLM_API_KEY": ""}),
+                  patch("main.LLMClient.request_json", side_effect=AssertionError("Внешний API запрещён в offline проверке"))):
+                result["checks"] = check_api() + check_server_startup()
+            result.update(status="complete", checks_passed=len(result["checks"]))
+        except Exception as exc:
+            result.update(status="failed", error=f"{type(exc).__name__}: {exc}")
+            logging.exception("HTTP API: проверки не пройдены")
+        result["elapsed_seconds"] = perf_counter() - started
+        report["status"] = "complete" if all(item["status"] == "complete" for item in report["results"].values()) else "failed"
+        save_report(path, report)
+        logging.info("HTTP API: %s, %d проверок", result["status"], result.get("checks_passed", 0))
+        return 0 if result["status"] == "complete" else 1
     started = perf_counter()
     report = {**metadata(), "scenario": "offline"}
     check()
     report.update(status="complete", rows=208, overlapping_rows=24, elapsed_seconds=perf_counter() - started)
+    report["results"] = {"evaluator": dict(report)}
     save_report(Path(__file__).with_name("checks-results.json"), report)
     return 0
 

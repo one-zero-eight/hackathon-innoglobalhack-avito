@@ -11,7 +11,7 @@ from time import sleep
 from urllib.error import HTTPError, URLError
 from urllib.request import Request, urlopen
 
-from main import LLMClient
+from main import LLMClient, MissingCredentialsError
 
 DEFAULT_MODEL = "decision-model-preview"
 DEFAULT_BASE_URL = "https://token-plan.maas.qianwenaiapi.com/compatible-mode/v1"
@@ -93,7 +93,7 @@ class QwenDecisionClient(LLMClient):
             self.record_usage(result.get("usage"), cache_hit=True)
         else:
             if not self.api_key:
-                raise ValueError("Задайте QIANWEN_TOKEN_PLAN_API_KEY в .env")
+                raise MissingCredentialsError("Задайте QIANWEN_TOKEN_PLAN_API_KEY в .env")
             request = Request(
                 self.endpoint, data=json.dumps(payload, ensure_ascii=False).encode(),
                 headers={"Authorization": f"Bearer {self.api_key}", "Content-Type": "application/json"},

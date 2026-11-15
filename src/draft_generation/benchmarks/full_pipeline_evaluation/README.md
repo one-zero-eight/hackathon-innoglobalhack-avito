@@ -11,6 +11,7 @@
 | --- | --- | --- | ---: | --- | --- | --- |
 | Общий оценщик / офлайн | e814b58 + правки, f5b27fbd8a8c / 2026-11-14 | — | 208 строк, 0 вызовов моделей | формула, Parquet и аудит пройдены; 24 пересечения | —; весь офлайн-прогон 1.039845 с | бесплатно |
 | tfidf → sample_llm / live | cd0f310 + правки / 2026-11-14 | ../../sample_llm/prompts/draft.md | 208 | micro-F1 0.800000; TP/FP/FN 268/107/27 | 6.950199 / 2.702906 / 29.378819 | неизвестно: тариф не подтверждён |
+| HTTP API + runtime / offline | fb4ee41 + правки, 1a9eaa86a997 / 2026-11-15T15:34:31+03:00 | контрольные ответы | 65 проверок, 0 внешних API | все пройдены; каталог, селекторы, reuse, overlap HTTP, ошибки, CLI и реальный сервер | —; весь прогон 1.536349 с, не latency LLM | бесплатно |
 
 ## Запуск
 
@@ -18,7 +19,19 @@
 uv run python src/draft_generation/benchmarks/full_pipeline_evaluation/run.py
 ```
 
-Офлайн-отчёт — [checks-results.json](checks-results.json).
+Офлайн-отчёт — [checks-results.json](checks-results.json): results.evaluator сохраняет прежние проверки, results.http_api — API/runtime.
+
+Проверки API без PostgreSQL, весов внешних моделей и облачных запросов:
+
+```bash
+uv run python src/draft_generation/benchmarks/full_pipeline_evaluation/run.py --api-check
+```
+
+Этот режим проверяет 24 extractor-модуля и один generator в Swagger, defaults/overrides,
+reuse обоих шагов, конкурентные запросы, отсутствие частичных drafts, безопасные 422/502/503,
+повтор после недоступного ресурса, CLI и запуск python -m src из другого cwd.
+Платный транспорт заблокирован; ответы генерации контрольные. Сохраняются происхождение
+и даты остальных строк. Реальный временный HTTP-сервер останавливается после проверки.
 Настоящая полная цепочка: --live --config <run-config.json>,
 для продолжения — --resume. Live-отчёт — [live-results.json](live-results.json).
 API-вызовы могут быть платными. При переоформлении новые вызовы не делались.
