@@ -279,6 +279,23 @@ curl -s "http://localhost:8000/api/dataset/random?split=train" \
       -H 'Content-Type: application/json' -d @-
 ```
 
+### Автозагрузка датасета при старте compose
+
+Сервис `db-load` при каждом `docker compose up` исполняет
+`src/api/dataset_loader.py` (см. «Датасет кейса в БД») и завершается:
+`restart: "no"`, `depends_on: db: service_healthy`, каталог
+`docs/innoglobalhack_avito` смонтирован в лоадер только на чтение.
+Повторный запуск идемпотентен (UNIQUE `row_key` + `ON CONFLICT DO
+NOTHING`), на `api` и `web` сервис не влияет. Образ лоадера — отдельный
+лёгкий `deploy/db-load.Dockerfile` без torch/CUDA: полный
+`uv sync --frozen` для одноразовой загрузки не нужен. Повтор вручную:
+
+```bash
+docker compose run --rm db-load
+docker compose exec db psql -U avito -d avito \
+  -c "SELECT split, count(*) FROM case_ads GROUP BY split"
+```
+
 ### Dev-запуск
 
 ```bash
