@@ -38,7 +38,6 @@ SHA-256 содержимого таблицы: `fae05cba56fdf57a15aa3979afd828b7
 | qwen_decision | не прогоняется | boundaries | — | — | по решению команды Qwen не запускаем |
 | local_jev / jevos-v5 | требуется пересчёт | english / 0.5 | — | — | runtime только для Linux x86_64 |
 | local_jev / jevos-v5 | требуется пересчёт | guided_ru / 0.5 | — | — | runtime только для Linux x86_64 |
-| tinybert | не обучен | — | — | — | веса отсутствуют; обучение не запускалось в этой среде |
 
 Недоступны в этом окружении: `jev::baseline`, `jev_boundaries`,
 `jev_tfidf`(+baseline), `jev_retrieval`(+baseline), `evidence_jev`,
@@ -50,7 +49,7 @@ SHA-256 содержимого таблицы: `fae05cba56fdf57a15aa3979afd828b7
 ## Запуск
 
 ```bash
-OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 TFIDF_ARTIFACT_PATH=out/classifier-methods/tfidf.json uv run python src/subcategory_extraction/benchmarks/improved_dataset/run.py --methods tfidf learned_keywords --offline
+OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 TFIDF_ARTIFACT_PATH=out/classifier-methods/tfidf.json uv run python src/subcategory_extraction/benchmarks/improved_dataset/run.py --methods lexical.tfidf lexical.learned_keywords --offline
 ```
 
 Для других реализаций замените список `--methods`. Для проверки исходного

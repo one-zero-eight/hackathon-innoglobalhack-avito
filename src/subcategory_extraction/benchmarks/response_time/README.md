@@ -41,7 +41,7 @@ train, seed=44. SHA-256 train:
 ## Запуск
 
 ```bash
-TFIDF_ARTIFACT_PATH=out/classifier-methods/tfidf.json uv run python src/subcategory_extraction/benchmarks/response_time/run.py --module tfidf --size 10
+TFIDF_ARTIFACT_PATH=out/classifier-methods/tfidf.json uv run python src/subcategory_extraction/benchmarks/response_time/run.py --module lexical.tfidf --size 10
 ```
 
 Для другого решения замените `--module`. Отчёт — [results.json](results.json).
@@ -68,7 +68,7 @@ p95 посчитан nearest rank. Его не сравниваем напрям
 ## Свежий прогон опубликованных весов Leo
 
 ```bash
-OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 TOKENIZERS_PARALLELISM=false RUBERT_F1_ARTIFACT_PATH=src/subcategory_extraction/semantic_encoder_f1/artifacts RUBERT_F1_DEVICE=cpu uv run python src/subcategory_extraction/benchmarks/response_time/run.py --module semantic_encoder_f1 --size 10
+OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 TOKENIZERS_PARALLELISM=false RUBERT_F1_ARTIFACT_PATH=src/subcategory_extraction/semantic/semantic_encoder_f1/artifacts RUBERT_F1_DEVICE=cpu uv run python src/subcategory_extraction/benchmarks/response_time/run.py --module semantic.semantic_encoder_f1 --size 10
 ```
 
 Apple Silicon arm64, CPU, один поток PyTorch; версии и платформа — в `results.json`.
@@ -83,7 +83,7 @@ Apple Silicon arm64, CPU, один поток PyTorch; версии и плат�
 
 
 ```bash
-OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 uv run python src/subcategory_extraction/benchmarks/response_time/run.py --module learned_keywords --size 10
+OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 uv run python src/subcategory_extraction/benchmarks/response_time/run.py --module lexical.learned_keywords --size 10
 ```
 
 Apple Silicon arm64, CPU; один поток OpenMP/OpenBLAS. Загрузка модели и данных
@@ -99,7 +99,7 @@ p95 — линейный percentile NumPy. Выборка: 10 validation-гру�
 
 
 ```bash
-QWEN_DECISION_CACHE=0 OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 uv run python src/subcategory_extraction/benchmarks/response_time/run.py --module qwen_decision --size 10 --append
+QWEN_DECISION_CACHE=0 OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 uv run python src/subcategory_extraction/benchmarks/response_time/run.py --module decisions.qwen_decision --size 10 --append
 ```
 
 Настоящие последовательные `run()` на штатных 10 входах seed=44. Чтение и запись
@@ -125,8 +125,8 @@ F1 здесь не считается. Оба модуля измерены за
 
 
 ```bash
-OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 uv run python src/subcategory_extraction/benchmarks/response_time/run.py --module local_jev --size 10 --append
-OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 uv run python src/subcategory_extraction/benchmarks/response_time/run.py --module learned_keywords --size 10 --append
+OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 uv run python src/subcategory_extraction/benchmarks/response_time/run.py --module decisions.local_jev --size 10 --append
+OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 uv run python src/subcategory_extraction/benchmarks/response_time/run.py --module lexical.learned_keywords --size 10 --append
 ```
 
 Linux x86_64, Intel Core i9-12900H. Jevos: четыре потока OpenVINO;

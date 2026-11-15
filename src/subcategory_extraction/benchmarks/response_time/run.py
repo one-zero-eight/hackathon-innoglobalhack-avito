@@ -47,7 +47,7 @@ def main() -> int:
             report["results"][module] = item
     configurations = (list(CONFIGURATIONS) if args.all_configurations else
                       [BY_KEY[args.configuration]] if args.configuration else
-                      [Configuration(args.module or "tfidf", args.module or "tfidf")])
+                      [Configuration((args.module or "lexical.tfidf").rsplit(".", 1)[-1], args.module or "lexical.tfidf")])
     matrix_mode = bool(args.configuration or args.all_configurations)
     for configuration in configurations:
         module = configuration.module

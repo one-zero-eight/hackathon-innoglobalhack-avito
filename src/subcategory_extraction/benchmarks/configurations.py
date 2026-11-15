@@ -11,8 +11,8 @@ from typing import Iterator
 from main import LLMClient
 
 ROOT = Path(__file__).resolve().parents[3]
-GUIDED = "src/subcategory_extraction/google_decision/prompts/google_decision_guided.md"
-BASELINE = "src/subcategory_extraction/google_decision/prompts/google_decision_baseline.md"
+GUIDED = "src/subcategory_extraction/decisions/jev/prompts/guided.md"
+BASELINE = "src/subcategory_extraction/decisions/jev/prompts/baseline.md"
 
 
 @dataclass(frozen=True)
@@ -26,43 +26,43 @@ class Configuration:
 
 
 CONFIGURATIONS = (
-    Configuration("regex", "regex"),
-    Configuration("tfidf", "tfidf", {"TFIDF_ARTIFACT_PATH": "out/classifier-methods/tfidf.json"}, "case_train"),
-    Configuration("tfidf::legacy", "tfidf", {"TFIDF_ARTIFACT_PATH": "out/tfidf.json"}),
-    Configuration("learned_keywords", "learned_keywords", training_table="manual_train"),
-    Configuration("semantic_encoder", "semantic_encoder"),
-    Configuration("semantic_encoder::threshold-encoder", "semantic_encoder", {
+    Configuration("regex", "lexical.regex"),
+    Configuration("tfidf", "lexical.tfidf", {"TFIDF_ARTIFACT_PATH": "out/classifier-methods/tfidf.json"}, "case_train"),
+    Configuration("tfidf::legacy", "lexical.tfidf", {"TFIDF_ARTIFACT_PATH": "out/tfidf.json"}),
+    Configuration("learned_keywords", "lexical.learned_keywords", training_table="manual_train"),
+    Configuration("semantic_encoder", "semantic.semantic_encoder"),
+    Configuration("semantic_encoder::threshold-encoder", "semantic.semantic_encoder", {
         "SEMANTIC_ENCODER_ARTIFACT_PATH": "out/rubert-thresholds/encoder",
     }, "manual_train"),
-    Configuration("semantic_encoder_calibrated", "semantic_encoder_calibrated", {
+    Configuration("semantic_encoder_calibrated", "semantic.semantic_encoder_calibrated", {
         "SEMANTIC_ENCODER_ARTIFACT_PATH": "out/rubert-thresholds/encoder",
     }, "manual_train"),
-    Configuration("semantic_encoder_f1", "semantic_encoder_f1", training_table="manual_train"),
-    Configuration("snippet_logistic_regression", "snippet_logistic_regression"),
-    Configuration("semantic_evidence", "semantic_evidence"),
-    Configuration("tinybert", "tinybert"),
-    Configuration("local_jev", "local_jev", {"LOCAL_JEV_PROMPT": "english"}),
-    Configuration("local_jev (guided_ru, threshold=0.5)", "local_jev", {"LOCAL_JEV_PROMPT": "guided_ru"}),
-    Configuration("google_decision", "google_decision", {"GOOGLE_DECISION_PROMPT": "guided"}),
-    Configuration("google_decision::baseline", "google_decision", {"GOOGLE_DECISION_PROMPT": "baseline"}),
-    Configuration("jev", "jev", {"JEV_PROMPT_PATH": GUIDED}),
-    Configuration("jev_calibrated", "jev_calibrated"),
-    Configuration("jev::baseline", "jev", {"JEV_PROMPT_PATH": BASELINE}),
-    Configuration("jev_boundaries", "jev_boundaries"),
-    Configuration("jev_tfidf", "jev_tfidf", {"JEV_PROMPT_PATH": GUIDED}, "case_train"),
-    Configuration("jev_tfidf::baseline", "jev_tfidf", {"JEV_PROMPT_PATH": BASELINE}, "case_train"),
-    Configuration("jev_retrieval", "jev_retrieval", {"JEV_PROMPT_PATH": GUIDED}, "case_train"),
-    Configuration("jev_retrieval::baseline", "jev_retrieval", {"JEV_PROMPT_PATH": BASELINE}, "case_train"),
-    Configuration("evidence_jev", "evidence_jev"),
-    Configuration("jev_arbiter", "jev_arbiter", {"JEV_PROMPT_PATH": GUIDED}, "case_train"),
-    Configuration("jev_arbiter::baseline", "jev_arbiter", {"JEV_PROMPT_PATH": BASELINE}, "case_train"),
-    Configuration("qwen_decision", "qwen_decision", {"QWEN_DECISION_PROMPT": "auto"}, "manual_train"),
-    Configuration("qwen_decision::guided", "qwen_decision", {"QWEN_DECISION_PROMPT": "guided"}),
-    Configuration("qwen_decision::boundaries", "qwen_decision", {"QWEN_DECISION_PROMPT": "boundaries"}),
+    Configuration("semantic_encoder_f1", "semantic.semantic_encoder_f1", training_table="manual_train"),
+    Configuration("snippet_logistic_regression", "lexical.snippet_logistic_regression"),
+    Configuration("semantic_evidence", "semantic.semantic_evidence"),
+    Configuration("local_jev", "decisions.local_jev", {"LOCAL_JEV_PROMPT": "english"}),
+    Configuration("local_jev (guided_ru, threshold=0.5)", "decisions.local_jev", {"LOCAL_JEV_PROMPT": "guided_ru"}),
+    Configuration("google_decision", "decisions.google_decision", {"GOOGLE_DECISION_PROMPT": "guided"}),
+    Configuration("google_decision::baseline", "decisions.google_decision", {"GOOGLE_DECISION_PROMPT": "baseline"}),
+    Configuration("jev", "decisions.jev", {"JEV_PROMPT_PATH": GUIDED}),
+    Configuration("jev_calibrated", "decisions.jev_calibrated"),
+    Configuration("jev::baseline", "decisions.jev", {"JEV_PROMPT_PATH": BASELINE}),
+    Configuration("jev_boundaries", "decisions.jev_boundaries"),
+    Configuration("jev_tfidf", "hybrid.jev_tfidf", {"JEV_PROMPT_PATH": GUIDED}, "case_train"),
+    Configuration("jev_tfidf::baseline", "hybrid.jev_tfidf", {"JEV_PROMPT_PATH": BASELINE}, "case_train"),
+    Configuration("jev_retrieval", "decisions.jev_retrieval", {"JEV_PROMPT_PATH": "src/subcategory_extraction/decisions/jev_retrieval/prompts/guided.md"}, "case_train"),
+    Configuration("jev_retrieval::baseline", "decisions.jev_retrieval", {"JEV_PROMPT_PATH": "src/subcategory_extraction/decisions/jev_retrieval/prompts/baseline.md"}, "case_train"),
+    Configuration("evidence_jev", "hybrid.evidence_jev"),
+    Configuration("jev_arbiter", "hybrid.jev_arbiter", {"JEV_PROMPT_PATH": GUIDED}, "case_train"),
+    Configuration("jev_arbiter::baseline", "hybrid.jev_arbiter", {"JEV_PROMPT_PATH": BASELINE}, "case_train"),
+    Configuration("qwen_decision", "decisions.qwen_decision", {"QWEN_DECISION_PROMPT": "auto"}, "manual_train"),
+    Configuration("qwen_decision::guided", "decisions.qwen_decision", {"QWEN_DECISION_PROMPT": "guided"}),
+    Configuration("qwen_decision::boundaries", "decisions.qwen_decision", {"QWEN_DECISION_PROMPT": "boundaries"}),
 )
 BY_KEY = {config.key: config for config in CONFIGURATIONS}
-LOCAL_METHODS = {"regex", "tfidf", "learned_keywords", "semantic_encoder",
-                 "semantic_encoder_calibrated", "semantic_encoder_f1", "local_jev"}
+LOCAL_METHODS = {"lexical.regex", "lexical.tfidf", "lexical.learned_keywords", "semantic.semantic_encoder",
+                 "semantic.semantic_encoder_calibrated", "semantic.semantic_encoder_f1", "decisions.local_jev",
+                 "lexical.snippet_logistic_regression", "semantic.semantic_evidence"}
 
 # Значения фиксируются до оценки; .env не определяет скрытые варианты матрицы.
 FIXED_ENVIRONMENT = {
@@ -73,9 +73,9 @@ FIXED_ENVIRONMENT = {
     "LOCAL_JEV_MODEL": "jevos-v5", "LOCAL_JEV_THRESHOLD": "0.5",
     "SEMANTIC_ENCODER_DEVICE": "cpu", "RUBERT_F1_DEVICE": "cpu",
     "TFIDF_ARTIFACT_PATH": "out/classifier-methods/tfidf.json",
-    "LEARNED_KEYWORDS_ARTIFACT": "src/subcategory_extraction/learned_keywords/artifacts/learned-keywords.json",
+    "LEARNED_KEYWORDS_ARTIFACT": "src/subcategory_extraction/lexical/learned_keywords/artifacts/learned-keywords.json",
     "SEMANTIC_ENCODER_ARTIFACT_PATH": "out/semantic-encoder",
-    "RUBERT_F1_ARTIFACT_PATH": "src/subcategory_extraction/semantic_encoder_f1/artifacts",
+    "RUBERT_F1_ARTIFACT_PATH": "src/subcategory_extraction/semantic/semantic_encoder_f1/artifacts",
     "JEV_REFERENCE_DATASET": "out/hybrid-training.jsonl",
     "JEV_REFERENCE_MAX_CHARS": "1800",
 }

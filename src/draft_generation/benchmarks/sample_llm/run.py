@@ -24,7 +24,7 @@ logger = logging.getLogger(__name__)
 def replay() -> dict[str, int]:
     """Проверить контракт, транспорт, пустые цели и некорректные ответы."""
     config = PipelineConfig(
-        subcategory_extraction="google_decision",
+        subcategory_extraction="decisions.google_decision",
         draft_generation="sample_llm",
     )
     inp = PipelineInput(description="Устанавливаю розетки и смесители.", mcId=101)
@@ -120,7 +120,7 @@ def replay() -> dict[str, int]:
             raise AssertionError("Отсутствие ключа не обнаружено")
     # Настоящие два модуля и оркестрация, только ответы API заменены контрольными.
     with (
-        patch("subcategory_extraction.google_decision.client.GoogleDecisionClient.complete",
+        patch("subcategory_extraction.decisions.google_decision.client.GoogleDecisionClient.complete",
               return_value=json.dumps({"answers": {
                   f"mc{cid}": {"noul": 0.9 if cid == 104 else 0.0}
                   for cid in range(102, 107)

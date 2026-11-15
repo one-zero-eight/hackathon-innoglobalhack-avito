@@ -43,7 +43,6 @@
 | semantic_encoder::threshold-encoder | 0.7284 | 0.7569 | 0.012 | live |
 | semantic_encoder_calibrated | 0.7273 | 0.7519 | 0.011 | live |
 | local_jev (guided_ru) | 0.0 | — | — | not valid (macOS) |
-| tinybert | — | — | — | обучение |
 | jev::baseline, jev_boundaries, jev_retrieval, evidence_jev, jev_arbiter | — | — | — | нет авторизованного API |
 | qwen_decision::guided / :boundaries | — | — | — | нет ключа |
 | semantic_encoder (базовый, live) | — | — | — | артефакт не загружен |
@@ -100,12 +99,6 @@ CPU-вариант: выбор checkpoint, оконная токенизация
 evidence-encoder (фрагменты), взвешенная композиция (0.25/0.75).
 CPU-only runtime, артефакты проверяются по SHA-256 внутри модуля.
 
-#### tinybert
-Huawei TinyBERT 4L-312D (end-to-end fine-tuning). Ветка держит только
-`train.py`/`model.py`/`pipeline.py`; обученные веса отсутствуют — их нужно
-воспроизвести `python -m subcategory_extraction.tinybert.train`
-(5 эпох, загрузка оригинала с HuggingFace).
-
 ### LLM-модели (облачные API)
 
 #### google_decision
@@ -150,7 +143,6 @@ feder-cr/jev локально на CPU (localhost:8017). В этой macOS-ср�
 | qwen_decision (+guided/boundaries) | `QIANWEN_TOKEN_PLAN_API_KEY` не задан |
 | local_jev (+guided_ru) | runtime поддерживает Linux x86_64; на macOS официальный сервер не запущен |
 | semantic_encoder (базовый live) | артефакт `out/semantic-encoder` не загружен |
-| tinybert | обученные веса в ветке отсутствуют (нужно обучение) |
 
 Фиктивные значения не подставляются; в `results.json` такие конфигурации
 помечены `failed`/`requires_rerun` с явной ошибкой.

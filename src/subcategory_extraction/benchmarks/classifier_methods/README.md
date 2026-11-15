@@ -37,7 +37,6 @@ PostgreSQL), SHA-256 исходного файла —
 | semantic_encoder::threshold-encoder | out/rubert-thresholds/encoder / 2026-11-15 | — | 208 | 0.728411 | локальные run() |
 | semantic_encoder_calibrated | out/rubert-thresholds/encoder / 2026-11-15 | — | 208 | 0.727273 | локальные run() |
 | qwen_decision | decision-model-preview / сохранённые ответы | boundaries | 208 | 0.629674 | сохранённые ответы, без новых вызовов |
-| tinybert | — | — | 208 | — | обучение не выполнено в этой среде |
 | local_jev / jevos-v5 | jevos-v5 / сохранённые предсказания | english / 0.5 | 208 | 0.399050 | сохранённые CPU-предсказания |
 | local_jev / jevos-v5 | jevos-v5 / сохранённые предсказания | guided_ru / 0.5 | 208 | 0.000000 | сохранённые CPU-предсказания; на macOS runtime недоступен, результат невалиден |
 
@@ -64,9 +63,6 @@ API, runtime `local_jev` поддерживает только Linux x86_64, л�
 - `local_jev` (+ guided_ru) — runtime только для Linux x86_64;
 - `semantic_encoder` (базовая) — артефакт `out/semantic-encoder/metadata.json`
   не загружен (известен исторический результат 0.786704 по сохранённым ответам);
-- `tinybert` — обученные веса отсутствуют; обучение запускается
-  `python -m subcategory_extraction.tinybert.train`.
-
 ## Карта результатов
 
 ![Подходы: Micro-F1 (case_test) × время](approaches-map.png)
@@ -78,7 +74,7 @@ micro-F1 на исходном test. Источник времени — сце�
 ## Запуск
 
 ```bash
-OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 TFIDF_ARTIFACT_PATH=out/classifier-methods/tfidf.json uv run python src/subcategory_extraction/benchmarks/classifier_methods/run.py --methods regex tfidf learned_keywords --offline
+OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 TFIDF_ARTIFACT_PATH=out/classifier-methods/tfidf.json uv run python src/subcategory_extraction/benchmarks/classifier_methods/run.py --methods lexical.regex lexical.tfidf lexical.learned_keywords --offline
 ```
 
 Для других реализаций замените список `--methods`. Для проверки исходного
@@ -96,7 +92,7 @@ API-модули. Отсутствие весов/API фиксируется к�
 
 
 ```bash
-OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 TOKENIZERS_PARALLELISM=false RUBERT_F1_ARTIFACT_PATH=src/subcategory_extraction/semantic_encoder_f1/artifacts RUBERT_F1_DEVICE=cpu uv run python src/subcategory_extraction/benchmarks/classifier_methods/run.py --methods semantic_encoder_f1 --offline
+OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 TOKENIZERS_PARALLELISM=false RUBERT_F1_ARTIFACT_PATH=src/subcategory_extraction/semantic/semantic_encoder_f1/artifacts RUBERT_F1_DEVICE=cpu uv run python src/subcategory_extraction/benchmarks/classifier_methods/run.py --methods semantic.semantic_encoder_f1 --offline
 ```
 
 Точные нормализованные совпадения с train модели (`improved_dataset/train.jsonl`):
@@ -128,7 +124,7 @@ OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 TOKENIZERS_PARALLELISM=false RUBERT_F1_ARTIF
 
 
 ```bash
-OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 uv run python src/subcategory_extraction/benchmarks/classifier_methods/run.py --methods learned_keywords
+OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 uv run python src/subcategory_extraction/benchmarks/classifier_methods/run.py --methods lexical.learned_keywords
 ```
 
 Настоящие локальные run(), без API, переобучения внутри runner и подбора
@@ -150,7 +146,7 @@ OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 uv run python src/subcategory_extractio
 
 
 ```bash
-OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 LEARNED_KEYWORDS_ARTIFACT=src/subcategory_extraction/learned_keywords/artifacts/learned-keywords.json uv run python src/subcategory_extraction/benchmarks/classifier_methods/run.py --methods learned_keywords qwen_decision --workers 4 --append
+OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 LEARNED_KEYWORDS_ARTIFACT=src/subcategory_extraction/lexical/learned_keywords/artifacts/learned-keywords.json uv run python src/subcategory_extraction/benchmarks/classifier_methods/run.py --methods lexical.learned_keywords decisions.qwen_decision --workers 4 --append
 ```
 
 Промпт и пороги выбраны только по 240 группам исправленного train и сохранены

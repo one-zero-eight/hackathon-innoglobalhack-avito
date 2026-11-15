@@ -24,7 +24,7 @@ from run import EvaluationRow, audit_overlap, calculate_metrics, prepare_rows, r
 
 ROOT = Path(__file__).resolve().parents[4]
 HERE = Path(__file__).resolve().parent
-METHODS = tuple(sorted(path.parent.name for path in HERE.parent.parent.glob("*/pipeline.py")))
+METHODS = tuple(sorted(".".join(path.parent.relative_to(HERE.parent.parent).parts) for path in HERE.parent.parent.glob("*/*/pipeline.py")))
 DATASETS = {
     # Имена таблиц PostgreSQL (единый формат в src/database.py).
     "classifier_methods": ("case_test", "case_train"),
@@ -105,7 +105,7 @@ def main(directory: Path = HERE, scenario: str = "classifier_methods") -> int:
         return 0
     configurations = (list(CONFIGURATIONS) if args.all_configurations else
                       [BY_KEY[args.configuration]] if args.configuration else
-                      [Configuration(method, method) for method in args.methods])
+                      [Configuration(method.rsplit(".", 1)[-1], method) for method in args.methods])
     matrix_mode = bool(args.configuration or args.all_configurations)
     dataset, training = DATASETS[scenario]
     if not dataset or not training:

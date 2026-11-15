@@ -13,7 +13,7 @@ from urllib.error import HTTPError, URLError
 
 from dotenv import load_dotenv
 
-from subcategory_extraction.google_decision.client import DEFAULT_MODEL, TokenBudget
+from subcategory_extraction.decisions.google_decision.client import DEFAULT_MODEL, TokenBudget
 from dataset_annotation.collection_decision.pipeline import CollectionAnnotationPipeline
 
 ROOT = Path(__file__).resolve().parents[3]
