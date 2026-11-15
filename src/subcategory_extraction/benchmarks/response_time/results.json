@@ -1,8 +1,15 @@
 {
-  "date": "2026-11-14T23:38:17+03:00",
-  "commit": "8c6fe87d8c63b7072bbad7aef71670f74ca1c6bb",
-  "code_sha256": "df877ac35fef057a5e5142a02f2ca88a6abb25f9a63f03a281efd2ee9e35aca6",
+  "date": "2026-11-15T02:53:51+03:00",
+  "commit": "e64668f0ca0f35e226f7cfa09a8649a443f46a07",
+  "code_sha256": "48e1ea81665df382f49ca38826623eeaafe3281476ed6203e19e08a7ed2918d1",
   "working_tree": true,
+  "machine": "macOS-27.0.1-arm64-arm-64bit-Mach-O",
+  "environment": {
+    "OMP_NUM_THREADS": null,
+    "OPENBLAS_NUM_THREADS": null,
+    "MKL_NUM_THREADS": null,
+    "TOKENIZERS_PARALLELISM": null
+  },
   "sample_seed": 44,
   "sample_size": 10,
   "results": {
@@ -12,7 +19,7 @@
       "rows": [
         {
           "group_id": "1755d70b12029ca196b7b0db67ab296db96a38e58bfa37db4f9eddc1e435d87e",
-          "seconds": 0.0022659950009256136,
+          "seconds": 0.004558166954666376,
           "predicted": [
             102,
             103,
@@ -22,11 +29,12 @@
           ],
           "cache_hit": null,
           "http_attempts": null,
-          "usage": null
+          "usage": null,
+          "api_clients": []
         },
         {
           "group_id": "df3453fa719bcc9c4120f73540192a23c48886d1d05117214da3af68fdc290c9",
-          "seconds": 0.001364784999168478,
+          "seconds": 0.0017042078543454409,
           "predicted": [
             102,
             103,
@@ -36,11 +44,12 @@
           ],
           "cache_hit": null,
           "http_attempts": null,
-          "usage": null
+          "usage": null,
+          "api_clients": []
         },
         {
           "group_id": "270d30c0fee5b8ec5ce8309bc25a5dec6f0a874bdf86a75c9e6c29d1a30c80b1",
-          "seconds": 0.0024006240000744583,
+          "seconds": 0.0019053751602768898,
           "predicted": [
             102,
             103,
@@ -50,11 +59,12 @@
           ],
           "cache_hit": null,
           "http_attempts": null,
-          "usage": null
+          "usage": null,
+          "api_clients": []
         },
         {
           "group_id": "716b71093f6ffcb8457d664a34eaeafd6b20130cfc8a637d2324960aea030387",
-          "seconds": 0.0016956679992290447,
+          "seconds": 0.0012867089826613665,
           "predicted": [
             102,
             103,
@@ -62,11 +72,12 @@
           ],
           "cache_hit": null,
           "http_attempts": null,
-          "usage": null
+          "usage": null,
+          "api_clients": []
         },
         {
           "group_id": "8d8689783ae7b2d19ae5d3e5a199cea32bf1458a91a5936230bdc502c4051cdf",
-          "seconds": 0.0015086610001162626,
+          "seconds": 0.0011848339345306158,
           "predicted": [
             102,
             103,
@@ -76,11 +87,12 @@
           ],
           "cache_hit": null,
           "http_attempts": null,
-          "usage": null
+          "usage": null,
+          "api_clients": []
         },
         {
           "group_id": "bdcf8534a4ad2c0f2d370814f3b22e61e250e397c60d1c1dc45b54364947a03d",
-          "seconds": 0.002686064999579685,
+          "seconds": 0.0016042920760810375,
           "predicted": [
             102,
             103,
@@ -90,11 +102,12 @@
           ],
           "cache_hit": null,
           "http_attempts": null,
-          "usage": null
+          "usage": null,
+          "api_clients": []
         },
         {
           "group_id": "5524cc0b4bc58d27f2d87abc371da359477b802a890b3d21bc34fc51e0214caa",
-          "seconds": 0.0018324510001548333,
+          "seconds": 0.0012855420354753733,
           "predicted": [
             102,
             103,
@@ -104,11 +117,12 @@
           ],
           "cache_hit": null,
           "http_attempts": null,
-          "usage": null
+          "usage": null,
+          "api_clients": []
         },
         {
           "group_id": "01feb66f2e21c5fb187fedd281f87e93c750cae9f62dd731f95d32ec0e2c0807",
-          "seconds": 0.0025927659989974927,
+          "seconds": 0.0014132920186966658,
           "predicted": [
             102,
             103,
@@ -118,11 +132,12 @@
           ],
           "cache_hit": null,
           "http_attempts": null,
-          "usage": null
+          "usage": null,
+          "api_clients": []
         },
         {
           "group_id": "1f07801ecf1efcabe5f51f854601df2993b41894476fb12115c72242d382ab08",
-          "seconds": 0.002592672000901075,
+          "seconds": 0.0016803338658064604,
           "predicted": [
             102,
             104,
@@ -130,46 +145,90 @@
           ],
           "cache_hit": null,
           "http_attempts": null,
-          "usage": null
+          "usage": null,
+          "api_clients": []
         },
         {
           "group_id": "b06fa5d52b80f154594a544c282106fb90f32dccc057b670b9ad89a60e27d185",
-          "seconds": 0.0023178880001069047,
+          "seconds": 0.0013381671160459518,
           "predicted": [
             102,
             106
           ],
           "cache_hit": null,
           "http_attempts": null,
-          "usage": null
+          "usage": null,
+          "api_clients": []
         }
       ],
+      "configuration": {
+        "key": "learned_keywords",
+        "module": "learned_keywords",
+        "environment": {
+          "JEV_MODEL": "jev-1.13.0",
+          "LLM_MODEL_ID": "gemini-decision-1",
+          "QWEN_DECISION_MODEL": "decision-model-preview",
+          "STRUCTURED_LLM_MODEL": "gpt-6.1-terra",
+          "JEV_THRESHOLD": "0.5",
+          "GOOGLE_DECISION_THRESHOLD": "0.5",
+          "JEV_TFIDF_WEIGHT": "0.5",
+          "JEV_TFIDF_THRESHOLD": "0.5",
+          "LOCAL_JEV_MODEL": "jevos-v5",
+          "LOCAL_JEV_THRESHOLD": "0.5",
+          "SEMANTIC_ENCODER_DEVICE": "cpu",
+          "RUBERT_F1_DEVICE": "cpu",
+          "TFIDF_ARTIFACT_PATH": "out/classifier-methods/tfidf.json",
+          "LEARNED_KEYWORDS_ARTIFACT": "src/subcategory_extraction/learned_keywords/artifacts/learned-keywords.json",
+          "SEMANTIC_ENCODER_ARTIFACT_PATH": "out/semantic-encoder",
+          "RUBERT_F1_ARTIFACT_PATH": "src/subcategory_extraction/semantic_encoder_f1/artifacts",
+          "JEV_REFERENCE_DATASET": "out/hybrid-training.jsonl",
+          "JEV_REFERENCE_MAX_CHARS": "1800"
+        },
+        "artifact_sha256": {
+          "out/classifier-methods/tfidf.json": "2ef7ed22c74a13820b1b06d53b5a84d6c8555b082f4bcab5b6e0408164acf62b",
+          "src/subcategory_extraction/learned_keywords/artifacts/learned-keywords.json": "d06457a8c082171a096da05d18812528247c8c90e3c06157dc93e5ea6b65f3fa",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/calibration.json": "08810b988729fc370d1c03677c38430a27da8a9501d9d6edc5d9532bd0e1dee4",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/encoder/config.json": "5d75152afedf12d8b30edf67fc9fdd0eedf9578a70679373db46ba94256335a0",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/encoder/model.safetensors": "9fc639dd6813e8481b7d21577924df1973636e38e5992bba20f06700b2d0ada1",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/head.safetensors": "81f56fffeaf4a5460e36b362b3e7d3e804a1579a9f8b7ae6adeb357d3da4772b",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/metadata.json": "d523ce9fd906ede91463053c94d664c5ae04b40b1588ce2802e5be0eb2d330f9",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/tokenizer/special_tokens_map.json": "5d5b662e421ea9fac075174bb0688ee0d9431699900b90662acd44b2a350503a",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/tokenizer/tokenizer.json": "b6a9f282c732603652189b1fc2f32a2e2578b43927c5cf44a2e3585631419bb0",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/tokenizer/tokenizer_config.json": "71b22b163773e6d2a3bc53236a6dca9245f2e0422b09e2d9597dbf02825c7135",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/tokenizer/vocab.txt": "f056a69b097422652053bf87565c35543e5d81540ca4b7dddd28de4157a969e0"
+        },
+        "training_table": "manual_train",
+        "selection": "existing configurations fixed before test; no threshold search"
+      },
+      "measurement_metadata": {
+        "date": "2026-11-15T02:01:00+03:00",
+        "commit": "e64668f0ca0f35e226f7cfa09a8649a443f46a07",
+        "code_sha256": "48e1ea81665df382f49ca38826623eeaafe3281476ed6203e19e08a7ed2918d1",
+        "machine": "macOS-27.0.1-arm64-arm-64bit-Mach-O",
+        "environment": {
+          "OMP_NUM_THREADS": null,
+          "OPENBLAS_NUM_THREADS": null,
+          "MKL_NUM_THREADS": null,
+          "TOKENIZERS_PARALLELISM": null
+        }
+      },
       "timing_scope": {
         "loading_included": false,
         "first_call_included": true,
         "cache_enabled": null,
-        "quota_wait_and_retries_included_if_any": true
+        "quota_wait_and_retries_included_if_any": true,
+        "warmup": false,
+        "fresh_client_caches": true,
+        "p95_method": "numpy.percentile linear interpolation"
       },
       "response_time": {
         "calls": 10,
-        "total_seconds": 0.021257574999253848,
-        "mean_seconds": 0.0021257574999253848,
-        "median_seconds": 0.002291941500516259,
-        "p95_seconds": 0.002644080449317698,
-        "min_seconds": 0.001364784999168478,
-        "max_seconds": 0.002686064999579685
-      },
-      "execution_environment": {
-        "python": "3.13.7",
-        "platform": "Linux-7.0.0-43-generic-x86_64-with-glibc2.43",
-        "cpu": "Intel Core i9-12900H",
-        "libraries": {
-          "pydantic": "2.13.0",
-          "numpy": "2.5.4",
-          "scikit-learn": "1.9.1",
-          "pyarrow": "26.0.0",
-          "python-dotenv": "1.2.4"
-        }
+        "total_seconds": 0.017960919998586178,
+        "mean_seconds": 0.0017960919998586179,
+        "median_seconds": 0.0015087920473888516,
+        "p95_seconds": 0.0033644106471911045,
+        "min_seconds": 0.0011848339345306158,
+        "max_seconds": 0.004558166954666376
       }
     },
     "semantic_encoder_f1": {
@@ -178,195 +237,217 @@
       "rows": [
         {
           "group_id": "1755d70b12029ca196b7b0db67ab296db96a38e58bfa37db4f9eddc1e435d87e",
-          "seconds": 0.04399133310653269,
+          "seconds": 0.02213333291001618,
           "predicted": [
             102,
             103,
             104,
             105,
             106
-          ]
+          ],
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "api_clients": []
         },
         {
           "group_id": "df3453fa719bcc9c4120f73540192a23c48886d1d05117214da3af68fdc290c9",
-          "seconds": 0.05545866722241044,
+          "seconds": 0.010509916814044118,
           "predicted": [
             102,
             103,
             104,
             105,
             106
-          ]
+          ],
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "api_clients": []
         },
         {
           "group_id": "270d30c0fee5b8ec5ce8309bc25a5dec6f0a874bdf86a75c9e6c29d1a30c80b1",
-          "seconds": 0.08641633298248053,
+          "seconds": 0.028058791998773813,
           "predicted": [
             102,
             103,
             104,
             105,
             106
-          ]
+          ],
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "api_clients": []
         },
         {
           "group_id": "716b71093f6ffcb8457d664a34eaeafd6b20130cfc8a637d2324960aea030387",
-          "seconds": 0.009910333901643753,
+          "seconds": 0.004028792027384043,
           "predicted": [
             102,
             103,
             104,
             105,
             106
-          ]
+          ],
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "api_clients": []
         },
         {
           "group_id": "8d8689783ae7b2d19ae5d3e5a199cea32bf1458a91a5936230bdc502c4051cdf",
-          "seconds": 0.0031017090659588575,
+          "seconds": 0.0019160420633852482,
           "predicted": [
             102,
             103,
             104,
             105,
             106
-          ]
+          ],
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "api_clients": []
         },
         {
           "group_id": "bdcf8534a4ad2c0f2d370814f3b22e61e250e397c60d1c1dc45b54364947a03d",
-          "seconds": 0.07480362500064075,
+          "seconds": 0.02543770894408226,
           "predicted": [
             102,
             103,
             104,
             105,
             106
-          ]
+          ],
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "api_clients": []
         },
         {
           "group_id": "5524cc0b4bc58d27f2d87abc371da359477b802a890b3d21bc34fc51e0214caa",
-          "seconds": 0.012258917093276978,
+          "seconds": 0.005207624984905124,
           "predicted": [
             102,
             104,
             105,
             106
-          ]
+          ],
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "api_clients": []
         },
         {
           "group_id": "01feb66f2e21c5fb187fedd281f87e93c750cae9f62dd731f95d32ec0e2c0807",
-          "seconds": 0.02874945802614093,
+          "seconds": 0.009637124836444855,
           "predicted": [
             102,
             103,
             104,
             105,
             106
-          ]
+          ],
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "api_clients": []
         },
         {
           "group_id": "1f07801ecf1efcabe5f51f854601df2993b41894476fb12115c72242d382ab08",
-          "seconds": 0.07249920885078609,
+          "seconds": 0.026212750002741814,
           "predicted": [
             102,
             104,
             105
-          ]
+          ],
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "api_clients": []
         },
         {
           "group_id": "b06fa5d52b80f154594a544c282106fb90f32dccc057b670b9ad89a60e27d185",
-          "seconds": 0.017309749964624643,
+          "seconds": 0.0063261669129133224,
           "predicted": [
             102,
             106
-          ]
+          ],
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "api_clients": []
         }
       ],
-      "response_time": {
-        "calls": 10,
-        "total_seconds": 0.40449933521449566,
-        "mean_seconds": 0.040449933521449564,
-        "median_seconds": 0.03637039556633681,
-        "p95_seconds": 0.08119061439065262,
-        "min_seconds": 0.0031017090659588575,
-        "max_seconds": 0.08641633298248053
+      "configuration": {
+        "key": "semantic_encoder_f1",
+        "module": "semantic_encoder_f1",
+        "environment": {
+          "JEV_MODEL": "jev-1.13.0",
+          "LLM_MODEL_ID": "gemini-decision-1",
+          "QWEN_DECISION_MODEL": "decision-model-preview",
+          "STRUCTURED_LLM_MODEL": "gpt-6.1-terra",
+          "JEV_THRESHOLD": "0.5",
+          "GOOGLE_DECISION_THRESHOLD": "0.5",
+          "JEV_TFIDF_WEIGHT": "0.5",
+          "JEV_TFIDF_THRESHOLD": "0.5",
+          "LOCAL_JEV_MODEL": "jevos-v5",
+          "LOCAL_JEV_THRESHOLD": "0.5",
+          "SEMANTIC_ENCODER_DEVICE": "cpu",
+          "RUBERT_F1_DEVICE": "cpu",
+          "TFIDF_ARTIFACT_PATH": "out/classifier-methods/tfidf.json",
+          "LEARNED_KEYWORDS_ARTIFACT": "src/subcategory_extraction/learned_keywords/artifacts/learned-keywords.json",
+          "SEMANTIC_ENCODER_ARTIFACT_PATH": "out/semantic-encoder",
+          "RUBERT_F1_ARTIFACT_PATH": "src/subcategory_extraction/semantic_encoder_f1/artifacts",
+          "JEV_REFERENCE_DATASET": "out/hybrid-training.jsonl",
+          "JEV_REFERENCE_MAX_CHARS": "1800"
+        },
+        "artifact_sha256": {
+          "out/classifier-methods/tfidf.json": "2ef7ed22c74a13820b1b06d53b5a84d6c8555b082f4bcab5b6e0408164acf62b",
+          "src/subcategory_extraction/learned_keywords/artifacts/learned-keywords.json": "d06457a8c082171a096da05d18812528247c8c90e3c06157dc93e5ea6b65f3fa",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/calibration.json": "08810b988729fc370d1c03677c38430a27da8a9501d9d6edc5d9532bd0e1dee4",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/encoder/config.json": "5d75152afedf12d8b30edf67fc9fdd0eedf9578a70679373db46ba94256335a0",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/encoder/model.safetensors": "9fc639dd6813e8481b7d21577924df1973636e38e5992bba20f06700b2d0ada1",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/head.safetensors": "81f56fffeaf4a5460e36b362b3e7d3e804a1579a9f8b7ae6adeb357d3da4772b",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/metadata.json": "d523ce9fd906ede91463053c94d664c5ae04b40b1588ce2802e5be0eb2d330f9",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/tokenizer/special_tokens_map.json": "5d5b662e421ea9fac075174bb0688ee0d9431699900b90662acd44b2a350503a",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/tokenizer/tokenizer.json": "b6a9f282c732603652189b1fc2f32a2e2578b43927c5cf44a2e3585631419bb0",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/tokenizer/tokenizer_config.json": "71b22b163773e6d2a3bc53236a6dca9245f2e0422b09e2d9597dbf02825c7135",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/tokenizer/vocab.txt": "f056a69b097422652053bf87565c35543e5d81540ca4b7dddd28de4157a969e0"
+        },
+        "training_table": "manual_train",
+        "selection": "existing configurations fixed before test; no threshold search"
       },
       "measurement_metadata": {
-        "date": "2026-11-14T17:29:05+03:00",
-        "commit": "1c2a6f5c079df450f03561039321273d5f0e379b",
-        "code_sha256": "da785acab587d8e8fbe60c6553f2f9669c8a41278ee18c639c6500301287d686",
-        "working_tree": true,
-        "sample_seed": 44,
-        "sample_size": 10,
-        "status": "complete",
-        "model_provenance": {
-          "source_commit": "1c2a6f5c079df450f03561039321273d5f0e379b",
-          "synced_main_commit": "3144889",
-          "artifact": "src/subcategory_extraction/semantic_encoder_f1/artifacts",
-          "artifact_files": {
-            "metadata.json": {
-              "bytes": 2214,
-              "sha256": "d523ce9fd906ede91463053c94d664c5ae04b40b1588ce2802e5be0eb2d330f9"
-            },
-            "calibration.json": {
-              "bytes": 12237,
-              "sha256": "08810b988729fc370d1c03677c38430a27da8a9501d9d6edc5d9532bd0e1dee4"
-            },
-            "head.safetensors": {
-              "bytes": 7672,
-              "sha256": "81f56fffeaf4a5460e36b362b3e7d3e804a1579a9f8b7ae6adeb357d3da4772b"
-            },
-            "encoder/config.json": {
-              "bytes": 630,
-              "sha256": "5d75152afedf12d8b30edf67fc9fdd0eedf9578a70679373db46ba94256335a0"
-            },
-            "encoder/model.safetensors": {
-              "bytes": 116781184,
-              "sha256": "9fc639dd6813e8481b7d21577924df1973636e38e5992bba20f06700b2d0ada1"
-            },
-            "tokenizer/tokenizer_config.json": {
-              "bytes": 1458,
-              "sha256": "71b22b163773e6d2a3bc53236a6dca9245f2e0422b09e2d9597dbf02825c7135"
-            },
-            "tokenizer/special_tokens_map.json": {
-              "bytes": 695,
-              "sha256": "5d5b662e421ea9fac075174bb0688ee0d9431699900b90662acd44b2a350503a"
-            },
-            "tokenizer/tokenizer.json": {
-              "bytes": 2413438,
-              "sha256": "b6a9f282c732603652189b1fc2f32a2e2578b43927c5cf44a2e3585631419bb0"
-            },
-            "tokenizer/vocab.txt": {
-              "bytes": 1080667,
-              "sha256": "f056a69b097422652053bf87565c35543e5d81540ca4b7dddd28de4157a969e0"
-            }
-          },
-          "device": "cpu",
-          "torch_version": "2.15.0",
-          "transformers_version": "4.57.6",
-          "torch_num_threads": 1,
-          "platform": "macOS-27.0.1-arm64-arm-64bit-Mach-O",
-          "machine": "arm64",
-          "environment": {
-            "OMP_NUM_THREADS": "1",
-            "MKL_NUM_THREADS": "1",
-            "TOKENIZERS_PARALLELISM": "false",
-            "RUBERT_F1_DEVICE": "cpu"
-          },
-          "selection": "published weights and thresholds unchanged; no training or test tuning",
-          "training_source_dataset": "docs/improved_dataset/train.jsonl",
-          "training_source_sha256": "d365141906cd7e2a1d66792aa2e37661d8bcdcd0a4bbaf3781649a9108238b76"
-        },
-        "timing_scope": {
-          "model_loading": false,
-          "data_loading": false,
-          "warmup": false,
-          "first_call_included": true,
-          "cache": "no prediction cache",
-          "quota_waits": false,
-          "retries": false,
-          "p95_method": "numpy.percentile linear interpolation"
-        },
-        "training_dataset_sha256": "b7118d68086624fbeab43839f22a635d4e325e4ee339f22d4aa0ad3c2e986615"
+        "date": "2026-11-15T02:01:04+03:00",
+        "commit": "e64668f0ca0f35e226f7cfa09a8649a443f46a07",
+        "code_sha256": "48e1ea81665df382f49ca38826623eeaafe3281476ed6203e19e08a7ed2918d1",
+        "machine": "macOS-27.0.1-arm64-arm-64bit-Mach-O",
+        "environment": {
+          "OMP_NUM_THREADS": null,
+          "OPENBLAS_NUM_THREADS": null,
+          "MKL_NUM_THREADS": null,
+          "TOKENIZERS_PARALLELISM": null
+        }
+      },
+      "timing_scope": {
+        "loading_included": false,
+        "first_call_included": true,
+        "cache_enabled": null,
+        "quota_wait_and_retries_included_if_any": true,
+        "warmup": false,
+        "fresh_client_caches": true,
+        "p95_method": "numpy.percentile linear interpolation"
+      },
+      "response_time": {
+        "calls": 10,
+        "total_seconds": 0.13946825149469078,
+        "mean_seconds": 0.013946825149469077,
+        "median_seconds": 0.010073520825244486,
+        "p95_seconds": 0.02722807310055941,
+        "min_seconds": 0.0019160420633852482,
+        "max_seconds": 0.028058791998773813
       }
     },
     "qwen_decision": {
@@ -793,6 +874,2115 @@
         "state_cache": 0,
         "batch_tokens": 0,
         "dynamic_quantization": 128
+      }
+    },
+    "regex": {
+      "status": "complete",
+      "model": "regex",
+      "rows": [
+        {
+          "group_id": "1755d70b12029ca196b7b0db67ab296db96a38e58bfa37db4f9eddc1e435d87e",
+          "seconds": 0.005576791940256953,
+          "predicted": [
+            102,
+            103,
+            104,
+            105,
+            106
+          ],
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "api_clients": []
+        },
+        {
+          "group_id": "df3453fa719bcc9c4120f73540192a23c48886d1d05117214da3af68fdc290c9",
+          "seconds": 0.006727582775056362,
+          "predicted": [
+            102,
+            103,
+            104,
+            105,
+            106
+          ],
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "api_clients": []
+        },
+        {
+          "group_id": "270d30c0fee5b8ec5ce8309bc25a5dec6f0a874bdf86a75c9e6c29d1a30c80b1",
+          "seconds": 0.01128262490965426,
+          "predicted": [
+            102,
+            103,
+            104,
+            105,
+            106
+          ],
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "api_clients": []
+        },
+        {
+          "group_id": "716b71093f6ffcb8457d664a34eaeafd6b20130cfc8a637d2324960aea030387",
+          "seconds": 0.0016717500984668732,
+          "predicted": [
+            102,
+            103,
+            104,
+            105,
+            106
+          ],
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "api_clients": []
+        },
+        {
+          "group_id": "8d8689783ae7b2d19ae5d3e5a199cea32bf1458a91a5936230bdc502c4051cdf",
+          "seconds": 0.0008040000684559345,
+          "predicted": [
+            102,
+            103,
+            104,
+            105,
+            106
+          ],
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "api_clients": []
+        },
+        {
+          "group_id": "bdcf8534a4ad2c0f2d370814f3b22e61e250e397c60d1c1dc45b54364947a03d",
+          "seconds": 0.0071219580713659525,
+          "predicted": [
+            102,
+            103,
+            104,
+            105,
+            106
+          ],
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "api_clients": []
+        },
+        {
+          "group_id": "5524cc0b4bc58d27f2d87abc371da359477b802a890b3d21bc34fc51e0214caa",
+          "seconds": 0.0023152080830186605,
+          "predicted": [
+            102,
+            103,
+            104,
+            105,
+            106
+          ],
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "api_clients": []
+        },
+        {
+          "group_id": "01feb66f2e21c5fb187fedd281f87e93c750cae9f62dd731f95d32ec0e2c0807",
+          "seconds": 0.006667040986940265,
+          "predicted": [
+            102,
+            103,
+            104,
+            105,
+            106
+          ],
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "api_clients": []
+        },
+        {
+          "group_id": "1f07801ecf1efcabe5f51f854601df2993b41894476fb12115c72242d382ab08",
+          "seconds": 0.00640729209408164,
+          "predicted": [
+            102,
+            104,
+            105
+          ],
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "api_clients": []
+        },
+        {
+          "group_id": "b06fa5d52b80f154594a544c282106fb90f32dccc057b670b9ad89a60e27d185",
+          "seconds": 0.003463040804490447,
+          "predicted": [
+            102,
+            106
+          ],
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "api_clients": []
+        }
+      ],
+      "configuration": {
+        "key": "regex",
+        "module": "regex",
+        "environment": {
+          "JEV_MODEL": "jev-1.13.0",
+          "LLM_MODEL_ID": "gemini-decision-1",
+          "QWEN_DECISION_MODEL": "decision-model-preview",
+          "STRUCTURED_LLM_MODEL": "gpt-6.1-terra",
+          "JEV_THRESHOLD": "0.5",
+          "GOOGLE_DECISION_THRESHOLD": "0.5",
+          "JEV_TFIDF_WEIGHT": "0.5",
+          "JEV_TFIDF_THRESHOLD": "0.5",
+          "LOCAL_JEV_MODEL": "jevos-v5",
+          "LOCAL_JEV_THRESHOLD": "0.5",
+          "SEMANTIC_ENCODER_DEVICE": "cpu",
+          "RUBERT_F1_DEVICE": "cpu",
+          "TFIDF_ARTIFACT_PATH": "out/classifier-methods/tfidf.json",
+          "LEARNED_KEYWORDS_ARTIFACT": "src/subcategory_extraction/learned_keywords/artifacts/learned-keywords.json",
+          "SEMANTIC_ENCODER_ARTIFACT_PATH": "out/semantic-encoder",
+          "RUBERT_F1_ARTIFACT_PATH": "src/subcategory_extraction/semantic_encoder_f1/artifacts",
+          "JEV_REFERENCE_DATASET": "out/hybrid-training.jsonl",
+          "JEV_REFERENCE_MAX_CHARS": "1800"
+        },
+        "artifact_sha256": {
+          "out/classifier-methods/tfidf.json": "2ef7ed22c74a13820b1b06d53b5a84d6c8555b082f4bcab5b6e0408164acf62b",
+          "src/subcategory_extraction/learned_keywords/artifacts/learned-keywords.json": "d06457a8c082171a096da05d18812528247c8c90e3c06157dc93e5ea6b65f3fa",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/calibration.json": "08810b988729fc370d1c03677c38430a27da8a9501d9d6edc5d9532bd0e1dee4",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/encoder/config.json": "5d75152afedf12d8b30edf67fc9fdd0eedf9578a70679373db46ba94256335a0",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/encoder/model.safetensors": "9fc639dd6813e8481b7d21577924df1973636e38e5992bba20f06700b2d0ada1",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/head.safetensors": "81f56fffeaf4a5460e36b362b3e7d3e804a1579a9f8b7ae6adeb357d3da4772b",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/metadata.json": "d523ce9fd906ede91463053c94d664c5ae04b40b1588ce2802e5be0eb2d330f9",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/tokenizer/special_tokens_map.json": "5d5b662e421ea9fac075174bb0688ee0d9431699900b90662acd44b2a350503a",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/tokenizer/tokenizer.json": "b6a9f282c732603652189b1fc2f32a2e2578b43927c5cf44a2e3585631419bb0",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/tokenizer/tokenizer_config.json": "71b22b163773e6d2a3bc53236a6dca9245f2e0422b09e2d9597dbf02825c7135",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/tokenizer/vocab.txt": "f056a69b097422652053bf87565c35543e5d81540ca4b7dddd28de4157a969e0"
+        },
+        "training_table": null,
+        "selection": "existing configurations fixed before test; no threshold search"
+      },
+      "measurement_metadata": {
+        "date": "2026-11-15T02:00:46+03:00",
+        "commit": "e64668f0ca0f35e226f7cfa09a8649a443f46a07",
+        "code_sha256": "48e1ea81665df382f49ca38826623eeaafe3281476ed6203e19e08a7ed2918d1",
+        "machine": "macOS-27.0.1-arm64-arm-64bit-Mach-O",
+        "environment": {
+          "OMP_NUM_THREADS": null,
+          "OPENBLAS_NUM_THREADS": null,
+          "MKL_NUM_THREADS": null,
+          "TOKENIZERS_PARALLELISM": null
+        }
+      },
+      "timing_scope": {
+        "loading_included": false,
+        "first_call_included": true,
+        "cache_enabled": null,
+        "quota_wait_and_retries_included_if_any": true,
+        "warmup": false,
+        "fresh_client_caches": true,
+        "p95_method": "numpy.percentile linear interpolation"
+      },
+      "response_time": {
+        "calls": 10,
+        "total_seconds": 0.05203728983178735,
+        "mean_seconds": 0.005203728983178735,
+        "median_seconds": 0.005992042017169297,
+        "p95_seconds": 0.009410324832424518,
+        "min_seconds": 0.0008040000684559345,
+        "max_seconds": 0.01128262490965426
+      }
+    },
+    "tfidf": {
+      "status": "complete",
+      "model": "tfidf",
+      "rows": [
+        {
+          "group_id": "1755d70b12029ca196b7b0db67ab296db96a38e58bfa37db4f9eddc1e435d87e",
+          "seconds": 0.005172624951228499,
+          "predicted": [
+            102,
+            103,
+            104,
+            105,
+            106
+          ],
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "api_clients": []
+        },
+        {
+          "group_id": "df3453fa719bcc9c4120f73540192a23c48886d1d05117214da3af68fdc290c9",
+          "seconds": 0.0009694169275462627,
+          "predicted": [
+            102,
+            103,
+            104,
+            105,
+            106
+          ],
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "api_clients": []
+        },
+        {
+          "group_id": "270d30c0fee5b8ec5ce8309bc25a5dec6f0a874bdf86a75c9e6c29d1a30c80b1",
+          "seconds": 0.0012259171344339848,
+          "predicted": [
+            102,
+            103,
+            104,
+            105,
+            106
+          ],
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "api_clients": []
+        },
+        {
+          "group_id": "716b71093f6ffcb8457d664a34eaeafd6b20130cfc8a637d2324960aea030387",
+          "seconds": 0.0006031251978129148,
+          "predicted": [
+            102,
+            103,
+            104,
+            105,
+            106
+          ],
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "api_clients": []
+        },
+        {
+          "group_id": "8d8689783ae7b2d19ae5d3e5a199cea32bf1458a91a5936230bdc502c4051cdf",
+          "seconds": 0.0004611669573932886,
+          "predicted": [
+            103,
+            104,
+            105,
+            106
+          ],
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "api_clients": []
+        },
+        {
+          "group_id": "bdcf8534a4ad2c0f2d370814f3b22e61e250e397c60d1c1dc45b54364947a03d",
+          "seconds": 0.0008692089468240738,
+          "predicted": [
+            102,
+            103,
+            104,
+            105,
+            106
+          ],
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "api_clients": []
+        },
+        {
+          "group_id": "5524cc0b4bc58d27f2d87abc371da359477b802a890b3d21bc34fc51e0214caa",
+          "seconds": 0.0005763338413089514,
+          "predicted": [
+            102,
+            104,
+            105,
+            106
+          ],
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "api_clients": []
+        },
+        {
+          "group_id": "01feb66f2e21c5fb187fedd281f87e93c750cae9f62dd731f95d32ec0e2c0807",
+          "seconds": 0.0006475839763879776,
+          "predicted": [
+            102,
+            103,
+            104,
+            105,
+            106
+          ],
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "api_clients": []
+        },
+        {
+          "group_id": "1f07801ecf1efcabe5f51f854601df2993b41894476fb12115c72242d382ab08",
+          "seconds": 0.0008357081096619368,
+          "predicted": [
+            104,
+            105
+          ],
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "api_clients": []
+        },
+        {
+          "group_id": "b06fa5d52b80f154594a544c282106fb90f32dccc057b670b9ad89a60e27d185",
+          "seconds": 0.0006077908910810947,
+          "predicted": [
+            102,
+            106
+          ],
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "api_clients": []
+        }
+      ],
+      "configuration": {
+        "key": "tfidf",
+        "module": "tfidf",
+        "environment": {
+          "JEV_MODEL": "jev-1.13.0",
+          "LLM_MODEL_ID": "gemini-decision-1",
+          "QWEN_DECISION_MODEL": "decision-model-preview",
+          "STRUCTURED_LLM_MODEL": "gpt-6.1-terra",
+          "JEV_THRESHOLD": "0.5",
+          "GOOGLE_DECISION_THRESHOLD": "0.5",
+          "JEV_TFIDF_WEIGHT": "0.5",
+          "JEV_TFIDF_THRESHOLD": "0.5",
+          "LOCAL_JEV_MODEL": "jevos-v5",
+          "LOCAL_JEV_THRESHOLD": "0.5",
+          "SEMANTIC_ENCODER_DEVICE": "cpu",
+          "RUBERT_F1_DEVICE": "cpu",
+          "TFIDF_ARTIFACT_PATH": "out/classifier-methods/tfidf.json",
+          "LEARNED_KEYWORDS_ARTIFACT": "src/subcategory_extraction/learned_keywords/artifacts/learned-keywords.json",
+          "SEMANTIC_ENCODER_ARTIFACT_PATH": "out/semantic-encoder",
+          "RUBERT_F1_ARTIFACT_PATH": "src/subcategory_extraction/semantic_encoder_f1/artifacts",
+          "JEV_REFERENCE_DATASET": "out/hybrid-training.jsonl",
+          "JEV_REFERENCE_MAX_CHARS": "1800"
+        },
+        "artifact_sha256": {
+          "out/classifier-methods/tfidf.json": "2ef7ed22c74a13820b1b06d53b5a84d6c8555b082f4bcab5b6e0408164acf62b",
+          "src/subcategory_extraction/learned_keywords/artifacts/learned-keywords.json": "d06457a8c082171a096da05d18812528247c8c90e3c06157dc93e5ea6b65f3fa",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/calibration.json": "08810b988729fc370d1c03677c38430a27da8a9501d9d6edc5d9532bd0e1dee4",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/encoder/config.json": "5d75152afedf12d8b30edf67fc9fdd0eedf9578a70679373db46ba94256335a0",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/encoder/model.safetensors": "9fc639dd6813e8481b7d21577924df1973636e38e5992bba20f06700b2d0ada1",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/head.safetensors": "81f56fffeaf4a5460e36b362b3e7d3e804a1579a9f8b7ae6adeb357d3da4772b",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/metadata.json": "d523ce9fd906ede91463053c94d664c5ae04b40b1588ce2802e5be0eb2d330f9",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/tokenizer/special_tokens_map.json": "5d5b662e421ea9fac075174bb0688ee0d9431699900b90662acd44b2a350503a",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/tokenizer/tokenizer.json": "b6a9f282c732603652189b1fc2f32a2e2578b43927c5cf44a2e3585631419bb0",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/tokenizer/tokenizer_config.json": "71b22b163773e6d2a3bc53236a6dca9245f2e0422b09e2d9597dbf02825c7135",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/tokenizer/vocab.txt": "f056a69b097422652053bf87565c35543e5d81540ca4b7dddd28de4157a969e0"
+        },
+        "training_table": "case_train",
+        "selection": "existing configurations fixed before test; no threshold search"
+      },
+      "measurement_metadata": {
+        "date": "2026-11-15T02:00:50+03:00",
+        "commit": "e64668f0ca0f35e226f7cfa09a8649a443f46a07",
+        "code_sha256": "48e1ea81665df382f49ca38826623eeaafe3281476ed6203e19e08a7ed2918d1",
+        "machine": "macOS-27.0.1-arm64-arm-64bit-Mach-O",
+        "environment": {
+          "OMP_NUM_THREADS": null,
+          "OPENBLAS_NUM_THREADS": null,
+          "MKL_NUM_THREADS": null,
+          "TOKENIZERS_PARALLELISM": null
+        }
+      },
+      "timing_scope": {
+        "loading_included": false,
+        "first_call_included": true,
+        "cache_enabled": null,
+        "quota_wait_and_retries_included_if_any": true,
+        "warmup": false,
+        "fresh_client_caches": true,
+        "p95_method": "numpy.percentile linear interpolation"
+      },
+      "response_time": {
+        "calls": 10,
+        "total_seconds": 0.011968876933678985,
+        "mean_seconds": 0.0011968876933678985,
+        "median_seconds": 0.0007416460430249572,
+        "p95_seconds": 0.0033966064336709637,
+        "min_seconds": 0.0004611669573932886,
+        "max_seconds": 0.005172624951228499
+      }
+    },
+    "tfidf::legacy": {
+      "status": "complete",
+      "model": "tfidf",
+      "rows": [
+        {
+          "group_id": "1755d70b12029ca196b7b0db67ab296db96a38e58bfa37db4f9eddc1e435d87e",
+          "seconds": 0.0019968750420957804,
+          "predicted": [
+            102,
+            103,
+            104,
+            105,
+            106
+          ],
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "api_clients": []
+        },
+        {
+          "group_id": "df3453fa719bcc9c4120f73540192a23c48886d1d05117214da3af68fdc290c9",
+          "seconds": 0.0009097501169890165,
+          "predicted": [
+            102,
+            103,
+            104,
+            105,
+            106
+          ],
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "api_clients": []
+        },
+        {
+          "group_id": "270d30c0fee5b8ec5ce8309bc25a5dec6f0a874bdf86a75c9e6c29d1a30c80b1",
+          "seconds": 0.0011262919288128614,
+          "predicted": [
+            102,
+            103,
+            104,
+            105,
+            106
+          ],
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "api_clients": []
+        },
+        {
+          "group_id": "716b71093f6ffcb8457d664a34eaeafd6b20130cfc8a637d2324960aea030387",
+          "seconds": 0.0005276249721646309,
+          "predicted": [],
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "api_clients": []
+        },
+        {
+          "group_id": "8d8689783ae7b2d19ae5d3e5a199cea32bf1458a91a5936230bdc502c4051cdf",
+          "seconds": 0.0004492499865591526,
+          "predicted": [
+            102,
+            103,
+            104,
+            105,
+            106
+          ],
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "api_clients": []
+        },
+        {
+          "group_id": "bdcf8534a4ad2c0f2d370814f3b22e61e250e397c60d1c1dc45b54364947a03d",
+          "seconds": 0.0008140001446008682,
+          "predicted": [
+            102,
+            103,
+            104,
+            105,
+            106
+          ],
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "api_clients": []
+        },
+        {
+          "group_id": "5524cc0b4bc58d27f2d87abc371da359477b802a890b3d21bc34fc51e0214caa",
+          "seconds": 0.0005354171153157949,
+          "predicted": [
+            104,
+            105
+          ],
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "api_clients": []
+        },
+        {
+          "group_id": "01feb66f2e21c5fb187fedd281f87e93c750cae9f62dd731f95d32ec0e2c0807",
+          "seconds": 0.0006560410838574171,
+          "predicted": [
+            102,
+            103,
+            104,
+            105,
+            106
+          ],
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "api_clients": []
+        },
+        {
+          "group_id": "1f07801ecf1efcabe5f51f854601df2993b41894476fb12115c72242d382ab08",
+          "seconds": 0.0007718750275671482,
+          "predicted": [
+            104,
+            105
+          ],
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "api_clients": []
+        },
+        {
+          "group_id": "b06fa5d52b80f154594a544c282106fb90f32dccc057b670b9ad89a60e27d185",
+          "seconds": 0.0005837089847773314,
+          "predicted": [
+            102,
+            106
+          ],
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "api_clients": []
+        }
+      ],
+      "configuration": {
+        "key": "tfidf::legacy",
+        "module": "tfidf",
+        "environment": {
+          "JEV_MODEL": "jev-1.13.0",
+          "LLM_MODEL_ID": "gemini-decision-1",
+          "QWEN_DECISION_MODEL": "decision-model-preview",
+          "STRUCTURED_LLM_MODEL": "gpt-6.1-terra",
+          "JEV_THRESHOLD": "0.5",
+          "GOOGLE_DECISION_THRESHOLD": "0.5",
+          "JEV_TFIDF_WEIGHT": "0.5",
+          "JEV_TFIDF_THRESHOLD": "0.5",
+          "LOCAL_JEV_MODEL": "jevos-v5",
+          "LOCAL_JEV_THRESHOLD": "0.5",
+          "SEMANTIC_ENCODER_DEVICE": "cpu",
+          "RUBERT_F1_DEVICE": "cpu",
+          "TFIDF_ARTIFACT_PATH": "out/tfidf.json",
+          "LEARNED_KEYWORDS_ARTIFACT": "src/subcategory_extraction/learned_keywords/artifacts/learned-keywords.json",
+          "SEMANTIC_ENCODER_ARTIFACT_PATH": "out/semantic-encoder",
+          "RUBERT_F1_ARTIFACT_PATH": "src/subcategory_extraction/semantic_encoder_f1/artifacts",
+          "JEV_REFERENCE_DATASET": "out/hybrid-training.jsonl",
+          "JEV_REFERENCE_MAX_CHARS": "1800"
+        },
+        "artifact_sha256": {
+          "out/tfidf.json": "c9e78f3394eac378538b147e2342fe861266db510f363e174d2b921073865e9c",
+          "src/subcategory_extraction/learned_keywords/artifacts/learned-keywords.json": "d06457a8c082171a096da05d18812528247c8c90e3c06157dc93e5ea6b65f3fa",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/calibration.json": "08810b988729fc370d1c03677c38430a27da8a9501d9d6edc5d9532bd0e1dee4",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/encoder/config.json": "5d75152afedf12d8b30edf67fc9fdd0eedf9578a70679373db46ba94256335a0",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/encoder/model.safetensors": "9fc639dd6813e8481b7d21577924df1973636e38e5992bba20f06700b2d0ada1",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/head.safetensors": "81f56fffeaf4a5460e36b362b3e7d3e804a1579a9f8b7ae6adeb357d3da4772b",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/metadata.json": "d523ce9fd906ede91463053c94d664c5ae04b40b1588ce2802e5be0eb2d330f9",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/tokenizer/special_tokens_map.json": "5d5b662e421ea9fac075174bb0688ee0d9431699900b90662acd44b2a350503a",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/tokenizer/tokenizer.json": "b6a9f282c732603652189b1fc2f32a2e2578b43927c5cf44a2e3585631419bb0",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/tokenizer/tokenizer_config.json": "71b22b163773e6d2a3bc53236a6dca9245f2e0422b09e2d9597dbf02825c7135",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/tokenizer/vocab.txt": "f056a69b097422652053bf87565c35543e5d81540ca4b7dddd28de4157a969e0"
+        },
+        "training_table": null,
+        "selection": "existing configurations fixed before test; no threshold search"
+      },
+      "measurement_metadata": {
+        "date": "2026-11-15T02:00:55+03:00",
+        "commit": "e64668f0ca0f35e226f7cfa09a8649a443f46a07",
+        "code_sha256": "48e1ea81665df382f49ca38826623eeaafe3281476ed6203e19e08a7ed2918d1",
+        "machine": "macOS-27.0.1-arm64-arm-64bit-Mach-O",
+        "environment": {
+          "OMP_NUM_THREADS": null,
+          "OPENBLAS_NUM_THREADS": null,
+          "MKL_NUM_THREADS": null,
+          "TOKENIZERS_PARALLELISM": null
+        }
+      },
+      "timing_scope": {
+        "loading_included": false,
+        "first_call_included": true,
+        "cache_enabled": null,
+        "quota_wait_and_retries_included_if_any": true,
+        "warmup": false,
+        "fresh_client_caches": true,
+        "p95_method": "numpy.percentile linear interpolation"
+      },
+      "response_time": {
+        "calls": 10,
+        "total_seconds": 0.008370834402740002,
+        "mean_seconds": 0.0008370834402740002,
+        "median_seconds": 0.0007139580557122827,
+        "p95_seconds": 0.001605112641118466,
+        "min_seconds": 0.0004492499865591526,
+        "max_seconds": 0.0019968750420957804
+      }
+    },
+    "semantic_encoder_calibrated": {
+      "status": "complete",
+      "model": "semantic_encoder_calibrated",
+      "rows": [
+        {
+          "group_id": "1755d70b12029ca196b7b0db67ab296db96a38e58bfa37db4f9eddc1e435d87e",
+          "seconds": 0.008284667041152716,
+          "predicted": [
+            102,
+            103,
+            104,
+            105,
+            106
+          ],
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "api_clients": []
+        },
+        {
+          "group_id": "df3453fa719bcc9c4120f73540192a23c48886d1d05117214da3af68fdc290c9",
+          "seconds": 0.010413957992568612,
+          "predicted": [
+            102,
+            103,
+            104,
+            105,
+            106
+          ],
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "api_clients": []
+        },
+        {
+          "group_id": "270d30c0fee5b8ec5ce8309bc25a5dec6f0a874bdf86a75c9e6c29d1a30c80b1",
+          "seconds": 0.02410016697831452,
+          "predicted": [
+            102,
+            103,
+            104,
+            105,
+            106
+          ],
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "api_clients": []
+        },
+        {
+          "group_id": "716b71093f6ffcb8457d664a34eaeafd6b20130cfc8a637d2324960aea030387",
+          "seconds": 0.0040082919877022505,
+          "predicted": [
+            102,
+            103,
+            104,
+            105,
+            106
+          ],
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "api_clients": []
+        },
+        {
+          "group_id": "8d8689783ae7b2d19ae5d3e5a199cea32bf1458a91a5936230bdc502c4051cdf",
+          "seconds": 0.002094374969601631,
+          "predicted": [
+            102,
+            103,
+            104,
+            105,
+            106
+          ],
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "api_clients": []
+        },
+        {
+          "group_id": "bdcf8534a4ad2c0f2d370814f3b22e61e250e397c60d1c1dc45b54364947a03d",
+          "seconds": 0.022465332876890898,
+          "predicted": [
+            102,
+            103,
+            104,
+            105,
+            106
+          ],
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "api_clients": []
+        },
+        {
+          "group_id": "5524cc0b4bc58d27f2d87abc371da359477b802a890b3d21bc34fc51e0214caa",
+          "seconds": 0.004629457835108042,
+          "predicted": [
+            102,
+            103,
+            104,
+            105,
+            106
+          ],
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "api_clients": []
+        },
+        {
+          "group_id": "01feb66f2e21c5fb187fedd281f87e93c750cae9f62dd731f95d32ec0e2c0807",
+          "seconds": 0.009379707975313067,
+          "predicted": [
+            102,
+            103,
+            104,
+            105,
+            106
+          ],
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "api_clients": []
+        },
+        {
+          "group_id": "1f07801ecf1efcabe5f51f854601df2993b41894476fb12115c72242d382ab08",
+          "seconds": 0.022187249967828393,
+          "predicted": [
+            102,
+            104,
+            105
+          ],
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "api_clients": []
+        },
+        {
+          "group_id": "b06fa5d52b80f154594a544c282106fb90f32dccc057b670b9ad89a60e27d185",
+          "seconds": 0.005351792089641094,
+          "predicted": [
+            102,
+            106
+          ],
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "api_clients": []
+        }
+      ],
+      "configuration": {
+        "key": "semantic_encoder_calibrated",
+        "module": "semantic_encoder_calibrated",
+        "environment": {
+          "JEV_MODEL": "jev-1.13.0",
+          "LLM_MODEL_ID": "gemini-decision-1",
+          "QWEN_DECISION_MODEL": "decision-model-preview",
+          "STRUCTURED_LLM_MODEL": "gpt-6.1-terra",
+          "JEV_THRESHOLD": "0.5",
+          "GOOGLE_DECISION_THRESHOLD": "0.5",
+          "JEV_TFIDF_WEIGHT": "0.5",
+          "JEV_TFIDF_THRESHOLD": "0.5",
+          "LOCAL_JEV_MODEL": "jevos-v5",
+          "LOCAL_JEV_THRESHOLD": "0.5",
+          "SEMANTIC_ENCODER_DEVICE": "cpu",
+          "RUBERT_F1_DEVICE": "cpu",
+          "TFIDF_ARTIFACT_PATH": "out/classifier-methods/tfidf.json",
+          "LEARNED_KEYWORDS_ARTIFACT": "src/subcategory_extraction/learned_keywords/artifacts/learned-keywords.json",
+          "SEMANTIC_ENCODER_ARTIFACT_PATH": "out/rubert-thresholds/encoder",
+          "RUBERT_F1_ARTIFACT_PATH": "src/subcategory_extraction/semantic_encoder_f1/artifacts",
+          "JEV_REFERENCE_DATASET": "out/hybrid-training.jsonl",
+          "JEV_REFERENCE_MAX_CHARS": "1800"
+        },
+        "artifact_sha256": {
+          "out/classifier-methods/tfidf.json": "2ef7ed22c74a13820b1b06d53b5a84d6c8555b082f4bcab5b6e0408164acf62b",
+          "src/subcategory_extraction/learned_keywords/artifacts/learned-keywords.json": "d06457a8c082171a096da05d18812528247c8c90e3c06157dc93e5ea6b65f3fa",
+          "out/rubert-thresholds/encoder/calibration.json": "56aff78fd832d8b6a5f44027b1fe5ec45d6ffa5dfe8785896294f7b14116e90c",
+          "out/rubert-thresholds/encoder/encoder/config.json": "5d75152afedf12d8b30edf67fc9fdd0eedf9578a70679373db46ba94256335a0",
+          "out/rubert-thresholds/encoder/encoder/model.safetensors": "e037edf6070a37f8d4697bf3836f67d5291ba0d252971fff6f3ee280de521a9c",
+          "out/rubert-thresholds/encoder/head.safetensors": "2f96d8b53ffa5c45c62a0e12f56d82314732fdcf740356fac06cfbf87c9ecc13",
+          "out/rubert-thresholds/encoder/metadata.json": "37d88a2296784de8136e7851def9e3943ca12390e8f73154c712c3f912ed8afc",
+          "out/rubert-thresholds/encoder/tokenizer/special_tokens_map.json": "5d5b662e421ea9fac075174bb0688ee0d9431699900b90662acd44b2a350503a",
+          "out/rubert-thresholds/encoder/tokenizer/tokenizer.json": "b6a9f282c732603652189b1fc2f32a2e2578b43927c5cf44a2e3585631419bb0",
+          "out/rubert-thresholds/encoder/tokenizer/tokenizer_config.json": "71b22b163773e6d2a3bc53236a6dca9245f2e0422b09e2d9597dbf02825c7135",
+          "out/rubert-thresholds/encoder/tokenizer/vocab.txt": "f056a69b097422652053bf87565c35543e5d81540ca4b7dddd28de4157a969e0",
+          "out/rubert-thresholds/encoder/train-report.json": "72205214773b63f220668388376310293c8616220df9c3f8afdca842d98653f1",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/calibration.json": "08810b988729fc370d1c03677c38430a27da8a9501d9d6edc5d9532bd0e1dee4",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/encoder/config.json": "5d75152afedf12d8b30edf67fc9fdd0eedf9578a70679373db46ba94256335a0",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/encoder/model.safetensors": "9fc639dd6813e8481b7d21577924df1973636e38e5992bba20f06700b2d0ada1",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/head.safetensors": "81f56fffeaf4a5460e36b362b3e7d3e804a1579a9f8b7ae6adeb357d3da4772b",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/metadata.json": "d523ce9fd906ede91463053c94d664c5ae04b40b1588ce2802e5be0eb2d330f9",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/tokenizer/special_tokens_map.json": "5d5b662e421ea9fac075174bb0688ee0d9431699900b90662acd44b2a350503a",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/tokenizer/tokenizer.json": "b6a9f282c732603652189b1fc2f32a2e2578b43927c5cf44a2e3585631419bb0",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/tokenizer/tokenizer_config.json": "71b22b163773e6d2a3bc53236a6dca9245f2e0422b09e2d9597dbf02825c7135",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/tokenizer/vocab.txt": "f056a69b097422652053bf87565c35543e5d81540ca4b7dddd28de4157a969e0"
+        },
+        "training_table": "manual_train",
+        "selection": "existing configurations fixed before test; no threshold search"
+      },
+      "measurement_metadata": {
+        "date": "2026-11-15T02:01:21+03:00",
+        "commit": "e64668f0ca0f35e226f7cfa09a8649a443f46a07",
+        "code_sha256": "48e1ea81665df382f49ca38826623eeaafe3281476ed6203e19e08a7ed2918d1",
+        "machine": "macOS-27.0.1-arm64-arm-64bit-Mach-O",
+        "environment": {
+          "OMP_NUM_THREADS": null,
+          "OPENBLAS_NUM_THREADS": null,
+          "MKL_NUM_THREADS": null,
+          "TOKENIZERS_PARALLELISM": null
+        }
+      },
+      "timing_scope": {
+        "loading_included": false,
+        "first_call_included": true,
+        "cache_enabled": null,
+        "quota_wait_and_retries_included_if_any": true,
+        "warmup": false,
+        "fresh_client_caches": true,
+        "p95_method": "numpy.percentile linear interpolation"
+      },
+      "response_time": {
+        "calls": 10,
+        "total_seconds": 0.11291499971412122,
+        "mean_seconds": 0.011291499971412123,
+        "median_seconds": 0.008832187508232892,
+        "p95_seconds": 0.023364491632673887,
+        "min_seconds": 0.002094374969601631,
+        "max_seconds": 0.02410016697831452
+      }
+    },
+    "semantic_encoder::threshold-encoder": {
+      "status": "complete",
+      "model": "semantic_encoder",
+      "rows": [
+        {
+          "group_id": "1755d70b12029ca196b7b0db67ab296db96a38e58bfa37db4f9eddc1e435d87e",
+          "seconds": 0.008972000097855926,
+          "predicted": [
+            102,
+            103,
+            104,
+            105,
+            106
+          ],
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "api_clients": []
+        },
+        {
+          "group_id": "df3453fa719bcc9c4120f73540192a23c48886d1d05117214da3af68fdc290c9",
+          "seconds": 0.011741917114704847,
+          "predicted": [
+            102,
+            103,
+            104,
+            105,
+            106
+          ],
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "api_clients": []
+        },
+        {
+          "group_id": "270d30c0fee5b8ec5ce8309bc25a5dec6f0a874bdf86a75c9e6c29d1a30c80b1",
+          "seconds": 0.024698791094124317,
+          "predicted": [
+            102,
+            103,
+            104,
+            105,
+            106
+          ],
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "api_clients": []
+        },
+        {
+          "group_id": "716b71093f6ffcb8457d664a34eaeafd6b20130cfc8a637d2324960aea030387",
+          "seconds": 0.004066291963681579,
+          "predicted": [
+            102,
+            103,
+            104,
+            105,
+            106
+          ],
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "api_clients": []
+        },
+        {
+          "group_id": "8d8689783ae7b2d19ae5d3e5a199cea32bf1458a91a5936230bdc502c4051cdf",
+          "seconds": 0.0024639589246362448,
+          "predicted": [
+            102,
+            103,
+            104,
+            105,
+            106
+          ],
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "api_clients": []
+        },
+        {
+          "group_id": "bdcf8534a4ad2c0f2d370814f3b22e61e250e397c60d1c1dc45b54364947a03d",
+          "seconds": 0.023861333029344678,
+          "predicted": [
+            102,
+            103,
+            104,
+            105,
+            106
+          ],
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "api_clients": []
+        },
+        {
+          "group_id": "5524cc0b4bc58d27f2d87abc371da359477b802a890b3d21bc34fc51e0214caa",
+          "seconds": 0.0053421249613165855,
+          "predicted": [
+            102,
+            103,
+            104,
+            105,
+            106
+          ],
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "api_clients": []
+        },
+        {
+          "group_id": "01feb66f2e21c5fb187fedd281f87e93c750cae9f62dd731f95d32ec0e2c0807",
+          "seconds": 0.009735916974022985,
+          "predicted": [
+            102,
+            103,
+            104,
+            105,
+            106
+          ],
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "api_clients": []
+        },
+        {
+          "group_id": "1f07801ecf1efcabe5f51f854601df2993b41894476fb12115c72242d382ab08",
+          "seconds": 0.025843541836366057,
+          "predicted": [
+            102,
+            103,
+            104,
+            105
+          ],
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "api_clients": []
+        },
+        {
+          "group_id": "b06fa5d52b80f154594a544c282106fb90f32dccc057b670b9ad89a60e27d185",
+          "seconds": 0.007716999854892492,
+          "predicted": [
+            102,
+            103,
+            106
+          ],
+          "cache_hit": null,
+          "http_attempts": null,
+          "usage": null,
+          "api_clients": []
+        }
+      ],
+      "configuration": {
+        "key": "semantic_encoder::threshold-encoder",
+        "module": "semantic_encoder",
+        "environment": {
+          "JEV_MODEL": "jev-1.13.0",
+          "LLM_MODEL_ID": "gemini-decision-1",
+          "QWEN_DECISION_MODEL": "decision-model-preview",
+          "STRUCTURED_LLM_MODEL": "gpt-6.1-terra",
+          "JEV_THRESHOLD": "0.5",
+          "GOOGLE_DECISION_THRESHOLD": "0.5",
+          "JEV_TFIDF_WEIGHT": "0.5",
+          "JEV_TFIDF_THRESHOLD": "0.5",
+          "LOCAL_JEV_MODEL": "jevos-v5",
+          "LOCAL_JEV_THRESHOLD": "0.5",
+          "SEMANTIC_ENCODER_DEVICE": "cpu",
+          "RUBERT_F1_DEVICE": "cpu",
+          "TFIDF_ARTIFACT_PATH": "out/classifier-methods/tfidf.json",
+          "LEARNED_KEYWORDS_ARTIFACT": "src/subcategory_extraction/learned_keywords/artifacts/learned-keywords.json",
+          "SEMANTIC_ENCODER_ARTIFACT_PATH": "out/rubert-thresholds/encoder",
+          "RUBERT_F1_ARTIFACT_PATH": "src/subcategory_extraction/semantic_encoder_f1/artifacts",
+          "JEV_REFERENCE_DATASET": "out/hybrid-training.jsonl",
+          "JEV_REFERENCE_MAX_CHARS": "1800"
+        },
+        "artifact_sha256": {
+          "out/classifier-methods/tfidf.json": "2ef7ed22c74a13820b1b06d53b5a84d6c8555b082f4bcab5b6e0408164acf62b",
+          "src/subcategory_extraction/learned_keywords/artifacts/learned-keywords.json": "d06457a8c082171a096da05d18812528247c8c90e3c06157dc93e5ea6b65f3fa",
+          "out/rubert-thresholds/encoder/calibration.json": "56aff78fd832d8b6a5f44027b1fe5ec45d6ffa5dfe8785896294f7b14116e90c",
+          "out/rubert-thresholds/encoder/encoder/config.json": "5d75152afedf12d8b30edf67fc9fdd0eedf9578a70679373db46ba94256335a0",
+          "out/rubert-thresholds/encoder/encoder/model.safetensors": "e037edf6070a37f8d4697bf3836f67d5291ba0d252971fff6f3ee280de521a9c",
+          "out/rubert-thresholds/encoder/head.safetensors": "2f96d8b53ffa5c45c62a0e12f56d82314732fdcf740356fac06cfbf87c9ecc13",
+          "out/rubert-thresholds/encoder/metadata.json": "37d88a2296784de8136e7851def9e3943ca12390e8f73154c712c3f912ed8afc",
+          "out/rubert-thresholds/encoder/tokenizer/special_tokens_map.json": "5d5b662e421ea9fac075174bb0688ee0d9431699900b90662acd44b2a350503a",
+          "out/rubert-thresholds/encoder/tokenizer/tokenizer.json": "b6a9f282c732603652189b1fc2f32a2e2578b43927c5cf44a2e3585631419bb0",
+          "out/rubert-thresholds/encoder/tokenizer/tokenizer_config.json": "71b22b163773e6d2a3bc53236a6dca9245f2e0422b09e2d9597dbf02825c7135",
+          "out/rubert-thresholds/encoder/tokenizer/vocab.txt": "f056a69b097422652053bf87565c35543e5d81540ca4b7dddd28de4157a969e0",
+          "out/rubert-thresholds/encoder/train-report.json": "72205214773b63f220668388376310293c8616220df9c3f8afdca842d98653f1",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/calibration.json": "08810b988729fc370d1c03677c38430a27da8a9501d9d6edc5d9532bd0e1dee4",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/encoder/config.json": "5d75152afedf12d8b30edf67fc9fdd0eedf9578a70679373db46ba94256335a0",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/encoder/model.safetensors": "9fc639dd6813e8481b7d21577924df1973636e38e5992bba20f06700b2d0ada1",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/head.safetensors": "81f56fffeaf4a5460e36b362b3e7d3e804a1579a9f8b7ae6adeb357d3da4772b",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/metadata.json": "d523ce9fd906ede91463053c94d664c5ae04b40b1588ce2802e5be0eb2d330f9",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/tokenizer/special_tokens_map.json": "5d5b662e421ea9fac075174bb0688ee0d9431699900b90662acd44b2a350503a",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/tokenizer/tokenizer.json": "b6a9f282c732603652189b1fc2f32a2e2578b43927c5cf44a2e3585631419bb0",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/tokenizer/tokenizer_config.json": "71b22b163773e6d2a3bc53236a6dca9245f2e0422b09e2d9597dbf02825c7135",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/tokenizer/vocab.txt": "f056a69b097422652053bf87565c35543e5d81540ca4b7dddd28de4157a969e0"
+        },
+        "training_table": "manual_train",
+        "selection": "existing configurations fixed before test; no threshold search"
+      },
+      "measurement_metadata": {
+        "date": "2026-11-15T02:01:30+03:00",
+        "commit": "e64668f0ca0f35e226f7cfa09a8649a443f46a07",
+        "code_sha256": "48e1ea81665df382f49ca38826623eeaafe3281476ed6203e19e08a7ed2918d1",
+        "machine": "macOS-27.0.1-arm64-arm-64bit-Mach-O",
+        "environment": {
+          "OMP_NUM_THREADS": null,
+          "OPENBLAS_NUM_THREADS": null,
+          "MKL_NUM_THREADS": null,
+          "TOKENIZERS_PARALLELISM": null
+        }
+      },
+      "timing_scope": {
+        "loading_included": false,
+        "first_call_included": true,
+        "cache_enabled": null,
+        "quota_wait_and_retries_included_if_any": true,
+        "warmup": false,
+        "fresh_client_caches": true,
+        "p95_method": "numpy.percentile linear interpolation"
+      },
+      "response_time": {
+        "calls": 10,
+        "total_seconds": 0.12444287585094571,
+        "mean_seconds": 0.012444287585094572,
+        "median_seconds": 0.009353958535939455,
+        "p95_seconds": 0.025328404002357273,
+        "min_seconds": 0.0024639589246362448,
+        "max_seconds": 0.025843541836366057
+      }
+    },
+    "google_decision": {
+      "status": "complete",
+      "model": "gemini-decision-1",
+      "rows": [
+        {
+          "group_id": "1755d70b12029ca196b7b0db67ab296db96a38e58bfa37db4f9eddc1e435d87e",
+          "seconds": 1.0451188748702407,
+          "predicted": [
+            105,
+            106,
+            103,
+            104,
+            102
+          ],
+          "cache_hit": false,
+          "http_attempts": null,
+          "usage": {
+            "total_tokens": 1253,
+            "total_input_tokens": 1253,
+            "input_tokens_by_modality": [
+              {
+                "modality": "text",
+                "tokens": 1253
+              }
+            ],
+            "total_output_tokens": 0
+          },
+          "api_clients": [
+            {
+              "client": "pipeline.client",
+              "model": "gemini-decision-1",
+              "cache_hit": false,
+              "http_attempts": null,
+              "usage": {
+                "total_tokens": 1253,
+                "total_input_tokens": 1253,
+                "input_tokens_by_modality": [
+                  {
+                    "modality": "text",
+                    "tokens": 1253
+                  }
+                ],
+                "total_output_tokens": 0
+              }
+            }
+          ]
+        },
+        {
+          "group_id": "df3453fa719bcc9c4120f73540192a23c48886d1d05117214da3af68fdc290c9",
+          "seconds": 0.7745545420330018,
+          "predicted": [
+            106,
+            103,
+            104,
+            105,
+            102
+          ],
+          "cache_hit": false,
+          "http_attempts": null,
+          "usage": {
+            "total_tokens": 1611,
+            "total_input_tokens": 1611,
+            "input_tokens_by_modality": [
+              {
+                "modality": "text",
+                "tokens": 1611
+              }
+            ],
+            "total_output_tokens": 0
+          },
+          "api_clients": [
+            {
+              "client": "pipeline.client",
+              "model": "gemini-decision-1",
+              "cache_hit": false,
+              "http_attempts": null,
+              "usage": {
+                "total_tokens": 1611,
+                "total_input_tokens": 1611,
+                "input_tokens_by_modality": [
+                  {
+                    "modality": "text",
+                    "tokens": 1611
+                  }
+                ],
+                "total_output_tokens": 0
+              }
+            }
+          ]
+        },
+        {
+          "group_id": "270d30c0fee5b8ec5ce8309bc25a5dec6f0a874bdf86a75c9e6c29d1a30c80b1",
+          "seconds": 0.7867314589675516,
+          "predicted": [
+            104,
+            102,
+            105,
+            106,
+            103
+          ],
+          "cache_hit": false,
+          "http_attempts": null,
+          "usage": {
+            "total_tokens": 2376,
+            "total_input_tokens": 2376,
+            "input_tokens_by_modality": [
+              {
+                "modality": "text",
+                "tokens": 2376
+              }
+            ],
+            "total_output_tokens": 0
+          },
+          "api_clients": [
+            {
+              "client": "pipeline.client",
+              "model": "gemini-decision-1",
+              "cache_hit": false,
+              "http_attempts": null,
+              "usage": {
+                "total_tokens": 2376,
+                "total_input_tokens": 2376,
+                "input_tokens_by_modality": [
+                  {
+                    "modality": "text",
+                    "tokens": 2376
+                  }
+                ],
+                "total_output_tokens": 0
+              }
+            }
+          ]
+        },
+        {
+          "group_id": "716b71093f6ffcb8457d664a34eaeafd6b20130cfc8a637d2324960aea030387",
+          "seconds": 0.7118305831681937,
+          "predicted": [
+            102,
+            103,
+            104,
+            105,
+            106
+          ],
+          "cache_hit": false,
+          "http_attempts": null,
+          "usage": {
+            "total_tokens": 1083,
+            "total_input_tokens": 1083,
+            "input_tokens_by_modality": [
+              {
+                "modality": "text",
+                "tokens": 1083
+              }
+            ],
+            "total_output_tokens": 0
+          },
+          "api_clients": [
+            {
+              "client": "pipeline.client",
+              "model": "gemini-decision-1",
+              "cache_hit": false,
+              "http_attempts": null,
+              "usage": {
+                "total_tokens": 1083,
+                "total_input_tokens": 1083,
+                "input_tokens_by_modality": [
+                  {
+                    "modality": "text",
+                    "tokens": 1083
+                  }
+                ],
+                "total_output_tokens": 0
+              }
+            }
+          ]
+        },
+        {
+          "group_id": "8d8689783ae7b2d19ae5d3e5a199cea32bf1458a91a5936230bdc502c4051cdf",
+          "seconds": 0.7627947919536382,
+          "predicted": [
+            103,
+            104,
+            105,
+            106
+          ],
+          "cache_hit": false,
+          "http_attempts": null,
+          "usage": {
+            "total_tokens": 988,
+            "total_input_tokens": 988,
+            "input_tokens_by_modality": [
+              {
+                "modality": "text",
+                "tokens": 988
+              }
+            ],
+            "total_output_tokens": 0
+          },
+          "api_clients": [
+            {
+              "client": "pipeline.client",
+              "model": "gemini-decision-1",
+              "cache_hit": false,
+              "http_attempts": null,
+              "usage": {
+                "total_tokens": 988,
+                "total_input_tokens": 988,
+                "input_tokens_by_modality": [
+                  {
+                    "modality": "text",
+                    "tokens": 988
+                  }
+                ],
+                "total_output_tokens": 0
+              }
+            }
+          ]
+        },
+        {
+          "group_id": "bdcf8534a4ad2c0f2d370814f3b22e61e250e397c60d1c1dc45b54364947a03d",
+          "seconds": 0.9646647081244737,
+          "predicted": [
+            105,
+            104,
+            102,
+            106,
+            103
+          ],
+          "cache_hit": false,
+          "http_attempts": null,
+          "usage": {
+            "total_tokens": 1718,
+            "total_input_tokens": 1718,
+            "input_tokens_by_modality": [
+              {
+                "modality": "text",
+                "tokens": 1718
+              }
+            ],
+            "total_output_tokens": 0
+          },
+          "api_clients": [
+            {
+              "client": "pipeline.client",
+              "model": "gemini-decision-1",
+              "cache_hit": false,
+              "http_attempts": null,
+              "usage": {
+                "total_tokens": 1718,
+                "total_input_tokens": 1718,
+                "input_tokens_by_modality": [
+                  {
+                    "modality": "text",
+                    "tokens": 1718
+                  }
+                ],
+                "total_output_tokens": 0
+              }
+            }
+          ]
+        },
+        {
+          "group_id": "5524cc0b4bc58d27f2d87abc371da359477b802a890b3d21bc34fc51e0214caa",
+          "seconds": 0.6912586251273751,
+          "predicted": [
+            104,
+            102,
+            106,
+            105
+          ],
+          "cache_hit": false,
+          "http_attempts": null,
+          "usage": {
+            "total_tokens": 1237,
+            "total_input_tokens": 1237,
+            "input_tokens_by_modality": [
+              {
+                "modality": "text",
+                "tokens": 1237
+              }
+            ],
+            "total_output_tokens": 0
+          },
+          "api_clients": [
+            {
+              "client": "pipeline.client",
+              "model": "gemini-decision-1",
+              "cache_hit": false,
+              "http_attempts": null,
+              "usage": {
+                "total_tokens": 1237,
+                "total_input_tokens": 1237,
+                "input_tokens_by_modality": [
+                  {
+                    "modality": "text",
+                    "tokens": 1237
+                  }
+                ],
+                "total_output_tokens": 0
+              }
+            }
+          ]
+        },
+        {
+          "group_id": "01feb66f2e21c5fb187fedd281f87e93c750cae9f62dd731f95d32ec0e2c0807",
+          "seconds": 0.7052438750397414,
+          "predicted": [
+            106,
+            105,
+            103,
+            102,
+            104
+          ],
+          "cache_hit": false,
+          "http_attempts": null,
+          "usage": {
+            "total_tokens": 1601,
+            "total_input_tokens": 1601,
+            "input_tokens_by_modality": [
+              {
+                "modality": "text",
+                "tokens": 1601
+              }
+            ],
+            "total_output_tokens": 0
+          },
+          "api_clients": [
+            {
+              "client": "pipeline.client",
+              "model": "gemini-decision-1",
+              "cache_hit": false,
+              "http_attempts": null,
+              "usage": {
+                "total_tokens": 1601,
+                "total_input_tokens": 1601,
+                "input_tokens_by_modality": [
+                  {
+                    "modality": "text",
+                    "tokens": 1601
+                  }
+                ],
+                "total_output_tokens": 0
+              }
+            }
+          ]
+        },
+        {
+          "group_id": "1f07801ecf1efcabe5f51f854601df2993b41894476fb12115c72242d382ab08",
+          "seconds": 0.861153292004019,
+          "predicted": [
+            105,
+            104
+          ],
+          "cache_hit": false,
+          "http_attempts": null,
+          "usage": {
+            "total_tokens": 1686,
+            "total_input_tokens": 1686,
+            "input_tokens_by_modality": [
+              {
+                "modality": "text",
+                "tokens": 1686
+              }
+            ],
+            "total_output_tokens": 0
+          },
+          "api_clients": [
+            {
+              "client": "pipeline.client",
+              "model": "gemini-decision-1",
+              "cache_hit": false,
+              "http_attempts": null,
+              "usage": {
+                "total_tokens": 1686,
+                "total_input_tokens": 1686,
+                "input_tokens_by_modality": [
+                  {
+                    "modality": "text",
+                    "tokens": 1686
+                  }
+                ],
+                "total_output_tokens": 0
+              }
+            }
+          ]
+        },
+        {
+          "group_id": "b06fa5d52b80f154594a544c282106fb90f32dccc057b670b9ad89a60e27d185",
+          "seconds": 0.7095016250386834,
+          "predicted": [
+            102,
+            106
+          ],
+          "cache_hit": false,
+          "http_attempts": null,
+          "usage": {
+            "total_tokens": 1339,
+            "total_input_tokens": 1339,
+            "input_tokens_by_modality": [
+              {
+                "modality": "text",
+                "tokens": 1339
+              }
+            ],
+            "total_output_tokens": 0
+          },
+          "api_clients": [
+            {
+              "client": "pipeline.client",
+              "model": "gemini-decision-1",
+              "cache_hit": false,
+              "http_attempts": null,
+              "usage": {
+                "total_tokens": 1339,
+                "total_input_tokens": 1339,
+                "input_tokens_by_modality": [
+                  {
+                    "modality": "text",
+                    "tokens": 1339
+                  }
+                ],
+                "total_output_tokens": 0
+              }
+            }
+          ]
+        }
+      ],
+      "configuration": {
+        "key": "google_decision",
+        "module": "google_decision",
+        "environment": {
+          "JEV_MODEL": "jev-1.13.0",
+          "LLM_MODEL_ID": "gemini-decision-1",
+          "QWEN_DECISION_MODEL": "decision-model-preview",
+          "STRUCTURED_LLM_MODEL": "gpt-6.1-terra",
+          "JEV_THRESHOLD": "0.5",
+          "GOOGLE_DECISION_THRESHOLD": "0.5",
+          "JEV_TFIDF_WEIGHT": "0.5",
+          "JEV_TFIDF_THRESHOLD": "0.5",
+          "LOCAL_JEV_MODEL": "jevos-v5",
+          "LOCAL_JEV_THRESHOLD": "0.5",
+          "SEMANTIC_ENCODER_DEVICE": "cpu",
+          "RUBERT_F1_DEVICE": "cpu",
+          "TFIDF_ARTIFACT_PATH": "out/classifier-methods/tfidf.json",
+          "LEARNED_KEYWORDS_ARTIFACT": "src/subcategory_extraction/learned_keywords/artifacts/learned-keywords.json",
+          "SEMANTIC_ENCODER_ARTIFACT_PATH": "out/semantic-encoder",
+          "RUBERT_F1_ARTIFACT_PATH": "src/subcategory_extraction/semantic_encoder_f1/artifacts",
+          "JEV_REFERENCE_DATASET": "out/hybrid-training.jsonl",
+          "JEV_REFERENCE_MAX_CHARS": "1800",
+          "GOOGLE_DECISION_PROMPT": "guided"
+        },
+        "artifact_sha256": {
+          "out/classifier-methods/tfidf.json": "2ef7ed22c74a13820b1b06d53b5a84d6c8555b082f4bcab5b6e0408164acf62b",
+          "src/subcategory_extraction/learned_keywords/artifacts/learned-keywords.json": "d06457a8c082171a096da05d18812528247c8c90e3c06157dc93e5ea6b65f3fa",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/calibration.json": "08810b988729fc370d1c03677c38430a27da8a9501d9d6edc5d9532bd0e1dee4",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/encoder/config.json": "5d75152afedf12d8b30edf67fc9fdd0eedf9578a70679373db46ba94256335a0",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/encoder/model.safetensors": "9fc639dd6813e8481b7d21577924df1973636e38e5992bba20f06700b2d0ada1",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/head.safetensors": "81f56fffeaf4a5460e36b362b3e7d3e804a1579a9f8b7ae6adeb357d3da4772b",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/metadata.json": "d523ce9fd906ede91463053c94d664c5ae04b40b1588ce2802e5be0eb2d330f9",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/tokenizer/special_tokens_map.json": "5d5b662e421ea9fac075174bb0688ee0d9431699900b90662acd44b2a350503a",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/tokenizer/tokenizer.json": "b6a9f282c732603652189b1fc2f32a2e2578b43927c5cf44a2e3585631419bb0",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/tokenizer/tokenizer_config.json": "71b22b163773e6d2a3bc53236a6dca9245f2e0422b09e2d9597dbf02825c7135",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/tokenizer/vocab.txt": "f056a69b097422652053bf87565c35543e5d81540ca4b7dddd28de4157a969e0"
+        },
+        "training_table": null,
+        "selection": "existing configurations fixed before test; no threshold search"
+      },
+      "measurement_metadata": {
+        "date": "2026-11-15T02:53:31+03:00",
+        "commit": "e64668f0ca0f35e226f7cfa09a8649a443f46a07",
+        "code_sha256": "48e1ea81665df382f49ca38826623eeaafe3281476ed6203e19e08a7ed2918d1",
+        "machine": "macOS-27.0.1-arm64-arm-64bit-Mach-O",
+        "environment": {
+          "OMP_NUM_THREADS": null,
+          "OPENBLAS_NUM_THREADS": null,
+          "MKL_NUM_THREADS": null,
+          "TOKENIZERS_PARALLELISM": null
+        }
+      },
+      "timing_scope": {
+        "loading_included": false,
+        "first_call_included": true,
+        "cache_enabled": null,
+        "quota_wait_and_retries_included_if_any": true,
+        "warmup": false,
+        "fresh_client_caches": true,
+        "p95_method": "numpy.percentile linear interpolation"
+      },
+      "response_time": {
+        "calls": 10,
+        "total_seconds": 8.012852376326919,
+        "mean_seconds": 0.8012852376326919,
+        "median_seconds": 0.76867466699332,
+        "p95_seconds": 1.0089144998346455,
+        "min_seconds": 0.6912586251273751,
+        "max_seconds": 1.0451188748702407
+      }
+    },
+    "google_decision::baseline": {
+      "status": "complete",
+      "model": "gemini-decision-1",
+      "rows": [
+        {
+          "group_id": "1755d70b12029ca196b7b0db67ab296db96a38e58bfa37db4f9eddc1e435d87e",
+          "seconds": 1.2996414580848068,
+          "predicted": [
+            102,
+            105,
+            103,
+            104,
+            106
+          ],
+          "cache_hit": false,
+          "http_attempts": null,
+          "usage": {
+            "total_tokens": 672,
+            "total_input_tokens": 672,
+            "input_tokens_by_modality": [
+              {
+                "modality": "text",
+                "tokens": 672
+              }
+            ],
+            "total_output_tokens": 0
+          },
+          "api_clients": [
+            {
+              "client": "pipeline.client",
+              "model": "gemini-decision-1",
+              "cache_hit": false,
+              "http_attempts": null,
+              "usage": {
+                "total_tokens": 672,
+                "total_input_tokens": 672,
+                "input_tokens_by_modality": [
+                  {
+                    "modality": "text",
+                    "tokens": 672
+                  }
+                ],
+                "total_output_tokens": 0
+              }
+            }
+          ]
+        },
+        {
+          "group_id": "df3453fa719bcc9c4120f73540192a23c48886d1d05117214da3af68fdc290c9",
+          "seconds": 0.8392377090640366,
+          "predicted": [
+            106,
+            103,
+            102,
+            104,
+            105
+          ],
+          "cache_hit": false,
+          "http_attempts": null,
+          "usage": {
+            "total_tokens": 1030,
+            "total_input_tokens": 1030,
+            "input_tokens_by_modality": [
+              {
+                "modality": "text",
+                "tokens": 1030
+              }
+            ],
+            "total_output_tokens": 0
+          },
+          "api_clients": [
+            {
+              "client": "pipeline.client",
+              "model": "gemini-decision-1",
+              "cache_hit": false,
+              "http_attempts": null,
+              "usage": {
+                "total_tokens": 1030,
+                "total_input_tokens": 1030,
+                "input_tokens_by_modality": [
+                  {
+                    "modality": "text",
+                    "tokens": 1030
+                  }
+                ],
+                "total_output_tokens": 0
+              }
+            }
+          ]
+        },
+        {
+          "group_id": "270d30c0fee5b8ec5ce8309bc25a5dec6f0a874bdf86a75c9e6c29d1a30c80b1",
+          "seconds": 0.7859366671182215,
+          "predicted": [
+            103,
+            105,
+            106,
+            104,
+            102
+          ],
+          "cache_hit": false,
+          "http_attempts": null,
+          "usage": {
+            "total_tokens": 1795,
+            "total_input_tokens": 1795,
+            "input_tokens_by_modality": [
+              {
+                "modality": "text",
+                "tokens": 1795
+              }
+            ],
+            "total_output_tokens": 0
+          },
+          "api_clients": [
+            {
+              "client": "pipeline.client",
+              "model": "gemini-decision-1",
+              "cache_hit": false,
+              "http_attempts": null,
+              "usage": {
+                "total_tokens": 1795,
+                "total_input_tokens": 1795,
+                "input_tokens_by_modality": [
+                  {
+                    "modality": "text",
+                    "tokens": 1795
+                  }
+                ],
+                "total_output_tokens": 0
+              }
+            }
+          ]
+        },
+        {
+          "group_id": "716b71093f6ffcb8457d664a34eaeafd6b20130cfc8a637d2324960aea030387",
+          "seconds": 1.0721798748709261,
+          "predicted": [
+            105,
+            106,
+            103,
+            104,
+            102
+          ],
+          "cache_hit": false,
+          "http_attempts": null,
+          "usage": {
+            "total_tokens": 502,
+            "total_input_tokens": 502,
+            "input_tokens_by_modality": [
+              {
+                "modality": "text",
+                "tokens": 502
+              }
+            ],
+            "total_output_tokens": 0
+          },
+          "api_clients": [
+            {
+              "client": "pipeline.client",
+              "model": "gemini-decision-1",
+              "cache_hit": false,
+              "http_attempts": null,
+              "usage": {
+                "total_tokens": 502,
+                "total_input_tokens": 502,
+                "input_tokens_by_modality": [
+                  {
+                    "modality": "text",
+                    "tokens": 502
+                  }
+                ],
+                "total_output_tokens": 0
+              }
+            }
+          ]
+        },
+        {
+          "group_id": "8d8689783ae7b2d19ae5d3e5a199cea32bf1458a91a5936230bdc502c4051cdf",
+          "seconds": 0.7785657909698784,
+          "predicted": [
+            106,
+            103,
+            104,
+            102,
+            105
+          ],
+          "cache_hit": false,
+          "http_attempts": null,
+          "usage": {
+            "total_tokens": 407,
+            "total_input_tokens": 407,
+            "input_tokens_by_modality": [
+              {
+                "modality": "text",
+                "tokens": 407
+              }
+            ],
+            "total_output_tokens": 0
+          },
+          "api_clients": [
+            {
+              "client": "pipeline.client",
+              "model": "gemini-decision-1",
+              "cache_hit": false,
+              "http_attempts": null,
+              "usage": {
+                "total_tokens": 407,
+                "total_input_tokens": 407,
+                "input_tokens_by_modality": [
+                  {
+                    "modality": "text",
+                    "tokens": 407
+                  }
+                ],
+                "total_output_tokens": 0
+              }
+            }
+          ]
+        },
+        {
+          "group_id": "bdcf8534a4ad2c0f2d370814f3b22e61e250e397c60d1c1dc45b54364947a03d",
+          "seconds": 0.7025922499597073,
+          "predicted": [
+            106,
+            105,
+            103,
+            104,
+            102
+          ],
+          "cache_hit": false,
+          "http_attempts": null,
+          "usage": {
+            "total_tokens": 1137,
+            "total_input_tokens": 1137,
+            "input_tokens_by_modality": [
+              {
+                "modality": "text",
+                "tokens": 1137
+              }
+            ],
+            "total_output_tokens": 0
+          },
+          "api_clients": [
+            {
+              "client": "pipeline.client",
+              "model": "gemini-decision-1",
+              "cache_hit": false,
+              "http_attempts": null,
+              "usage": {
+                "total_tokens": 1137,
+                "total_input_tokens": 1137,
+                "input_tokens_by_modality": [
+                  {
+                    "modality": "text",
+                    "tokens": 1137
+                  }
+                ],
+                "total_output_tokens": 0
+              }
+            }
+          ]
+        },
+        {
+          "group_id": "5524cc0b4bc58d27f2d87abc371da359477b802a890b3d21bc34fc51e0214caa",
+          "seconds": 0.6416849999222904,
+          "predicted": [
+            104,
+            102,
+            106,
+            105
+          ],
+          "cache_hit": false,
+          "http_attempts": null,
+          "usage": {
+            "total_tokens": 656,
+            "total_input_tokens": 656,
+            "input_tokens_by_modality": [
+              {
+                "modality": "text",
+                "tokens": 656
+              }
+            ],
+            "total_output_tokens": 0
+          },
+          "api_clients": [
+            {
+              "client": "pipeline.client",
+              "model": "gemini-decision-1",
+              "cache_hit": false,
+              "http_attempts": null,
+              "usage": {
+                "total_tokens": 656,
+                "total_input_tokens": 656,
+                "input_tokens_by_modality": [
+                  {
+                    "modality": "text",
+                    "tokens": 656
+                  }
+                ],
+                "total_output_tokens": 0
+              }
+            }
+          ]
+        },
+        {
+          "group_id": "01feb66f2e21c5fb187fedd281f87e93c750cae9f62dd731f95d32ec0e2c0807",
+          "seconds": 0.7469850420020521,
+          "predicted": [
+            105,
+            106,
+            104,
+            103,
+            102
+          ],
+          "cache_hit": false,
+          "http_attempts": null,
+          "usage": {
+            "total_tokens": 1020,
+            "total_input_tokens": 1020,
+            "input_tokens_by_modality": [
+              {
+                "modality": "text",
+                "tokens": 1020
+              }
+            ],
+            "total_output_tokens": 0
+          },
+          "api_clients": [
+            {
+              "client": "pipeline.client",
+              "model": "gemini-decision-1",
+              "cache_hit": false,
+              "http_attempts": null,
+              "usage": {
+                "total_tokens": 1020,
+                "total_input_tokens": 1020,
+                "input_tokens_by_modality": [
+                  {
+                    "modality": "text",
+                    "tokens": 1020
+                  }
+                ],
+                "total_output_tokens": 0
+              }
+            }
+          ]
+        },
+        {
+          "group_id": "1f07801ecf1efcabe5f51f854601df2993b41894476fb12115c72242d382ab08",
+          "seconds": 0.7140999170951545,
+          "predicted": [
+            103,
+            102,
+            106,
+            105,
+            104
+          ],
+          "cache_hit": false,
+          "http_attempts": null,
+          "usage": {
+            "total_tokens": 1105,
+            "total_input_tokens": 1105,
+            "input_tokens_by_modality": [
+              {
+                "modality": "text",
+                "tokens": 1105
+              }
+            ],
+            "total_output_tokens": 0
+          },
+          "api_clients": [
+            {
+              "client": "pipeline.client",
+              "model": "gemini-decision-1",
+              "cache_hit": false,
+              "http_attempts": null,
+              "usage": {
+                "total_tokens": 1105,
+                "total_input_tokens": 1105,
+                "input_tokens_by_modality": [
+                  {
+                    "modality": "text",
+                    "tokens": 1105
+                  }
+                ],
+                "total_output_tokens": 0
+              }
+            }
+          ]
+        },
+        {
+          "group_id": "b06fa5d52b80f154594a544c282106fb90f32dccc057b670b9ad89a60e27d185",
+          "seconds": 0.637121332809329,
+          "predicted": [
+            106,
+            102
+          ],
+          "cache_hit": false,
+          "http_attempts": null,
+          "usage": {
+            "total_tokens": 758,
+            "total_input_tokens": 758,
+            "input_tokens_by_modality": [
+              {
+                "modality": "text",
+                "tokens": 758
+              }
+            ],
+            "total_output_tokens": 0
+          },
+          "api_clients": [
+            {
+              "client": "pipeline.client",
+              "model": "gemini-decision-1",
+              "cache_hit": false,
+              "http_attempts": null,
+              "usage": {
+                "total_tokens": 758,
+                "total_input_tokens": 758,
+                "input_tokens_by_modality": [
+                  {
+                    "modality": "text",
+                    "tokens": 758
+                  }
+                ],
+                "total_output_tokens": 0
+              }
+            }
+          ]
+        }
+      ],
+      "configuration": {
+        "key": "google_decision::baseline",
+        "module": "google_decision",
+        "environment": {
+          "JEV_MODEL": "jev-1.13.0",
+          "LLM_MODEL_ID": "gemini-decision-1",
+          "QWEN_DECISION_MODEL": "decision-model-preview",
+          "STRUCTURED_LLM_MODEL": "gpt-6.1-terra",
+          "JEV_THRESHOLD": "0.5",
+          "GOOGLE_DECISION_THRESHOLD": "0.5",
+          "JEV_TFIDF_WEIGHT": "0.5",
+          "JEV_TFIDF_THRESHOLD": "0.5",
+          "LOCAL_JEV_MODEL": "jevos-v5",
+          "LOCAL_JEV_THRESHOLD": "0.5",
+          "SEMANTIC_ENCODER_DEVICE": "cpu",
+          "RUBERT_F1_DEVICE": "cpu",
+          "TFIDF_ARTIFACT_PATH": "out/classifier-methods/tfidf.json",
+          "LEARNED_KEYWORDS_ARTIFACT": "src/subcategory_extraction/learned_keywords/artifacts/learned-keywords.json",
+          "SEMANTIC_ENCODER_ARTIFACT_PATH": "out/semantic-encoder",
+          "RUBERT_F1_ARTIFACT_PATH": "src/subcategory_extraction/semantic_encoder_f1/artifacts",
+          "JEV_REFERENCE_DATASET": "out/hybrid-training.jsonl",
+          "JEV_REFERENCE_MAX_CHARS": "1800",
+          "GOOGLE_DECISION_PROMPT": "baseline"
+        },
+        "artifact_sha256": {
+          "out/classifier-methods/tfidf.json": "2ef7ed22c74a13820b1b06d53b5a84d6c8555b082f4bcab5b6e0408164acf62b",
+          "src/subcategory_extraction/learned_keywords/artifacts/learned-keywords.json": "d06457a8c082171a096da05d18812528247c8c90e3c06157dc93e5ea6b65f3fa",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/calibration.json": "08810b988729fc370d1c03677c38430a27da8a9501d9d6edc5d9532bd0e1dee4",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/encoder/config.json": "5d75152afedf12d8b30edf67fc9fdd0eedf9578a70679373db46ba94256335a0",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/encoder/model.safetensors": "9fc639dd6813e8481b7d21577924df1973636e38e5992bba20f06700b2d0ada1",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/head.safetensors": "81f56fffeaf4a5460e36b362b3e7d3e804a1579a9f8b7ae6adeb357d3da4772b",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/metadata.json": "d523ce9fd906ede91463053c94d664c5ae04b40b1588ce2802e5be0eb2d330f9",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/tokenizer/special_tokens_map.json": "5d5b662e421ea9fac075174bb0688ee0d9431699900b90662acd44b2a350503a",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/tokenizer/tokenizer.json": "b6a9f282c732603652189b1fc2f32a2e2578b43927c5cf44a2e3585631419bb0",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/tokenizer/tokenizer_config.json": "71b22b163773e6d2a3bc53236a6dca9245f2e0422b09e2d9597dbf02825c7135",
+          "src/subcategory_extraction/semantic_encoder_f1/artifacts/tokenizer/vocab.txt": "f056a69b097422652053bf87565c35543e5d81540ca4b7dddd28de4157a969e0"
+        },
+        "training_table": null,
+        "selection": "existing configurations fixed before test; no threshold search"
+      },
+      "measurement_metadata": {
+        "date": "2026-11-15T02:53:51+03:00",
+        "commit": "e64668f0ca0f35e226f7cfa09a8649a443f46a07",
+        "code_sha256": "48e1ea81665df382f49ca38826623eeaafe3281476ed6203e19e08a7ed2918d1",
+        "machine": "macOS-27.0.1-arm64-arm-64bit-Mach-O",
+        "environment": {
+          "OMP_NUM_THREADS": null,
+          "OPENBLAS_NUM_THREADS": null,
+          "MKL_NUM_THREADS": null,
+          "TOKENIZERS_PARALLELISM": null
+        }
+      },
+      "timing_scope": {
+        "loading_included": false,
+        "first_call_included": true,
+        "cache_enabled": null,
+        "quota_wait_and_retries_included_if_any": true,
+        "warmup": false,
+        "fresh_client_caches": true,
+        "p95_method": "numpy.percentile linear interpolation"
+      },
+      "response_time": {
+        "calls": 10,
+        "total_seconds": 8.218045041896403,
+        "mean_seconds": 0.8218045041896402,
+        "median_seconds": 0.7627754164859653,
+        "p95_seconds": 1.1972837456385603,
+        "min_seconds": 0.637121332809329,
+        "max_seconds": 1.2996414580848068
       }
     }
   },

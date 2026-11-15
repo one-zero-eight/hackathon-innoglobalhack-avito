@@ -22,17 +22,27 @@ SHA-256 содержимого таблицы: `fae05cba56fdf57a15aa3979afd828b7
 
 | Модуль | Версия / дата измерения | Промпт | N | micro-F1 | Происхождение |
 | --- | --- | --- | ---: | ---: | --- |
-| tfidf | локальный прогон из БД / 2026-11-15 | — | 139 | 0.681128 | локальные run(), источник — БД |
-| semantic_encoder_calibrated | локальный прогон из БД / 2026-11-15 | — | 139 | 0.751852 | локальные run(), источник — БД |
-| semantic_encoder | локальный прогон из БД / 2026-11-15 | — | 139 | 0.756856 | локальные run(), источник — БД |
-| learned_keywords | локальный прогон из БД / 2026-11-15 | — | 139 | 0.730697 | локальные run(), источник — БД |
 | semantic_encoder_f1 | локальный прогон из БД / 2026-11-15 | — | 139 | 0.770093 | локальные run(), источник — БД |
-| google_decision | требуется пересчёт | guided | — | — | прежний результат на reviewed_test несовместим |
-| jev | требуется пересчёт | guided | — | — | прежний результат на reviewed_test несовместим |
-| jev_tfidf | требуется пересчёт | guided | — | — | прежний результат на reviewed_test несовместим |
-| qwen_decision | требуется пересчёт | boundaries | — | — | прежний результат на reviewed_test несовместим |
-| local_jev / jevos-v5 | требуется пересчёт | english / 0.5 | — | — | прежние 119 предсказаний несовместимы с manual_test |
-| local_jev / jevos-v5 | требуется пересчёт | guided_ru / 0.5 | — | — | прежние 119 предсказаний несовместимы с manual_test |
+| regex | правила / 2026-11-15 | — | 139 | 0.768362 | локальные run(), источник — БД |
+| semantic_encoder::threshold-encoder | out/rubert-thresholds/encoder / 2026-11-15 | — | 139 | 0.756856 | локальные run(), источник — БД |
+| semantic_encoder_calibrated | локальный прогон из БД / 2026-11-15 | — | 139 | 0.751852 | локальные run(), источник — БД |
+| google_decision::baseline | gemini-decision-1 / 2026-11-15 | baseline | 139 | 0.787671 | локальные run(), источник — БД |
+| learned_keywords | локальный прогон из БД / 2026-11-15 | — | 139 | 0.730697 | локальные run(), источник — БД |
+| google_decision | gemini-decision-1 / 2026-11-15 | guided | 139 | 0.737945 | локальные run(), источник — БД |
+| tfidf::legacy | out/tfidf.json / 2026-11-15 | — | 139 | 0.697872 | локальные run(), источник — БД |
+| tfidf | локальный прогон из БД / 2026-11-15 | — | 139 | 0.681128 | локальные run(), источник — БД |
+| jev | требуется пересчёт | guided | — | — | нет рабочего BESTAPI-ключа (HTTP 401) |
+| jev_tfidf | требуется пересчёт | guided | — | — | нет рабочего BESTAPI-ключа (HTTP 401) |
+| qwen_decision | не прогоняется | boundaries | — | — | по решению команды Qwen не запускаем |
+| local_jev / jevos-v5 | требуется пересчёт | english / 0.5 | — | — | runtime только для Linux x86_64 |
+| local_jev / jevos-v5 | требуется пересчёт | guided_ru / 0.5 | — | — | runtime только для Linux x86_64 |
+
+Недоступны в этом окружении: `jev::baseline`, `jev_boundaries`,
+`jev_tfidf`(+baseline), `jev_retrieval`(+baseline), `evidence_jev`,
+`jev_arbiter`(+baseline) — с текущим `BESTAPI_API_KEY` API `bestapi.fugue.pro`
+отвечает HTTP 401; `qwen_decision`(+guided/+boundaries) — не прогоняем по
+решению команды; `local_jev`(+guided_ru) — runtime Linux-only;
+`semantic_encoder` (базовая) — артефакт не загружен.
 
 ## Запуск
 
