@@ -347,8 +347,8 @@ Vite проксирует `/api/*` на `http://localhost:8000` (см.
 | Переменная | Назначение |
 | --- | --- |
 | `DATABASE_URL` | подключение к PostgreSQL (compose переопределяет на `db:5432`) |
-| `SELECTEL_API_KEY` | ключ Selectel для классификатора `decisions.jev` (endpoint, модель и порог — `JEV_*`) |
-| `LLM_API_KEY`, `LLM_MODEL_ID` | ключ и модель LLM для генератора `sample_llm` (таймаут и повторы — `SAMPLE_LLM_*`) |
+| `SELECTEL_API_KEY` | ключ Selectel: классификатор `decisions.jev` (endpoint, модель и порог — `JEV_*`) и генератор `sample_llm` (Qwen через AI Router, настройки — `SAMPLE_LLM_*`) |
+| `LLM_API_KEY`, `LLM_MODEL_ID` | ключ и модель классификаторов Google (`GOOGLE_DECISION_*`) |
 | `BESTAPI_API_KEY` | ключ BestAPI для структурного LLM (`STRUCTURED_LLM_*`) |
 | `LOCAL_LLM_API_URL`, `LOCAL_LLM_MODEL_ID` | endpoint локальной генерации `local_llm` и alias модели (`default_model`) |
 | `LOCAL_LLM_TIMEOUT`, `LOCAL_LLM_MAX_TOKENS` | таймаут 180 с и лимит 4096 токенов на запрос; скрытых повторов нет |

@@ -167,7 +167,7 @@ def check_api() -> list[str]:
                 response = client.post("/drafts", json=inp)
                 expected = run_pipeline(PipelineInput.model_validate(inp), config).model_dump(by_alias=True)
                 verify(response.status_code == 200 and response.json() == expected and bool(expected["drafts"]), "real_modules_match_shared_orchestration")
-        with patch.dict(os.environ, {"LLM_API_KEY": ""}), TestClient(create_app(config_path)) as client:
+        with patch.dict(os.environ, {"LLM_API_KEY": "", "SELECTEL_API_KEY": ""}), TestClient(create_app(config_path)) as client:
             verify(client.post("/drafts", json=inp).status_code == 503, "real_generator_missing_credentials_is_503")
         # Два перекрывающихся HTTP-запроса не должны одновременно трогать mutable state модулей.
         started, attempted, release = Event(), Event(), Event()
@@ -303,7 +303,7 @@ def check_web_generation() -> list[str]:
 
     from api.app import app as web_app
     from api.service import DraftsService
-    from main import MICROCATEGORIES
+    from main import MICROCATEGORIES, PipelineConfig, PipelineRuntime
 
     source = {"description": "🔧 Устанавливаю смесители!", "mcId": 101}
     draft = {"mcId": 104, "title": "Сантехника", "text": "🔧 Установка смесителей!\n\n• Монтаж смесителей"}
@@ -316,18 +316,23 @@ def check_web_generation() -> list[str]:
         ("web_generation_error_not_fake_draft", ValueError("private provider data"), 502),
     )
     checks = []
+    config = PipelineConfig(subcategory_extraction="lexical.regex", draft_generation="sample_llm")
     for name, output, status in cases:
-        service = DraftsService(classifier=None, pool=None, threshold=0.85)
-
         def produce(*args: Any) -> Any:
             if isinstance(output, Exception):
                 raise output
             return output
 
-        service._generator = StubPipeline(produce)
+        def pipelines(service: str, config: PipelineConfig) -> BasePipeline:
+            """Реальный runtime с контрольными шагами: цели фиксированы, генератор выдаёт output."""
+            if service == "subcategory_extraction":
+                return StubPipeline(lambda data: [104, 105])
+            return StubPipeline(lambda data, ids: produce(data, ids))
+
+        service = DraftsService(runtime=PipelineRuntime(), config=config, pool=None)
         with (
             patch("api.service.get_catalog", new=AsyncMock(return_value=MICROCATEGORIES)),
-            patch.object(service, "_classify", new=AsyncMock(return_value=[104, 105])),
+            patch("main.load_pipeline", side_effect=pipelines),
             patch.object(web_app.state, "service", service, create=True),
         ):
             client = TestClient(web_app)

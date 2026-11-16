@@ -21,11 +21,11 @@
       "elapsed_seconds": 33.97800820902921
     },
     "http_api": {
-      "date": "2026-11-16T01:35:02+03:00",
-      "commit": "5c7bcdf5b1b9dd72c48323e7e65dff8bd7c4df39",
-      "code_sha256": "bf9b3865a0d94d8ada316fd1cd21406fb7c08b0c7a19840440789f68b5a8f60d",
+      "date": "2026-11-16T07:15:40+03:00",
+      "commit": "3b99b75982cc63c806eada44a4f602c9095aa83c",
+      "code_sha256": "ee44725046dfd98accabcb028ea222760945f4e4111330bdabebd915c35c4a55",
       "working_tree": true,
-      "machine": "macOS-26.5.2-arm64-arm-64bit-Mach-O",
+      "machine": "Linux-7.0.0-34-generic-x86_64-with-glibc2.39",
       "environment": {
         "OMP_NUM_THREADS": null,
         "OPENBLAS_NUM_THREADS": null,
@@ -110,7 +110,7 @@
         "real_http_validation"
       ],
       "checks_passed": 72,
-      "elapsed_seconds": 1.4607413329940755
+      "elapsed_seconds": 1.8931592930002807
     },
     "local_http_smoke": {
       "status": "complete",
@@ -136,8 +136,16 @@
           }
         ]
       },
-      "checks": ["one_draft_per_category", "bullet_points", "source_emojis"],
-      "web_health": {"status": "ok", "db": true, "classifier_model": "typesafe/jev-1.13"},
+      "checks": [
+        "one_draft_per_category",
+        "bullet_points",
+        "source_emojis"
+      ],
+      "web_health": {
+        "status": "ok",
+        "db": true,
+        "classifier_model": "typesafe/jev-1.13"
+      },
       "web_microcategories": 6,
       "web_classification_limit": "SELECTEL_API_KEY is not configured; live Jev classification was not verified"
     }

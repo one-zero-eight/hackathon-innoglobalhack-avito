@@ -37,12 +37,13 @@ MLX alias: `LOCAL_LLM_MODEL_ID=default_model`; таймаут `LOCAL_LLM_TIMEOUT
 
 ## Выбор модулей
 
-Классификатор и генератор выбираются **только** в `config.json`:
+Классификатор и генератор выбираются **только** в `config.json`
+(среди генераторов доступны `local_llm` и `sample_llm`):
 
 ```json
 {
   "subcategory_extraction": "decisions.jev",
-  "draft_generation": "local_llm"
+  "draft_generation": "sample_llm"
 }
 ```
 
@@ -52,6 +53,13 @@ Query-параметров `extractor`/`generator` у `POST /api/drafts` нет.
 модель молча не подставляется. Добавление нового модуля с существующим
 интерфейсом подхватывается после правки `config.json` и перезапуска сервера;
 новые registry-списки в коде не нужны.
+
+В универсальном API `src/http_api.py` (`python -m src`, `POST /drafts`)
+дополнительно есть `GET /modules` (`extractors`, `generators`, `defaults`)
+и query-параметры `extractor`/`generator` для переопределения модуля одного
+запроса. Оба списка строятся одинаково: папки модулей с `pipeline.py` и
+`__init__.py`, прошедшие проверку имени; импорт и конструкторы моделей не
+вызываются.
 
 В `app.state` живёт один `PipelineRuntime`: активные экземпляры шагов
 кэшируются и переиспользуются между запросами, параллельные запросы
@@ -197,7 +205,6 @@ curl -X POST 'http://127.0.0.1:8000/api/drafts' \
 
 Известное ограничение: офлайн-проверки HTTP-контракта в
 `src/draft_generation/benchmarks/full_pipeline_evaluation` (`run.py
---api-check`) писались под удалённый легаси-сервер (`python -m src`,
-`GET /modules`, query-селекторы) и до адаптации этого сценария не
-запускаются. Адаптация — отдельная задача с согласованием с автором
-бенчмарка; новых бенчмарков не создаётся.
+--api-check`) покрывают оба HTTP-приложения: универсальный API
+(`python -m src`, `GET /modules`, query-селекторы) и веб-бэкенд
+(`api.app`, `/api/*`) на контрольных ответах, без API-расходов.

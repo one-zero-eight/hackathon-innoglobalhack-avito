@@ -8,8 +8,9 @@
   (dict контракта кейса, валидация — в `main.PipelineOutput`)
 - Доступны `local_llm` (по умолчанию) и `sample_llm`. Варианты добавляются
   в `<module>/pipeline.py`, промпты — в `<module>/prompts/`.
-- Выбор: ключ `draft_generation` в корневом `config.json`; через HTTP — только
-  там же (query-селекторов нет), список модулей виден в Swagger: `/docs`.
+- Выбор: ключ `draft_generation` в корневом `config.json`; в универсальном
+  HTTP API — также query `generator` для отдельного запроса (`GET /modules`,
+  Swagger: `/docs`), веб-API `/api/*` использует только `config.json`.
 - `null` — модуль не выбран.
 - Бенчмарки: `benchmarks/<name>/` с `run.py`, `README.md` и результатами.
 
