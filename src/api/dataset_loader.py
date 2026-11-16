@@ -44,7 +44,7 @@ logger = logging.getLogger(__name__)
 
 TRAIN_FILENAME = "public-train-annotated.jsonl"
 TEST_FILENAME = "public-test-dataset.parquet"
-DEFAULT_DATA_DIR = PROJECT_ROOT / "data" / "innoglobalhack_avito" / "innoglobalhack_avito"
+DEFAULT_DATA_DIR = PROJECT_ROOT / "docs" / "innoglobalhack_avito"
 
 # Исходная категория объявлений официального датасета кейса (см. AGENTS.md).
 SOURCE_MC_ID = 101
