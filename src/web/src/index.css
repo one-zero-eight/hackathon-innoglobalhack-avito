@@ -90,6 +90,23 @@ body {
   }
 }
 
+/*
+ * Двухколоночный layout: на широких экранах (брейкпоинт lg, как у
+ * Grid.Col в HomePage) левая колонка ввода прижимается под sticky-шапку
+ * и остаётся видимой при прокрутке длинных результатов справа.
+ * Смещение 76 px = высота шапки AppHeader + запас на отступы.
+ */
+@media (min-width: 64em) {
+  .input-column-sticky {
+    position: sticky;
+    inset-block-start: 76px;
+    /* Если форма выше вьюпорта — колонка скроллится сама, не перекрываясь. */
+    max-block-size: calc(100vh - 92px);
+    overflow-y: auto;
+    scrollbar-width: thin;
+  }
+}
+
 /* Короткая обратная связь у кнопок и интерактивных поверхностей. */
 :where(
   .mantine-Button-root,
