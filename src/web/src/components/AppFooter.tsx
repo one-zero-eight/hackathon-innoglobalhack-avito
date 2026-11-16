@@ -15,18 +15,13 @@ export function AppFooter() {
       }}
     >
       <Container size="lg" py="md">
-        <Group justify="space-between" align="flex-start" gap="lg">
+        <Group justify="space-between" align="center" gap="lg">
           <Stack gap={4}>
             <AvitoLogo height={22} />
-            <Text size="xs" c="dimmed">
-              Учебный проект хакатона InnoGlobalHack × Avito. Логотип и фирменные
-              цвета — товарные знаки Avito, используются только в демонстрационных
-              целях.
-            </Text>
           </Stack>
 
           <Text size="xs" c="dimmed">
-            © {CURRENT_YEAR} Команда InnoGlobalHack
+            © {CURRENT_YEAR} 108 двоеточие 3
           </Text>
         </Group>
       </Container>

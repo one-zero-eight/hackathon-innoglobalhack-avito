@@ -1,4 +1,4 @@
-"""Минимальный клиент Google Gemini GenerateContent API."""
+"""Клиент Selectel AI Router для генерации черновиков."""
 
 import json
 import logging
@@ -9,8 +9,8 @@ from urllib.request import Request, urlopen
 
 from main import LLMClient, MissingCredentialsError
 
-DEFAULT_MODEL = "gemini-3.5-flash-lite"
-DEFAULT_API_URL = "https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent"
+DEFAULT_MODEL = "qwen/qwen3.5-9b"
+DEFAULT_API_URL = "https://api.selectel.ru/aig/v1/chat/completions"
 logger = logging.getLogger(__name__)
 
 
@@ -19,9 +19,8 @@ class SampleLLMClient(LLMClient):
 
     def __init__(self) -> None:
         super().__init__(os.getenv("SAMPLE_LLM_MODEL_ID") or DEFAULT_MODEL)
-        self.api_url = (os.getenv("SAMPLE_LLM_API_URL") or DEFAULT_API_URL).format(
-            model=self.model_id
-        )
+        self.api_key = os.getenv("SELECTEL_API_KEY")
+        self.api_url = os.getenv("SAMPLE_LLM_API_URL") or DEFAULT_API_URL
         self.timeout = float(os.getenv("SAMPLE_LLM_TIMEOUT", "60"))
         self.max_attempts = int(os.getenv("SAMPLE_LLM_MAX_ATTEMPTS", "4"))
         self.retry_delay = float(os.getenv("SAMPLE_LLM_RETRY_DELAY", "10"))
@@ -33,18 +32,16 @@ class SampleLLMClient(LLMClient):
     def complete(self, prompt: str, **kwargs: object) -> str:
         """Запросить JSON, повторяя только временные ошибки HTTP и таймауты."""
         if not self.api_key:
-            raise MissingCredentialsError("Укажите LLM_API_KEY в .env")
-        generation_config: dict[str, object] = {"responseMimeType": "application/json"}
-        if "response_schema" in kwargs:
-            generation_config["responseJsonSchema"] = kwargs["response_schema"]
+            raise MissingCredentialsError("Укажите SELECTEL_API_KEY в .env")
         request = Request(
             self.api_url,
             data=json.dumps({
-                "contents": [{"role": "user", "parts": [{"text": prompt}]}],
-                "generationConfig": generation_config,
+                "model": self.model_id,
+                "messages": [{"role": "user", "content": prompt}],
+                "response_format": {"type": "json_object"},
             }, ensure_ascii=False).encode("utf-8"),
             headers={
-                "x-goog-api-key": self.api_key,
+                "Authorization": f"Bearer {self.api_key}",
                 "Content-Type": "application/json",
             },
         )
@@ -58,15 +55,17 @@ class SampleLLMClient(LLMClient):
                 if attempt + 1 == self.max_attempts:
                     raise
                 logger.warning(
-                    "Временная ошибка Gemini (%s), повтор %d/%d через %.0f с",
+                    "Временная ошибка Selectel (%s), повтор %d/%d через %.0f с",
                     type(exc).__name__, attempt + 2, self.max_attempts, self.retry_delay,
                 )
                 sleep(self.retry_delay)
         try:
-            parts = result["candidates"][0]["content"]["parts"]
-            content = "".join(part["text"] for part in parts)
+            choice = result["choices"][0]
+            content = choice["message"]["content"]
         except (KeyError, IndexError, TypeError) as exc:
-            raise ValueError("Gemini API: отсутствует текст в candidates[0].content.parts") from exc
+            raise ValueError("Selectel API: отсутствует текст в choices[0].message.content") from exc
+        if choice.get("finish_reason") not in (None, "stop"):
+            raise ValueError("Ответ Selectel API прерван до завершения")
         if not isinstance(content, str) or not content.strip():
             raise ValueError("LLM API вернул пустой или нетекстовый ответ")
         return content

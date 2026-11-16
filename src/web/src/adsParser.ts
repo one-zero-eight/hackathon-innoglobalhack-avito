@@ -1,7 +1,6 @@
 export interface ImportedAd {
   description: string
   mcId: number
-  title?: string
 }
 
 interface CsvRow {
@@ -30,14 +29,15 @@ function parseAd(value: unknown, rowLabel: string): ImportedAd {
     throw new Error(`${rowLabel}: поле mcId должно быть положительным целым числом.`)
   }
 
-  if (record.title !== undefined && typeof record.title !== 'string') {
-    throw new Error(`${rowLabel}: поле title должно быть строкой.`)
+  if (record.title !== undefined) {
+    throw new Error(
+      `${rowLabel}: Вход не должен содержать поле title: по условиям кейса на вход подаются только description и mcId`,
+    )
   }
 
   return {
     description: record.description.trim(),
     mcId,
-    ...(typeof record.title === 'string' ? { title: record.title.trim() } : {}),
   }
 }
 
@@ -128,23 +128,24 @@ function parseCsv(text: string): ImportedAd[] {
   }
 
   const headers = rows[0].cells.map((cell) => cell.trim().toLocaleLowerCase('en'))
+  if (headers.includes('title')) {
+    throw new Error('Входной CSV не должен содержать колонку title: допустимы только description и mcId')
+  }
   const descriptionIndex = headers.indexOf('description')
   const mcIdIndex = headers.indexOf('mcid')
-  const titleIndex = headers.indexOf('title')
   if (descriptionIndex === -1 || mcIdIndex === -1) {
-    throw new Error('В CSV должны быть колонки description и mcId; колонка title необязательна.')
+    throw new Error('В CSV должны быть колонки description и mcId')
   }
 
-  return rows.slice(1).map(({ cells, line }) => {
-    const value: Record<string, unknown> = {
-      description: cells[descriptionIndex]?.trim() ?? '',
-      mcId: cells[mcIdIndex]?.trim() ?? '',
-    }
-    if (titleIndex !== -1) {
-      value.title = cells[titleIndex]?.trim() ?? ''
-    }
-    return parseAd(value, `Строка ${line}`)
-  })
+  return rows.slice(1).map(({ cells, line }) =>
+    parseAd(
+      {
+        description: cells[descriptionIndex]?.trim() ?? '',
+        mcId: cells[mcIdIndex]?.trim() ?? '',
+      },
+      `Строка ${line}`,
+    ),
+  )
 }
 
 function parseJson(text: string): ImportedAd[] {

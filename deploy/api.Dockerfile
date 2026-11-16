@@ -1,4 +1,6 @@
-# Образ FastAPI-сервиса черновиков.
+# Образ FastAPI-сервиса черновиков (LEGACY: полная сборка со всеми модулями и
+# тяжёлыми зависимостями torch/CUDA через uv sync). Основной compose-сервис api
+# переведён на лёгкий deploy/api-rumodernbert.Dockerfile (только remont_mc_v04).
 # Само приложение src/api пишет другой воркер; здесь только инфраструктура.
 FROM python:3.13-slim
 
@@ -13,6 +15,11 @@ RUN uv sync --frozen --no-dev
 
 # Затем код проекта (src/api появится внутри src/)
 COPY src ./src
+COPY config.json ./
+COPY docs/innoglobalhack_avito/microcategories-guide.md ./docs/innoglobalhack_avito/microcategories-guide.md
+
+# Корень проекта в контейнере: load_config() ищет config.json относительно src/main.py
+COPY config.json ./
 
 # Собственное окружение проекта вместо системного Python
 ENV PATH="/app/.venv/bin:$PATH"

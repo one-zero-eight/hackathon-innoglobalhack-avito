@@ -19,7 +19,7 @@ uv run python src/draft_generation/benchmarks/response_time/run.py --offline
 ```
 
 Отчёт — [results.json](results.json), код 1 означает недоступное измерение.
-Для настоящего замера уберите --offline; нужен рабочий Google API-ключ.
+Для настоящего замера уберите --offline; нужен `SELECTEL_API_KEY` с доступом к модели.
 Повторный запуск заменяет строку решения, а не создаёт секцию нового прогона.
 Неуспешному замеру не подставляем старую успешную latency.
 Исходные ответы — [recorded-results.json](recorded-results.json).

@@ -586,3 +586,4 @@ data/mcId_*
 data/private-test-dataset.csv
 .~*
 convert_razmetka_xlsx.py
+remont-mc-v04-weights.tar.gz

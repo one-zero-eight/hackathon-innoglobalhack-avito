@@ -6,17 +6,99 @@
 
 - Интерфейс: `DraftGenerationPipeline.run(PipelineInput, target_mc_ids) -> list[dict]`
   (dict контракта кейса, валидация — в `main.PipelineOutput`)
-- Доступен `sample_llm`. Варианты добавляются в `<module>/pipeline.py`,
-  промпты — в `<module>/prompts/`.
-- Выбор: ключ `draft_generation` в корневом `config.json`; в HTTP — query `generator`
-  для отдельного запроса. Список и defaults: `GET /modules`, Swagger: `/docs`.
+- Доступны `local_llm` (по умолчанию) и `sample_llm`. Варианты добавляются
+  в `<module>/pipeline.py`, промпты — в `<module>/prompts/`.
+- Выбор: ключ `draft_generation` в корневом `config.json`; в универсальном
+  HTTP API — также query `generator` для отдельного запроса (`GET /modules`,
+  Swagger: `/docs`), веб-API `/api/*` использует только `config.json`.
 - `null` — модуль не выбран.
 - Бенчмарки: `benchmarks/<name>/` с `run.py`, `README.md` и результатами.
 
-Полный HTTP-пайплайн запускается через `uv run python -m src`; [описание API](../../docs/http-api.md).
+Полный HTTP-пайплайн запускается через `uv run uvicorn api.app:app --app-dir src`;
+[описание API](../../docs/http-api.md).
 Оба шага используют общий loader и runtime из main.py. Пустые цели пропускают загрузку
-генератора. Runtime проверяет ровно один черновик на каждую полученную категорию,
-не возвращая частичный результат при ошибке.
+генератора. Runtime проверяет уникальность и принадлежность черновиков целевым
+категориям, допуская отказ от неподтверждённых услуг без фиктивных черновиков.
+
+## local_llm
+
+Основной генератор — локальный Qwen3.5-9B через OpenAI-compatible Chat Completions.
+Выбор в `config.json`: `"draft_generation": "local_llm"`.
+Классификатор `decisions.jev` остаётся без изменений; облачный ключ генератору не нужен.
+CLI, общий HTTP API и веб-бэкенд загружают один и тот же модуль, без отдельной
+реализации генерации.
+
+Перед первым запросом `main.strip_seo_sections()` удаляет поисковые секции
+«Также нас ищут», «Ключевые слова», «Для поиска» и длинные повторяющиеся
+keyword-хвосты. Границы общие с `dataset_annotation`; реальные перечни услуг
+не заменяются списком запрещённых слов. Модель получает очищенное описание
+и определение целевой категории, но не примеры справочника как факты об исполнителе.
+
+Содержательный промпт [`local_llm/prompts/draft.md`](local_llm/prompts/draft.md)
+сохранён без изменений. Первый ответ — строгий JSON с `title`, `intro`,
+непустым списком тематических работ `items` и списком `additional_info`.
+Код формирует один черновик: вступление → пункты с `•` → необязательный раздел
+«Дополнительная информация:» с пунктами `•`. При пустом `additional_info`
+раздел не выводится. `mcId` задаёт код, дубли целей удаляются с сохранением порядка;
+пустые цели не вызывают модель.
+
+Если в очищенном исходнике есть эмодзи, второй запрос по
+[`local_llm/prompts/style.md`](local_llm/prompts/style.md) выбирает только их номера:
+0 — без эмодзи, остальные — индексы исходных эмодзи. Программа может добавить
+только выбранный исходный эмодзи перед вступлением или существующим пунктом,
+после маркера `•`. Слова, заголовок, количество и порядок пунктов не меняются.
+Посторонние поля, текст вместо индексов, неизвестные номера и неверные размеры
+списков отклоняются. Без исходных эмодзи второго запроса нет.
+
+Строгая схема отклоняет пустые строки, пустой список работ и лишние поля.
+Невалидный или оборванный ответ и HTTP-ошибка завершают запрос: скрытых повторов,
+исправления JSON и повторной генерации нет. Максимум два запроса на категорию.
+При отсутствии подтверждённых работ модель может вернуть JSON `null`; сам модуль
+не создаёт черновик, а полностью поисковый исходник не вызывает модель.
+Общий `PipelineRuntime` допускает пустой результат или подмножество целевых
+категорий при таком отказе, но отклоняет дубли и посторонние категории.
+Проверка схемы не доказывает фактическую достоверность текста.
+
+### Настройка сервера
+
+По умолчанию `LOCAL_LLM_MODEL_ID` — абсолютный путь от корня проекта
+`out/draft-model-weights/qwen35-9b`, endpoint `LOCAL_LLM_API_URL` —
+`http://127.0.0.1:8080/v1/chat/completions` (localhost:8080).
+Разрешены только `127.0.0.1`, `localhost`, `::1` и Docker-host
+`host.docker.internal`, не произвольные удалённые адреса.
+Параметры: `LOCAL_LLM_TEMPERATURE=0.2`, `LOCAL_LLM_MAX_TOKENS=4096`,
+`LOCAL_LLM_SEED=43`, `LOCAL_LLM_TIMEOUT=180` (секунды).
+`LOCAL_LLM_REVISION` позволяет явно сохранить ревизию модели для внешних отчётов.
+Сервер должен поддерживать `chat_template_kwargs.enable_thinking=false`.
+
+На Apple Silicon рантайм устанавливается отдельно от зависимостей приложения:
+
+```bash
+uv venv out/draft-model-runtime --python 3.13
+uv pip install --python out/draft-model-runtime/bin/python \
+  "mlx-lm==0.31.0" "mlx==0.30.4" "transformers==5.3.0"
+out/draft-model-runtime/bin/python -c \
+  'from huggingface_hub import snapshot_download; snapshot_download(repo_id="mlx-community/Qwen3.5-9B-4bit", revision="8b2b98c00a6b4d291155e4890773ca8f769aee53", local_dir="out/draft-model-weights/qwen35-9b")'
+out/draft-model-runtime/bin/mlx_lm.server \
+  --model "$PWD/out/draft-model-weights/qwen35-9b" \
+  --host 127.0.0.1 --port 8080 \
+  --chat-template-args '{"enable_thinking":false}' \
+  --max-tokens 4096 --prompt-cache-size 1 \
+  --decode-concurrency 1 --prompt-concurrency 1
+```
+
+Первоначальная загрузка весов требует интернета; последующая генерация — нет.
+При другом каталоге передавайте один и тот же абсолютный путь серверу и
+`LOCAL_LLM_MODEL_ID`. Веса и отдельный рантайм в репозиторий не входят.
+Для контейнерного приложения задайте
+`LOCAL_LLM_MODEL_ID=default_model` (алиас уже загруженной модели MLX) и
+`LOCAL_LLM_API_URL=http://host.docker.internal:8080/v1/chat/completions`.
+Сервер на хосте должен слушать интерфейс, доступный Docker; не публикуйте
+MLX endpoint в недоверенную сеть.
+
+Общая офлайн-проверка ниже также проверяет `local_llm`: обнаружение loader,
+Jev → генератор, оформление эмодзи без изменения слов, SEO-очистку,
+некорректные ответы и локальный транспорт. Веса и работающий сервер ей не нужны.
 
 ## sample_llm
 
@@ -26,19 +108,18 @@ JSON-ответ с непустыми `title` и `text` валидируется
 `mcId` задаётся кодом, а не моделью. Пустой список категорий не вызывает API.
 
 Выбор в `config.json`: `"draft_generation": "sample_llm"`.
-В `.env` нужен общий `LLM_API_KEY` для Google Gemini.
-По умолчанию используется модель `gemini-3.5-flash-lite`.
+В `.env` нужен `SELECTEL_API_KEY` с доступом к модели в Selectel AI Router.
+По умолчанию используется модель `qwen/qwen3.5-9b` и endpoint
+`https://api.selectel.ru/aig/v1/chat/completions`.
 При необходимости задайте `SAMPLE_LLM_MODEL_ID`, `SAMPLE_LLM_API_URL`
 и `SAMPLE_LLM_TIMEOUT` (секунды, по умолчанию 60).
 При HTTP 429/500/502/503/504 и таймауте запрос повторяется:
 `SAMPLE_LLM_MAX_ATTEMPTS` (4 попытки), `SAMPLE_LLM_RETRY_DELAY` (10 секунд).
 Остальные ошибки не скрываются и прерывают прогон.
-Endpoint должен поддерживать Google GenerateContent с JSON mode;
-`{model}` в URL заменяется именем модели.
-JSON-схема `title`/`text` передаётся в API из той же модели Pydantic,
-которой валидируется ответ.
-`LLM_MODEL_ID` не используется генератором: модель `gemini-decision-1`
-остаётся настройкой классификатора.
+Endpoint должен поддерживать OpenAI-совместимый Chat Completions и JSON mode.
+Модель получает инструкцию вернуть JSON; схема `title`/`text` проверяется
+локально через Pydantic, а не передаётся как строгая схема провайдеру.
+`LLM_MODEL_ID` и `LLM_API_KEY` генератором не используются.
 Генератор не проверяет фактическую достоверность текста автоматически —
 это простой пробный модуль, а не гарантия отсутствия галлюцинаций.
 

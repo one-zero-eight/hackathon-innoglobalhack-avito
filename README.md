@@ -8,7 +8,7 @@
 | Путь | Что это |
 | --- | --- |
 | `src/main.py` | CLI + всё общее: контракт, микрокатегории, `BasePipeline`, `LLMClient` |
-| `src/api.py` | HTTP API полного пайплайна и селекторы модулей в Swagger |
+| `src/http_api.py` | HTTP API полного пайплайна и селекторы модулей в Swagger |
 | `config.json` | выбор реализации каждого шага |
 | `src/subcategory_extraction/` | шаг 1: выделение подкатегорий услуг |
 | `src/draft_generation/` | шаг 2: генерация черновиков |
@@ -126,22 +126,30 @@ uv run python src/subcategory_extraction/benchmarks/classifier_methods/run.py --
 
 ```bash
 uv sync
-uv run python -m src
+uv run uvicorn api.app:app --app-dir src --port 8000
 ```
 
-Swagger: http://127.0.0.1:8000/docs. В `POST /drafts` выберите extractor и generator
-из выпадающих списков; без выбора используются значения `config.json`.
-`GET /modules` возвращает все обнаруженные модули и defaults, `GET /health` — состояние HTTP-сервера.
+Swagger: http://127.0.0.1:8000/docs. `POST /api/drafts` принимает
+`{"description": "...", "mcId": 101}` и возвращает `{"drafts": [...]}`;
+выбор extractor и generator — только в `config.json`, query-параметров нет.
+`GET /api/health` — состояние сервера, базы и выбранные модули.
 
 ```bash
-curl -X POST 'http://127.0.0.1:8000/drafts?extractor=lexical.regex&generator=sample_llm' \
+curl -X POST 'http://127.0.0.1:8000/api/drafts' \
   -H 'Content-Type: application/json' \
   -d '{"description":"Устанавливаю розетки и смесители.","mcId":101}'
 ```
 
-Тело и результат соответствуют контракту кейса; имена модулей передаются отдельно в URL.
-Один общий loader обслуживает оба шага. Сервер последовательно выполняет inference и
-переиспользует активные экземпляры. Пустой список целей возвращает `drafts: []` без генерации.
+Пакетная обработка — `POST /api/drafts/batch`: массив объявлений обрабатывается
+параллельно, результат стримится по SSE (события `start`/`result`/`error`/`done`).
+Потоковая генерация одного объявления — `POST /api/drafts/stream`: тот же вход,
+но цели приходят кадром `categories`, а каждый черновик — отдельным кадром
+`draft` по мере готовности (`done`/`error` в конце).
+
+Тело и результат соответствуют контракту кейса. Сервер выполняет inference
+последовательно в одиночном запросе и переиспользует активные экземпляры
+модулей; пакетный эндпоинт создаёт независимый пайплайн на каждую строку.
+Пустой список целей возвращает `drafts: []` без генерации.
 API-ключи и веса нужны только при использовании соответствующего модуля.
 Подробности, ошибки и офлайн-проверка: [docs/http-api.md](docs/http-api.md).
 
@@ -212,6 +220,29 @@ uv run python src/run.py --config run.config.json
 [src/web/README.md](src/web/README.md)) и справочник микрокатегорий
 в PostgreSQL. Инфраструктура — `docker-compose.yml` и `deploy/`.
 
+CLI, универсальный HTTP `POST /drafts` (`python -m src`) и React
+`POST /api/drafts` используют один генератор из `config.json.draft_generation`:
+`local_llm`. Веб-классификатор остаётся Selectel Jev Decisions API.
+Генератор возвращает вступление и тематические пункты `•`, затем при необходимости
+дополнительные сведения; исходные эмодзи выбираются отдельным запросом без
+переписывания сгенерированных слов. Ошибка генерации даёт 502, не пустой черновик.
+
+**До запуска** отдельно установите runtime и веса Qwen3.5-9B.
+Docker Compose не устанавливает и не запускает модель. Например, на Apple Silicon
+в отдельном окружении с `mlx-lm` и скачанными MLX-весами:
+
+```bash
+mlx_lm.server --model /absolute/path/to/Qwen3.5-9B-MLX --host 0.0.0.0 --port 8080
+```
+
+OpenAI-совместимый endpoint для CLI/dev по умолчанию —
+`http://127.0.0.1:8080/v1/chat/completions`, идентификатор MLX — `default_model`.
+Compose обращается к хосту через
+`http://host.docker.internal:8080/v1/chat/completions`; runtime должен быть доступен
+контейнеру (не только на loopback). Не открывайте этот неаутентифицированный порт
+в публичную сеть. URL и alias другой локальной службы задаются через
+`LOCAL_LLM_API_URL` и `LOCAL_LLM_MODEL_ID`.
+
 ### Продакшен-запуск
 
 ```bash
@@ -230,6 +261,8 @@ nginx внутри контейнера `web` раздаёт статику и �
 | Эндпоинт | Что делает |
 | --- | --- |
 | `POST /api/drafts` | контракт кейса: вход `{"description": "…", "mcId": 101}`, выход `{"drafts": [{"mcId": 104, "title": "…", "text": "…"}]}` |
+| `POST /api/drafts/batch` | пакетная обработка: SSE-поток `start`/`result`/`error`/`done` по мере готовности строк |
+| `POST /api/drafts/stream` | потоковая генерация одного объявления: SSE-кадры `categories`/`draft`/`done`/`error` |
 | `GET /api/microcategories` | справочник из БД: `[{"mcId": 101, "title": "Ремонт под ключ"}, …]` |
 | `GET /api/health` | статус API и БД (`ok`/`degraded`) и модель классификатора |
 | `GET /api/dataset/samples` | страница объявлений датасета: `?split=train|test&limit=N≤100&offset=K` |
@@ -279,6 +312,23 @@ curl -s "http://localhost:8000/api/dataset/random?split=train" \
       -H 'Content-Type: application/json' -d @-
 ```
 
+### Автозагрузка датасета при старте compose
+
+Сервис `db-load` при каждом `docker compose up` исполняет
+`src/api/dataset_loader.py` (см. «Датасет кейса в БД») и завершается:
+`restart: "no"`, `depends_on: db: service_healthy`, каталог
+`docs/innoglobalhack_avito` смонтирован в лоадер только на чтение.
+Повторный запуск идемпотентен (UNIQUE `row_key` + `ON CONFLICT DO
+NOTHING`), на `api` и `web` сервис не влияет. Образ лоадера — отдельный
+лёгкий `deploy/db-load.Dockerfile` без torch/CUDA: полный
+`uv sync --frozen` для одноразовой загрузки не нужен. Повтор вручную:
+
+```bash
+docker compose run --rm db-load
+docker compose exec db psql -U avito -d avito \
+  -c "SELECT split, count(*) FROM case_ads GROUP BY split"
+```
+
 ### Dev-запуск
 
 ```bash
@@ -297,19 +347,18 @@ Vite проксирует `/api/*` на `http://localhost:8000` (см.
 | Переменная | Назначение |
 | --- | --- |
 | `DATABASE_URL` | подключение к PostgreSQL (compose переопределяет на `db:5432`) |
-| `SELECTEL_DECISIONS_URL`, `SELECTEL_DECISIONS_MODEL` | endpoint и модель классификатора (Selectel Decisions API, `typesafe/jev-1.13`, ключ — тот же `SELECTEL_API_KEY`) |
-| `CLASSIFIER_THRESHOLD` | порог `p`: категории ниже порога не черновим |
-| `SELECTEL_API_URL`, `SELECTEL_API_KEY`, `SELECTEL_MODEL` | генерация черновиков |
-| `CLASSIFIER_TIMEOUT`, `CLASSIFIER_RETRIES` | таймаут и повторы запросов классификатора |
-| `GENERATION_TIMEOUT`, `GENERATION_RETRIES` | таймаут и повторы генерации |
+| `SELECTEL_API_KEY` | ключ Selectel: классификатор `decisions.jev` (endpoint, модель и порог — `JEV_*`) и генератор `sample_llm` (Qwen через AI Router, настройки — `SAMPLE_LLM_*`) |
+| `LLM_API_KEY`, `LLM_MODEL_ID` | ключ и модель классификаторов Google (`GOOGLE_DECISION_*`) |
+| `BESTAPI_API_KEY` | ключ BestAPI для структурного LLM (`STRUCTURED_LLM_*`) |
+| `LOCAL_LLM_API_URL`, `LOCAL_LLM_MODEL_ID` | endpoint локальной генерации `local_llm` и alias модели (`default_model`) |
+| `LOCAL_LLM_TIMEOUT`, `LOCAL_LLM_MAX_TOKENS` | таймаут 180 с и лимит 4096 токенов на запрос; скрытых повторов нет |
+| `LLM_PRICING_FILE` | JSON-тарифы USD для учёта расходов; без файла стоимость неизвестна |
 | `API_PORT`, `WEB_PORT` | хост-порты API и веб-клиента |
 
-> **Примечание.** Классификатор — модель `jev` (`typesafe/jev-1.13`) через
-> Selectel Decisions API (`POST /v1/decisions` с вопросами `noul`): она
-> возвращает вероятности по микрокатегориям напрямую, без chat-формата.
-> Текущая модель видна в `GET /api/health` в поле `classifier_model`.
-> Генерация черновиков — `meta-llama/llama-3.2-3b-instruct` через Selectel
-> Chat Completions, ключ используется тот же.
+> **Примечание.** Модели, пороги, таймауты и повторы — настройки выбранных
+> модулей в `.env` ядра (шаблон — `.env.example`); через HTTP они не
+> принимаются, выбор модулей — только в `config.json`. Текущая пара модулей
+> видна в `GET /api/health` в полях `extractor` и `generator`.
 
 ## Контрибьюшн
 

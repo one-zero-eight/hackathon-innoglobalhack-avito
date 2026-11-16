@@ -1,10 +1,29 @@
 import { useCallback, useMemo, useRef, useState, type FormEvent } from 'react'
-import { Alert, Button, Group, Select, Stack, Text, Textarea } from '@mantine/core'
+import {
+  ActionIcon,
+  Alert,
+  Box,
+  Button,
+  Group,
+  Modal,
+  Select,
+  Stack,
+  Text,
+  Textarea,
+} from '@mantine/core'
+import { useMediaQuery } from '@mantine/hooks'
 import { fetchRandomSample, type DraftsRequest, type Microcategory } from '../api'
-import type { ImportedAd } from '../adsParser'
-import { AlertIcon, ShuffleIcon } from './icons'
+import { AlertIcon, MaximizeIcon, ShuffleIcon } from './icons'
 
 const MIN_DESCRIPTION_LENGTH = 10
+
+/** Подпись и подсказка поля описания — общие для формы и увеличенного редактора. */
+const DESCRIPTION_LABEL = 'Описание объявления'
+const DESCRIPTION_PLACEHOLDER =
+  'Например: выполню ремонт под ключ: штукатурка, плитка, электрика…'
+
+/** Начиная с этой ширины (48em) увеличенный редактор занимает весь экран. */
+const FULL_SCREEN_BREAKPOINT = '(max-width: 48em)'
 
 interface DraftsFormProps {
   microcategories: Microcategory[]
@@ -12,8 +31,6 @@ interface DraftsFormProps {
   loading: boolean
   /** Список ещё не загрузился — поля блокируем. */
   disabled?: boolean
-  /** Выбранная строка загруженной таблицы. */
-  selectedAd?: ImportedAd | null
   onSubmit: (request: DraftsRequest) => void
 }
 
@@ -50,24 +67,29 @@ export function DraftsForm({
   microcategories,
   loading,
   disabled = false,
-  selectedAd = null,
   onSubmit,
 }: DraftsFormProps) {
-  const [description, setDescription] = useState(selectedAd?.description ?? '')
-  const [mcId, setMcId] = useState<string | null>(
-    selectedAd === null ? null : String(selectedAd.mcId),
-  )
-  const [errors, setErrors] = useState<FormErrors>(() =>
-    selectedAd === null
-      ? {}
-      : validate(selectedAd.description, String(selectedAd.mcId), microcategories),
-  )
+  const [description, setDescription] = useState('')
+  const [mcId, setMcId] = useState<string | null>(null)
+  const [errors, setErrors] = useState<FormErrors>({})
   const [sampleLoading, setSampleLoading] = useState(false)
   const [sampleError, setSampleError] = useState<string | null>(null)
+  const [expandedOpened, setExpandedOpened] = useState(false)
 
   const descriptionRef = useRef<HTMLTextAreaElement>(null)
   const mcIdRef = useRef<HTMLInputElement>(null)
   const sampleRequestId = useRef(0)
+
+  // На узких экранах увеличенный редактор открывается на весь экран.
+  const fullScreenEditor = useMediaQuery(FULL_SCREEN_BREAKPOINT)
+
+  // Увеличенный редактор описания: открытие и закрытие модалки.
+  const openExpanded = useCallback(() => setExpandedOpened(true), [])
+  const closeExpanded = useCallback(() => setExpandedOpened(false), [])
+  // После анимации выхода фокус возвращаем в inline-Textarea формы.
+  const handleExpandedExited = useCallback(() => {
+    descriptionRef.current?.focus()
+  }, [])
 
   // Значение Select — строка; подписываем как «101 — Ремонт под ключ».
   const options = useMemo(
@@ -137,20 +159,36 @@ export function DraftsForm({
   return (
     <form onSubmit={handleSubmit} noValidate>
       <Stack gap="md">
-        <Textarea
-          label="Описание объявления"
-          description={`Минимум ${MIN_DESCRIPTION_LENGTH} символов`}
-          placeholder="Например: выполню ремонт под ключ: штукатурка, плитка, электрика…"
-          autosize
-          minRows={5}
-          maxRows={12}
-          value={description}
-          onChange={(event) => setDescription(event.currentTarget.value)}
-          error={errors.description}
-          disabled={disabled}
-          withAsterisk
-          ref={descriptionRef}
-        />
+        <Box pos="relative">
+          <ActionIcon
+            pos="absolute"
+            top={0}
+            right={0}
+            variant="subtle"
+            color="gray"
+            size="sm"
+            aria-label="Развернуть окно ввода описания"
+            title="Развернуть окно ввода описания"
+            disabled={disabled}
+            onClick={openExpanded}
+          >
+            <MaximizeIcon size={15} />
+          </ActionIcon>
+          <Textarea
+            label={DESCRIPTION_LABEL}
+            description={`Минимум ${MIN_DESCRIPTION_LENGTH} символов`}
+            placeholder={DESCRIPTION_PLACEHOLDER}
+            autosize
+            minRows={5}
+            maxRows={12}
+            value={description}
+            onChange={(event) => setDescription(event.currentTarget.value)}
+            error={errors.description}
+            disabled={disabled}
+            withAsterisk
+            ref={descriptionRef}
+          />
+        </Box>
 
         <Select
           label="Текущая микрокатегория"
@@ -198,6 +236,43 @@ export function DraftsForm({
             <Text size="sm">{sampleError}</Text>
           </Alert>
         )}
+
+        {/* Увеличенный редактор описания: крупный Textarea привязан к тому же
+            состоянию description, поэтому правки синхронизируются с формой
+            в реальном времени. Модалка рендерится в Portal вне <form>, а Enter
+            в textarea даёт перенос строки — форма сама по себе не отправляется. */}
+        <Modal
+          opened={expandedOpened}
+          onClose={closeExpanded}
+          title={DESCRIPTION_LABEL}
+          size="xl"
+          centered
+          fullScreen={fullScreenEditor}
+          // Плавная анимация входа и выхода: fade + масштабирование (transition
+          // 'pop'), длительность входа 220 мс, выхода 180 мс.
+          transitionProps={{ transition: 'pop', duration: 220, exitDuration: 180 }}
+          // Фокус после закрытия возвращаем сами — в inline-Textarea формы.
+          returnFocus={false}
+          onExitTransitionEnd={handleExpandedExited}
+          closeButtonProps={{ 'aria-label': 'Закрыть окно ввода описания' }}
+        >
+          <Textarea
+            label={DESCRIPTION_LABEL}
+            description={`Минимум ${MIN_DESCRIPTION_LENGTH} символов`}
+            placeholder={DESCRIPTION_PLACEHOLDER}
+            autosize
+            minRows={12}
+            maxRows={20}
+            value={description}
+            onChange={(event) => setDescription(event.currentTarget.value)}
+            error={errors.description}
+            disabled={disabled}
+            withAsterisk
+            // FocusTrap модалки при активации сам наводит фокус на элемент
+            // с data-autofocus — курсор попадает в крупный Textarea.
+            data-autofocus
+          />
+        </Modal>
       </Stack>
     </form>
   )

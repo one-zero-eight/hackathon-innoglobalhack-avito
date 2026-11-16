@@ -1,24 +1,29 @@
 """FastAPI-приложение веб-сервиса черновиков Avito.
 
-Роуты: POST /api/drafts, GET /api/microcategories, GET /api/health и датасет
-кейса: GET /api/dataset/samples, /api/dataset/random, /api/dataset/stats.
-На старте читаются настройки и создаётся пул БД без подключения;
+Роуты: POST /api/drafts, POST /api/drafts/batch (SSE-пакет), POST
+/api/drafts/stream (SSE-стриминг одного объявления), GET
+/api/microcategories, GET /api/health и датасет кейса: GET
+/api/dataset/samples, /api/dataset/random, /api/dataset/stats.
+Весь пайплайн (извлечение подкатегорий и генерация) делегируется ядру ``main``:
+модули выбираются только в ``config.json`` и выполняются через
+``main.PipelineRuntime``. На старте читаются ``.env`` и ``config.json``,
+выбранные модули проверяются по каталогу, создаётся пул БД без подключения;
 отсутствие ключей LLM — не ошибка запуска, сбои видны только на запросах.
 """
 
-import asyncio
 import logging
 from collections.abc import AsyncIterator
 from contextlib import asynccontextmanager
 from typing import Any
+from urllib.error import URLError
 
 import asyncpg
+from dotenv import load_dotenv
 from fastapi import FastAPI, HTTPException, Query, Request
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import JSONResponse
+from fastapi.responses import JSONResponse, StreamingResponse
 
-from api.clients.decisions import DecisionsClient
-from api.clients.openai_compat import OpenAIChatClient
+from api.bulk import BulkService
 from api.config import Settings
 from api.db import (
     close_pool,
@@ -28,8 +33,8 @@ from api.db import (
     get_catalog,
     init_pool,
 )
-from api.errors import LLMGatewayError
 from api.schemas import (
+    BatchRequest,
     DatasetSample,
     DatasetSplit,
     DatasetStats,
@@ -37,6 +42,16 @@ from api.schemas import (
     PipelineOutput,
 )
 from api.service import DraftsService
+from api.stream import DraftsStreamService
+from main import (
+    DEFAULT_CONFIG_PATH,
+    PipelineConfig,
+    PipelineOutputError,
+    PipelineRuntime,
+    PipelineUnavailableError,
+    discover_modules,
+    load_config,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -45,34 +60,62 @@ DEV_CORS_ORIGINS = ["http://localhost:5173", "http://127.0.0.1:5173"]
 # Проверка БД в health-check не должна вешать ответ.
 HEALTH_DB_TIMEOUT_S = 2.0
 
+# Ошибки провайдера и нарушения контракта модели — 502 с безопасным detail.
+PIPELINE_ERROR_DETAIL = "Ошибка провайдера или некорректный результат модели"
+PIPELINE_ERROR_EXCEPTIONS: tuple[type[Exception], ...] = (
+    PipelineOutputError,
+    ValueError,
+    URLError,
+    TimeoutError,
+    ConnectionError,
+)
+# Недоступные настройки/зависимости/ключ выбранного модуля — 503.
+PIPELINE_UNAVAILABLE_DETAIL = (
+    "Модуль пайплайна недоступен: проверьте настройки и ресурсы сервера"
+)
+
+
+def _validate_selected_modules(config: PipelineConfig) -> None:
+    """Проверить, что модули из config.json существуют; иначе — ошибка старта.
+
+    Запасная реализация молча не подставляется: неизвестный extractor или
+    generator валит запуск приложения с явным сообщением.
+    """
+    extractors = discover_modules("subcategory_extraction")
+    generators = discover_modules("draft_generation")
+    if config.subcategory_extraction not in extractors:
+        raise ValueError(
+            "В config.json выбран несуществующий extractor: "
+            f"{config.subcategory_extraction}"
+        )
+    if config.draft_generation not in generators:
+        raise ValueError(
+            "В config.json выбран несуществующий generator: "
+            f"{config.draft_generation}"
+        )
+
 
 @asynccontextmanager
 async def lifespan(app: FastAPI) -> AsyncIterator[None]:
     """Собрать сервис при старте и закрыть пул при выключении."""
+    load_dotenv(DEFAULT_CONFIG_PATH.parent / ".env")
+    config = load_config()
+    _validate_selected_modules(config)
     settings = Settings()
+    runtime = PipelineRuntime()
     app.state.settings = settings
+    app.state.config = config
+    app.state.runtime = runtime
     app.state.pool = await init_pool(settings.database_url)
-    classifier = DecisionsClient(
-        settings.selectel_decisions_url,
-        settings.selectel_api_key,
-        settings.selectel_decisions_model,
-        timeout=settings.classifier_timeout,
-        retries=settings.classifier_retries,
-    )
-    generator = OpenAIChatClient(
-        settings.selectel_api_url,
-        settings.selectel_api_key,
-        settings.selectel_model,
-        timeout=settings.generation_timeout,
-        retries=settings.generation_retries,
-    )
-    app.state.service = DraftsService(
-        classifier, generator, app.state.pool, settings.classifier_threshold
-    )
+    app.state.service = DraftsService(runtime, config, app.state.pool)
+    # Пакетный сервис не переиспользует runtime: у каждой строки свой пайплайн.
+    app.state.bulk = BulkService()
+    # Поток одного объявления тоже не держит общий замок runtime на весь поток.
+    app.state.stream = DraftsStreamService()
     logger.info(
-        "Сервис черновиков готов: классификатор %s (Decisions API), генератор %s",
-        settings.selectel_decisions_model,
-        settings.selectel_model,
+        "Сервис черновиков готов: extractor %s, generator %s (config.json)",
+        config.subcategory_extraction,
+        config.draft_generation,
     )
     try:
         yield
@@ -97,19 +140,42 @@ app.add_middleware(
 )
 
 
-@app.exception_handler(LLMGatewayError)
-async def llm_gateway_error_handler(request: Request, exc: LLMGatewayError) -> JSONResponse:
-    """Сбой LLM-шлюза (классификатор/генератор) — 502 с русским сообщением."""
-    logger.error("LLM-шлюз: %s", exc)
-    return JSONResponse(status_code=502, content={"detail": str(exc)})
+@app.exception_handler(PipelineUnavailableError)
+async def pipeline_unavailable_error_handler(
+    request: Request, exc: PipelineUnavailableError
+) -> JSONResponse:
+    """Выбранный модуль недоступен — 503 без деталей причины и ключей."""
+    logger.warning(
+        "Модуль недоступен: %s/%s (%s)",
+        exc.service,
+        exc.module,
+        type(exc.__cause__).__name__,
+    )
+    return JSONResponse(status_code=503, content={"detail": PIPELINE_UNAVAILABLE_DETAIL})
+
+
+async def pipeline_error_handler(request: Request, exc: Exception) -> JSONResponse:
+    """Ошибка провайдера или некорректный результат модели — 502, без traceback."""
+    logger.warning(
+        "Ошибка пайплайна при запросе %s %s: %s",
+        request.method,
+        request.url.path,
+        type(exc).__name__,
+    )
+    return JSONResponse(status_code=502, content={"detail": PIPELINE_ERROR_DETAIL})
+
+
+for _pipeline_exc_class in PIPELINE_ERROR_EXCEPTIONS:
+    app.add_exception_handler(_pipeline_exc_class, pipeline_error_handler)
 
 
 DB_ERROR_EXCEPTIONS: tuple[type[Exception], ...] = (
     asyncpg.PostgresError,
     asyncpg.exceptions.InterfaceError,
     ConnectionRefusedError,
-    asyncio.TimeoutError,
 )
+# asyncio.TimeoutError — алиас встроенного TimeoutError (Python 3.11+):
+# таймауты относим к ошибкам пайплайна (502), а не к ошибкам БД.
 
 
 async def db_error_handler(request: Request, exc: Exception) -> JSONResponse:
@@ -128,6 +194,47 @@ for _db_exc_class in DB_ERROR_EXCEPTIONS:
 async def create_drafts(inp: PipelineInput, request: Request) -> PipelineOutput:
     """Сформировать дополнительные черновики: {"description": ..., "mcId": ...}."""
     return await request.app.state.service.run(inp)
+
+
+@app.post("/api/drafts/batch")
+async def create_drafts_batch(inp: BatchRequest, request: Request) -> StreamingResponse:
+    """Пакетная обработка: SSE-поток start/result/error/done по мере готовности.
+
+    Тело валидируется до старта потока (лимиты и mcId — 422); дальше каждая
+    строка обрабатывается независимым пайплайном в общем пуле потоков под
+    семафором, результат уходит кадром по мере завершения задачи.
+    """
+    stream = request.app.state.bulk.stream(
+        inp.ads,
+        inp.concurrency,
+        request.app.state.config,
+        request.is_disconnected,
+    )
+    return StreamingResponse(
+        stream,
+        media_type="text/event-stream",
+        headers={"Cache-Control": "no-cache", "X-Accel-Buffering": "no"},
+    )
+
+
+@app.post("/api/drafts/stream")
+async def create_drafts_stream(inp: PipelineInput, request: Request) -> StreamingResponse:
+    """Потоковая генерация одного объявления: SSE categories/draft/done|error.
+
+    Аддитивный вариант `POST /api/drafts`: тот же вход и тот же результат,
+    но целевые категории приходят кадром `categories`, а каждый черновик —
+    отдельным кадром `draft` сразу после генерации.
+    """
+    stream = request.app.state.stream.stream(
+        inp,
+        request.app.state.config,
+        request.is_disconnected,
+    )
+    return StreamingResponse(
+        stream,
+        media_type="text/event-stream",
+        headers={"Cache-Control": "no-cache", "X-Accel-Buffering": "no"},
+    )
 
 
 @app.get("/api/microcategories")
@@ -172,8 +279,8 @@ async def dataset_stats(request: Request) -> DatasetStats:
 
 @app.get("/api/health")
 async def health(request: Request) -> dict[str, object]:
-    """Живость API и БД; при недоступной базе — degraded, но не 5xx."""
-    settings: Settings = request.app.state.settings
+    """Живость API, выбранная пара модулей и БД; недоступная база — degraded, не 5xx."""
+    config: PipelineConfig = request.app.state.config
     db_ok = False
     try:
         async with request.app.state.pool.acquire() as conn:
@@ -183,5 +290,6 @@ async def health(request: Request) -> dict[str, object]:
     return {
         "status": "ok" if db_ok else "degraded",
         "db": db_ok,
-        "classifier_model": settings.selectel_decisions_model,
+        "extractor": config.subcategory_extraction,
+        "generator": config.draft_generation,
     }

@@ -12,7 +12,18 @@ npm run dev          # http://localhost:5173
 ```
 
 Dev-сервер проксирует `/api/*` на `http://localhost:8000` (см. `vite.config.ts`),
-поэтому для работы нужен запущенный бэкенд пайплайна (WP2/WP3).
+поэтому для работы нужен запущенный бэкенд пайплайна (WP2/WP3):
+`uv run uvicorn api.app:app --app-dir src --port 8000`, PostgreSQL и
+`SELECTEL_API_KEY` для классификатора Jev. Адрес бэкенда переопределяется
+переменной окружения `VITE_BACKEND_ORIGIN`
+(например, `VITE_BACKEND_ORIGIN=http://127.0.0.1:8787 npm run dev` —
+для проверки на мок-SSE).
+`python -m src` запускает универсальный HTTP API (`/drafts`), не React-бэкенд.
+Генератор один с CLI: `config.json.draft_generation=local_llm`.
+Runtime и веса Qwen3.5-9B устанавливаются и запускаются отдельно
+([инструкция](../../README.md#веб-сервис)); для dev endpoint
+`http://127.0.0.1:8080/v1/chat/completions`, `LOCAL_LLM_MODEL_ID=default_model`.
+Compose использует `host.docker.internal:8080`. Модель в образы не входит.
 
 ## Команды
 
@@ -26,17 +37,51 @@ Dev-сервер проксирует `/api/*` на `http://localhost:8000` (с�
 ## Контракт с бэкендом
 
 - `GET /api/microcategories` → `[{ "mcId": 101, "title": "Ремонт под ключ" }, …]`
-- `POST /api/drafts` с телом `{ "description": "…", "mcId": 101 }` →
-  `{ "drafts": [{ "mcId": 104, "title": "…", "text": "…" }] }`
-  (у черновика `title`/`text` могут быть `null` — UI показывает плашку
-  «Текст не сгенерирован»).
+- `POST /api/drafts/stream` с телом `{ "description": "…", "mcId": 101 }` →
+  поток `text/event-stream` (SSE) для ручного ввода, кадры:
+  - `categories` → `{ "mcIds": [104, 105] }` — цели после классификации;
+  - `draft` → `{ "mcId", "title", "text" }` — один готовый черновик;
+  - `error` → `{ "detail" }` — терминальный кадр сбоя;
+  - `done` → `{}` — успешное завершение.
+  Клиент `streamDrafts()` (`api.ts`) читает кадры накопительно и раздаёт
+  обработчики onCategories/onDraft/onDone; сбой в потоке и обрыв без `done`
+  → `ApiError` с русским сообщением, отмена — через `AbortSignal`.
 - Ответ с HTTP-ошибкой: `{ "detail": "…" }` — текст показывается в `Alert`.
+- `POST /api/drafts/batch` с телом `{ "ads": [{ "description", "mcId" }], "concurrency": 4 | null }`
+  → поток `text/event-stream` (SSE), кадры `event: <type>\ndata: <json>\n\n`:
+  - `start` → `{ total, concurrency }` — начало обработки;
+  - `result` → `{ index, mcId, drafts: [...] }` — готовая строка (`index` —
+    0-based позиция во входном массиве, порядок может отличаться от входного);
+  - `error` → `{ index, detail }` — ошибка строки;
+  - `done` → `{ processed, succeeded, failed }` — итог.
+  Клиент `streamBatchDrafts()` (`api.ts`) читает `response.body.getReader()`,
+  разбирает кадры накопительно (`parseSseFrames`) и вызывает обработчики
+  onStart/onResult/onError/onDone; не-2xx и сетевые сбои → `ApiError` с
+  русским сообщением, отмена — через `AbortSignal`.
+
+## Пакетная обработка (режим «Загрузка таблицы»)
+
+После импорта файла кнопка «Обработать все» отправляет весь массив на
+`POST /api/drafts/batch` и прогрессивно показывает результаты по строкам
+файла: прогресс-бар done/total с процентами, статусы «ожидание / в работе /
+готово / ошибка», раскрывающиеся карточки черновиков (переиспользуют
+`DraftCard`), detail ошибки. Строка, обработанная без черновиков и без
+ошибки, помечается «Ничего не найдено» (серым курсивом). Доступны выбор
+параллелизма 1–8 (по умолчанию 4), отмена («Остановить», `AbortController`)
+и экспорт «Скачать JSON» / «Скачать CSV» (`bulkExport.ts`, Blob + download,
+без зависимостей). CSV-колонки:
+`index, description, source_mcId, target_mc_ids, draft_title, draft_text`
+(по строке на черновик). Переключение режима ввода скрывает панель пакетных
+результатов и отменяет незавершённый поток (и наоборот — ручной результат
+скрывается при переходе к таблице).
 
 ## Структура
 
 ```
 src/
-├── api.ts                  # типы контракта и fetch-клиент
+├── api.ts                  # типы контракта, fetch-клиент, SSE-разборщик потоков stream/batch
+├── bulkTypes.ts            # состояния строк/фазы пакетной обработки
+├── bulkExport.ts           # экспорт результатов в JSON/CSV (Blob + download)
 ├── theme.ts                # тема Mantine: палитры Avito + цветовая кодировка категорий
 ├── main.tsx                # MantineProvider + App
 ├── App.tsx                 # корневой компонент (рендерит HomePage)
@@ -46,12 +91,14 @@ src/
 │   ├── AppHeader.tsx       # шапка: лого, подпись, радужная полоса
 │   ├── AppFooter.tsx       # футер: лого, дисклеймер, копирайт
 │   ├── icons.tsx           # inline-SVG иконки (стиль Lucide, без зависимостей)
+│   ├── AdsDropzone.tsx     # импорт таблицы + «Обработать все» и параллелизм
 │   ├── DraftsForm.tsx      # Textarea + Select + кнопка «Подобрать черновики»
 │   ├── DraftCard.tsx       # карточка черновика: топ-полоска и бейдж категории
 │   ├── ResultsList.tsx     # сетка карточек черновиков
+│   ├── BulkResults.tsx     # таблица пакетных результатов, прогресс и экспорт
 │   └── EmptyState.tsx      # «Подходящих микрокатегорий не найдено» + ватермарк
 └── pages/
-    └── HomePage.tsx        # заголовок, форма, состояния загрузки/ошибки/результата
+    └── HomePage.tsx        # заголовок, форма, ручной режим и пакетная задача
 ```
 
 ## Брендинг

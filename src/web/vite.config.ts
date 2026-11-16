@@ -4,7 +4,9 @@ import { defineConfig } from 'vite'
 
 // Адрес бэкенда пайплайна: фронт ходит только на относительные пути /api/*,
 // а vite.dev-сервер проксирует их на Python-ядро (WP2/WP3).
-const BACKEND_ORIGIN = 'http://localhost:8000'
+// Переопределяется переменной окружения VITE_BACKEND_ORIGIN — например,
+// для проверки пакетного SSE-потока на мок-сервере.
+const BACKEND_ORIGIN = process.env.VITE_BACKEND_ORIGIN ?? 'http://localhost:8000'
 
 // https://vite.dev/config/
 export default defineConfig({
