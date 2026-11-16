@@ -1,0 +1,50 @@
+{
+ "base": "deepvk/RuModernBERT-base",
+ "max_len": 1536,
+ "cats": [
+  102,
+  103,
+  104,
+  105,
+  106
+ ],
+ "mode": "doc",
+ "rules_prefix": true,
+ "inputs": [
+  "input_ids",
+  "attention_mask"
+ ],
+ "log": [
+  {
+   "epoch": 1,
+   "loss": 0.1573,
+   "eval": {
+    "f1": 0.9439,
+    "exact": 0.8624
+   },
+   "min": 3.4
+  },
+  {
+   "epoch": 2,
+   "loss": 0.0259,
+   "eval": {
+    "f1": 0.9485,
+    "exact": 0.8881
+   },
+   "min": 6.8
+  },
+  {
+   "epoch": 3,
+   "loss": 0.0141,
+   "eval": {
+    "f1": 0.945,
+    "exact": 0.8792
+   },
+   "min": 10.2
+  }
+ ],
+ "epochs": 3,
+ "lr": 3e-05,
+ "bs": 16,
+ "n_train": 29709
+}
