@@ -6,6 +6,7 @@ import {
   Card,
   Center,
   Container,
+  Grid,
   SegmentedControl,
   SimpleGrid,
   Skeleton,
@@ -68,7 +69,7 @@ function ResultsSkeleton() {
         </Text>
       </Stack>
 
-      <SimpleGrid cols={{ base: 1, sm: 2, lg: 3 }} spacing="md" verticalSpacing="md">
+      <SimpleGrid cols={{ base: 1, sm: 2 }} spacing="md" verticalSpacing="md">
         {[0, 1, 2].map((key) => (
           <Card key={key} withBorder shadow="xs" padding="md" radius="md" bg="white">
             <Stack gap="sm">
@@ -107,6 +108,29 @@ function PageHeader() {
         черновики.
       </Text>
     </Stack>
+  )
+}
+
+/**
+ * Заглушка правой колонки до первого запроса: объясняет, что здесь появятся
+ * черновики, чтобы колонка не выглядела сломанной и пустой.
+ */
+function ResultsPlaceholder() {
+  return (
+    <Card withBorder shadow="xs" padding="xl" radius="md" bg="white">
+      <Stack align="center" justify="center" gap="xs" mih={140}>
+        <Box className="avito-pulse" aria-hidden>
+          <AvitoLogo height={34} markOnly alt="" />
+        </Box>
+        <Text fw={600} ta="center">
+          Здесь появятся черновики
+        </Text>
+        <Text c="dimmed" size="sm" ta="center" maw={420}>
+          Опишите услугу слева и запустите подбор — результаты появятся в этой
+          колонке.
+        </Text>
+      </Stack>
+    </Card>
   )
 }
 
@@ -327,159 +351,180 @@ export function HomePage() {
     <Box style={{ display: 'flex', flexDirection: 'column', minBlockSize: '100vh' }}>
       <AppHeader />
 
-      <Container size="lg" py="xl" style={{ flex: 1 }}>
+      <Container size="xl" py="xl" style={{ flex: 1 }}>
         <Stack gap="xl">
           <PageHeader />
 
-          <Card withBorder shadow="xs" padding="lg" radius="md" bg="white">
-            <Stack gap="md">
-              <Title order={2} size="h3">
-                Исходное объявление
-              </Title>
-
-              <SegmentedControl
-                aria-label="Режим ввода объявления"
-                data={INPUT_MODE_OPTIONS}
-                value={inputMode}
-                onChange={(value) => setInputMode(value as InputMode)}
-                fullWidth
-                maw={480}
-                mx="auto"
-              />
-
-              <Box
-                className="input-panels-viewport"
-                style={{ height: inputPanelHeight ?? 'auto' }}
-              >
-                <Box
-                  ref={manualPanelRef}
-                  className="input-panel"
-                  hidden={inputMode !== 'manual'}
-                >
+          {/* Две колонки на широких экранах: ввод слева, результаты справа.
+              На узких Grid схлопывается в одну колонку: сначала ввод,
+              затем результаты — порядок dom-дочерей сохранён. */}
+          <Grid gap="lg">
+            <Grid.Col span={{ base: 12, lg: 5 }}>
+              {/* Sticky-обёртка: при прокрутке длинных результатов форма
+                  ввода остаётся видимой (только от lg, см. index.css). */}
+              <Box className="input-column-sticky">
+                <Card withBorder shadow="xs" padding="lg" radius="md" bg="white">
                   <Stack gap="md">
-                    {categoriesError !== null && (
-                      <Alert
-                        color="red"
-                        title="Не удалось загрузить микрокатегории"
-                        radius="md"
-                        icon={<AlertIcon />}
+                    <Title order={2} size="h3">
+                      Исходное объявление
+                    </Title>
+
+                    <SegmentedControl
+                      aria-label="Режим ввода объявления"
+                      data={INPUT_MODE_OPTIONS}
+                      value={inputMode}
+                      onChange={(value) => setInputMode(value as InputMode)}
+                      fullWidth
+                      maw={480}
+                      mx="auto"
+                    />
+
+                    <Box
+                      className="input-panels-viewport"
+                      style={{ height: inputPanelHeight ?? 'auto' }}
+                    >
+                      <Box
+                        ref={manualPanelRef}
+                        className="input-panel"
+                        hidden={inputMode !== 'manual'}
                       >
-                        <Stack gap="sm">
-                          <Text size="sm">{categoriesError}</Text>
-                          <Button
-                            variant="light"
-                            color="red"
-                            size="sm"
-                            leftSection={<RefreshIcon size={16} />}
-                            onClick={retryCategories}
-                            w="fit-content"
-                          >
-                            Повторить
-                          </Button>
-                        </Stack>
-                      </Alert>
-                    )}
+                        <Stack gap="md">
+                          {categoriesError !== null && (
+                            <Alert
+                              color="red"
+                              title="Не удалось загрузить микрокатегории"
+                              radius="md"
+                              icon={<AlertIcon />}
+                            >
+                              <Stack gap="sm">
+                                <Text size="sm">{categoriesError}</Text>
+                                <Button
+                                  variant="light"
+                                  color="red"
+                                  size="sm"
+                                  leftSection={<RefreshIcon size={16} />}
+                                  onClick={retryCategories}
+                                  w="fit-content"
+                                >
+                                  Повторить
+                                </Button>
+                              </Stack>
+                            </Alert>
+                          )}
 
-                    {categoriesLoading ? (
-                      <Center py="lg">
-                        <Stack align="center" gap={6}>
-                          <Box className="avito-pulse">
-                            <AvitoLogo height={34} markOnly alt="" />
-                          </Box>
-                          <Text c="dimmed" size="sm">
-                            Загружаем микрокатегории…
-                          </Text>
+                          {categoriesLoading ? (
+                            <Center py="lg">
+                              <Stack align="center" gap={6}>
+                                <Box className="avito-pulse">
+                                  <AvitoLogo height={34} markOnly alt="" />
+                                </Box>
+                                <Text c="dimmed" size="sm">
+                                  Загружаем микрокатегории…
+                                </Text>
+                              </Stack>
+                            </Center>
+                          ) : (
+                            <DraftsForm
+                              key={adSelection?.id ?? 'empty'}
+                              microcategories={microcategories}
+                              loading={status === 'loading'}
+                              disabled={categoriesError !== null}
+                              selectedAd={adSelection?.ad ?? null}
+                              onSubmit={handleGenerate}
+                            />
+                          )}
                         </Stack>
-                      </Center>
-                    ) : (
-                      <DraftsForm
-                        key={adSelection?.id ?? 'empty'}
-                        microcategories={microcategories}
-                        loading={status === 'loading'}
-                        disabled={categoriesError !== null}
-                        selectedAd={adSelection?.ad ?? null}
-                        onSubmit={handleGenerate}
-                      />
-                    )}
+                      </Box>
+
+                      <Box
+                        ref={tablePanelRef}
+                        className="input-panel"
+                        hidden={inputMode !== 'table'}
+                      >
+                        <AdsDropzone
+                          microcategories={microcategories}
+                          onSelect={handleSelectAd}
+                          onProcessAll={startBulk}
+                          bulkRunning={bulkAds !== null && bulkPhase === 'running'}
+                        />
+                      </Box>
+                    </Box>
                   </Stack>
-                </Box>
-
-                <Box
-                  ref={tablePanelRef}
-                  className="input-panel"
-                  hidden={inputMode !== 'table'}
-                >
-                  <AdsDropzone
-                    microcategories={microcategories}
-                    onSelect={handleSelectAd}
-                    onProcessAll={startBulk}
-                    bulkRunning={bulkAds !== null && bulkPhase === 'running'}
-                  />
-                </Box>
+                </Card>
               </Box>
-            </Stack>
-          </Card>
+            </Grid.Col>
 
-          {/* Пакетные результаты: видны независимо от режима ввода. */}
-          {bulkAds !== null && (
-            <Box
-              component="section"
-              aria-live="polite"
-              aria-label="Результаты пакетной обработки"
-            >
-              <Card withBorder shadow="xs" padding="lg" radius="md" bg="white">
-                <BulkResults
-                  ads={bulkAds}
-                  rows={bulkRows}
-                  phase={bulkPhase}
-                  total={bulkTotal}
-                  summary={bulkSummary}
-                  globalError={bulkError}
-                  microcategories={microcategories}
-                  onCancel={cancelBulk}
-                />
-              </Card>
-            </Box>
-          )}
-
-          {/* Зона результатов: изменения озвучиваются скринридером. */}
-          <Box component="section" aria-live="polite" aria-label="Результаты подбора черновиков">
-            {status === 'loading' && <ResultsSkeleton />}
-
-            {status === 'error' && (
-              <Alert
-                color="red"
-                title="Ошибка подбора черновиков"
-                radius="md"
-                icon={<AlertIcon />}
-              >
-                <Stack gap="sm">
-                  <Text size="sm">{requestError}</Text>
-                  <Button
-                    variant="light"
-                    color="red"
-                    size="sm"
-                    leftSection={<RefreshIcon size={16} />}
-                    onClick={retryLastRequest}
-                    disabled={lastRequest === null}
-                    w="fit-content"
+            <Grid.Col span={{ base: 12, lg: 7 }}>
+              <Stack gap="lg">
+                {/* Пакетные результаты: видны независимо от режима ввода. */}
+                {bulkAds !== null && (
+                  <Box
+                    component="section"
+                    aria-live="polite"
+                    aria-label="Результаты пакетной обработки"
                   >
-                    Повторить
-                  </Button>
-                </Stack>
-              </Alert>
-            )}
+                    <Card withBorder shadow="xs" padding="lg" radius="md" bg="white">
+                      <BulkResults
+                        ads={bulkAds}
+                        rows={bulkRows}
+                        phase={bulkPhase}
+                        total={bulkTotal}
+                        summary={bulkSummary}
+                        globalError={bulkError}
+                        microcategories={microcategories}
+                        onCancel={cancelBulk}
+                      />
+                    </Card>
+                  </Box>
+                )}
 
-            {status === 'empty' && <EmptyState />}
+                {/* Зона результатов: изменения озвучиваются скринридером. */}
+                <Box
+                  component="section"
+                  aria-live="polite"
+                  aria-label="Результаты подбора черновиков"
+                >
+                  {status === 'idle' && bulkAds === null && <ResultsPlaceholder />}
 
-            {status === 'success' && (
-              <ResultsList
-                drafts={drafts}
-                microcategories={microcategories}
-                sourceMcId={sourceMcId}
-              />
-            )}
-          </Box>
+                  {status === 'loading' && <ResultsSkeleton />}
+
+                  {status === 'error' && (
+                    <Alert
+                      color="red"
+                      title="Ошибка подбора черновиков"
+                      radius="md"
+                      icon={<AlertIcon />}
+                    >
+                      <Stack gap="sm">
+                        <Text size="sm">{requestError}</Text>
+                        <Button
+                          variant="light"
+                          color="red"
+                          size="sm"
+                          leftSection={<RefreshIcon size={16} />}
+                          onClick={retryLastRequest}
+                          disabled={lastRequest === null}
+                          w="fit-content"
+                        >
+                          Повторить
+                        </Button>
+                      </Stack>
+                    </Alert>
+                  )}
+
+                  {status === 'empty' && <EmptyState />}
+
+                  {status === 'success' && (
+                    <ResultsList
+                      drafts={drafts}
+                      microcategories={microcategories}
+                      sourceMcId={sourceMcId}
+                    />
+                  )}
+                </Box>
+              </Stack>
+            </Grid.Col>
+          </Grid>
         </Stack>
       </Container>
 
