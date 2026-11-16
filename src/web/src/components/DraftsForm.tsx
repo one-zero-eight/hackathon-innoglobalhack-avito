@@ -13,7 +13,6 @@ import {
 } from '@mantine/core'
 import { useMediaQuery } from '@mantine/hooks'
 import { fetchRandomSample, type DraftsRequest, type Microcategory } from '../api'
-import type { ImportedAd } from '../adsParser'
 import { AlertIcon, MaximizeIcon, ShuffleIcon } from './icons'
 
 const MIN_DESCRIPTION_LENGTH = 10
@@ -32,8 +31,6 @@ interface DraftsFormProps {
   loading: boolean
   /** Список ещё не загрузился — поля блокируем. */
   disabled?: boolean
-  /** Выбранная строка загруженной таблицы. */
-  selectedAd?: ImportedAd | null
   onSubmit: (request: DraftsRequest) => void
 }
 
@@ -70,18 +67,11 @@ export function DraftsForm({
   microcategories,
   loading,
   disabled = false,
-  selectedAd = null,
   onSubmit,
 }: DraftsFormProps) {
-  const [description, setDescription] = useState(selectedAd?.description ?? '')
-  const [mcId, setMcId] = useState<string | null>(
-    selectedAd === null ? null : String(selectedAd.mcId),
-  )
-  const [errors, setErrors] = useState<FormErrors>(() =>
-    selectedAd === null
-      ? {}
-      : validate(selectedAd.description, String(selectedAd.mcId), microcategories),
-  )
+  const [description, setDescription] = useState('')
+  const [mcId, setMcId] = useState<string | null>(null)
+  const [errors, setErrors] = useState<FormErrors>({})
   const [sampleLoading, setSampleLoading] = useState(false)
   const [sampleError, setSampleError] = useState<string | null>(null)
   const [expandedOpened, setExpandedOpened] = useState(false)

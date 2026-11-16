@@ -85,6 +85,20 @@ class BatchDoneEvent(BaseModel):
     failed: int
 
 
+class StreamCategoriesEvent(BaseModel):
+    """SSE-событие `categories` потока /api/drafts/stream: цели классификации."""
+
+    model_config = ConfigDict(populate_by_name=True)
+
+    mc_ids: list[int] = Field(alias="mcIds")
+
+
+class StreamErrorEvent(BaseModel):
+    """SSE-событие `error` потока /api/drafts/stream: безопасный detail."""
+
+    detail: str
+
+
 __all__ = [
     "MICROCATEGORIES",
     "BatchDoneEvent",
@@ -101,4 +115,6 @@ __all__ = [
     "Draft",
     "PipelineInput",
     "PipelineOutput",
+    "StreamCategoriesEvent",
+    "StreamErrorEvent",
 ]

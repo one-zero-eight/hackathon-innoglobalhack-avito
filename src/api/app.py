@@ -1,6 +1,7 @@
 """FastAPI-приложение веб-сервиса черновиков Avito.
 
-Роуты: POST /api/drafts, POST /api/drafts/batch (SSE-пакет), GET
+Роуты: POST /api/drafts, POST /api/drafts/batch (SSE-пакет), POST
+/api/drafts/stream (SSE-стриминг одного объявления), GET
 /api/microcategories, GET /api/health и датасет кейса: GET
 /api/dataset/samples, /api/dataset/random, /api/dataset/stats.
 Весь пайплайн (извлечение подкатегорий и генерация) делегируется ядру ``main``:
@@ -41,6 +42,7 @@ from api.schemas import (
     PipelineOutput,
 )
 from api.service import DraftsService
+from api.stream import DraftsStreamService
 from main import (
     DEFAULT_CONFIG_PATH,
     PipelineConfig,
@@ -108,6 +110,8 @@ async def lifespan(app: FastAPI) -> AsyncIterator[None]:
     app.state.service = DraftsService(runtime, config, app.state.pool)
     # Пакетный сервис не переиспользует runtime: у каждой строки свой пайплайн.
     app.state.bulk = BulkService()
+    # Поток одного объявления тоже не держит общий замок runtime на весь поток.
+    app.state.stream = DraftsStreamService()
     logger.info(
         "Сервис черновиков готов: extractor %s, generator %s (config.json)",
         config.subcategory_extraction,
@@ -203,6 +207,26 @@ async def create_drafts_batch(inp: BatchRequest, request: Request) -> StreamingR
     stream = request.app.state.bulk.stream(
         inp.ads,
         inp.concurrency,
+        request.app.state.config,
+        request.is_disconnected,
+    )
+    return StreamingResponse(
+        stream,
+        media_type="text/event-stream",
+        headers={"Cache-Control": "no-cache", "X-Accel-Buffering": "no"},
+    )
+
+
+@app.post("/api/drafts/stream")
+async def create_drafts_stream(inp: PipelineInput, request: Request) -> StreamingResponse:
+    """Потоковая генерация одного объявления: SSE categories/draft/done|error.
+
+    Аддитивный вариант `POST /api/drafts`: тот же вход и тот же результат,
+    но целевые категории приходят кадром `categories`, а каждый черновик —
+    отдельным кадром `draft` сразу после генерации.
+    """
+    stream = request.app.state.stream.stream(
+        inp,
         request.app.state.config,
         request.is_disconnected,
     )

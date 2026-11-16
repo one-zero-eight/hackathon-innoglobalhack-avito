@@ -1,16 +1,5 @@
 import { useCallback, useRef, useState, type ChangeEvent, type DragEvent } from 'react'
-import {
-  Alert,
-  Box,
-  Button,
-  Group,
-  ScrollArea,
-  Select,
-  Stack,
-  Table,
-  Text,
-} from '@mantine/core'
-import type { Microcategory } from '../api'
+import { Alert, Box, Button, Group, Select, Stack, Text } from '@mantine/core'
 import { parseAdsFile, type ImportedAd } from '../adsParser'
 import { AlertIcon } from './icons'
 
@@ -22,8 +11,6 @@ const CONCURRENCY_OPTIONS = Array.from({ length: 8 }, (_, index) => ({
 }))
 
 interface AdsDropzoneProps {
-  microcategories: Microcategory[]
-  onSelect: (ad: ImportedAd) => void
   /** Запуск пакетной обработки импортированного массива объявлений. */
   onProcessAll: (ads: ImportedAd[], concurrency: number) => void
   /** Пакетная обработка уже идёт — кнопка запуска блокируется. */
@@ -36,13 +23,8 @@ function errorMessage(error: unknown): string {
     : 'Не удалось прочитать файл. Проверьте его формат и попробуйте ещё раз.'
 }
 
-/** Загрузка объявлений из таблицы и выбор строки для исходной формы. */
-export function AdsDropzone({
-  microcategories,
-  onSelect,
-  onProcessAll,
-  bulkRunning,
-}: AdsDropzoneProps) {
+/** Загрузка объявлений из таблицы и запуск пакетной обработки. */
+export function AdsDropzone({ onProcessAll, bulkRunning }: AdsDropzoneProps) {
   const [ads, setAds] = useState<ImportedAd[]>([])
   const [fileName, setFileName] = useState<string | null>(null)
   const [error, setError] = useState<string | null>(null)
@@ -202,65 +184,6 @@ export function AdsDropzone({
               size="sm"
             />
           </Group>
-
-          <ScrollArea.Autosize
-            mah={360}
-            type="auto"
-            viewportProps={{
-              tabIndex: 0,
-              role: 'region',
-              'aria-label': 'Таблица загруженных объявлений',
-            }}
-          >
-            <Table
-              striped
-              highlightOnHover
-              stickyHeader
-              miw={520}
-              withTableBorder
-              captionSide="top"
-            >
-              <Table.Caption>Объявления из файла {fileName}</Table.Caption>
-              <Table.Thead>
-                <Table.Tr>
-                  <Table.Th scope="col">Описание</Table.Th>
-                  <Table.Th scope="col">mcId / категория</Table.Th>
-                  <Table.Th scope="col">Действие</Table.Th>
-                </Table.Tr>
-              </Table.Thead>
-              <Table.Tbody>
-                {ads.map((ad, index) => {
-                  const category = microcategories.find((item) => item.mcId === ad.mcId)
-                  return (
-                    <Table.Tr key={`${ad.mcId}-${index}`}>
-                      <Table.Td>
-                        <Text size="sm" lineClamp={2} maw={440}>
-                          {ad.description}
-                        </Text>
-                      </Table.Td>
-                      <Table.Td>
-                        <Text size="sm">
-                          {ad.mcId}
-                          {category ? ` — ${category.title}` : ''}
-                        </Text>
-                      </Table.Td>
-                      <Table.Td>
-                        <Button
-                          type="button"
-                          size="sm"
-                          variant="subtle"
-                          aria-label={`Подставить объявление ${index + 1} в форму`}
-                          onClick={() => onSelect({ ...ad })}
-                        >
-                          Подставить
-                        </Button>
-                      </Table.Td>
-                    </Table.Tr>
-                  )
-                })}
-              </Table.Tbody>
-            </Table>
-          </ScrollArea.Autosize>
         </Stack>
       )}
     </Stack>

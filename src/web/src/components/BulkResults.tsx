@@ -73,6 +73,7 @@ export function BulkResults({
   const failed = rows.filter((row) => row.status === 'error').length
   const denominator = Math.max(total, rows.length)
   const percent = denominator > 0 ? (processed / denominator) * 100 : 0
+  const percentLabel = Math.round(percent)
 
   const toggleRow = (index: number) => {
     setExpanded((current) => {
@@ -140,11 +141,11 @@ export function BulkResults({
         animated={phase === 'running'}
         size="lg"
         radius="xl"
-        aria-label={`Обработано ${processed} из ${denominator}`}
+        aria-label={`Обработано ${processed} из ${denominator} — ${percentLabel}%`}
       />
       <Group justify="space-between" gap="xs">
         <Text size="sm" c="dimmed">
-          Обработано {processed} из {denominator}
+          Обработано {processed} из {denominator} — {percentLabel}%
         </Text>
         <Group gap="xs">
           <Badge color="green" variant="light" radius="md">
@@ -185,6 +186,10 @@ export function BulkResults({
             const badge = statusBadge(row.status, phase)
             const category = microcategories.find((item) => item.mcId === ad.mcId)
             const details = row.drafts.length > 0 || row.error !== null
+            // Обработанная строка без черновиков и без ошибки — классификатор
+            // не нашёл дополнительных услуг: показываем это явно, а не «—».
+            const nothingFound =
+              row.status === 'done' && row.error === null && row.drafts.length === 0
 
             return [
               <Table.Tr key={`row-${index}`}>
@@ -227,6 +232,10 @@ export function BulkResults({
                           ? `Показать (${row.drafts.length})`
                           : 'Подробнее'}
                     </Button>
+                  ) : nothingFound ? (
+                    <Text size="sm" c="dimmed" fs="italic">
+                      Ничего не найдено
+                    </Text>
                   ) : (
                     <Text size="sm" c="dimmed">
                       —
@@ -261,8 +270,8 @@ export function BulkResults({
                         </Text>
                       )}
                       {row.error === null && row.drafts.length === 0 && (
-                        <Text size="sm" c="dimmed">
-                          Черновики ещё не получены.
+                        <Text size="sm" c="dimmed" fs="italic">
+                          {row.status === 'done' ? 'Ничего не найдено' : 'Черновики ещё не получены.'}
                         </Text>
                       )}
                     </Box>

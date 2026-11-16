@@ -4,19 +4,14 @@ export interface Microcategory {
   title: string
 }
 
-/** Черновик объявления из POST /api/drafts. */
+/** Черновик объявления из SSE-потока POST /api/drafts/stream. */
 export interface Draft {
   mcId: number
   title: string | null
   text: string | null
 }
 
-/** Ответ POST /api/drafts. */
-export interface DraftsResponse {
-  drafts: Draft[]
-}
-
-/** Тело запроса POST /api/drafts. */
+/** Тело запроса POST /api/drafts и POST /api/drafts/stream. */
 export interface DraftsRequest {
   description: string
   mcId: number
@@ -54,12 +49,29 @@ export interface BatchDoneEvent {
   failed: number
 }
 
+/** Кадр `categories` потока POST /api/drafts/stream: цели после классификации. */
+export interface StreamCategoriesEvent {
+  mcIds: number[]
+}
+
+/** Кадр `error` потока POST /api/drafts/stream: безопасный detail бэкенда. */
+export interface StreamErrorEvent {
+  detail: string
+}
+
 /** Обработчики кадров SSE-потока POST /api/drafts/batch. */
 export interface BatchStreamHandlers {
   onStart?: (event: BatchStartEvent) => void
   onResult?: (event: BatchResultEvent) => void
   onError?: (event: BatchErrorEvent) => void
   onDone?: (event: BatchDoneEvent) => void
+}
+
+/** Обработчики кадров SSE-потока POST /api/drafts/stream. */
+export interface DraftsStreamHandlers {
+  onCategories?: (event: StreamCategoriesEvent) => void
+  onDraft?: (draft: Draft) => void
+  onDone?: () => void
 }
 
 /** Сплит датасета кейса (GET /api/dataset/*). */
@@ -137,31 +149,24 @@ function assertMicrocategories(value: unknown): Microcategory[] {
   })
 }
 
+/** Приводит одну запись к типу Draft; повреждённая запись — явная ошибка. */
+function assertDraftItem(item: unknown): Draft {
+  if (item === null || typeof item !== 'object' || typeof (item as Draft).mcId !== 'number') {
+    throw new ApiError('Некорректный ответ сервиса: повреждена запись черновика.')
+  }
+  return {
+    mcId: (item as Draft).mcId,
+    title: typeof (item as Draft).title === 'string' ? (item as Draft).title : null,
+    text: typeof (item as Draft).text === 'string' ? (item as Draft).text : null,
+  } satisfies Draft
+}
+
 /** Приводит массив черновиков к типу Draft[]. */
 function assertDraftsArray(value: unknown): Draft[] {
   if (!Array.isArray(value)) {
     throw new ApiError('Некорректный ответ сервиса: ожидался набор черновиков.')
   }
-
-  return value.map((item) => {
-    if (item === null || typeof item !== 'object' || typeof item.mcId !== 'number') {
-      throw new ApiError('Некорректный ответ сервиса: повреждена запись черновика.')
-    }
-    return {
-      mcId: item.mcId,
-      title: typeof item.title === 'string' ? item.title : null,
-      text: typeof item.text === 'string' ? item.text : null,
-    } satisfies Draft
-  })
-}
-
-/** Приводит ответ POST /api/drafts к типу DraftsResponse. */
-function assertDraftsResponse(value: unknown): DraftsResponse {
-  if (value === null || typeof value !== 'object') {
-    throw new ApiError('Некорректный ответ сервиса: ожидался набор черновиков.')
-  }
-
-  return { drafts: assertDraftsArray((value as DraftsResponse).drafts) }
+  return value.map(assertDraftItem)
 }
 
 /** Приводит ответ GET /api/dataset/random к типу DatasetSample. */
@@ -231,21 +236,31 @@ export async function fetchRandomSample(split: DatasetSplit): Promise<DatasetSam
 }
 
 /**
- * POST /api/drafts — генерация дополнительных черновиков по описанию и
- * исходной микрокатегории.
+ * POST /api/drafts/stream — потоковая генерация черновиков одного
+ * объявления. Ответ — Server-Sent Events: кадр `categories` с целевыми
+ * микрокатегориями, затем кадры `draft` по мере готовности каждого
+ * черновика и финальный `done`.
  */
-export async function fetchDrafts(request: DraftsRequest): Promise<DraftsResponse> {
+export async function streamDrafts(
+  request: DraftsRequest,
+  handlers: DraftsStreamHandlers,
+  signal?: AbortSignal,
+): Promise<void> {
   let response: Response
   try {
-    response = await fetch('/api/drafts', {
+    response = await fetch('/api/drafts/stream', {
       method: 'POST',
       headers: {
-        Accept: 'application/json',
+        Accept: 'text/event-stream',
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(request),
+      signal,
     })
-  } catch {
+  } catch (error: unknown) {
+    if (isAbortError(error)) {
+      throw error
+    }
     throw new ApiError('Сервис недоступен. Проверьте, что запущен бэкенд.')
   }
 
@@ -253,7 +268,41 @@ export async function fetchDrafts(request: DraftsRequest): Promise<DraftsRespons
     await throwHttpError(response)
   }
 
-  return assertDraftsResponse(await parseBody(response))
+  let finished = false
+  let streamError: ApiError | null = null
+  await consumeSseStream(response, (frame) => {
+    switch (frame.event) {
+      case 'categories': {
+        const event = assertStreamCategories(parseEventData(frame))
+        handlers.onCategories?.(event)
+        break
+      }
+      case 'draft': {
+        const draft = assertDraftItem(parseEventData(frame))
+        handlers.onDraft?.(draft)
+        break
+      }
+      case 'done': {
+        finished = true
+        handlers.onDone?.()
+        break
+      }
+      case 'error': {
+        const event = assertStreamError(parseEventData(frame))
+        streamError = new ApiError(event.detail)
+        break
+      }
+      default:
+        break
+    }
+  })
+
+  if (streamError !== null) {
+    throw streamError
+  }
+  if (!finished) {
+    throw new ApiError('Поток ответа прервался. Проверьте, что запущен бэкенд.')
+  }
 }
 
 /** Один кадр Server-Sent Events: тип события и содержимое `data`. */
@@ -385,6 +434,33 @@ function assertBatchDone(value: unknown): BatchDoneEvent {
   }
 }
 
+/** Приводит кадр `categories` к типу StreamCategoriesEvent. */
+function assertStreamCategories(value: unknown): StreamCategoriesEvent {
+  const record = value as StreamCategoriesEvent | null
+  if (
+    record === null ||
+    typeof record !== 'object' ||
+    !Array.isArray(record.mcIds) ||
+    record.mcIds.some((mcId) => typeof mcId !== 'number')
+  ) {
+    throw new ApiError('Некорректный ответ сервиса: повреждён кадр categories.')
+  }
+  return { mcIds: record.mcIds }
+}
+
+/** Приводит кадр `error` потока к типу StreamErrorEvent. */
+function assertStreamError(value: unknown): StreamErrorEvent {
+  const record = value as StreamErrorEvent | null
+  if (
+    record === null ||
+    typeof record !== 'object' ||
+    typeof record.detail !== 'string'
+  ) {
+    throw new ApiError('Некорректный ответ сервиса: повреждён кадр error.')
+  }
+  return { detail: record.detail }
+}
+
 /** Отправляет один кадр потока в обработчики; неизвестные события игнорируются. */
 function dispatchBatchFrame(frame: SseFrame, handlers: BatchStreamHandlers): void {
   // Кадр валидируем до вызова обработчика: при отсутствии обработчика
@@ -421,11 +497,64 @@ export function isAbortError(error: unknown): boolean {
 }
 
 /**
+ * Читает тело SSE-ответа через getReader(), разбирает кадры по мере
+ * готовности и передаёт каждый в onFrame. Сетевые сбои превращаются в
+ * ApiError с русским сообщением; отмена через `signal` читателя
+ * пробрасывается как есть (AbortError). Хвост без завершающей пустой
+ * строки добирается в конце чтения.
+ */
+async function consumeSseStream(
+  response: Response,
+  onFrame: (frame: SseFrame) => void,
+): Promise<void> {
+  if (response.body === null) {
+    throw new ApiError('Сервер не передал поток ответа. Попробуйте ещё раз.')
+  }
+
+  const reader = response.body.getReader()
+  const decoder = new TextDecoder()
+  let buffer = ''
+
+  try {
+    for (;;) {
+      const { done, value } = await reader.read()
+      if (done) {
+        break
+      }
+      buffer += decoder.decode(value, { stream: true })
+      const { frames, rest } = parseSseFrames(buffer)
+      buffer = rest
+      for (const frame of frames) {
+        onFrame(frame)
+      }
+    }
+
+    // Хвост без завершающей пустой строки: добираем остаток буфера.
+    buffer += decoder.decode()
+    if (buffer.trim() !== '') {
+      const { frames } = parseSseFrames(`${buffer}\n\n`)
+      for (const frame of frames) {
+        onFrame(frame)
+      }
+    }
+  } catch (error: unknown) {
+    if (!isAbortError(error)) {
+      // Ошибка протокола или обрыв потока — закрываем чтение, не оставляем lock.
+      await reader.cancel().catch(() => undefined)
+    }
+    if (error instanceof ApiError || isAbortError(error)) {
+      throw error
+    }
+    throw new ApiError('Поток ответа прервался. Проверьте, что запущен бэкенд.')
+  }
+}
+
+/**
  * POST /api/drafts/batch — пакетная генерация черновиков с потоковым
- * ответом Server-Sent Events. Читает `response.body` через getReader(),
- * разбирает кадры по мере готовности и вызывает обработчики onStart/onResult/
- * onError/onDone. Сетевые сбои и не-2xx превращаются в ApiError с русским
- * сообщением; отмена через `signal` пробрасывается как есть (AbortError).
+ * ответом Server-Sent Events. Разбирает кадры по мере готовности и
+ * вызывает обработчики onStart/onResult/onError/onDone. Сетевые сбои и
+ * не-2xx превращаются в ApiError с русским сообщением; отмена через
+ * `signal` пробрасывается как есть (AbortError).
  */
 export async function streamBatchDrafts(
   ads: BatchAd[],
@@ -459,44 +588,6 @@ export async function streamBatchDrafts(
         : undefined,
     )
   }
-  if (response.body === null) {
-    throw new ApiError('Сервер не передал поток ответа. Попробуйте ещё раз.')
-  }
 
-  const reader = response.body.getReader()
-  const decoder = new TextDecoder()
-  let buffer = ''
-
-  try {
-    for (;;) {
-      const { done, value } = await reader.read()
-      if (done) {
-        break
-      }
-      buffer += decoder.decode(value, { stream: true })
-      const { frames, rest } = parseSseFrames(buffer)
-      buffer = rest
-      for (const frame of frames) {
-        dispatchBatchFrame(frame, handlers)
-      }
-    }
-
-    // Хвост без завершающей пустой строки: добираем остаток буфера.
-    buffer += decoder.decode()
-    if (buffer.trim() !== '') {
-      const { frames } = parseSseFrames(`${buffer}\n\n`)
-      for (const frame of frames) {
-        dispatchBatchFrame(frame, handlers)
-      }
-    }
-  } catch (error: unknown) {
-    if (!isAbortError(error)) {
-      // Ошибка протокола или обрыв потока — закрываем чтение, не оставляем lock.
-      await reader.cancel().catch(() => undefined)
-    }
-    if (error instanceof ApiError || isAbortError(error)) {
-      throw error
-    }
-    throw new ApiError('Поток ответа прервался. Проверьте, что запущен бэкенд.')
-  }
+  await consumeSseStream(response, (frame) => dispatchBatchFrame(frame, handlers))
 }

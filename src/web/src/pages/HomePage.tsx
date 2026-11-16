@@ -7,6 +7,7 @@ import {
   Center,
   Container,
   Grid,
+  Progress,
   SegmentedControl,
   SimpleGrid,
   Skeleton,
@@ -16,10 +17,10 @@ import {
 } from '@mantine/core'
 import {
   ApiError,
-  fetchDrafts,
   fetchMicrocategories,
   isAbortError,
   streamBatchDrafts,
+  streamDrafts,
   type BatchDoneEvent,
   type Draft,
   type DraftsRequest,
@@ -56,31 +57,56 @@ function messageOf(error: unknown): string {
   return 'Неизвестная ошибка. Попробуйте ещё раз.'
 }
 
-/** Скелетон на время генерации: три заготовки карточек с фирменным знаком. */
-function ResultsSkeleton() {
+/** Скелетон до списка категорий: три заготовки карточек черновиков. */
+function DraftsSkeletonGrid() {
+  return (
+    <SimpleGrid cols={{ base: 1, sm: 2 }} spacing="md" verticalSpacing="md">
+      {[0, 1, 2].map((key) => (
+        <Card key={key} withBorder shadow="xs" padding="md" radius="md" bg="white">
+          <Stack gap="sm">
+            <Skeleton height={22} width={180} radius="md" />
+            <Skeleton height={18} radius="md" />
+            <Skeleton height={14} radius="md" />
+            <Skeleton height={14} width="80%" radius="md" />
+          </Stack>
+        </Card>
+      ))}
+    </SimpleGrid>
+  )
+}
+
+/** Статус и полоса прогресса ручной генерации по кадрам потока. */
+function GenerationProgress({ done, total }: { done: number; total: number | null }) {
+  const percent = total !== null && total > 0 ? (done / total) * 100 : 100
+  const label =
+    total === null
+      ? 'Определяем подходящие микрокатегории…'
+      : total === 0
+        ? 'Подходящие микрокатегории не найдены'
+        : `Генерируем черновик ${Math.min(done + 1, total)} из ${total}…`
+
   return (
     <Stack gap="md">
       <Stack align="center" gap={4} py="xs">
         <Box className="avito-pulse">
           <AvitoLogo height={30} markOnly alt="" />
         </Box>
-        <Text fw={600} size="lg">
-          Подбираем черновики…
+        <Text fw={600} size="lg" ta="center">
+          {label}
         </Text>
       </Stack>
 
-      <SimpleGrid cols={{ base: 1, sm: 2 }} spacing="md" verticalSpacing="md">
-        {[0, 1, 2].map((key) => (
-          <Card key={key} withBorder shadow="xs" padding="md" radius="md" bg="white">
-            <Stack gap="sm">
-              <Skeleton height={22} width={180} radius="md" />
-              <Skeleton height={18} radius="md" />
-              <Skeleton height={14} radius="md" />
-              <Skeleton height={14} width="80%" radius="md" />
-            </Stack>
-          </Card>
-        ))}
-      </SimpleGrid>
+      <Progress
+        value={percent}
+        animated
+        size="lg"
+        radius="xl"
+        aria-label={
+          total === null || total === 0
+            ? 'Определяем подходящие микрокатегории'
+            : `Сгенерировано ${done} из ${total} черновиков`
+        }
+      />
     </Stack>
   )
 }
@@ -144,7 +170,8 @@ export function HomePage() {
   const [requestError, setRequestError] = useState<string | null>(null)
   const [sourceMcId, setSourceMcId] = useState(0)
   const [lastRequest, setLastRequest] = useState<DraftsRequest | null>(null)
-  const [adSelection, setAdSelection] = useState<{ ad: ImportedAd; id: number } | null>(null)
+  /** Число целевых категорий ручного запроса (из кадра categories). */
+  const [manualTotal, setManualTotal] = useState<number | null>(null)
   const [inputMode, setInputMode] = useState<InputMode>('manual')
   const [inputPanelHeight, setInputPanelHeight] = useState<number | null>(null)
 
@@ -159,6 +186,8 @@ export function HomePage() {
   const categoriesRequestId = useRef(0)
   const manualPanelRef = useRef<HTMLDivElement>(null)
   const tablePanelRef = useRef<HTMLDivElement>(null)
+  const manualAbortRef = useRef<AbortController | null>(null)
+  const manualRunIdRef = useRef(0)
   const bulkAbortRef = useRef<AbortController | null>(null)
   const bulkRunIdRef = useRef(0)
 
@@ -211,19 +240,70 @@ export function HomePage() {
     return () => observer.disconnect()
   }, [inputMode, categoriesLoading, categoriesError])
 
+  /**
+   * Ручная генерация через SSE-поток POST /api/drafts/stream: кадр
+   * `categories` даёт общее число черновиков, каждый кадр `draft` добавляет
+   * карточку сразу по готовности. Каждый запуск получает runId; устаревшие
+   * потоки игнорируются, новая отправка отменяет предыдущую.
+   */
   const handleGenerate = useCallback(async (request: DraftsRequest) => {
+    const runId = ++manualRunIdRef.current
+    manualAbortRef.current?.abort()
+    const controller = new AbortController()
+    manualAbortRef.current = controller
+
+    let received = 0
+
     setLastRequest(request)
     setStatus('loading')
     setRequestError(null)
+    setDrafts([])
+    setManualTotal(null)
     setSourceMcId(request.mcId)
+
     try {
-      const response = await fetchDrafts(request)
-      setDrafts(response.drafts)
-      setStatus(response.drafts.length === 0 ? 'empty' : 'success')
+      await streamDrafts(
+        request,
+        {
+          onCategories: (event) => {
+            if (runId === manualRunIdRef.current) {
+              setManualTotal(event.mcIds.length)
+            }
+          },
+          onDraft: (draft) => {
+            if (runId !== manualRunIdRef.current) {
+              return
+            }
+            received += 1
+            setDrafts((current) => [...current, draft])
+          },
+          onDone: () => {
+            if (runId !== manualRunIdRef.current) {
+              return
+            }
+            setStatus(received === 0 ? 'empty' : 'success')
+          },
+        },
+        controller.signal,
+      )
     } catch (error: unknown) {
+      if (runId !== manualRunIdRef.current) {
+        return
+      }
+      if (isAbortError(error)) {
+        setStatus('idle')
+        setDrafts([])
+        setManualTotal(null)
+        return
+      }
       setDrafts([])
+      setManualTotal(null)
       setRequestError(messageOf(error))
       setStatus('error')
+    } finally {
+      if (runId === manualRunIdRef.current) {
+        manualAbortRef.current = null
+      }
     }
   }, [])
 
@@ -234,10 +314,49 @@ export function HomePage() {
     }
   }, [lastRequest, handleGenerate])
 
-  const handleSelectAd = useCallback((ad: ImportedAd) => {
-    setAdSelection((current) => ({ ad, id: (current?.id ?? 0) + 1 }))
-    setInputMode('manual')
+  /** Сброс ручного результата и остановка его потока (при смене режима). */
+  const resetManualResults = useCallback(() => {
+    manualRunIdRef.current += 1
+    manualAbortRef.current?.abort()
+    manualAbortRef.current = null
+    setStatus('idle')
+    setDrafts([])
+    setRequestError(null)
+    setManualTotal(null)
   }, [])
+
+  /** Сброс пакетного результата и отмена его потока (при смене режима). */
+  const resetBulkResults = useCallback(() => {
+    bulkRunIdRef.current += 1
+    bulkAbortRef.current?.abort()
+    bulkAbortRef.current = null
+    setBulkAds(null)
+    setBulkRows([])
+    setBulkPhase('running')
+    setBulkTotal(0)
+    setBulkSummary(null)
+    setBulkError(null)
+  }, [])
+
+  /**
+   * Смена режима ввода: результаты противоположного режима скрываются —
+   * панель CSV не висит над ручным вводом, и наоборот.
+   */
+  const handleInputModeChange = useCallback(
+    (value: string) => {
+      const nextMode = value as InputMode
+      if (nextMode === inputMode) {
+        return
+      }
+      if (nextMode === 'manual') {
+        resetBulkResults()
+      } else {
+        resetManualResults()
+      }
+      setInputMode(nextMode)
+    },
+    [inputMode, resetBulkResults, resetManualResults],
+  )
 
   /**
    * Запуск пакетной обработки: отправляет весь массив на POST /api/drafts/batch
@@ -338,10 +457,12 @@ export function HomePage() {
     bulkAbortRef.current?.abort()
   }, [])
 
-  // При уходе со страницы прерываем незавершённый поток, чтобы не
+  // При уходе со страницы прерываем незавершённые потоки, чтобы не
   // обновлять состояние уже размонтированного компонента.
   useEffect(() => {
     return () => {
+      manualRunIdRef.current += 1
+      manualAbortRef.current?.abort()
       bulkRunIdRef.current += 1
       bulkAbortRef.current?.abort()
     }
@@ -373,7 +494,7 @@ export function HomePage() {
                       aria-label="Режим ввода объявления"
                       data={INPUT_MODE_OPTIONS}
                       value={inputMode}
-                      onChange={(value) => setInputMode(value as InputMode)}
+                      onChange={handleInputModeChange}
                       fullWidth
                       maw={480}
                       mx="auto"
@@ -425,11 +546,9 @@ export function HomePage() {
                             </Center>
                           ) : (
                             <DraftsForm
-                              key={adSelection?.id ?? 'empty'}
                               microcategories={microcategories}
                               loading={status === 'loading'}
                               disabled={categoriesError !== null}
-                              selectedAd={adSelection?.ad ?? null}
                               onSubmit={handleGenerate}
                             />
                           )}
@@ -442,8 +561,6 @@ export function HomePage() {
                         hidden={inputMode !== 'table'}
                       >
                         <AdsDropzone
-                          microcategories={microcategories}
-                          onSelect={handleSelectAd}
                           onProcessAll={startBulk}
                           bulkRunning={bulkAds !== null && bulkPhase === 'running'}
                         />
@@ -456,7 +573,8 @@ export function HomePage() {
 
             <Grid.Col span={{ base: 12, lg: 7 }}>
               <Stack gap="lg">
-                {/* Пакетные результаты: видны независимо от режима ввода. */}
+                {/* Пакетные результаты: видны в режиме таблицы; переключение
+                    на ручной ввод скрывает панель и отменяет поток. */}
                 {bulkAds !== null && (
                   <Box
                     component="section"
@@ -484,43 +602,62 @@ export function HomePage() {
                   aria-live="polite"
                   aria-label="Результаты подбора черновиков"
                 >
-                  {status === 'idle' && bulkAds === null && <ResultsPlaceholder />}
+                  <Stack gap="lg">
+                    {status === 'idle' && bulkAds === null && <ResultsPlaceholder />}
 
-                  {status === 'loading' && <ResultsSkeleton />}
+                    {status === 'loading' && (
+                      <GenerationProgress done={drafts.length} total={manualTotal} />
+                    )}
 
-                  {status === 'error' && (
-                    <Alert
-                      color="red"
-                      title="Ошибка подбора черновиков"
-                      radius="md"
-                      icon={<AlertIcon />}
-                    >
-                      <Stack gap="sm">
-                        <Text size="sm">{requestError}</Text>
-                        <Button
-                          variant="light"
-                          color="red"
-                          size="sm"
-                          leftSection={<RefreshIcon size={16} />}
-                          onClick={retryLastRequest}
-                          disabled={lastRequest === null}
-                          w="fit-content"
-                        >
-                          Повторить
-                        </Button>
-                      </Stack>
-                    </Alert>
-                  )}
+                    {status === 'error' && (
+                      <Alert
+                        color="red"
+                        title="Ошибка подбора черновиков"
+                        radius="md"
+                        icon={<AlertIcon />}
+                      >
+                        <Stack gap="sm">
+                          <Text size="sm">{requestError}</Text>
+                          <Button
+                            variant="light"
+                            color="red"
+                            size="sm"
+                            leftSection={<RefreshIcon size={16} />}
+                            onClick={retryLastRequest}
+                            disabled={lastRequest === null}
+                            w="fit-content"
+                          >
+                            Повторить
+                          </Button>
+                        </Stack>
+                      </Alert>
+                    )}
 
-                  {status === 'empty' && <EmptyState />}
+                    {status === 'empty' && <EmptyState />}
 
-                  {status === 'success' && (
-                    <ResultsList
-                      drafts={drafts}
-                      microcategories={microcategories}
-                      sourceMcId={sourceMcId}
-                    />
-                  )}
+                    {/* Черновики ручного запроса: во время генерации карточки
+                        приходят по одной, недостающие места занимают
+                        заглушки-Skeleton; на success тот же список остаётся
+                        на месте, без перемонтирования. */}
+                    {(status === 'loading' || status === 'success') &&
+                      manualTotal !== null &&
+                      manualTotal > 0 && (
+                        <ResultsList
+                          drafts={drafts}
+                          microcategories={microcategories}
+                          sourceMcId={sourceMcId}
+                          pending={
+                            status === 'loading'
+                              ? Math.max(manualTotal - drafts.length, 0)
+                              : 0
+                          }
+                        />
+                      )}
+
+                    {status === 'loading' && manualTotal === null && (
+                      <DraftsSkeletonGrid />
+                    )}
+                  </Stack>
                 </Box>
               </Stack>
             </Grid.Col>
