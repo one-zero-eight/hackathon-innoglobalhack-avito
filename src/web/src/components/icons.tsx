@@ -79,6 +79,29 @@ export function ShuffleIcon({ size = 18, strokeWidth = 2 }: IconProps) {
   )
 }
 
+/** Стилизованный Lucide `maximize-2` — для кнопки «Развернуть окно ввода описания». */
+export function MaximizeIcon({ size = 24, strokeWidth = 2 }: IconProps) {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={strokeWidth}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+      focusable="false"
+    >
+      <path d="M15 3h6v6" />
+      <path d="M9 21H3v-6" />
+      <path d="m21 3-7 7" />
+      <path d="m3 21 7-7" />
+    </svg>
+  )
+}
+
 /** Стилизованный Lucide `triangle-alert` — для сообщений об ошибке. */
 export function AlertIcon({ size = 20, strokeWidth = 2 }: IconProps) {
   return (
