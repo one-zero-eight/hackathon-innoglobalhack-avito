@@ -106,19 +106,18 @@ JSON-ответ с непустыми `title` и `text` валидируется
 `mcId` задаётся кодом, а не моделью. Пустой список категорий не вызывает API.
 
 Выбор в `config.json`: `"draft_generation": "sample_llm"`.
-В `.env` нужен общий `LLM_API_KEY` для Google Gemini.
-По умолчанию используется модель `gemini-3.5-flash-lite`.
+В `.env` нужен `SELECTEL_API_KEY` с доступом к модели в Selectel AI Router.
+По умолчанию используется модель `qwen/qwen3.5-9b` и endpoint
+`https://api.selectel.ru/aig/v1/chat/completions`.
 При необходимости задайте `SAMPLE_LLM_MODEL_ID`, `SAMPLE_LLM_API_URL`
 и `SAMPLE_LLM_TIMEOUT` (секунды, по умолчанию 60).
 При HTTP 429/500/502/503/504 и таймауте запрос повторяется:
 `SAMPLE_LLM_MAX_ATTEMPTS` (4 попытки), `SAMPLE_LLM_RETRY_DELAY` (10 секунд).
 Остальные ошибки не скрываются и прерывают прогон.
-Endpoint должен поддерживать Google GenerateContent с JSON mode;
-`{model}` в URL заменяется именем модели.
-JSON-схема `title`/`text` передаётся в API из той же модели Pydantic,
-которой валидируется ответ.
-`LLM_MODEL_ID` не используется генератором: модель `gemini-decision-1`
-остаётся настройкой классификатора.
+Endpoint должен поддерживать OpenAI-совместимый Chat Completions и JSON mode.
+Модель получает инструкцию вернуть JSON; схема `title`/`text` проверяется
+локально через Pydantic, а не передаётся как строгая схема провайдеру.
+`LLM_MODEL_ID` и `LLM_API_KEY` генератором не используются.
 Генератор не проверяет фактическую достоверность текста автоматически —
 это простой пробный модуль, а не гарантия отсутствия галлюцинаций.
 

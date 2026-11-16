@@ -61,25 +61,27 @@ def replay() -> dict[str, int]:
             except ValueError:
                 continue
             raise AssertionError("Некорректный ответ принят")
+    with patch.dict("os.environ", {"SELECTEL_API_KEY": "offline-placeholder"}, clear=True):
+        client = SampleLLMClient()
+        assert client.model_id == "qwen/qwen3.5-9b"
+        assert client.api_url == "https://api.selectel.ru/aig/v1/chat/completions"
     with patch.dict("os.environ", {
-        "LLM_API_KEY": "offline-placeholder",
-        "SAMPLE_LLM_API_KEY": "ignored-placeholder",
+        "SELECTEL_API_KEY": "offline-placeholder",
+        "LLM_API_KEY": "ignored-placeholder",
         "SAMPLE_LLM_MODEL_ID": "offline-model",
-        "SAMPLE_LLM_API_URL": "https://example.invalid/models/{model}:generateContent",
+        "SAMPLE_LLM_API_URL": "https://example.invalid/v1/chat/completions",
     }):
         client = SampleLLMClient()
-        response = json.dumps({"candidates": [{"content": {"parts": [{"text": answer}]}}]})
+        response = json.dumps({"choices": [{"message": {"content": answer}, "finish_reason": "stop"}]})
         with patch("draft_generation.sample_llm.client.urlopen",
                    return_value=StringIO(response)) as transport:
             schema = {"type": "object", "required": ["title", "text"]}
             assert client.complete("Контроль", response_schema=schema) == answer
             sent = json.loads(transport.call_args.args[0].data)
-            assert transport.call_args.args[0].get_header("X-goog-api-key") == "offline-placeholder"
-            assert transport.call_args.args[0].full_url.endswith("/offline-model:generateContent")
-            assert sent["contents"] == [{"role": "user", "parts": [{"text": "Контроль"}]}]
-            assert sent["generationConfig"] == {
-                "responseMimeType": "application/json", "responseJsonSchema": schema,
-            }
+            assert transport.call_args.args[0].get_header("Authorization") == "Bearer offline-placeholder"
+            assert transport.call_args.args[0].full_url == "https://example.invalid/v1/chat/completions"
+            assert sent == {"model": "offline-model", "messages": [{"role": "user", "content": "Контроль"}],
+                            "response_format": {"type": "json_object"}}
         client.max_attempts = 2
         with (
             patch("draft_generation.sample_llm.client.urlopen", side_effect=[
@@ -103,7 +105,8 @@ def replay() -> dict[str, int]:
                 else:
                     raise AssertionError("Ошибка HTTP скрыта")
                 assert transport.call_count == (1 if status == 401 else 2)
-        for body in ({}, {"candidates": []}, {"candidates": [{"content": {"parts": []}}]}):
+        for body in ({}, {"choices": []}, {"choices": [{"message": {"content": ""}}]},
+                     {"choices": [{"message": {"content": answer}, "finish_reason": "length"}]}):
             with patch("draft_generation.sample_llm.client.urlopen",
                        return_value=StringIO(json.dumps(body))):
                 try:
@@ -111,7 +114,7 @@ def replay() -> dict[str, int]:
                 except ValueError:
                     continue
                 raise AssertionError("Некорректная оболочка ответа принята")
-    with patch.dict("os.environ", {"SAMPLE_LLM_API_KEY": "ignored-placeholder", "LLM_API_KEY": ""}):
+    with patch.dict("os.environ", {"SELECTEL_API_KEY": "", "LLM_API_KEY": "ignored-placeholder"}):
         try:
             SampleLLMClient().complete("Контроль")
         except ValueError:
