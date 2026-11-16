@@ -51,11 +51,14 @@ COPY src/subcategory_extraction/__init__.py ./src/subcategory_extraction/__init_
 COPY src/subcategory_extraction/lexical/__init__.py ./src/subcategory_extraction/lexical/__init__.py
 COPY src/subcategory_extraction/lexical/remont_mc_v04 ./src/subcategory_extraction/lexical/remont_mc_v04
 
-# Выбранный генератор: HTTP-клиент к локальному Chat Completions серверу + промпты.
+# Генераторы: sample_llm (Selectel Chat Completions, выбран в config.json) и
+# local_llm (HTTP-клиент к локальному серверу, оставлен для переключения).
+# Оба — только stdlib-клиенты + промпты, новых зависимостей не требуют.
 COPY src/draft_generation/__init__.py ./src/draft_generation/__init__.py
+COPY src/draft_generation/sample_llm ./src/draft_generation/sample_llm
 COPY src/draft_generation/local_llm ./src/draft_generation/local_llm
 
-# Конфигурация выбора модулей (extractor=lexical.remont_mc_v04, generator=local_llm):
+# Конфигурация выбора модулей (extractor=lexical.remont_mc_v04, generator=sample_llm):
 # load_config() ищет config.json относительно src/main.py, то есть в корне /app.
 COPY config.json ./
 
@@ -66,6 +69,6 @@ COPY docs/innoglobalhack_avito/microcategories-guide.md ./docs/innoglobalhack_av
 # Системный Python: venv/uv sync здесь нет, PATH не переопределяем.
 EXPOSE 8000
 
-# LOCAL_LLM_API_URL: по умолчанию compose задаёт http://host.docker.internal:8080/...
-# (генератор ходит во внешний локальный LLM-сервер, в этом образе его нет).
+# Генератор sample_llm ходит в Selectel API (SELECTEL_API_KEY берётся из .env через
+# compose env_file); local_llm при переключении — во внешний локальный LLM-сервер.
 CMD ["python", "-m", "uvicorn", "api.app:app", "--app-dir", "src", "--host", "0.0.0.0", "--port", "8000"]
