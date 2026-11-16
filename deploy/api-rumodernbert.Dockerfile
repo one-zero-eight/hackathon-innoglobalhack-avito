@@ -4,19 +4,23 @@
 # через onnxruntime + tokenizers + numpy (см. docstring student.py). Здесь только
 # зависимости рантайма api и выбранного в config.json класса, и копируется только
 # нужный код: другие модули extraction, их веса, benchmarks и docs в образ не идут.
-FROM python:3.13-slim
+#
+# Multi-stage: uv и его кэш (~200+ МБ) остаются в стадии builder — в финальный
+# образ попадают только site-packages и код. CMD запускает uvicorn через
+# `python -m`, поэтому ни uv/uvx, ни console-скрипты в рантайме не нужны.
+
+# --- Стадия сборки зависимостей ---
+FROM python:3.13-slim AS builder
 
 # uv берём из официального образа astral-sh (как в deploy/db-load.Dockerfile)
-COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
-
-WORKDIR /app
+COPY --from=ghcr.io/astral-sh/uv:latest /uv /bin/uv
 
 # Зависимости: веб-слой src/api (fastapi/uvicorn/asyncpg/pydantic/dotenv) и CPU-инференс
 # remont_mc_v04 (onnxruntime/tokenizers/numpy). БЕЗ torch, transformers, scikit-learn,
 # safetensors, pyarrow. Версии — в границах pyproject.toml и uv.lock (numpy 2.x).
 # httpx в pyproject есть, но api-слой его не импортирует (клиент local_llm — urllib),
 # поэтому в лёгкий образ не входит.
-RUN uv pip install --system \
+RUN uv pip install --system --no-cache \
     "fastapi>=0.163.1" \
     "uvicorn>=0.54.0" \
     "asyncpg>=0.32.0" \
@@ -26,6 +30,15 @@ RUN uv pip install --system \
     "onnxruntime>=1.17" \
     "tokenizers>=0.21,<0.24" \
     "numpy>=2,<3"
+
+# --- Финальный лёгкий образ ---
+FROM python:3.13-slim
+
+WORKDIR /app
+
+# Только установленные пакеты из builder (console-скрипты /usr/local/bin не нужны:
+# CMD использует python -m uvicorn).
+COPY --from=builder /usr/local/lib/python3.13/site-packages /usr/local/lib/python3.13/site-packages
 
 # Ядро (контракт, микрокатегории, load_pipeline/discover_modules) и веб-слой.
 COPY src/main.py ./src/main.py
