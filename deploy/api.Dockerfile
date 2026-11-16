@@ -1,4 +1,6 @@
-# Образ FastAPI-сервиса черновиков.
+# Образ FastAPI-сервиса черновиков (LEGACY: полная сборка со всеми модулями и
+# тяжёлыми зависимостями torch/CUDA через uv sync). Основной compose-сервис api
+# переведён на лёгкий deploy/api-rumodernbert.Dockerfile (только remont_mc_v04).
 # Само приложение src/api пишет другой воркер; здесь только инфраструктура.
 FROM python:3.13-slim
 

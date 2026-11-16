@@ -48,9 +48,13 @@ services:
       - ./docs/innoglobalhack_avito:/app/docs/innoglobalhack_avito:ro
 
   api:
+    # Лёгкий образ только под RuModernBERT-классификатор (lexical.remont_mc_v04):
+    # onnxruntime + tokenizers + numpy на CPU, без torch/CUDA/scikit-learn и без
+    # кода/весов других классификаторов. Тяжёлый deploy/api.Dockerfile остаётся
+    # в репозитории как legacy (для полных сборок со всеми модулями).
     build:
       context: .
-      dockerfile: deploy/api.Dockerfile
+      dockerfile: deploy/api-rumodernbert.Dockerfile
     container_name: avito-api
     env_file: .env
     environment:
