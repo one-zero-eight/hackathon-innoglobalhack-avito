@@ -34,7 +34,7 @@ export function AppHeader() {
           </Group>
 
           <Text visibleFrom="sm" c="dimmed" size="sm">
-            Ремонт и отделка · микрокатегории 101–106
+            Ремонт и отделка
           </Text>
         </Group>
       </Container>
