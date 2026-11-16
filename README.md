@@ -8,6 +8,7 @@
 | Путь | Что это |
 | --- | --- |
 | `src/main.py` | CLI + всё общее: контракт, микрокатегории, `BasePipeline`, `LLMClient` |
+| `src/http_api.py` | HTTP API полного пайплайна и селекторы модулей в Swagger |
 | `config.json` | выбор реализации каждого шага |
 | `src/subcategory_extraction/` | шаг 1: выделение подкатегорий услуг |
 | `src/draft_generation/` | шаг 2: генерация черновиков |
@@ -216,6 +217,29 @@ uv run python src/run.py --config run.config.json
 [src/web/README.md](src/web/README.md)) и справочник микрокатегорий
 в PostgreSQL. Инфраструктура — `docker-compose.yml` и `deploy/`.
 
+CLI, универсальный HTTP `POST /drafts` (`python -m src`) и React
+`POST /api/drafts` используют один генератор из `config.json.draft_generation`:
+`local_llm`. Веб-классификатор остаётся Selectel Jev Decisions API.
+Генератор возвращает вступление и тематические пункты `•`, затем при необходимости
+дополнительные сведения; исходные эмодзи выбираются отдельным запросом без
+переписывания сгенерированных слов. Ошибка генерации даёт 502, не пустой черновик.
+
+**До запуска** отдельно установите runtime и веса Qwen3.5-9B.
+Docker Compose не устанавливает и не запускает модель. Например, на Apple Silicon
+в отдельном окружении с `mlx-lm` и скачанными MLX-весами:
+
+```bash
+mlx_lm.server --model /absolute/path/to/Qwen3.5-9B-MLX --host 0.0.0.0 --port 8080
+```
+
+OpenAI-совместимый endpoint для CLI/dev по умолчанию —
+`http://127.0.0.1:8080/v1/chat/completions`, идентификатор MLX — `default_model`.
+Compose обращается к хосту через
+`http://host.docker.internal:8080/v1/chat/completions`; runtime должен быть доступен
+контейнеру (не только на loopback). Не открывайте этот неаутентифицированный порт
+в публичную сеть. URL и alias другой локальной службы задаются через
+`LOCAL_LLM_API_URL` и `LOCAL_LLM_MODEL_ID`.
+
 ### Продакшен-запуск
 
 ```bash
@@ -318,9 +342,11 @@ Vite проксирует `/api/*` на `http://localhost:8000` (см.
 | Переменная | Назначение |
 | --- | --- |
 | `DATABASE_URL` | подключение к PostgreSQL (compose переопределяет на `db:5432`) |
-| `SELECTEL_API_KEY` | ключ Selectel для классификатора `decisions.jev` (endpoint, модель и порог — `JEV_*`) |
-| `LLM_API_KEY`, `LLM_MODEL_ID` | ключ и модель LLM для генератора `sample_llm` (таймаут и повторы — `SAMPLE_LLM_*`) |
+| `SELECTEL_API_KEY` | ключ Selectel: классификатор `decisions.jev` (endpoint, модель и порог — `JEV_*`) и генератор `sample_llm` (Qwen через AI Router, настройки — `SAMPLE_LLM_*`) |
+| `LLM_API_KEY`, `LLM_MODEL_ID` | ключ и модель классификаторов Google (`GOOGLE_DECISION_*`) |
 | `BESTAPI_API_KEY` | ключ BestAPI для структурного LLM (`STRUCTURED_LLM_*`) |
+| `LOCAL_LLM_API_URL`, `LOCAL_LLM_MODEL_ID` | endpoint локальной генерации `local_llm` и alias модели (`default_model`) |
+| `LOCAL_LLM_TIMEOUT`, `LOCAL_LLM_MAX_TOKENS` | таймаут 180 с и лимит 4096 токенов на запрос; скрытых повторов нет |
 | `LLM_PRICING_FILE` | JSON-тарифы USD для учёта расходов; без файла стоимость неизвестна |
 | `API_PORT`, `WEB_PORT` | хост-порты API и веб-клиента |
 

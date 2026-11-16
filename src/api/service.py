@@ -46,7 +46,8 @@ class DraftsService:
         в переиспользуемых клиентах модулей. Ошибка учёта (например,
         неподходящий ``LLM_PRICING_FILE``) логируется и не роняет запрос.
         Контекст ставится здесь же, в потоке вызова: иначе ``ContextVar``
-        не виден рабочему потоку threadpool.
+        не виден рабочему потоку threadpool. Пустые ``title``/``text``
+        черновика — ошибка контракта генератора (502), а не тихий результат.
         """
         try:
             ledger = LLMCostLedger()
@@ -55,12 +56,19 @@ class DraftsService:
                 "Учёт расходов API не настроен (%s): запрос выполняется без него",
                 type(exc).__name__,
             )
-            return self._runtime.run(inp, self._config)
+            return self._checked(self._runtime.run(inp, self._config))
         with track_llm_costs(ledger):
-            return self._runtime.run(inp, self._config)
+            return self._checked(self._runtime.run(inp, self._config))
+
+    @staticmethod
+    def _checked(output: PipelineOutput) -> PipelineOutput:
+        """Отклонить черновики без заголовка или текста: контракт кейса требует оба поля."""
+        if any(not draft.title or not draft.text for draft in output.drafts):
+            raise ValueError("Генератор вернул черновик без заголовка или текста")
+        return output
 
     def _check_catalog(self, catalog: dict[int, str]) -> None:
-        """Сверить справочник из БД с MICROCATEGORIES из main; расхождение — только лог."""
+        """Сверить справочник из БД с MICROCATEGORIES из main; расхождение — только в лог."""
         if catalog == MICROCATEGORIES:
             return
         details: list[str] = []
